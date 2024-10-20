@@ -4,7 +4,7 @@ using UnityEngine;
 namespace RotationTypes
 {
     [Serializable]
-    public abstract class RotationType : UnityEngine.Object
+    public abstract class RotationType
     {
         [SerializeField] protected AngleType _angleType = AngleType.Radian;
 

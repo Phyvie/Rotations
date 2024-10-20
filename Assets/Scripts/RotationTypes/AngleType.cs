@@ -3,7 +3,7 @@ using System;
 namespace RotationTypes
 {
     [Serializable]
-    public class AngleType
+    public class AngleType : UnityEngine.Object
     {
         private AngleType(double fullCircleUnits)
         {

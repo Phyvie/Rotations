@@ -3225,7 +3225,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnrotatedVector: {x: 0, y: 0, z: 0}
   RotatedVector: {x: 0, y: 0, z: 0}
-  _rotation: {fileID: 0}
+  _rotation:
+    _angleType: {fileID: 0}
+    _complexNumber: {x: 0, y: 0}
+    _rotationAngle: 0
 --- !u!1 &2036741022
 GameObject:
   m_ObjectHideFlags: 0
