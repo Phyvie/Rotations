@@ -11,47 +11,36 @@ namespace Editor
         public override void OnGUI(Rect positionRect, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(positionRect, label, property);
-            positionRect = EditorGUI.PrefixLabel(positionRect, GUIUtility.GetControlID(FocusType.Passive), label); 
+            EditorGUI.PrefixLabel(positionRect, GUIUtility.GetControlID(FocusType.Passive), label); 
             
-            #region angleType
             SerializedProperty angleType = property.FindPropertyRelative("_angleType");
-            EditorGUI.PropertyField(positionRect, angleType, new GUIContent("AngleType")); 
-            #endregion
+            EditorGUILayout.PropertyField(angleType, new GUIContent("AngleType")); 
             
-            /*
-            #region angle
             SerializedProperty angle = property.FindPropertyRelative("_rotationAngle");
-            angle.floatValue = EditorGUI.FloatField(positionRect, "RotationAngle", angle.floatValue);
-            positionRect.y += EditorGUIUtility.singleLineHeight + 2;
-            #endregion
+            angle.floatValue = EditorGUILayout.FloatField("RotationAngle", angle.floatValue);
             
-            #region complexNumber
             SerializedProperty complexNumber = property.FindPropertyRelative("_complexNumber");
-            complexNumber.vector2Value = EditorGUI.Vector2Field(positionRect, "ComplexNumber", complexNumber.vector2Value);
-            positionRect.y += EditorGUIUtility.singleLineHeight + 2;
-            #endregion
-            */
+            complexNumber.vector2Value = EditorGUILayout.Vector2Field("ComplexNumber", complexNumber.vector2Value);
             
             /*
             #region Matrix
-            SerializedProperty matrixProperty = property.FindPropertyRelative("_matrix");
-            float[][] matrix = (float[][]) matrixProperty.boxedValue;
-
-            for (int row = 0; row < matrix.Length; row++)
+            SerializedProperty matrixProperty = property.FindPropertyRelative("Matrix2X2");
+            
+            for (int row = 0; row < matrixProperty.arraySize; row++)
             {
-                for (int column = 0; column < matrix[row].Length; column++)
+                for (int column = 0; column < matrixProperty.GetArrayElementAtIndex(row).arraySize; column++)
                 {
                     Rect matrixPositionRect = new Rect(
                         positionRect.x + row*EditorGUIUtility.singleLineHeight,
                         positionRect.y + column*EditorGUIUtility.singleLineHeight,
                         positionRect.width / 2,
                         EditorGUIUtility.singleLineHeight);
-                    matrix[row][column] = EditorGUI.FloatField(
-                        matrixPositionRect,
-                        matrix[row][column]);
+                    matrixProperty.GetArrayElementAtIndex(row).GetArrayElementAtIndex(column).floatValue 
+                        = EditorGUI.FloatField(matrixPositionRect,
+                        matrixProperty.GetArrayElementAtIndex(row).GetArrayElementAtIndex(column).floatValue);
                 }
             }
-            positionRect.y += EditorGUIUtility.singleLineHeight * matrix.Length;
+            positionRect.y += EditorGUIUtility.singleLineHeight * matrixProperty.arraySize;
             #endregion
             */
 
@@ -60,7 +49,7 @@ namespace Editor
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return 2 * EditorGUIUtility.singleLineHeight + 4; 
+            return 2 * EditorGUIUtility.singleLineHeight; 
         }
     }
 }

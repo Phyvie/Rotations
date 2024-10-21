@@ -106,17 +106,14 @@ namespace RotationTypes
         }
 
         public static readonly float EqualsTolerance = 0.0001f; 
-        public bool Equals(MatrixRotation other)
+        public override bool Equals(object obj)
         {
-            if (other is null)
-            {
-                return false; 
-            }
-            if (this == other)
-            {
-                return true; 
-            }
-            if (matrix == other.matrix)
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            
+            MatrixRotation otherRotation = (MatrixRotation)obj; 
+            if (matrix == otherRotation.matrix)
             {
                 return true; 
             }
@@ -125,7 +122,7 @@ namespace RotationTypes
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    if (this[i, j] - other[i, j] > EqualsTolerance)
+                    if (this[i, j] - otherRotation[i, j] > EqualsTolerance)
                     {
                         return false; 
                     }
@@ -133,6 +130,11 @@ namespace RotationTypes
             }
 
             return true; 
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(matrix, isRotationMatrix);
         }
         
         public MatrixRotation Inverse()

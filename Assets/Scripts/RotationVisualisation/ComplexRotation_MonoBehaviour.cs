@@ -5,6 +5,8 @@ namespace RotationVisualisation
 {
     public class ComplexRotation_MonoBehaviour : MonoBehaviour
     {
+        [SerializeField] private Matrix4x4 zyKa; 
+
         [SerializeField] private Vector3 UnrotatedVector; 
         [SerializeField] private Vector3 RotatedVector; 
         

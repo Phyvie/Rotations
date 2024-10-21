@@ -37,6 +37,12 @@ public class EulerMatrixRotation : MonoBehaviour
     private void RotatePoint()
     {
         CalculateMatrices();
+
+        if (UnrotatedPoint is null || RotatedPoint is null)
+        {
+            Debug.LogWarning(name + ": can't rotate, because References are not set");
+            return; 
+        }
         
         Vector3 position = UnrotatedPoint.transform.position; 
         position = _YawMatrix.MultiplyVector(position); 

@@ -6,7 +6,7 @@ namespace RotationTypes
     [Serializable]
     public abstract class RotationType
     {
-        [SerializeField] protected AngleType _angleType = AngleType.Radian;
+        [SerializeField] protected AngleType _angleType = new AngleType(AngleType.Radian);
 
         public AngleType angleType
         {
