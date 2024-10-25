@@ -12,7 +12,7 @@ namespace Editor
             EditorGUI.BeginProperty(position, label, property);
 
             // Find the matrix field
-            SerializedProperty arrayProperty = property.FindPropertyRelative("_propertyDrawerMatrix");
+            SerializedProperty arrayProperty = property.FindPropertyRelative("InternalMatrix");
             SerializedProperty heightProperty = property.FindPropertyRelative("height");
             SerializedProperty widthProperty = property.FindPropertyRelative("width");
 

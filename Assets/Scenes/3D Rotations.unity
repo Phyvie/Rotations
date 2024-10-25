@@ -3247,6 +3247,14 @@ MonoBehaviour:
       fullCircleUnits: 6.283185307179586
     _complexNumber: {x: 0, y: 0}
     _rotationAngle: 180
+    _matrix:
+      InternalMatrix:
+      - 0.5
+      - 0
+      - 0
+      - 0.5
+      height: 2
+      width: 2
 --- !u!1 &2036741022
 GameObject:
   m_ObjectHideFlags: 0

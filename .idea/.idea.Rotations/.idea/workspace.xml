@@ -5,22 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b54c963-bad1-41cc-8b0e-252a0574fd2d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/MatrixInspector.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/MatrixInspector.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/Matrix.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/Matrix.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/AngleType_Inspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/AngleTypeInspector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/AngleType_Inspector.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/AngleTypeInspector.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/ComplexRotation_Inspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/ComplexRotationInspector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/ComplexRotation_Inspector.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/ComplexRotationInspector.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Matrix4X4_Inspector.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Matrix4X4_Inspector.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EulerMatrixRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EulerMatrixRotation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ExtensionMethods.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ExtensionMethods.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AxisAngleRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AxisAngleRotation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/ComplexRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/ComplexRotation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/Matrix.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/Matrix.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +103,7 @@
       <workItem from="1729441461628" duration="8699000" />
       <workItem from="1729461706523" duration="10068000" />
       <workItem from="1729882461718" duration="1323000" />
-      <workItem from="1729890768153" duration="3155000" />
+      <workItem from="1729890768153" duration="5355000" />
     </task>
     <servers />
   </component>
