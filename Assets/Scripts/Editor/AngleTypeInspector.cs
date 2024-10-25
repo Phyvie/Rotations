@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Editor
 {
     [CustomPropertyDrawer(typeof(AngleType))]
-    public class AngleType_Inspector : PropertyDrawer
+    public class AngleTypeInspector : PropertyDrawer
     {
         public override void OnGUI(Rect positionRect, SerializedProperty property, GUIContent label)
         {

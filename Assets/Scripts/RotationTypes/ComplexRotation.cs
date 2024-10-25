@@ -7,11 +7,11 @@ namespace RotationTypes
     public class ComplexRotation : RotationType
     {
         [SerializeField] private Vector2 _complexNumber = Vector2.zero; 
-        [SerializeField] private float _rotationAngle = 0; 
-        [SerializeField] private float[][] _matrix = new float[2][]
+        [SerializeField] private float _rotationAngle = 0;
+        [SerializeField] private Matrix _matrix = new float[2, 2]
         {
-            new float[2] { 1, 0 },
-            new float[2] { 0, 1 }
+            { 1, 0 },
+            { 0, 1 }
         };
 
         public Vector2 ComplexNumber
@@ -23,17 +23,17 @@ namespace RotationTypes
                 {
                     return; 
                 }
-                
+                    
                 _complexNumber = value;
                 
                 _rotationAngle = Mathf.Atan2(_complexNumber.y, _complexNumber.x);
                 _rotationAngle = AngleType.ConvertAngle(_rotationAngle, AngleType.Radian, angleType);
                 
-                _matrix = new float[2][]
+                _matrix = new Matrix(new float[2,2]
                 {
-                    new float[2] {_complexNumber.x, -_complexNumber.y },
-                    new float[2] {_complexNumber.y,  _complexNumber.x }
-                }; 
+                    {_complexNumber.x, -_complexNumber.y },
+                    {_complexNumber.y,  _complexNumber.x }
+                }); 
             }
         }
 
@@ -52,15 +52,15 @@ namespace RotationTypes
                 
                 _complexNumber = new Vector2(Mathf.Cos(radianAngle), Mathf.Sin(radianAngle)); //+x/+y = tan(radianValue) = -x/-y => atan(y/x) = +-radianValue = atan(-y/-x) (use atan2 to get the correct +-)
                 
-                _matrix = new float[2][]
+                _matrix = new float[2,2]
                 {
-                    new float[2] {_complexNumber.x, -_complexNumber.y },
-                    new float[2] {_complexNumber.y,  _complexNumber.x }
+                    {_complexNumber.x, -_complexNumber.y },
+                    {_complexNumber.y,  _complexNumber.x }
                 }; 
             }
         }
 
-        public float[][] Matrix2X2
+        public Matrix Matrix2X2
         {
             get => _matrix;
             set
@@ -72,7 +72,7 @@ namespace RotationTypes
                 
                 _matrix = value;
 
-                _complexNumber = new Vector2(_matrix[0][0], _matrix[0][1]); 
+                _complexNumber = new Vector2(_matrix[0,0], _matrix[0,1]); 
                 
                 _rotationAngle = Mathf.Atan2(_complexNumber.y, _complexNumber.x);
                 _rotationAngle = AngleType.ConvertAngle(_rotationAngle, AngleType.Radian, angleType);
@@ -94,9 +94,9 @@ namespace RotationTypes
             return new MatrixRotation(
                 new float[3][]
                 {
-                    new float[3] { _matrix[0][0], _matrix[0][1], 0 },
-                    new float[3] { _matrix[1][0], _matrix[1][1], 0 },
-                    new float[3] {       0,                  0,        1 },
+                    new float[3]{ _matrix[0,0], _matrix[0,1], 0 },
+                    new float[3]{ _matrix[1,0], _matrix[1,1], 0 },
+                    new float[3]{       0,           0,       1 }
                 }
             ); 
         }
@@ -129,8 +129,8 @@ namespace RotationTypes
         public Vector2 RotateVector2_ViaMatrix(Vector2 inVector)
         {
             return new Vector2(
-                inVector.x * _matrix[0][0] + inVector.y * _matrix[0][1], 
-                inVector.x * _matrix[1][0] + inVector.y * _matrix[1][1]
+                inVector.x * _matrix[0,0] + inVector.y * _matrix[0,1], 
+                inVector.x * _matrix[1,0] + inVector.y * _matrix[1,1]
             );  
         }
     }

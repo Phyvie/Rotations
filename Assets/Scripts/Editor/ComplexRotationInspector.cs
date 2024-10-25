@@ -1,4 +1,4 @@
-using System;
+/*
 using RotationTypes;
 using UnityEditor;
 using UnityEngine;
@@ -42,7 +42,7 @@ namespace Editor
             }
             positionRect.y += EditorGUIUtility.singleLineHeight * matrixProperty.arraySize;
             #endregion
-            */
+            *_/
 
             EditorGUI.EndProperty();
         }
@@ -53,3 +53,4 @@ namespace Editor
         }
     }
 }
+*/

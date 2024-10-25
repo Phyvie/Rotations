@@ -1,3 +1,4 @@
+using ExtensionMethods;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -55,10 +56,5 @@ public class EulerMatrixRotation : MonoBehaviour
     private void Update()
     {
         RotatePoint();         
-    }
-
-    private void OnValidate()
-    {
-        //RotatePoint(); 
     }
 }
