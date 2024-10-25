@@ -31,6 +31,11 @@ namespace RotationTypes
             set => pitch.angle = value;
         }
 
+        public EulerAngleRotation()
+        {
+            gimble = new List<SingleGimbleRotation>() { yaw, pitch, roll}; 
+        }
+        
         public EulerAngleRotation(float inRoll, float inYaw, float inPitch, AngleType inAngleType)
         {
             gimble = new List<SingleGimbleRotation>(){yaw, pitch, roll}; 
@@ -97,7 +102,7 @@ namespace RotationTypes
         //ToQuaternionRotation.ToMatrixRotation is cheaper, because converting from EulerAngles to another RotationType requires combining multiple rotations throughout the process which is cheaper in Quaternions
         public override MatrixRotation ToMatrixRotation() //TODO: test this function
         {
-            MatrixRotation result = new MatrixRotation(MatrixRotation.Identity);
+            MatrixRotation result = new MatrixRotation(MatrixRotation.Identity(3));
             foreach (SingleGimbleRotation rotation in gimble)
             {
                 result = result * rotation.toMatrixRotation() * result.Inverse(); 

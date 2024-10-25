@@ -38,9 +38,9 @@ namespace RotationTypes
             }; 
         }
         
+        public AngleType angleType; 
         public readonly ERotationAxis eAxis;
         public float angle;
-        public AngleType angleType; 
         
         public static readonly SingleGimbleRotation Yaw = new SingleGimbleRotation(ERotationAxis.Yaw, (float) Math.PI/2, AngleType.Radian); 
         public static readonly SingleGimbleRotation Pitch = new SingleGimbleRotation(ERotationAxis.Pitch, (float) Math.PI/2, AngleType.Radian); 
@@ -57,23 +57,23 @@ namespace RotationTypes
             
             return eAxis switch
             {
-                ERotationAxis.Yaw => new MatrixRotation(new float[3][]
+                ERotationAxis.Yaw => new MatrixRotation(new float[3,3]
                 {
-                    new float[3] { Mathf.Cos(angleInRadian),  0, Mathf.Sin(angleInRadian) },
-                    new float[3] {          0,                1,              0           },
-                    new float[3] { -Mathf.Sin(angleInRadian), 0, Mathf.Cos(angleInRadian) }
+                    { Mathf.Cos(angleInRadian),  0, Mathf.Sin(angleInRadian) },
+                    {          0,                1,              0           },
+                    { -Mathf.Sin(angleInRadian), 0, Mathf.Cos(angleInRadian) }
                 }),
-                ERotationAxis.Pitch => new MatrixRotation(new float[3][]
+                ERotationAxis.Pitch => new MatrixRotation(new float[3,3]
                 {
-                    new float[3] { Mathf.Cos(angleInRadian), -Mathf.Sin(angleInRadian),  0 },
-                    new float[3] { Mathf.Sin(angleInRadian),  Mathf.Cos(angleInRadian),  0 },
-                    new float[3] {           0,                          0,              1 }
+                    { Mathf.Cos(angleInRadian), -Mathf.Sin(angleInRadian),  0 },
+                    { Mathf.Sin(angleInRadian),  Mathf.Cos(angleInRadian),  0 },
+                    {           0,                          0,              1 }
                 }),
-                ERotationAxis.Roll => new MatrixRotation(new float[3][]
+                ERotationAxis.Roll => new MatrixRotation(new float[3,3]
                 {
-                    new float[3] { 1,              0,                       0            },
-                    new float[3] { 0, Mathf.Cos(angleInRadian), -Mathf.Sin(angleInRadian) },
-                    new float[3] { 0, Mathf.Sin(angleInRadian), Mathf.Cos(angleInRadian) }
+                    { 1,              0,                       0            },
+                    { 0, Mathf.Cos(angleInRadian), -Mathf.Sin(angleInRadian) },
+                    { 0, Mathf.Sin(angleInRadian), Mathf.Cos(angleInRadian) }
                 }),
                 _ => throw new NotImplementedException()
             }; 

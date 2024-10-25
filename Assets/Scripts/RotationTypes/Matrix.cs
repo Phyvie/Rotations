@@ -20,6 +20,7 @@ namespace RotationTypes
             }
         }
         
+        //Warning this function is not tested, it might do something wrong
         public Matrix(float[,] inMatrix)
         {
             Debug.Assert(inMatrix is not null);
@@ -27,6 +28,23 @@ namespace RotationTypes
             height = inMatrix.GetLength(0);
             width = inMatrix.GetLength(1); 
             Buffer.BlockCopy(inMatrix, 0, InternalMatrix, 0, inMatrix.GetLength(0) * inMatrix.GetLength(1));
+        }
+
+        public Matrix(int width, int height)
+        {
+            this.width = width;
+            this.height = height;
+            InternalMatrix = new float[width * height]; 
+        }
+        
+        public static Matrix Identity(int size)
+        {
+            Matrix identity = new Matrix(size , size);
+            for (int i = 0; i < size; i++)
+            {
+                identity[i, i] = 1.0f;
+            }
+            return identity;
         }
 
         public static implicit operator Matrix(float[,] inMatrix)
@@ -40,7 +58,7 @@ namespace RotationTypes
             InternalMatrix = new float[inMatrix.height * inMatrix.width];
             height = inMatrix.height;
             width = inMatrix.width; 
-            Buffer.BlockCopy(inMatrix.InternalMatrix, 0, InternalMatrix, 0, width * height);
+            Array.Copy(inMatrix.InternalMatrix, InternalMatrix, 9);
         }
         
         public static bool operator ==(Matrix firstMatrix, Matrix secondMatrix)
@@ -229,7 +247,10 @@ namespace RotationTypes
             }
             return new Matrix(result);
         }
-        
-        
+
+        public bool IsSpecialOrthogonal()
+        {
+            return Math.Abs(Determinant() - 1) < 0.001 && Inverse() == Transpose(); 
+        }
     }
 }

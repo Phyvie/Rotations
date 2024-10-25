@@ -3189,6 +3189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1987248657}
   - component: {fileID: 1987248658}
+  - component: {fileID: 1987248659}
   m_Layer: 0
   m_Name: ComplexRotation
   m_TagString: Untagged
@@ -3223,38 +3224,84 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5de040aa24569be4c8510388512c021c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zyKa:
-    e00: 0
-    e01: 0
-    e02: 0
-    e03: 0
-    e10: 0
-    e11: 0
-    e12: 0
-    e13: 0
-    e20: 0
-    e21: 0
-    e22: 0
-    e23: 0
-    e30: 0
-    e31: 0
-    e32: 0
-    e33: 0
-  UnrotatedVector: {x: 0, y: 0, z: 0}
-  RotatedVector: {x: 0, y: 0, z: 0}
-  _rotation:
+  complexRotation:
     _angleType:
       fullCircleUnits: 6.283185307179586
     _complexNumber: {x: 0, y: 0}
-    _rotationAngle: 180
+    _rotationAngle: 0
     _matrix:
       InternalMatrix:
-      - 0.5
+      - 1
       - 0
       - 0
-      - 0.5
+      - 0
       height: 2
       width: 2
+--- !u!114 &1987248659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987248656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e85a9103fdbd4ce9ae5acfa8bdc882b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eulerAngleRotation:
+    _angleType:
+      fullCircleUnits: 6.283185307179586
+    yaw:
+      angleType:
+        fullCircleUnits: 6.283185307179586
+      angle: 1.5707964
+    pitch:
+      angleType:
+        fullCircleUnits: 6.283185307179586
+      angle: 1.5707964
+    roll:
+      angleType:
+        fullCircleUnits: 6.283185307179586
+      angle: 1.5707964
+    gimble:
+    - angleType:
+        fullCircleUnits: 6.283185307179586
+      angle: 1.5707964
+    - angleType:
+        fullCircleUnits: 6.283185307179586
+      angle: 1.5707964
+    - angleType:
+        fullCircleUnits: 6.283185307179586
+      angle: 1.5707964
+  complexRotation:
+    _angleType:
+      fullCircleUnits: 6.283185307179586
+    _real: 1
+    _i: 0
+    _j: 0
+    _k: 0
+  axisAngleRotation:
+    _angleType:
+      fullCircleUnits: 6.283185307179586
+    axisAngle: {x: 0, y: 0, z: 0}
+  matrixRotation:
+    _angleType:
+      fullCircleUnits: 6.283185307179586
+    isRotationMatrix: 1
+    matrix:
+      InternalMatrix:
+      - 1
+      - 0
+      - 0
+      - 0
+      - 1
+      - 0
+      - 0
+      - 0
+      - 1
+      height: 3
+      width: 3
 --- !u!1 &2036741022
 GameObject:
   m_ObjectHideFlags: 0

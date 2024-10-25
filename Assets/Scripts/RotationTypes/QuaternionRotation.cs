@@ -166,11 +166,11 @@ namespace RotationTypes
         public override MatrixRotation ToMatrixRotation()
         {
             return new MatrixRotation(
-                new float[][]
+                new float[3, 3]
                 {
-                    new float[]{1-2*(y*y + z*z), 2*(x*y - w*z), 2*(w*y + x*z)},
-                    new float[]{2*(x*y + w*z), 1 - 2*(x*x + z*z), 2*(y*z - w*x)},
-                    new float[]{2*(x*z - w*y), 2*(w*x + y*z), 1- 2*(x*x + y*y)}
+                    {1-2*(y*y + z*z), 2*(x*y - w*z), 2*(w*y + x*z)},
+                    {2*(x*y + w*z), 1 - 2*(x*x + z*z), 2*(y*z - w*x)},
+                    {2*(x*z - w*y), 2*(w*x + y*z), 1- 2*(x*x + y*y)}
                 }
                 ); 
         }

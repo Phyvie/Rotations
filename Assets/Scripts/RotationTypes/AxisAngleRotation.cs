@@ -11,6 +11,11 @@ namespace RotationTypes
         private Vector3 axis => axisAngle.normalized; 
         private float angle => axisAngle.magnitude;
 
+        public AxisAngleRotation()
+        {
+            
+        }
+        
         public AxisAngleRotation(Vector3 inAxisAngle, AngleType inAngleType)
         {
             angleType = inAngleType; 
