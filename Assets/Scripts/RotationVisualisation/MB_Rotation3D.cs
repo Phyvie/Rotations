@@ -1,15 +1,21 @@
 using RotationTypes;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace RotationVisualisation
 {
-    public class Rotation3D_MonoBehaviour : MonoBehaviour
+    public class MB_Rotation3D : MonoBehaviour
     {
         [SerializeField] private EulerAngleRotation eulerAngleRotation = new EulerAngleRotation(); 
         [SerializeField] private QuaternionRotation complexRotation = new QuaternionRotation();
         [SerializeField] private AxisAngleRotation axisAngleRotation = new AxisAngleRotation();
-        [SerializeField] private MatrixRotation matrixRotation = new MatrixRotation(); 
+        [SerializeField] private MatrixRotation matrixRotation = new MatrixRotation();
 
+        [SerializeField] private MB_Matrix _mbMatrix;
+
+        [ContextMenu("ConnectMBMatrix")]
+        public void ConnectMBMatrix()
+        {
+            _mbMatrix.RefMatrix = matrixRotation.InternalMatrix; 
+        }
     }
 }

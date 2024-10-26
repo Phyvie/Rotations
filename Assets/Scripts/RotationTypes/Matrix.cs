@@ -13,11 +13,23 @@ namespace RotationTypes
         
         public float this[int row, int column]
         {
-            get => InternalMatrix[row*width+column];
+            get => InternalMatrix[row*Width+column];
             set
             {
-                InternalMatrix[row*width+column] = value;
+                InternalMatrix[row*Width+column] = value;
             }
+        }
+        
+        public int Height
+        {
+            get => height;
+            private set => height = value;
+        }
+
+        public int Width
+        {
+            get => width;
+            private set => width = value;
         }
         
         //Warning this function is not tested, it might do something wrong
@@ -25,18 +37,27 @@ namespace RotationTypes
         {
             Debug.Assert(inMatrix is not null);
             InternalMatrix = new float[inMatrix.GetLength(0) * inMatrix.GetLength(1)];
-            height = inMatrix.GetLength(0);
-            width = inMatrix.GetLength(1); 
+            Height = inMatrix.GetLength(0);
+            Width = inMatrix.GetLength(1); 
             Buffer.BlockCopy(inMatrix, 0, InternalMatrix, 0, inMatrix.GetLength(0) * inMatrix.GetLength(1));
         }
 
         public Matrix(int width, int height)
         {
-            this.width = width;
-            this.height = height;
+            this.Width = width;
+            this.Height = height;
             InternalMatrix = new float[width * height]; 
         }
         
+        public Matrix(Matrix inMatrix)
+        {
+            Debug.Assert(inMatrix is not null);
+            InternalMatrix = new float[inMatrix.Height * inMatrix.Width];
+            Height = inMatrix.Height;
+            Width = inMatrix.Width; 
+            Array.Copy(inMatrix.InternalMatrix, InternalMatrix, 9);
+        }
+
         public static Matrix Identity(int size)
         {
             Matrix identity = new Matrix(size , size);
@@ -50,15 +71,6 @@ namespace RotationTypes
         public static implicit operator Matrix(float[,] inMatrix)
         {
             return new Matrix(inMatrix); 
-        }
-        
-        public Matrix(Matrix inMatrix)
-        {
-            Debug.Assert(inMatrix is not null);
-            InternalMatrix = new float[inMatrix.height * inMatrix.width];
-            height = inMatrix.height;
-            width = inMatrix.width; 
-            Array.Copy(inMatrix.InternalMatrix, InternalMatrix, 9);
         }
         
         public static bool operator ==(Matrix firstMatrix, Matrix secondMatrix)
@@ -77,15 +89,15 @@ namespace RotationTypes
                 return false;
 
             Matrix other = (Matrix)obj;
-            if (height != other.height || width != other.width)
+            if (Height != other.Height || Width != other.Width)
                 return false;
 
             float tolerance = 0.0001f;
-            for (int row = 0; row < height; row++)
+            for (int row = 0; row < Height; row++)
             {
-                for (int column = 0; column < width; column++)
+                for (int column = 0; column < Width; column++)
                 {
-                    if (Math.Abs(InternalMatrix[row*width+column] - other.InternalMatrix[row*width+column]) > tolerance)
+                    if (Math.Abs(InternalMatrix[row*Width+column] - other.InternalMatrix[row*Width+column]) > tolerance)
                         return false;
                 }
             }
@@ -104,7 +116,7 @@ namespace RotationTypes
                 string rowString = "";
                 for (int columnIndex = 0; columnIndex < InternalMatrix.GetLength(1); columnIndex++)
                 {
-                    rowString += InternalMatrix[rowIndex*width+columnIndex].ToString("F2") + " ";
+                    rowString += InternalMatrix[rowIndex*Width+columnIndex].ToString("F2") + " ";
                 }
                 Debug.Log(rowString);
             }
@@ -112,13 +124,13 @@ namespace RotationTypes
         
         public static Matrix operator +(Matrix firstMatrix, Matrix secondMatrix)
         {
-            Debug.Assert(firstMatrix.height == secondMatrix.height, "Matrices must have the same height.");
-            Debug.Assert(firstMatrix.width == secondMatrix.width, "Matrices must have the same width.");
+            Debug.Assert(firstMatrix.Height == secondMatrix.Height, "Matrices must have the same height.");
+            Debug.Assert(firstMatrix.Width == secondMatrix.Width, "Matrices must have the same width.");
 
-            float[,] _newMatrix = new float[firstMatrix.height, firstMatrix.width];
-            for (int row = 0; row < firstMatrix.height; row++)
+            float[,] _newMatrix = new float[firstMatrix.Height, firstMatrix.Width];
+            for (int row = 0; row < firstMatrix.Height; row++)
             {
-                for (int column = 0; column < firstMatrix.width; column++)
+                for (int column = 0; column < firstMatrix.Width; column++)
                 {
                     _newMatrix[row, column] = firstMatrix[row, column] + secondMatrix[row, column];
                 }
@@ -129,15 +141,15 @@ namespace RotationTypes
         
         public static Matrix operator*(Matrix firstMatrix, Matrix secondMatrix)
         {
-            Debug.Assert(firstMatrix.width != secondMatrix.height, "firstMatrix.width != secondMatrix.height");
-            Debug.Assert(firstMatrix.height != secondMatrix.width, "firstMatrix.height != secondMatrix.width");
+            Debug.Assert(firstMatrix.Width != secondMatrix.Height, "firstMatrix.width != secondMatrix.height");
+            Debug.Assert(firstMatrix.Height != secondMatrix.Width, "firstMatrix.height != secondMatrix.width");
 
-            float[,] _newMatrix = new float[firstMatrix.height,secondMatrix.width];
-            for (int row = 0; row < firstMatrix.height; row++)
+            float[,] _newMatrix = new float[firstMatrix.Height,secondMatrix.Width];
+            for (int row = 0; row < firstMatrix.Height; row++)
             {
-                for (int column = 0; column < secondMatrix.width; column++)
+                for (int column = 0; column < secondMatrix.Width; column++)
                 {
-                    for (int k = 0; k < firstMatrix.height; k++)
+                    for (int k = 0; k < firstMatrix.Height; k++)
                     {
                         _newMatrix[row, column] += firstMatrix[k, column] * secondMatrix[row, k];
                     }
@@ -150,9 +162,9 @@ namespace RotationTypes
         
         public Matrix Inverse()
         {
-            Debug.Assert(height == width, "Matrix must be square to find its inverse.");
+            Debug.Assert(Height == Width, "Matrix must be square to find its inverse.");
 
-            int n = height;
+            int n = Height;
             Matrix result = new Matrix(new float[n, n]);
             Matrix copy = new Matrix(this);
 
@@ -187,12 +199,12 @@ namespace RotationTypes
         
         public Matrix Transpose()
         {
-            Matrix transposedMatrix = new Matrix(new float[width, height]);
-            for (int row = 0; row < height; row++)
+            Matrix transposedMatrix = new Matrix(new float[Width, Height]);
+            for (int row = 0; row < Height; row++)
             {
-                for (int column = 0; column < width; column++)
+                for (int column = 0; column < Width; column++)
                 {
-                    transposedMatrix[column, row] = InternalMatrix[row*width+column];
+                    transposedMatrix[column, row] = InternalMatrix[row*Width+column];
                 }
             }
             return transposedMatrix;
@@ -200,49 +212,49 @@ namespace RotationTypes
         
         public float Trace()
         {
-            Debug.Assert(height == width, "Matrix must be square to calculate the trace.");
+            Debug.Assert(Height == Width, "Matrix must be square to calculate the trace.");
             float trace = 0;
-            for (int i = 0; i < height; i++)
+            for (int i = 0; i < Height; i++)
             {
-                trace += InternalMatrix[i * width + i];
+                trace += InternalMatrix[i * Width + i];
             }
             return trace;
         }
 
         public float Determinant()
         {
-            Debug.Assert(height == width, "Matrix must be square to calculate the determinant.");
+            Debug.Assert(Height == Width, "Matrix must be square to calculate the determinant.");
 
-            if (height == 1)
+            if (Height == 1)
                 return InternalMatrix[0];
 
-            if (height == 2)
+            if (Height == 2)
                 return InternalMatrix[0] * InternalMatrix[3] - InternalMatrix[1] * InternalMatrix[2];
 
             float determinant = 0;
-            for (int p = 0; p < width; p++)
+            for (int p = 0; p < Width; p++)
             {
                 Matrix subMatrix = CreateSubMatrix(this, 0, p);
-                determinant += InternalMatrix[0*width+p] * subMatrix.Determinant() * (p % 2 == 0 ? 1 : -1);
+                determinant += InternalMatrix[0*Width+p] * subMatrix.Determinant() * (p % 2 == 0 ? 1 : -1);
             }
             return determinant;
         }
         
         private Matrix CreateSubMatrix(Matrix matrix, int excludingRow, int excludingCol)
         {
-            float[,] result = new float[matrix.height - 1, matrix.width - 1];
+            float[,] result = new float[matrix.Height - 1, matrix.Width - 1];
             int r = -1;
-            for (int rowIndex = 0; rowIndex < matrix.height; rowIndex++)
+            for (int rowIndex = 0; rowIndex < matrix.Height; rowIndex++)
             {
                 if (rowIndex == excludingRow)
                     continue;
                 r++;
                 int c = -1;
-                for (int columnIndex = 0; columnIndex < matrix.width; columnIndex++)
+                for (int columnIndex = 0; columnIndex < matrix.Width; columnIndex++)
                 {
                     if (columnIndex == excludingCol)
                         continue;
-                    result[r, ++c] = matrix.InternalMatrix[rowIndex * width *  columnIndex];
+                    result[r, ++c] = matrix.InternalMatrix[rowIndex * Width *  columnIndex];
                 }
             }
             return new Matrix(result);

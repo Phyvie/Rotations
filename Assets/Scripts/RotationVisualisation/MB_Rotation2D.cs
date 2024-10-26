@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RotationVisualisation
 {
-    public class Rotation2D_MonoBehaviour : MonoBehaviour
+    public class MB_Rotation2D : MonoBehaviour
     {
         [SerializeField] private ComplexRotation complexRotation = new ComplexRotation();
     }

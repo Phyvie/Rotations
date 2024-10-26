@@ -1,44 +1,57 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace RotationTypes
 {
+    public enum EGimbleType
+    {
+        Invalid, 
+        TrueEulerAngle, 
+        TaitBryanAngle, 
+        OversizedEulerAngle, 
+        OversizedTaitBryanAngle
+    }
+    
     [Serializable]
     public class EulerAngleRotation : RotationType
     {
-        [SerializeField] private SingleGimbleRotation yaw = SingleGimbleRotation.Yaw.Clone();
-        [SerializeField] private SingleGimbleRotation pitch = SingleGimbleRotation.Pitch.Clone();
-        [SerializeField] private SingleGimbleRotation roll = SingleGimbleRotation.Roll.Clone();
-
-        [SerializeField] private List<SingleGimbleRotation> gimble; 
+        [SerializeField] private List<SingleGimbleRotation> gimble;
+        [SerializeField] private bool isIntrinsic = true;
+        [SerializeField] private EGimbleType _gimbleType = EGimbleType.Invalid; 
         
-        public float Roll
+        public bool IsIntrinsic
         {
-            get => roll.angle;
-            set => roll.angle = value;
+            get => isIntrinsic;
+            set => isIntrinsic = value;
         }
 
-        public float Yaw
+        public EGimbleType GimbleType
         {
-            get => yaw.angle;
-            set => yaw.angle = value;
-        }
-
-        public float Pitch
-        {
-            get => pitch.angle;
-            set => pitch.angle = value;
+            get
+            {
+                return (_gimbleType = GetGimbleType());
+            }
         }
 
         public EulerAngleRotation()
         {
+            SingleGimbleRotation yaw = SingleGimbleRotation.Yaw.Clone();
+            SingleGimbleRotation pitch = SingleGimbleRotation.Pitch.Clone();
+            SingleGimbleRotation roll = SingleGimbleRotation.Roll.Clone();
+
             gimble = new List<SingleGimbleRotation>() { yaw, pitch, roll}; 
         }
         
         public EulerAngleRotation(float inRoll, float inYaw, float inPitch, AngleType inAngleType)
         {
-            gimble = new List<SingleGimbleRotation>(){yaw, pitch, roll}; 
+            gimble = new List<SingleGimbleRotation>()
+            {
+                SingleGimbleRotation.Yaw.Clone(), 
+                SingleGimbleRotation.Pitch.Clone(), 
+                SingleGimbleRotation.Roll.Clone(), 
+            }; 
             
             if (this.angleType is null && inAngleType is null)
             {
@@ -47,42 +60,78 @@ namespace RotationTypes
             }
 
             angleType = inAngleType; 
-            Roll = inRoll;
-            Yaw = inYaw;
-            Pitch = inPitch; 
         }
 
-        EulerAngleRotation changeRotationValues(float inRoll, float inYaw, float inPitch, AngleType inAngleType = null)
+        public override void SetAngleType(AngleType value)
         {
-            if (angleType is not null && angleType != this.angleType)
+            foreach (SingleGimbleRotation gimbleRing in gimble)
             {
-                inRoll = AngleType.ConvertAngle(inRoll, inAngleType, angleType); 
-                inYaw = AngleType.ConvertAngle(inYaw, inAngleType, angleType); 
-                inPitch = AngleType.ConvertAngle(inPitch, inAngleType, angleType); 
+                gimbleRing.angleType = value; 
             }
-            
-            return new EulerAngleRotation(inRoll, inYaw, inPitch, angleType); 
+            _angleType = value; 
+        }
+        
+        public void SetRotationValue(EGimbleAxis gimbleAxis, float value)
+        {
+            gimble.First(gimbleRing => gimbleRing.eAxis == gimbleAxis).angle = value; 
         }
 
-        EulerAngleRotation changeAngleType(AngleType inAngleType)
+        public float GetRotationValue(EGimbleAxis gimbleAxis)
         {
-            Roll = AngleType.ConvertAngle(Roll, angleType, inAngleType); 
-            Yaw = AngleType.ConvertAngle(Yaw, angleType, inAngleType); 
-            Pitch = AngleType.ConvertAngle(Pitch, angleType, inAngleType); 
-            _angleType = inAngleType;
-            return this; 
+            return gimble.First(gimbleRing => gimbleRing.eAxis == gimbleAxis).angle; 
         }
 
         public void SwitchGimbleOrder(SingleGimbleRotation firstRotation, SingleGimbleRotation secondRotation)
         {
             (firstRotation, secondRotation) = (secondRotation, firstRotation); //TODO: test this function
         }
-        
+
+        public bool ValidateGimble()
+        {
+            return GimbleType != EGimbleType.Invalid; 
+        }
+
+        private EGimbleType GetGimbleType()
+        {
+            HashSet<EGimbleAxis> gimbleAxisSet = new HashSet<EGimbleAxis>();
+            IEnumerator<SingleGimbleRotation> gimbleIterator = gimble.GetEnumerator();
+            EGimbleAxis lastGimbleAxis = gimbleIterator.Current.eAxis;
+            while (gimbleIterator.MoveNext())
+            {
+                if (gimbleAxisSet.Contains(lastGimbleAxis))
+                {
+                    if (lastGimbleAxis != gimbleIterator.Current.eAxis)
+                    {
+                        if (gimble.Count > 3)
+                        {
+                            gimbleIterator.Dispose();
+                            return EGimbleType.OversizedEulerAngle; 
+                        }
+                        gimbleIterator.Dispose();
+                        return EGimbleType.TrueEulerAngle; 
+                    }
+                }
+            }
+            if (gimbleAxisSet.Count == 3)
+            {
+                if (gimble.Count > 3)
+                {
+                    gimbleIterator.Dispose();
+                    return EGimbleType.OversizedTaitBryanAngle; 
+                }
+                gimbleIterator.Dispose();
+                return EGimbleType.TaitBryanAngle; 
+            }
+            
+            gimbleIterator.Dispose();
+            return EGimbleType.Invalid; 
+        }
+
         public override EulerAngleRotation ToEulerAngleRotation()
         {
-            return this; 
+            throw new NotImplementedException();
         }
-        
+
         public override QuaternionRotation ToQuaternionRotation() //TODO: test this function
         {
             QuaternionRotation result = new QuaternionRotation();
@@ -113,14 +162,6 @@ namespace RotationTypes
         public override AxisAngleRotation ToAxisAngleRotation()
         {
             return ToQuaternionRotation().ToAxisAngleRotation(); 
-        }
-
-        public override void SetAngleType(AngleType value)
-        {
-            Yaw = AngleType.ConvertAngle(Yaw, angleType, value); 
-            Pitch = AngleType.ConvertAngle(Pitch, angleType, value); 
-            Roll = AngleType.ConvertAngle(Roll, angleType, value); 
-            _angleType = value; 
         }
 
         public override Vector3 RotateVector(Vector3 inVector)

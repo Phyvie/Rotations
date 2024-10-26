@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RotationTypes
 {
@@ -8,18 +9,18 @@ namespace RotationTypes
     {
         [SerializeField] private bool isRotationMatrix = true;
         // [SerializeField] private bool bExpandTo4x4; //TODO
-        [SerializeField] private Matrix matrix;
+        [FormerlySerializedAs("matrix")] [SerializeField] public Matrix InternalMatrix;
 
         public MatrixRotation()
         {
             angleType = AngleType.Radian;
-            matrix = new Matrix(Matrix.Identity(3)); 
+            InternalMatrix = new Matrix(Matrix.Identity(3)); 
         }
         
         public MatrixRotation(MatrixRotation copiedMatrix)
         {
-            matrix = new Matrix(copiedMatrix.matrix);
-            isRotationMatrix = matrix.IsSpecialOrthogonal(); 
+            InternalMatrix = new Matrix(copiedMatrix.InternalMatrix);
+            isRotationMatrix = InternalMatrix.IsSpecialOrthogonal(); 
         }
 
         public MatrixRotation(Matrix matrix)
@@ -30,11 +31,11 @@ namespace RotationTypes
         
         public float this[int row, int column]
         {
-            get => matrix[row, column];
+            get => InternalMatrix[row, column];
             set
             {
-                matrix[row, column] = value;
-                isRotationMatrix = matrix.IsSpecialOrthogonal(); 
+                InternalMatrix[row, column] = value;
+                isRotationMatrix = InternalMatrix.IsSpecialOrthogonal(); 
             }
         }
 
@@ -45,12 +46,12 @@ namespace RotationTypes
 
         public MatrixRotation Inverse()
         {
-            return new MatrixRotation(matrix.Inverse()); 
+            return new MatrixRotation(InternalMatrix.Inverse()); 
         }
         
         public static MatrixRotation operator*(MatrixRotation first, MatrixRotation second)
         {
-            return new MatrixRotation(first.matrix * second.matrix); 
+            return new MatrixRotation(first.InternalMatrix * second.InternalMatrix); 
         }
         
         public static bool operator==(MatrixRotation firstRotation, MatrixRotation secondRotation)
@@ -87,7 +88,7 @@ namespace RotationTypes
             if (obj.GetType() != this.GetType()) return false;
             
             MatrixRotation otherRotation = (MatrixRotation)obj; 
-            if (matrix == otherRotation.matrix)
+            if (InternalMatrix == otherRotation.InternalMatrix)
             {
                 return true; 
             }
@@ -97,7 +98,7 @@ namespace RotationTypes
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(matrix, isRotationMatrix);
+            return HashCode.Combine(InternalMatrix, isRotationMatrix);
         }
         
         public override EulerAngleRotation ToEulerAngleRotation()
@@ -109,7 +110,7 @@ namespace RotationTypes
         {
             if (!isRotationMatrix)
             {
-                isRotationMatrix = matrix.IsSpecialOrthogonal(); 
+                isRotationMatrix = InternalMatrix.IsSpecialOrthogonal(); 
             }
 
             if (!isRotationMatrix)
@@ -117,41 +118,41 @@ namespace RotationTypes
                 throw new Exception("Can't transform matrix to Quaternion, because it isn't a rotationMatrix"); 
             }
 
-            float trace = matrix.Trace();
+            float trace = InternalMatrix.Trace();
             float w, x, y, z;
 
             if (trace > 0)
             {
                 float s = 0.5f / Mathf.Sqrt(trace + 1.0f);
                 w = 0.25f / s;
-                x = (matrix[2, 1] - matrix[1, 2]) * s;
-                y = (matrix[0, 2] - matrix[2, 0]) * s;
-                z = (matrix[1, 0] - matrix[0, 1]) * s;
+                x = (InternalMatrix[2, 1] - InternalMatrix[1, 2]) * s;
+                y = (InternalMatrix[0, 2] - InternalMatrix[2, 0]) * s;
+                z = (InternalMatrix[1, 0] - InternalMatrix[0, 1]) * s;
             }
             else
             {
-                if (matrix[0, 0] > matrix[1, 1] && matrix[0, 0] > matrix[2, 2])
+                if (InternalMatrix[0, 0] > InternalMatrix[1, 1] && InternalMatrix[0, 0] > InternalMatrix[2, 2])
                 {
-                    float s = 2.0f * Mathf.Sqrt(1.0f + matrix[0, 0] - matrix[1, 1] - matrix[2, 2]);
-                    w = (matrix[2, 1] - matrix[1, 2]) / s;
+                    float s = 2.0f * Mathf.Sqrt(1.0f + InternalMatrix[0, 0] - InternalMatrix[1, 1] - InternalMatrix[2, 2]);
+                    w = (InternalMatrix[2, 1] - InternalMatrix[1, 2]) / s;
                     x = 0.25f * s;
-                    y = (matrix[0, 1] + matrix[1, 0]) / s;
-                    z = (matrix[0, 2] + matrix[2, 0]) / s;
+                    y = (InternalMatrix[0, 1] + InternalMatrix[1, 0]) / s;
+                    z = (InternalMatrix[0, 2] + InternalMatrix[2, 0]) / s;
                 }
-                else if (matrix[1, 1] > matrix[2, 2])
+                else if (InternalMatrix[1, 1] > InternalMatrix[2, 2])
                 {
-                    float s = 2.0f * Mathf.Sqrt(1.0f + matrix[1, 1] - matrix[0, 0] - matrix[2, 2]);
-                    w = (matrix[0, 2] - matrix[2, 0]) / s;
-                    x = (matrix[0, 1] + matrix[1, 0]) / s;
+                    float s = 2.0f * Mathf.Sqrt(1.0f + InternalMatrix[1, 1] - InternalMatrix[0, 0] - InternalMatrix[2, 2]);
+                    w = (InternalMatrix[0, 2] - InternalMatrix[2, 0]) / s;
+                    x = (InternalMatrix[0, 1] + InternalMatrix[1, 0]) / s;
                     y = 0.25f * s;
-                    z = (matrix[1, 2] + matrix[2, 1]) / s;
+                    z = (InternalMatrix[1, 2] + InternalMatrix[2, 1]) / s;
                 }
                 else
                 {
-                    float s = 2.0f * Mathf.Sqrt(1.0f + matrix[2, 2] - matrix[0, 0] - matrix[1, 1]);
-                    w = (matrix[1, 0] - matrix[0, 1]) / s;
-                    x = (matrix[0, 2] + matrix[2, 0]) / s;
-                    y = (matrix[1, 2] + matrix[2, 1]) / s;
+                    float s = 2.0f * Mathf.Sqrt(1.0f + InternalMatrix[2, 2] - InternalMatrix[0, 0] - InternalMatrix[1, 1]);
+                    w = (InternalMatrix[1, 0] - InternalMatrix[0, 1]) / s;
+                    x = (InternalMatrix[0, 2] + InternalMatrix[2, 0]) / s;
+                    y = (InternalMatrix[1, 2] + InternalMatrix[2, 1]) / s;
                     z = 0.25f * s;
                 }
             }
@@ -161,7 +162,7 @@ namespace RotationTypes
 
         public override MatrixRotation ToMatrixRotation()
         {
-            return new MatrixRotation(matrix); 
+            return new MatrixRotation(InternalMatrix); 
         }
 
         public override AxisAngleRotation ToAxisAngleRotation()
