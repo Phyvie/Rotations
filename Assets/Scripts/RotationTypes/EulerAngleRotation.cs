@@ -19,20 +19,11 @@ namespace RotationTypes
     {
         [SerializeField] private List<SingleGimbleRotation> gimble;
         [SerializeField] private bool isIntrinsic = true;
-        [SerializeField] private EGimbleType _gimbleType = EGimbleType.Invalid; 
         
         public bool IsIntrinsic
         {
             get => isIntrinsic;
             set => isIntrinsic = value;
-        }
-
-        public EGimbleType GimbleType
-        {
-            get
-            {
-                return (_gimbleType = GetGimbleType());
-            }
         }
 
         public EulerAngleRotation()
@@ -86,19 +77,21 @@ namespace RotationTypes
             (firstRotation, secondRotation) = (secondRotation, firstRotation); //TODO: test this function
         }
 
-        public bool ValidateGimble()
+        public bool IsGimbleValid()
         {
-            return GimbleType != EGimbleType.Invalid; 
+            return GetGimbleType() != EGimbleType.Invalid; 
         }
 
-        private EGimbleType GetGimbleType()
+        public EGimbleType GetGimbleType()
         {
             HashSet<EGimbleAxis> gimbleAxisSet = new HashSet<EGimbleAxis>();
             IEnumerator<SingleGimbleRotation> gimbleIterator = gimble.GetEnumerator();
+            gimbleIterator.MoveNext(); 
             EGimbleAxis lastGimbleAxis = gimbleIterator.Current.eAxis;
+            gimbleAxisSet.Add(gimbleIterator.Current.eAxis); 
             while (gimbleIterator.MoveNext())
             {
-                if (gimbleAxisSet.Contains(lastGimbleAxis))
+                if (gimbleAxisSet.Contains(gimbleIterator.Current.eAxis))
                 {
                     if (lastGimbleAxis != gimbleIterator.Current.eAxis)
                     {
@@ -111,6 +104,9 @@ namespace RotationTypes
                         return EGimbleType.TrueEulerAngle; 
                     }
                 }
+
+                lastGimbleAxis = gimbleIterator.Current.eAxis; 
+                gimbleAxisSet.Add(gimbleIterator.Current.eAxis); 
             }
             if (gimbleAxisSet.Count == 3)
             {
@@ -125,6 +121,33 @@ namespace RotationTypes
             
             gimbleIterator.Dispose();
             return EGimbleType.Invalid; 
+        }
+
+        public String GetAddButtonName()
+        {
+            EGimbleType gimbleType = GetGimbleType(); 
+            if (gimbleType != EGimbleType.Invalid)
+            {
+                return "Oversize Gimble"; 
+            }
+
+            if (gimble.Count >= 3)
+            {
+                return "Oversize Invalid Gimble"; 
+            }
+
+            return "Add GimbleRing"; 
+        }
+
+        public String GetRemoveButtonName()
+        {
+            EGimbleType gimbleType = GetGimbleType(); 
+            if (gimble.Count == 3)
+            {
+                return "Undersize Gimble"; 
+            }
+
+            return "Remove surplus GimbleRing"; 
         }
 
         public override EulerAngleRotation ToEulerAngleRotation()

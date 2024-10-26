@@ -1,3 +1,4 @@
+using RotationTypes;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,12 +12,13 @@ namespace Editor
             EditorGUI.BeginProperty(position, label, property);
             
             SerializedProperty hasOwnAngleTypeProperty = property.FindPropertyRelative("hasOwnAngleType");
+            Debug.Log("hasOwnAngleTypeProperty: " + hasOwnAngleTypeProperty.boolValue);
             if (hasOwnAngleTypeProperty.boolValue)
             {
                 SerializedProperty angleTypeProperty = property.FindPropertyRelative("ownAngleType");
                 EditorGUILayout.PropertyField(angleTypeProperty); 
             }
-
+            
             EditorGUILayout.BeginVertical();
             SerializedProperty axisProperty = property.FindPropertyRelative("eAxis"); 
             EditorGUILayout.PropertyField(axisProperty);

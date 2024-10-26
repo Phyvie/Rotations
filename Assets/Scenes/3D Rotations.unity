@@ -3495,28 +3495,17 @@ MonoBehaviour:
   eulerAngleRotation:
     _angleType:
       fullCircleUnits: 6.283185307179586
-    yaw:
-      angleType:
-        fullCircleUnits: 6.283185307179586
-      angle: 1.5707964
-    pitch:
-      angleType:
-        fullCircleUnits: 6.283185307179586
-      angle: 1.5707964
-    roll:
-      angleType:
-        fullCircleUnits: 6.283185307179586
-      angle: 1.5707964
     gimble:
-    - angleType:
-        fullCircleUnits: 6.283185307179586
+    - hasOwnAngleType: 0
+      eAxis: 1
       angle: 1.5707964
-    - angleType:
-        fullCircleUnits: 6.283185307179586
+    - hasOwnAngleType: 0
+      eAxis: 0
       angle: 1.5707964
-    - angleType:
-        fullCircleUnits: 6.283185307179586
+    - hasOwnAngleType: 0
+      eAxis: 2
       angle: 1.5707964
+    isIntrinsic: 1
   complexRotation:
     _angleType:
       fullCircleUnits: 6.283185307179586
