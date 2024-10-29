@@ -73,6 +73,11 @@ namespace RotationTypes
             j = 0;
             k = 0; 
         }
+
+        public QuaternionRotation(QuaternionRotation quaternionRotation) : this(quaternionRotation.real, quaternionRotation.i, quaternionRotation.j, quaternionRotation.k)
+        {
+            
+        }
         
         public QuaternionRotation(float inReal, float inI, float inJ, float inK)
         {
@@ -100,6 +105,49 @@ namespace RotationTypes
             z = inAxis.z * sin; 
         }
 
+        private static readonly QuaternionRotation _identity = new QuaternionRotation(1, 0, 0, 0);
+
+        public static QuaternionRotation GetIdentity()
+        {
+            return new QuaternionRotation(_identity); 
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            QuaternionRotation qr = (QuaternionRotation)obj;
+            return this == qr; 
+        }
+        
+        public static bool operator ==(QuaternionRotation qr1, QuaternionRotation qr2)
+        {
+            if (ReferenceEquals(qr1, qr2))
+            {
+                return true;
+            }
+
+            if (((object)qr1 == null) || ((object)qr2 == null))
+            {
+                return false;
+            }
+
+            return Math.Abs(qr1._real - qr2._real) < 0.0001f && Math.Abs(qr1._i - qr2._i) < 0.0001f && Math.Abs(qr1._j - qr2._j) < 0.0001f && Math.Abs(qr1._k - qr2._k) < 0.0001f;
+        }
+
+        public static bool operator !=(QuaternionRotation qr1, QuaternionRotation qr2)
+        {
+            return !(qr1 == qr2);
+        }
+
+        public override int GetHashCode()
+        {
+            return Tuple.Create(_real, _i, _j, _k).GetHashCode();
+        }
+        
         public static QuaternionRotation operator*(QuaternionRotation q1, QuaternionRotation q2)
         {
             return new QuaternionRotation(
@@ -110,6 +158,26 @@ namespace RotationTypes
             ); 
         }
 
+        public static QuaternionRotation operator*(QuaternionRotation q1, float scalar)
+        {
+            return new QuaternionRotation(
+                q1.real * scalar, 
+                q1.i * scalar, 
+                q1.j * scalar, 
+                q1.k * scalar
+                ); 
+        }
+
+        public static QuaternionRotation operator/(QuaternionRotation q1, float scalar)
+        {
+            return new QuaternionRotation(
+                q1.real / scalar, 
+                q1.i / scalar, 
+                q1.j / scalar, 
+                q1.k / scalar
+            ); 
+        }
+        
         public static QuaternionRotation operator+(QuaternionRotation q1, QuaternionRotation q2)
         {
             return new QuaternionRotation(
@@ -121,6 +189,11 @@ namespace RotationTypes
         }
 
         public QuaternionRotation Inverse()
+        {
+            return new QuaternionRotation(real, -i, -j, -k)/Size(); 
+        }
+
+        public QuaternionRotation Conjugate()
         {
             return new QuaternionRotation(real, -i, -j, -k); 
         }
@@ -137,6 +210,11 @@ namespace RotationTypes
             return (rotationA + rotationB).Normalize(); 
         }
 
+        public float SizeSquared()
+        {
+            return real * real + i * i + j * j + k * k; 
+        }
+        
         public float Size()
         {
             return Mathf.Sqrt(real * real + i * i + j * j + k * k); 
@@ -155,7 +233,9 @@ namespace RotationTypes
     
         public override EulerAngleRotation ToEulerAngleRotation()
         {
-            throw new System.NotImplementedException();
+            EulerAngleRotation newEulerAngle = new EulerAngleRotation(0, 0, 0); 
+            newEulerAngle.GetValuesFromQuaternion(this);
+            return newEulerAngle; 
         }
 
         public override QuaternionRotation ToQuaternionRotation()
@@ -187,7 +267,9 @@ namespace RotationTypes
 
         public override Vector3 RotateVector(Vector3 inVector)
         {
-            throw new NotImplementedException();
+            QuaternionRotation VectorAsQuaternion = new QuaternionRotation(0, inVector.x, inVector.y, inVector.z);
+            VectorAsQuaternion = this * VectorAsQuaternion * this.Inverse(); 
+            return new Vector3(VectorAsQuaternion.i, VectorAsQuaternion.j, VectorAsQuaternion.j); 
         }
     }
 }

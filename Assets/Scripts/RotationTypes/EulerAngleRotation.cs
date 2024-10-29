@@ -17,6 +17,8 @@ namespace RotationTypes
     [Serializable]
     public class EulerAngleRotation : RotationType
     {
+        [SerializeField] public List<AngleType> ZyKa;
+        
         [SerializeField] private List<SingleGimbleRotation> gimble;
         [SerializeField] private bool isIntrinsic = true;
         
@@ -33,6 +35,21 @@ namespace RotationTypes
             SingleGimbleRotation roll = SingleGimbleRotation.Roll.Clone();
 
             gimble = new List<SingleGimbleRotation>() { yaw, pitch, roll}; 
+        }
+
+        public EulerAngleRotation(List<SingleGimbleRotation> gimble)
+        {
+            this.gimble = new List<SingleGimbleRotation>();
+            foreach (SingleGimbleRotation gimbleRing in gimble)
+            {
+                this.gimble.Add(gimbleRing);
+            }
+        }
+
+        public EulerAngleRotation(float inRoll, float inYaw, float inPitch) : 
+            this(inRoll, inYaw, inPitch, AngleType.Radian)
+        {
+            
         }
         
         public EulerAngleRotation(float inRoll, float inYaw, float inPitch, AngleType inAngleType)
@@ -152,7 +169,7 @@ namespace RotationTypes
 
         public override EulerAngleRotation ToEulerAngleRotation()
         {
-            throw new NotImplementedException();
+            return new EulerAngleRotation(gimble); 
         }
 
         public override QuaternionRotation ToQuaternionRotation() //TODO: test this function
@@ -165,16 +182,33 @@ namespace RotationTypes
             return result; 
         }
 
-        public EulerAngleRotation FromQuaternion()
+        public void GetValuesFromQuaternion(QuaternionRotation quaternionRotation)
         {
-            EulerAngleRotation euler = new EulerAngleRotation(0, 0, 0, AngleType.Radian);
-            throw new NotImplementedException(); 
+            QuaternionRotation quaternionRotationCopy = new QuaternionRotation(quaternionRotation); 
+            List<SingleGimbleRotation> incompleteGimble = new List<SingleGimbleRotation>(); 
+            EulerAngleRotation incompleteEulerAngleRotation = new EulerAngleRotation(incompleteGimble); 
+            
+            for (int i = 0; i < gimble.Count; i++)
+            {
+                gimble[i].ExtractValueFromQuaternion(quaternionRotationCopy);  
+                incompleteGimble.Add(gimble[i]);
+                QuaternionRotation inverseRotation = incompleteEulerAngleRotation.ToQuaternionRotation().Inverse();
+                if (isIntrinsic || !isIntrinsic)
+                {
+                    quaternionRotationCopy = inverseRotation * quaternionRotationCopy; 
+                }
+
+                if (quaternionRotationCopy == QuaternionRotation.GetIdentity())
+                {
+                    return; 
+                }
+            }
         }
         
         //ToQuaternionRotation.ToMatrixRotation is cheaper, because converting from EulerAngles to another RotationType requires combining multiple rotations throughout the process which is cheaper in Quaternions
         public override MatrixRotation ToMatrixRotation() //TODO: test this function
         {
-            MatrixRotation result = new MatrixRotation(MatrixRotation.Identity(3));
+            MatrixRotation result = new MatrixRotation(MatrixRotation.RotationIdentity());
             foreach (SingleGimbleRotation rotation in gimble)
             {
                 result = result * rotation.toMatrixRotation() * result.Inverse(); 
@@ -182,6 +216,29 @@ namespace RotationTypes
             return result; 
         }
 
+        public void GetValuesFromMatrix(MatrixRotation matrixRotation)
+        {
+            MatrixRotation matrixRotationCopy = new MatrixRotation(matrixRotation); 
+            List<SingleGimbleRotation> incompleteGimble = new List<SingleGimbleRotation>(); 
+            EulerAngleRotation incompleteEulerAngleRotation = new EulerAngleRotation(incompleteGimble); 
+            
+            for (int i = 0; i < gimble.Count; i++)
+            {
+                gimble[i].ExtractValueFromMatrix(matrixRotationCopy); 
+                incompleteGimble.Add(gimble[i]);
+                MatrixRotation inverseRotation = incompleteEulerAngleRotation.ToMatrixRotation().Inverse();
+                if (isIntrinsic || !isIntrinsic)
+                {
+                    matrixRotationCopy = inverseRotation * matrixRotationCopy; 
+                }
+
+                if (matrixRotationCopy == MatrixRotation.RotationIdentity())
+                {
+                    return; 
+                }
+            }
+        }
+        
         public override AxisAngleRotation ToAxisAngleRotation()
         {
             return ToQuaternionRotation().ToAxisAngleRotation(); 
@@ -189,7 +246,7 @@ namespace RotationTypes
 
         public override Vector3 RotateVector(Vector3 inVector)
         {
-            throw new NotImplementedException();
+            throw new Exception("Rotating by an EulerAngle is useless, because the mathematics is the same as applying multiple MatrixRotations");
         }
     }
 }

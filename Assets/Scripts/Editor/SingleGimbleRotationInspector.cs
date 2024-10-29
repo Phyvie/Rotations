@@ -29,5 +29,10 @@ namespace Editor
             
             EditorGUI.EndProperty();
         }
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            return base.GetPropertyHeight(property, label);
+        }
     }
 }

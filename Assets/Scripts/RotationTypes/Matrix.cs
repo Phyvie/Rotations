@@ -159,6 +159,59 @@ namespace RotationTypes
             Matrix multipliedMatrix = new Matrix(_newMatrix); 
             return multipliedMatrix; 
         }
+
+        public static Vector2 operator *(Matrix matrix, Vector2 vector)
+        {
+            Debug.Assert(matrix.width == 2, "Matrix width must be 2 for multiplication with Vector2.");
+            return new Vector2(
+                matrix[0, 0] * vector.x + matrix[0, 1] * vector.y,
+                matrix[1, 0] * vector.x + matrix[1, 1] * vector.y
+            );
+        }
+
+        // Operator* for Vector2Int
+        public static Vector2Int operator *(Matrix matrix, Vector2Int vector)
+        {
+            Debug.Assert(matrix.width == 2, "Matrix width must be 2 for multiplication with Vector2Int.");
+            return new Vector2Int(
+                Mathf.RoundToInt(matrix[0, 0] * vector.x + matrix[0, 1] * vector.y),
+                Mathf.RoundToInt(matrix[1, 0] * vector.x + matrix[1, 1] * vector.y)
+            );
+        }
+
+        // Operator* for Vector3
+        public static Vector3 operator *(Matrix matrix, Vector3 vector)
+        {
+            Debug.Assert(matrix.width == 3, "Matrix width must be 3 for multiplication with Vector3.");
+            return new Vector3(
+                matrix[0, 0] * vector.x + matrix[0, 1] * vector.y + matrix[0, 2] * vector.z,
+                matrix[1, 0] * vector.x + matrix[1, 1] * vector.y + matrix[1, 2] * vector.z,
+                matrix[2, 0] * vector.x + matrix[2, 1] * vector.y + matrix[2, 2] * vector.z
+            );
+        }
+
+        // Operator* for Vector3Int
+        public static Vector3Int operator *(Matrix matrix, Vector3Int vector)
+        {
+            Debug.Assert(matrix.width == 3, "Matrix width must be 3 for multiplication with Vector3Int.");
+            return new Vector3Int(
+                Mathf.RoundToInt(matrix[0, 0] * vector.x + matrix[0, 1] * vector.y + matrix[0, 2] * vector.z),
+                Mathf.RoundToInt(matrix[1, 0] * vector.x + matrix[1, 1] * vector.y + matrix[1, 2] * vector.z),
+                Mathf.RoundToInt(matrix[2, 0] * vector.x + matrix[2, 1] * vector.y + matrix[2, 2] * vector.z)
+            );
+        }
+
+        // Operator* for Vector4
+        public static Vector4 operator *(Matrix matrix, Vector4 vector)
+        {
+            Debug.Assert(matrix.width == 4, "Matrix width must be 4 for multiplication with Vector4.");
+            return new Vector4(
+                matrix[0, 0] * vector.x + matrix[0, 1] * vector.y + matrix[0, 2] * vector.z + matrix[0, 3] * vector.w,
+                matrix[1, 0] * vector.x + matrix[1, 1] * vector.y + matrix[1, 2] * vector.z + matrix[1, 3] * vector.w,
+                matrix[2, 0] * vector.x + matrix[2, 1] * vector.y + matrix[2, 2] * vector.z + matrix[2, 3] * vector.w,
+                matrix[3, 0] * vector.x + matrix[3, 1] * vector.y + matrix[3, 2] * vector.z + matrix[3, 3] * vector.w
+            );
+        }
         
         public Matrix Inverse()
         {

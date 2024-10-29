@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -20,7 +21,7 @@ namespace RotationTypes
         {
             eAxis = inEAxis; 
             angle = inAngle;
-            ownAngleType = ownAngleType; 
+            _ownAngleType = ownAngleType; 
         }
         
         public SingleGimbleRotation Clone()
@@ -35,7 +36,7 @@ namespace RotationTypes
                 EGimbleAxis.Yaw => Vector3.up,
                 EGimbleAxis.Pitch => Vector3.left,
                 EGimbleAxis.Roll => Vector3.forward,
-                _ => throw new NotImplementedException()
+                _ => throw new UnexpectedEnumValueException<EGimbleAxis>(eAxis)
             }; 
         }
 
@@ -74,12 +75,7 @@ namespace RotationTypes
         public static readonly SingleGimbleRotation Yaw = new SingleGimbleRotation(EGimbleAxis.Yaw, (float) Math.PI/2, AngleType.Radian); 
         public static readonly SingleGimbleRotation Pitch = new SingleGimbleRotation(EGimbleAxis.Pitch, (float) Math.PI/2, AngleType.Radian); 
         public static readonly SingleGimbleRotation Roll = new SingleGimbleRotation(EGimbleAxis.Roll, (float) Math.PI/2, AngleType.Radian);
-
-        public QuaternionRotation toQuaternionRotation() //TODO: Test this Function
-        {
-            return new QuaternionRotation(GetRotationAxis(), angle, ownAngleType);
-        }
-
+        
         public MatrixRotation toMatrixRotation() //TODO: Test this Function
         {
             float angleInRadian = AngleType.ConvertAngle(angle, ownAngleType, AngleType.Radian); 
@@ -104,13 +100,46 @@ namespace RotationTypes
                     { 0, Mathf.Cos(angleInRadian), -Mathf.Sin(angleInRadian) },
                     { 0, Mathf.Sin(angleInRadian), Mathf.Cos(angleInRadian) }
                 }),
-                _ => throw new NotImplementedException()
+                _ => throw new UnexpectedEnumValueException<EGimbleAxis>(eAxis)
             }; 
         }
 
-        public SingleGimbleRotation ExtractFromMatrix(MatrixRotation matrixRotation, EGimbleAxis inAxis)
+        public void ExtractValueFromMatrix(MatrixRotation m)
         {
-            throw new NotImplementedException(); 
+            switch (eAxis)
+            {
+                case EGimbleAxis.Yaw:
+                    angle = Mathf.Atan2(m[2, 0], m[0, 0]); 
+                    break; 
+                case EGimbleAxis.Pitch:
+                    angle = Mathf.Atan2(m[0, 1], m[0, 0]); 
+                    break; 
+                case EGimbleAxis.Roll:
+                    angle = Mathf.Atan2(m[2, 1], m[1, 1]); 
+                    break; 
+            }
+        }
+
+        public QuaternionRotation toQuaternionRotation() //TODO: Test this Function
+        {
+            return new QuaternionRotation(GetRotationAxis(), angle, ownAngleType);
+        }
+        
+        public void ExtractValueFromQuaternion(QuaternionRotation q)
+        {
+            //TODO: Understand this
+            switch (eAxis)
+            {
+                case EGimbleAxis.Yaw:
+                    angle = Mathf.Atan2(2.0f * (q.w * q.z + q.x * q.y), 1.0f - 2.0f * (q.y * q.y + q.z * q.z));
+                    break; 
+                case EGimbleAxis.Pitch:
+                    angle = Mathf.Atan2(2.0f * (q.w * q.y - q.z * q.x), 1.0f - 2.0f * (q.y * q.y + q.z * q.z));
+                    break; 
+                case EGimbleAxis.Roll:
+                    angle = Mathf.Atan2(2.0f * (q.w * q.x + q.y*q.z), 1.0f - 2.0f*(q.x * q.x + q.y * q.y)); 
+                    break; 
+            }
         }
 
         public string GetRotationName()

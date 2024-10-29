@@ -9,7 +9,7 @@ namespace RotationTypes
     {
         [SerializeField] private bool isRotationMatrix = true;
         // [SerializeField] private bool bExpandTo4x4; //TODO
-        [FormerlySerializedAs("matrix")] [SerializeField] public Matrix InternalMatrix;
+        [SerializeField] public Matrix InternalMatrix;
 
         public MatrixRotation()
         {
@@ -39,9 +39,14 @@ namespace RotationTypes
             }
         }
 
-        public static MatrixRotation Identity(int size)
+        public static MatrixRotation RotationIdentity()
         {
-            return new MatrixRotation(Matrix.Identity(size));
+            return new MatrixRotation(Matrix.Identity(3));
+        }
+
+        public static MatrixRotation TransformIdentity()
+        {
+            return new MatrixRotation(Matrix.Identity(4)); 
         }
 
         public MatrixRotation Inverse()
@@ -103,7 +108,9 @@ namespace RotationTypes
         
         public override EulerAngleRotation ToEulerAngleRotation()
         {
-            throw new System.NotImplementedException();
+            EulerAngleRotation newEulerAngle = new EulerAngleRotation(0, 0, 0); 
+            newEulerAngle.GetValuesFromMatrix(this);
+            return newEulerAngle; 
         }
 
         public override QuaternionRotation ToQuaternionRotation()
@@ -177,7 +184,7 @@ namespace RotationTypes
 
         public override Vector3 RotateVector(Vector3 inVector)
         {
-            throw new NotImplementedException();
+            return InternalMatrix * inVector; 
         }
     }
 }
