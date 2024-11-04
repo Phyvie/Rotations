@@ -156,7 +156,15 @@ namespace Editor
 		        IList objectArray = (IList)parentObject;
 		        bool validArrayEntry = arrayIndex < objectArray.Count;
 						
-		        returnValue = (T)(validArrayEntry ? objectArray[arrayIndex] : null);
+		        if (!validArrayEntry)
+		        {
+			        Debug.LogWarning($"GetPropertyAs<{typeof(T).FullName}>: OutOfBoundsException; If this happened during array initialisation or size-change everything is fine, otherwise not");
+			        return default; 
+		        }
+		        else
+		        {
+			        returnValue = (T)objectArray[arrayIndex];
+		        }
 	        }
 	        else
 	        {

@@ -49,7 +49,7 @@ namespace Editor
                 EditorGUI.GetPropertyHeight(axisProp) +
                 EditorGUI.GetPropertyHeight(angleProp);
 
-            return singlePropHeight * (property.isArray ? property.arraySize : 1); 
+            return singlePropHeight; 
         }
     }
 }

@@ -5,12 +5,11 @@ using UnityEngine;
 
 namespace Editor
 {
-    [CustomPropertyDrawer(typeof(RotationTypes.EulerAngleRotation))]
+    [CustomPropertyDrawer(typeof(EulerAngleRotation))]
     public class EulerAngleRotationInspector : NestedPropertyDrawer
     {
         private SerializedProperty gimbleProperty;
         private SerializedProperty angleTypeProperty;
-        private bool isFoldout; 
         
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -19,59 +18,31 @@ namespace Editor
             
             InitializePropertyNesting(property);
             EulerAngleRotation targetEulerAngle = GetPropertyAsT<EulerAngleRotation>();
-
-            /*
-            EditorGUI.BeginFoldoutHeaderGroup(position, isFoldout, new GUIContent("EulerAngleRotation")); 
-            if (isFoldout)
+            if (targetEulerAngle is null)
             {
-                
+                Debug.LogWarning("EulerAngleInspector: targetEulerAngle is null; this should only happen during initialisation or array-size change");
+                return; 
             }
-            EditorGUI.EndFoldoutHeaderGroup();
-            */
             
             EGimbleType targetGimbleType = targetEulerAngle!.GetGimbleType();
-            GUIStyle boldStyle = new GUIStyle(EditorStyles.label);
-            boldStyle.fontStyle = FontStyle.Bold;
-            boldStyle.fontSize = 14; 
-            EditorGUI.LabelField(position, Enum.GetNames(typeof(EGimbleType))[(int) targetGimbleType], boldStyle); //TODO: make this text bigger and fat and red
-            position.y += EditorGUIUtility.singleLineHeight +  EditorGUIUtility.standardVerticalSpacing; 
-            
-            SerializedProperty isIntrinsicProperty = property.FindPropertyRelative("isIntrinsic");
-            isIntrinsicProperty.boolValue = EditorGUI.Toggle(position, "intrinsic", isIntrinsicProperty.boolValue);
-            position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-
-            angleTypeProperty = property.FindPropertyRelative("_angleType");
-            EditorGUI.PropertyField(position, angleTypeProperty); 
-            position.y += EditorGUI.GetPropertyHeight(angleTypeProperty); 
-            
-            gimbleProperty = property.FindPropertyRelative("gimble");
-            EditorGUI.PropertyField(position, gimbleProperty); 
-            position.y += EditorGUI.GetPropertyHeight(gimbleProperty) + EditorGUIUtility.standardVerticalSpacing; 
-            
-            /*
-            for (int i = 0; i < gimbleProperty.arraySize; i++)
+            property.isExpanded = EditorGUI.BeginFoldoutHeaderGroup(position, property.isExpanded, new GUIContent($"eulerAngle({Enum.GetNames(typeof(EGimbleType))[(int) targetGimbleType]})"));
+            EditorGUI.EndFoldoutHeaderGroup(); //??? this is confusing, because seemingly all a BeginFoldoutHeaderGroup does is return whether it's toggled on or off, but not the actual indentation; 
+            if (property.isExpanded)
             {
-                SerializedProperty elementProperty = gimbleProperty.GetArrayElementAtIndex(i);
-                EditorGUI.PropertyField(position, elementProperty, GUIContent.none);
+                position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 
+                
+                SerializedProperty isIntrinsicProperty = property.FindPropertyRelative("isIntrinsic");
+                isIntrinsicProperty.boolValue = EditorGUI.Toggle(position, "intrinsic", isIntrinsicProperty.boolValue);
+                position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+                
+                angleTypeProperty = property.FindPropertyRelative("_angleType");
+                EditorGUI.PropertyField(position, angleTypeProperty); 
+                position.y += EditorGUI.GetPropertyHeight(angleTypeProperty);
+                
+                gimbleProperty = property.FindPropertyRelative("gimble");
+                EditorGUI.PropertyField(position, gimbleProperty); 
+                position.y += EditorGUI.GetPropertyHeight(gimbleProperty) + EditorGUIUtility.standardVerticalSpacing; 
             }
-            */
-            
-            /*
-            if (GUI.Button(new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight), targetEulerAngle.GetAddButtonName()))
-            {
-                gimbleProperty.arraySize++;
-                //TODO: EditorGUI.AddButton or whatever it is called
-                position.y += EditorGUIUtility.singleLineHeight;
-            }
-            */
-            
-            /*
-            if (gimbleProperty.arraySize > 0 && GUI.Button(new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight), targetProperty.GetRemoveButtonName()))
-            {
-                gimbleProperty.arraySize--;
-                position.y += EditorGUIUtility.singleLineHeight;
-            }
-            */
             
             EditorGUI.EndProperty(); 
         }
@@ -80,18 +51,13 @@ namespace Editor
         {
             angleTypeProperty = property.FindPropertyRelative("_angleType");
             gimbleProperty = property.FindPropertyRelative("gimble");
-            float singlePropertyHeight =
-                (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 2
+            float unfoldedHeight =
+                (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 3
                 + EditorGUI.GetPropertyHeight(angleTypeProperty) 
                 + EditorGUI.GetPropertyHeight(gimbleProperty);
-            if (property.isArray)
-            {
-                return property.arraySize * singlePropertyHeight; 
-            }
-            else
-            {
-                return singlePropertyHeight; 
-            }
+            float foldedHeight = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 
+            
+            return (property.isExpanded ? unfoldedHeight : foldedHeight); 
         }
     }
 }

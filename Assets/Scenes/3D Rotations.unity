@@ -4060,14 +4060,14 @@ MonoBehaviour:
   eulerAngleRotation:
     gimble:
     - hasOwnAngleType: 0
-      eAxis: 1
-      angle: 2.01
+      eAxis: 0
+      angle: 0
     - hasOwnAngleType: 0
       eAxis: 0
-      angle: 1.5707964
+      angle: 0
     - hasOwnAngleType: 0
-      eAxis: 2
-      angle: 1.5707964
+      eAxis: 0
+      angle: 0
     isIntrinsic: 1
   quaternionRotation:
     _real: 1
@@ -4336,9 +4336,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mBTestClass:
-  - testInt: 3
-  - testInt: 5
-  - testInt: 7
+  - testInt: 0
+    testFloat: 0
+    testString: 
+  - testInt: 0
+    testFloat: 0
+    testString: 
+  - testInt: 0
+    testFloat: 0
+    testString: 
+  eulerAngleInMB:
+  - gimble:
+    - hasOwnAngleType: 0
+      eAxis: 0
+      angle: 0
+    - hasOwnAngleType: 0
+      eAxis: 1
+      angle: 0
+    - hasOwnAngleType: 0
+      eAxis: 2
+      angle: 0
+    isIntrinsic: 0
+  - gimble:
+    - hasOwnAngleType: 0
+      eAxis: 1
+      angle: 0
+    - hasOwnAngleType: 0
+      eAxis: 2
+      angle: 0
+    - hasOwnAngleType: 0
+      eAxis: 0
+      angle: 0
+    isIntrinsic: 0
+  - gimble: []
+    isIntrinsic: 0
 --- !u!1001 &7678552021489249906
 PrefabInstance:
   m_ObjectHideFlags: 0
