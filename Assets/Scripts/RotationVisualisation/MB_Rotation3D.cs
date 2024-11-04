@@ -5,18 +5,6 @@ namespace RotationVisualisation
 {
     public class MB_Rotation3D : MonoBehaviour
     {
-        [ContextMenu("AddToZyKa")]
-        public void AddToZyKa()
-        {
-            eulerAngleRotation.ZyKa.Add(AngleType.Radian);
-        }
-        [ContextMenu("RemoveFromZyKa")]
-        public void RemoveZyKa()
-        {
-            eulerAngleRotation.ZyKa.RemoveAt(0); 
-        }
-        
-        
         #region RotationDataTypes
         #region Variables
         [SerializeField] private EulerAngleRotation eulerAngleRotation = new EulerAngleRotation(); 

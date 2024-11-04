@@ -12,20 +12,25 @@ namespace Editor
     {
         private bool initialized = false;
         protected object propertyObject = null;
+        protected object parentObject => propertyObjectHierarchy[^2]; 
         protected Type propertyType = null;
-        protected FieldInfo propertyFieldInfo = null; 
+        protected FieldInfo propertyFieldInfo = null;
+        protected int arrayIndex = -1; 
         
         protected List<object> propertyObjectHierarchy = new List<object>();
         protected List<Type> propertyTypeHierarchy = new List<Type>();
-        protected List<FieldInfo> propertyFieldInfoHierarchy = new List<FieldInfo>(); 
-
+        protected List<FieldInfo> propertyFieldInfoHierarchy = new List<FieldInfo>();
+        protected List<int> propertyArrayIndicesHierarchy = new List<int>(); 
+        
         private static readonly Regex matchArrayElement = new Regex(@"^data\[(\d+)\]$");
 
         protected virtual void InitializePropertyNesting(SerializedProperty prop)
         {
             if (initialized)
             {
-               return; 
+	            propertyObjectHierarchy.Clear();
+	            propertyTypeHierarchy.Clear(); 
+               // return; 
             }
 
             SerializedObject serializedObject = prop.serializedObject;
@@ -52,25 +57,25 @@ namespace Editor
 				if (currentlyCheckedFieldType != null && typeof(IList).IsAssignableFrom(currentlyCheckedFieldType))
 				{
 					//IList items are serialized like this: `Array.data[0]`
-					Debug.AssertFormat(pathNode.Equals("Array", StringComparison.Ordinal), serializedObject.targetObject, "Expected path node 'Array', but found '{0}'", pathNode);
+					Debug.AssertFormat(pathNode.Equals("Array", StringComparison.Ordinal), serializedObject!.targetObject, "Expected path node 'Array', but found '{0}'", pathNode);
 
 					//just skip the `Array` part of the path
 					pathNode = splitPath[++i];
 
 					//match the `data[0]` part of the path and extract the IList item index
 					Match elementMatch = matchArrayElement.Match(pathNode);
-					int index;
-					if (elementMatch.Success && int.TryParse(elementMatch.Groups[1].Value, out index))
+					if (elementMatch.Success && int.TryParse(elementMatch.Groups[1].Value, out arrayIndex))
 					{
 						IList objectArray = (IList)propertyObject;
-						bool validArrayEntry = objectArray != null && index < objectArray.Count;
+						bool validArrayEntry = objectArray != null && arrayIndex < objectArray.Count;
 						
-						propertyObject = validArrayEntry ? objectArray[index] : null;
+						propertyObject = validArrayEntry ? objectArray[arrayIndex] : null;
 						propertyType = currentlyCheckedFieldType.IsArray
 							? currentlyCheckedFieldType.GetElementType()          //only set for arrays
 							: currentlyCheckedFieldType.GenericTypeArguments[0];  //type of `T` in List<T>
 						propertyObjectHierarchy.Add(propertyObject);
 						propertyTypeHierarchy.Add(propertyType);
+						propertyArrayIndicesHierarchy.Add(arrayIndex);
 					}
 					else
 					{
@@ -99,11 +104,13 @@ namespace Editor
 					propertyObject = (field == null || propertyObject == null) ? null : field.GetValue(propertyObject);
 					currentlyCheckedFieldType = field == null ? null : field.FieldType;
 					propertyType = currentlyCheckedFieldType;
-					propertyFieldInfo = fieldInfo; 
+					propertyFieldInfo = fieldInfo;
+					arrayIndex = -1; 
 					
 					propertyObjectHierarchy.Add(propertyObject);
-					propertyTypeHierarchy.Add(propertyType);
-					propertyFieldInfoHierarchy.Add(field); 
+					propertyTypeHierarchy.Add(propertyType); 
+					propertyArrayIndicesHierarchy.Add(-1);
+					propertyFieldInfoHierarchy.Add(field);
 				}
 			}
             initialized = true;
@@ -127,6 +134,49 @@ namespace Editor
 	        foreach (FieldInfo fieldInfo in propertyFieldInfoHierarchy)
 	        {
 		        Debug.Log(fieldInfo);
+	        }
+        }
+
+        protected T GetPropertyAsT<T>()
+        {
+	        T returnValue; 
+	        if (parentObject is null)
+	        {
+		        Debug.LogError("Can't GetPropertyAsT, because parentObject is null");
+		        return default; 
+	        }
+	        if (parentObject is IList) //TODO: check whether this can replace an IsAssignableFrom
+	        {
+		        IList objectArray = (IList)parentObject;
+		        bool validArrayEntry = arrayIndex < objectArray.Count;
+						
+		        returnValue = (T)(validArrayEntry ? objectArray[arrayIndex] : null);
+	        }
+	        else
+	        {
+		        returnValue = (T)propertyFieldInfo.GetValue(parentObject); //TODO! this actually doesn't work for lists //would be nice to have smth like FieldInfo.GetArrayValue
+	        }
+	        
+	        return returnValue; 
+        }
+
+        protected void SetPropertyToT<T>(T newValue)
+        {
+	        if (parentObject is null)
+	        {
+		        Debug.LogError("Can't GetPropertyAsT, because parentObject is null");
+		        return; 
+	        }
+	        if (parentObject is IList && arrayIndex != -1)
+	        {
+		        IList objectArray = (IList)parentObject; 
+		        bool validArrayEntry = arrayIndex < objectArray.Count;
+
+		        objectArray[arrayIndex] = newValue; 
+	        }
+	        else
+	        {
+		        propertyFieldInfo.SetValue(parentObject, newValue); 
 	        }
         }
     }

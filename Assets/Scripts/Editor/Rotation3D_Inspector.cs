@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 
 namespace Editor
 {
+    /*
     [CustomEditor(typeof(MB_Rotation3D), true)]
     public class Rotation3D_Inspector : UnityEditor.Editor
     {
@@ -18,9 +19,10 @@ namespace Editor
             EditorGUILayout.PropertyField(serializedObject.FindProperty("quaternionRotation"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("axisAngleRotation"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("matrixRotation"));
-            */
+            *_/
             
             serializedObject.ApplyModifiedProperties(); 
         }
     }
+    */
 }

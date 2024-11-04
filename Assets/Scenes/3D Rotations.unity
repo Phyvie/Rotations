@@ -1297,7 +1297,11 @@ MonoBehaviour:
   LinesToDraw:
   - start: {x: 0, y: 0, z: 0}
     end: {x: 1, y: 0, z: 0}
-    color: {r: 1, g: 1, b: 1, a: 0}
+    color:
+      r: 1
+      g: 1
+      b: 1
+      a: 0
 --- !u!120 &629836224
 LineRenderer:
   serializedVersion: 2
@@ -1709,6 +1713,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 974660a1f3e46324d93ea114926c2acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _lastRotation: {x: 0, y: 0, z: 0}
+  _lastPosition: {x: 0, y: 0, z: 0}
   UnrotatedPoint: {fileID: 909809379}
 --- !u!4 &1030492883
 Transform:
@@ -3320,6 +3326,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 974660a1f3e46324d93ea114926c2acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _lastRotation: {x: 0, y: 0, z: 0}
+  _lastPosition: {x: 0, y: 0, z: 0}
   UnrotatedPoint: {fileID: 1231141178}
 --- !u!1 &1780242129
 GameObject:
@@ -4036,16 +4044,7 @@ MonoBehaviour:
   InputFieldsParent: {fileID: 1924321581}
   InputFieldPrefab: {fileID: 3500894178385712545, guid: 93a9adb2e30af974383568ba246d5c9a,
     type: 3}
-  InputFields:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  InputFields: []
 --- !u!114 &1987248661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4062,7 +4061,7 @@ MonoBehaviour:
     gimble:
     - hasOwnAngleType: 0
       eAxis: 1
-      angle: 1.5707964
+      angle: 2.01
     - hasOwnAngleType: 0
       eAxis: 0
       angle: 1.5707964
@@ -4292,6 +4291,55 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 282527017}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2110119353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2110119354}
+  - component: {fileID: 2110119355}
+  m_Layer: 0
+  m_Name: TestObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2110119354
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110119353}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2110119355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110119353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ade78c4b03c1f048a4aae7105d9d121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testAngleTypeArray: []
+  testClassArray:
+  - testClassAngleTypeArray: []
+    testClassInt: 0
+  testInt: 31
 --- !u!1001 &7678552021489249906
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4421,3 +4469,4 @@ SceneRoots:
   - {fileID: 1987248657}
   - {fileID: 1450642124}
   - {fileID: 629836222}
+  - {fileID: 2110119354}

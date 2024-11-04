@@ -17,8 +17,6 @@ namespace RotationTypes
     [Serializable]
     public class EulerAngleRotation : RotationType
     {
-        [SerializeField] public List<AngleType> ZyKa;
-        
         [SerializeField] private List<SingleGimbleRotation> gimble;
         [SerializeField] private bool isIntrinsic = true;
         

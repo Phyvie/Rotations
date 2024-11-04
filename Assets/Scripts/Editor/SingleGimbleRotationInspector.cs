@@ -10,6 +10,7 @@ namespace Editor
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
+            position.height = EditorGUIUtility.singleLineHeight; 
             
             SerializedProperty hasOwnAngleTypeProperty = property.FindPropertyRelative("hasOwnAngleType");
             Debug.Log("hasOwnAngleTypeProperty: " + hasOwnAngleTypeProperty.boolValue);
@@ -32,7 +33,14 @@ namespace Editor
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return base.GetPropertyHeight(property, label);
+            if (property.isArray)
+            {
+                return ((EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 2) * property.arraySize - EditorGUIUtility.standardVerticalSpacing; 
+            }
+            else
+            {
+                return EditorGUIUtility.singleLineHeight * 2 + EditorGUIUtility.standardVerticalSpacing; 
+            }
         }
     }
 }

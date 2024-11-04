@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using System.Text;
 using RotationTypes;
 using UnityEditor;
 using UnityEngine;
@@ -14,37 +15,50 @@ namespace Editor
             EditorGUI.BeginProperty(positionRect, label, property);
             
             InitializePropertyNesting(property);
-            FieldInfo parentFieldInfo = propertyFieldInfoHierarchy[^1];
-            object parentObject = propertyObjectHierarchy[^2]; 
-            AngleType fieldValue = (AngleType)parentFieldInfo.GetValue(parentObject); //TODO! this actually doesn't work for lists
+            
+            positionRect.height = EditorGUIUtility.singleLineHeight; 
             
             int currentIndex = 0;
             foreach (AngleType angleType in AngleType.AngleTypes)
             {
-                if (fieldValue == angleType)
+                if (GetPropertyAsT<AngleType>() == angleType)
                 {
                     break; 
                 }
                 currentIndex++; 
             }
-            
-            if (currentIndex > AngleType.AngleTypes.Length)
-            {
-                currentIndex = 0;
-                Debug.LogWarning("Couldn't find angleType in AngleType.AngleTypes");
-            }
 
             int newIndex = EditorGUI.Popup(positionRect, currentIndex, AngleType.AngleTypeNames);
+            if (currentIndex >= AngleType.AngleTypes.Length || currentIndex < 0)
+            {
+                newIndex = 0;
+                StringBuilder ObjectPath = new StringBuilder(); 
+                foreach(Type type in propertyTypeHierarchy)
+                {
+                    // ObjectPath.Append(type); 
+                }
+                Debug.LogWarning("Couldn't find angleType in AngleType.AngleTypes for object: ");
+            }
+            
             if (newIndex >= 0 && newIndex != currentIndex)
             {
-                fieldInfo.SetValue(parentObject, AngleType.AngleTypes[newIndex]); 
+                SetPropertyToT(AngleType.AngleTypes[newIndex]);
+                // propertyFieldInfo.SetValue(parentObject, AngleType.AngleTypes[newIndex]); //TODO: deprecated
             }
             EditorGUI.EndProperty();
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 
+            if (property.isArray)
+            {
+                return property.arraySize *
+                       (EditorGUIUtility.singleLineHeight * EditorGUIUtility.standardVerticalSpacing) -
+                       EditorGUIUtility.standardVerticalSpacing; 
+            }
+            return EditorGUIUtility.singleLineHeight; 
         }
     }
 }
+
+
