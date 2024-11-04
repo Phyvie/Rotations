@@ -29,6 +29,7 @@ namespace Editor
             EditorGUI.EndFoldoutHeaderGroup(); //??? this is confusing, because seemingly all a BeginFoldoutHeaderGroup does is return whether it's toggled on or off, but not the actual indentation; 
             if (property.isExpanded)
             {
+                EditorGUI.indentLevel+=2; 
                 position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 
                 
                 SerializedProperty isIntrinsicProperty = property.FindPropertyRelative("isIntrinsic");
@@ -41,7 +42,8 @@ namespace Editor
                 
                 gimbleProperty = property.FindPropertyRelative("gimble");
                 EditorGUI.PropertyField(position, gimbleProperty); 
-                position.y += EditorGUI.GetPropertyHeight(gimbleProperty) + EditorGUIUtility.standardVerticalSpacing; 
+                position.y += EditorGUI.GetPropertyHeight(gimbleProperty) + EditorGUIUtility.standardVerticalSpacing;
+                EditorGUI.indentLevel-=2; 
             }
             
             EditorGUI.EndProperty(); 

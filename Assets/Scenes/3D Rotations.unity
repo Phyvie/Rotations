@@ -4091,6 +4091,22 @@ MonoBehaviour:
       - 1
       height: 3
       width: 3
+  eulerAngleRotationArray:
+  - gimble: []
+    isIntrinsic: 0
+  - gimble: []
+    isIntrinsic: 0
+  quaternionRotationArray:
+  - _real: 0
+    _i: 0
+    _j: 0
+    _k: 0
+  - _real: 0
+    _i: 0
+    _j: 0
+    _k: 0
+  axisAngleRotationArray: []
+  matrixRotationArray: []
   _mbMatrix: {fileID: 0}
 --- !u!1 &2036741022
 GameObject:
