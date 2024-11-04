@@ -8,6 +8,14 @@ namespace RotationTypes
     public class AxisAngleRotation : RotationType
     {
         [SerializeField] private Vector3 axisAngle;
+        [SerializeField] protected AngleType _angleType = AngleType.Radian;
+
+        public AngleType angleType
+        {
+            get => _angleType;
+            set => SetAngleType(value);
+        }
+        
         private Vector3 axis => axisAngle.normalized; 
         private float angle => axisAngle.magnitude;
         private float angleInRadian => AngleType.ConvertAngle(angle, angleType, AngleType.Radian); 
@@ -76,7 +84,7 @@ namespace RotationTypes
             return new AxisAngleRotation(axisAngle, angleType); 
         }
 
-        public override void SetAngleType(AngleType value)
+        public void SetAngleType(AngleType value)
         {
             axisAngle = axisAngle * (float) (value.fullCircleUnits / angleType.fullCircleUnits);
             _angleType = value; 

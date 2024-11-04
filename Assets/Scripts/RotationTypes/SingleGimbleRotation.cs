@@ -45,7 +45,7 @@ namespace RotationTypes
             get => ownAngleType;
             set
             {
-                if (!hasOwnAngleType)
+                if (inheritAngleTypeFromOwner)
                 {
                     ownAngleType = value; 
                 }
@@ -67,7 +67,7 @@ namespace RotationTypes
         }
         
         
-        public bool hasOwnAngleType = false; 
+        public bool inheritAngleTypeFromOwner = false; 
         private AngleType _ownAngleType; 
         public EGimbleAxis eAxis;
         public float angle;

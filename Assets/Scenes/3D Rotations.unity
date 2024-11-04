@@ -4059,13 +4059,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eulerAngleRotation:
     gimble:
-    - hasOwnAngleType: 0
+    - inheritAngleTypeFromOwner: 0
       eAxis: 0
       angle: 0
-    - hasOwnAngleType: 0
+    - inheritAngleTypeFromOwner: 0
       eAxis: 0
       angle: 0
-    - hasOwnAngleType: 0
+    - inheritAngleTypeFromOwner: 0
       eAxis: 0
       angle: 0
     isIntrinsic: 1
@@ -4077,7 +4077,6 @@ MonoBehaviour:
   axisAngleRotation:
     axisAngle: {x: 0, y: 0, z: 0}
   matrixRotation:
-    isRotationMatrix: 1
     InternalMatrix:
       InternalMatrix:
       - 1
@@ -4091,22 +4090,6 @@ MonoBehaviour:
       - 1
       height: 3
       width: 3
-  eulerAngleRotationArray:
-  - gimble: []
-    isIntrinsic: 0
-  - gimble: []
-    isIntrinsic: 0
-  quaternionRotationArray:
-  - _real: 0
-    _i: 0
-    _j: 0
-    _k: 0
-  - _real: 0
-    _i: 0
-    _j: 0
-    _k: 0
-  axisAngleRotationArray: []
-  matrixRotationArray: []
   _mbMatrix: {fileID: 0}
 --- !u!1 &2036741022
 GameObject:
@@ -4363,24 +4346,24 @@ MonoBehaviour:
     testString: 
   eulerAngleInMB:
   - gimble:
-    - hasOwnAngleType: 0
+    - inheritAngleTypeFromOwner: 0
       eAxis: 0
       angle: 0
-    - hasOwnAngleType: 0
+    - inheritAngleTypeFromOwner: 0
       eAxis: 1
       angle: 0
-    - hasOwnAngleType: 0
+    - inheritAngleTypeFromOwner: 0
       eAxis: 2
       angle: 0
     isIntrinsic: 0
   - gimble:
-    - hasOwnAngleType: 0
+    - inheritAngleTypeFromOwner: 0
       eAxis: 1
       angle: 0
-    - hasOwnAngleType: 0
+    - inheritAngleTypeFromOwner: 0
       eAxis: 2
       angle: 0
-    - hasOwnAngleType: 0
+    - inheritAngleTypeFromOwner: 0
       eAxis: 0
       angle: 0
     isIntrinsic: 0

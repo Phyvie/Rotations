@@ -54,7 +54,7 @@ namespace Editor
             angleTypeProperty = property.FindPropertyRelative("_angleType");
             gimbleProperty = property.FindPropertyRelative("gimble");
             float unfoldedHeight =
-                (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 3
+                (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 2
                 + EditorGUI.GetPropertyHeight(angleTypeProperty) 
                 + EditorGUI.GetPropertyHeight(gimbleProperty);
             float foldedHeight = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 

@@ -17,6 +17,14 @@ namespace RotationTypes
     [Serializable]
     public class EulerAngleRotation : RotationType
     {
+        [SerializeField] protected AngleType _angleType = AngleType.Radian;
+
+        public AngleType angleType
+        {
+            get => _angleType;
+            set => SetAngleType(value);
+        }
+
         [SerializeField] private List<SingleGimbleRotation> gimble;
         [SerializeField] private bool isIntrinsic = true;
         
@@ -68,7 +76,7 @@ namespace RotationTypes
             angleType = inAngleType; 
         }
 
-        public override void SetAngleType(AngleType value)
+        public void SetAngleType(AngleType value)
         {
             foreach (SingleGimbleRotation gimbleRing in gimble)
             {

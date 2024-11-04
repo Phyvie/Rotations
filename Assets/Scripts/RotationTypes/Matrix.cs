@@ -39,7 +39,7 @@ namespace RotationTypes
             InternalMatrix = new float[inMatrix.GetLength(0) * inMatrix.GetLength(1)];
             Height = inMatrix.GetLength(0);
             Width = inMatrix.GetLength(1); 
-            Buffer.BlockCopy(inMatrix, 0, InternalMatrix, 0, inMatrix.GetLength(0) * inMatrix.GetLength(1));
+            Buffer.BlockCopy(inMatrix, 0, InternalMatrix, 0, inMatrix.GetLength(0) * inMatrix.GetLength(1)); //TODO: this BlockCopy does not do what it's supposed to do
         }
 
         public Matrix(int width, int height)
@@ -274,10 +274,15 @@ namespace RotationTypes
             return trace;
         }
 
-        public float Determinant()
+        public float Determinant() //TODO: this function is not doing what it's supposed to do
         {
             Debug.Assert(Height == Width, "Matrix must be square to calculate the determinant.");
 
+            if (Height == 0)
+            {
+                return Single.NaN;
+            }
+            
             if (Height == 1)
                 return InternalMatrix[0];
 
@@ -307,7 +312,7 @@ namespace RotationTypes
                 {
                     if (columnIndex == excludingCol)
                         continue;
-                    result[r, ++c] = matrix.InternalMatrix[rowIndex * Width *  columnIndex];
+                    result[r, ++c] = matrix.InternalMatrix[rowIndex * Width + columnIndex];
                 }
             }
             return new Matrix(result);
@@ -315,6 +320,10 @@ namespace RotationTypes
 
         public bool IsSpecialOrthogonal()
         {
+            if (width == 0 || height == 0)
+            {
+                return true; 
+            }
             return Math.Abs(Determinant() - 1) < 0.001 && Inverse() == Transpose(); 
         }
     }

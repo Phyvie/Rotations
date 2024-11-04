@@ -106,12 +106,17 @@ namespace RotationTypes
         }
 
         private static readonly QuaternionRotation _identity = new QuaternionRotation(1, 0, 0, 0);
-
         public static QuaternionRotation GetIdentity()
         {
             return new QuaternionRotation(_identity); 
         }
 
+        private static readonly QuaternionRotation zeroQuaternion = new QuaternionRotation(0, 0, 0, 0);
+        public static QuaternionRotation GetZeroQuaternion()
+        {
+            return new QuaternionRotation(zeroQuaternion); 
+        }
+        
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
@@ -258,11 +263,6 @@ namespace RotationTypes
         public override AxisAngleRotation ToAxisAngleRotation()
         {
             return new AxisAngleRotation(new Vector3(i, j, k), (float) Math.Acos(real), AngleType.Radian); 
-        }
-
-        public override void SetAngleType(AngleType value)
-        {
-            _angleType = value; 
         }
 
         public override Vector3 RotateVector(Vector3 inVector)

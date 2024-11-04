@@ -6,6 +6,14 @@ namespace RotationTypes
     [Serializable]
     public class ComplexRotation : RotationType
     {
+        [SerializeField] protected AngleType _angleType = AngleType.Radian;
+
+        public AngleType angleType
+        {
+            get => _angleType;
+            set => SetAngleType(value);
+        }
+        
         [SerializeField] private Vector2 _complexNumber = Vector2.zero; 
         [SerializeField] private float _rotationAngle = 0;
         [SerializeField] private Matrix _matrix = new float[2, 2]
@@ -106,7 +114,7 @@ namespace RotationTypes
             return new AxisAngleRotation(Vector3.back * _rotationAngle, AngleType.Radian); 
         }
 
-        public override void SetAngleType(AngleType value)
+        public void SetAngleType(AngleType value)
         {
             _rotationAngle = AngleType.ConvertAngle(_rotationAngle, angleType, value); 
             _angleType = value; 

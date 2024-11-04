@@ -7,7 +7,7 @@ namespace Editor
     [CustomPropertyDrawer(typeof(SingleGimbleRotation))]
     public class SingleGimbleRotationInspector : PropertyDrawer
     {
-        private SerializedProperty hasOwnAngleTypeProp; 
+        private SerializedProperty inheritsAngleTypeProp; 
         private SerializedProperty angleTypeProp; 
         private SerializedProperty axisProp; 
         private SerializedProperty angleProp; 
@@ -17,9 +17,9 @@ namespace Editor
             EditorGUI.BeginProperty(position, label, property);
             position.height = EditorGUIUtility.singleLineHeight; 
             
-            hasOwnAngleTypeProp = property.FindPropertyRelative("hasOwnAngleType");
-            Debug.Log("hasOwnAngleTypeProperty: " + hasOwnAngleTypeProp.boolValue);
-            if (hasOwnAngleTypeProp.boolValue)
+            inheritsAngleTypeProp = property.FindPropertyRelative("inheritAngleTypeFromOwner");
+            Debug.Log("hasOwnAngleTypeProperty: " + inheritsAngleTypeProp.boolValue);
+            if (!inheritsAngleTypeProp.boolValue)
             {
                 angleTypeProp = property.FindPropertyRelative("ownAngleType");
                 EditorGUI.PropertyField(position, angleTypeProp);
@@ -39,13 +39,13 @@ namespace Editor
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            hasOwnAngleTypeProp = property.FindPropertyRelative("hasOwnAngleType");
+            inheritsAngleTypeProp = property.FindPropertyRelative("inheritAngleTypeFromOwner");
             angleTypeProp = property.FindPropertyRelative("ownAngleType");
             axisProp = property.FindPropertyRelative("eAxis"); 
             angleProp = property.FindPropertyRelative("angle");
 
             float singlePropHeight =
-                (hasOwnAngleTypeProp.boolValue ? EditorGUI.GetPropertyHeight(angleTypeProp) : 0) +
+                (inheritsAngleTypeProp.boolValue ? EditorGUI.GetPropertyHeight(angleTypeProp) : 0) +
                 EditorGUI.GetPropertyHeight(axisProp) +
                 EditorGUI.GetPropertyHeight(angleProp);
 

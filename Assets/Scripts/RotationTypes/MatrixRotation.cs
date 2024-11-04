@@ -7,26 +7,23 @@ namespace RotationTypes
     [Serializable]
     public class MatrixRotation : RotationType
     {
-        [SerializeField] private bool isRotationMatrix = true;
+        public bool isRotationMatrix => InternalMatrix.IsSpecialOrthogonal();
         // [SerializeField] private bool bExpandTo4x4; //TODO
         [SerializeField] public Matrix InternalMatrix;
 
         public MatrixRotation()
         {
-            angleType = AngleType.Radian;
             InternalMatrix = new Matrix(Matrix.Identity(3)); 
         }
         
         public MatrixRotation(MatrixRotation copiedMatrix)
         {
             InternalMatrix = new Matrix(copiedMatrix.InternalMatrix);
-            isRotationMatrix = InternalMatrix.IsSpecialOrthogonal(); 
         }
 
         public MatrixRotation(Matrix matrix)
         {
             matrix = new Matrix(matrix);
-            isRotationMatrix = matrix.IsSpecialOrthogonal(); 
         }
         
         public float this[int row, int column]
@@ -35,7 +32,6 @@ namespace RotationTypes
             set
             {
                 InternalMatrix[row, column] = value;
-                isRotationMatrix = InternalMatrix.IsSpecialOrthogonal(); 
             }
         }
 
@@ -117,12 +113,8 @@ namespace RotationTypes
         {
             if (!isRotationMatrix)
             {
-                isRotationMatrix = InternalMatrix.IsSpecialOrthogonal(); 
-            }
-
-            if (!isRotationMatrix)
-            {
-                throw new Exception("Can't transform matrix to Quaternion, because it isn't a rotationMatrix"); 
+                Debug.LogError("RotationMatrix.ToQuaternionRotation error: Matrix is not a RotationMatrix");
+                return QuaternionRotation.GetZeroQuaternion(); 
             }
 
             float trace = InternalMatrix.Trace();
@@ -175,11 +167,6 @@ namespace RotationTypes
         public override AxisAngleRotation ToAxisAngleRotation()
         {
             return ToQuaternionRotation().ToAxisAngleRotation(); 
-        }
-
-        public override void SetAngleType(AngleType value)
-        {
-            _angleType = value; 
         }
 
         public override Vector3 RotateVector(Vector3 inVector)
