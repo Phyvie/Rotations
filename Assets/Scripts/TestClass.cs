@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using RotationTypes;
+using UnityEngine;
 
 [System.Serializable]
 public class TestClass
 {
-    public AngleType testClassAngle;
-    public AngleType[] testClassAngleTypeArray; 
-    public int testClassInt; 
+    // [SerializeField] private List<SingleGimbleRotation> testGimbleRotationArray;
+    [SerializeField] private int[] testInt; 
 }

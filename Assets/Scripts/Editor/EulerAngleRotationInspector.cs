@@ -6,35 +6,48 @@ using UnityEngine;
 namespace Editor
 {
     [CustomPropertyDrawer(typeof(RotationTypes.EulerAngleRotation))]
-    public class EulerAngleRotationInspector : PropertyDrawer
+    public class EulerAngleRotationInspector : NestedPropertyDrawer
     {
-        private SerializedProperty gimbleProperty; 
+        private SerializedProperty gimbleProperty;
+        private SerializedProperty angleTypeProperty;
+        private bool isFoldout; 
         
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
-            position.height = EditorGUIUtility.singleLineHeight; 
+            position.height = EditorGUIUtility.singleLineHeight;
             
-            EulerAngleRotation targetEulerAngle = fieldInfo.GetValue(property.serializedObject.targetObject) as EulerAngleRotation;
+            InitializePropertyNesting(property);
+            EulerAngleRotation targetEulerAngle = GetPropertyAsT<EulerAngleRotation>();
 
+            /*
+            EditorGUI.BeginFoldoutHeaderGroup(position, isFoldout, new GUIContent("EulerAngleRotation")); 
+            if (isFoldout)
+            {
+                
+            }
+            EditorGUI.EndFoldoutHeaderGroup();
+            */
+            
             EGimbleType targetGimbleType = targetEulerAngle!.GetGimbleType();
             GUIStyle boldStyle = new GUIStyle(EditorStyles.label);
             boldStyle.fontStyle = FontStyle.Bold;
             boldStyle.fontSize = 14; 
             EditorGUI.LabelField(position, Enum.GetNames(typeof(EGimbleType))[(int) targetGimbleType], boldStyle); //TODO: make this text bigger and fat and red
-            position.y += EditorGUIUtility.singleLineHeight + 2 + EditorGUIUtility.standardVerticalSpacing; 
+            position.y += EditorGUIUtility.singleLineHeight +  EditorGUIUtility.standardVerticalSpacing; 
             
             SerializedProperty isIntrinsicProperty = property.FindPropertyRelative("isIntrinsic");
             isIntrinsicProperty.boolValue = EditorGUI.Toggle(position, "intrinsic", isIntrinsicProperty.boolValue);
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
-            SerializedProperty angleTypeProperty = property.FindPropertyRelative("_angleType");
+            angleTypeProperty = property.FindPropertyRelative("_angleType");
             EditorGUI.PropertyField(position, angleTypeProperty); 
             position.y += EditorGUI.GetPropertyHeight(angleTypeProperty); 
             
             gimbleProperty = property.FindPropertyRelative("gimble");
             EditorGUI.PropertyField(position, gimbleProperty); 
             position.y += EditorGUI.GetPropertyHeight(gimbleProperty) + EditorGUIUtility.standardVerticalSpacing; 
+            
             /*
             for (int i = 0; i < gimbleProperty.arraySize; i++)
             {
@@ -65,9 +78,20 @@ namespace Editor
         
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
+            angleTypeProperty = property.FindPropertyRelative("_angleType");
             gimbleProperty = property.FindPropertyRelative("gimble");
-            return EditorGUIUtility.singleLineHeight + 2
-                + (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 3; 
+            float singlePropertyHeight =
+                (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 2
+                + EditorGUI.GetPropertyHeight(angleTypeProperty) 
+                + EditorGUI.GetPropertyHeight(gimbleProperty);
+            if (property.isArray)
+            {
+                return property.arraySize * singlePropertyHeight; 
+            }
+            else
+            {
+                return singlePropertyHeight; 
+            }
         }
     }
 }

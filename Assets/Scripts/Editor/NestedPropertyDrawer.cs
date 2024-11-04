@@ -139,10 +139,16 @@ namespace Editor
 
         protected T GetPropertyAsT<T>()
         {
+	        if (!initialized)
+	        {
+		        Debug.LogWarning($"Called GetPropertyAs<{typeof(T).FullName}> before initializing the nested Property"); 
+		        return default; 
+	        }
+	        
 	        T returnValue; 
 	        if (parentObject is null)
 	        {
-		        Debug.LogError("Can't GetPropertyAsT, because parentObject is null");
+		        Debug.LogError($"Can't GetPropertyAs<{typeof(T).FullName}>, because parentObject is null");
 		        return default; 
 	        }
 	        if (parentObject is IList) //TODO: check whether this can replace an IsAssignableFrom
@@ -164,7 +170,7 @@ namespace Editor
         {
 	        if (parentObject is null)
 	        {
-		        Debug.LogError("Can't GetPropertyAsT, because parentObject is null");
+		        Debug.LogError($"Can't SetPropertyTo<{typeof(T).FullName}>, because parentObject is null");
 		        return; 
 	        }
 	        if (parentObject is IList && arrayIndex != -1)
@@ -172,7 +178,14 @@ namespace Editor
 		        IList objectArray = (IList)parentObject; 
 		        bool validArrayEntry = arrayIndex < objectArray.Count;
 
-		        objectArray[arrayIndex] = newValue; 
+		        if (!validArrayEntry)
+		        {
+			        Debug.LogWarning($"SetPropertyTo<{typeof(T).FullName}>: OutOfBoundsException; If this happened during array initialisation or size-change everything is fine, otherwise not"); 
+		        }
+		        else
+		        {
+			        objectArray[arrayIndex] = newValue;   
+		        }
 	        }
 	        else
 	        {

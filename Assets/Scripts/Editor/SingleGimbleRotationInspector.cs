@@ -4,43 +4,52 @@ using UnityEngine;
 
 namespace Editor
 {
-    [CustomPropertyDrawer(typeof(RotationTypes.SingleGimbleRotation))]
+    [CustomPropertyDrawer(typeof(SingleGimbleRotation))]
     public class SingleGimbleRotationInspector : PropertyDrawer
     {
+        private SerializedProperty hasOwnAngleTypeProp; 
+        private SerializedProperty angleTypeProp; 
+        private SerializedProperty axisProp; 
+        private SerializedProperty angleProp; 
+        
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
             position.height = EditorGUIUtility.singleLineHeight; 
             
-            SerializedProperty hasOwnAngleTypeProperty = property.FindPropertyRelative("hasOwnAngleType");
-            Debug.Log("hasOwnAngleTypeProperty: " + hasOwnAngleTypeProperty.boolValue);
-            if (hasOwnAngleTypeProperty.boolValue)
+            hasOwnAngleTypeProp = property.FindPropertyRelative("hasOwnAngleType");
+            Debug.Log("hasOwnAngleTypeProperty: " + hasOwnAngleTypeProp.boolValue);
+            if (hasOwnAngleTypeProp.boolValue)
             {
-                SerializedProperty angleTypeProperty = property.FindPropertyRelative("ownAngleType");
-                EditorGUILayout.PropertyField(angleTypeProperty); 
+                angleTypeProp = property.FindPropertyRelative("ownAngleType");
+                EditorGUI.PropertyField(position, angleTypeProp);
+                position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 
             }
             
-            EditorGUILayout.BeginVertical();
-            SerializedProperty axisProperty = property.FindPropertyRelative("eAxis"); 
-            EditorGUILayout.PropertyField(axisProperty);
+            axisProp = property.FindPropertyRelative("eAxis"); 
+            EditorGUI.PropertyField(position, axisProp);
+            position.y += EditorGUI.GetPropertyHeight(axisProp); 
             
-            SerializedProperty angle = property.FindPropertyRelative("angle");
-            EditorGUILayout.PropertyField(angle);
-            EditorGUILayout.EndVertical();
+            angleProp = property.FindPropertyRelative("angle");
+            EditorGUI.PropertyField(position, angleProp);
+            position.y += EditorGUI.GetPropertyHeight(angleProp); 
             
             EditorGUI.EndProperty();
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            if (property.isArray)
-            {
-                return ((EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 2) * property.arraySize - EditorGUIUtility.standardVerticalSpacing; 
-            }
-            else
-            {
-                return EditorGUIUtility.singleLineHeight * 2 + EditorGUIUtility.standardVerticalSpacing; 
-            }
+            hasOwnAngleTypeProp = property.FindPropertyRelative("hasOwnAngleType");
+            angleTypeProp = property.FindPropertyRelative("ownAngleType");
+            axisProp = property.FindPropertyRelative("eAxis"); 
+            angleProp = property.FindPropertyRelative("angle");
+
+            float singlePropHeight =
+                (hasOwnAngleTypeProp.boolValue ? EditorGUI.GetPropertyHeight(angleTypeProp) : 0) +
+                EditorGUI.GetPropertyHeight(axisProp) +
+                EditorGUI.GetPropertyHeight(angleProp);
+
+            return singlePropHeight * (property.isArray ? property.arraySize : 1); 
         }
     }
 }

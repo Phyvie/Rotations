@@ -14,7 +14,7 @@ namespace RotationTypes
         }
 
         public readonly string angleTypeName; 
-        public readonly double fullCircleUnits; //TODO: I wish this could be a readonly -> wherever AngleType is accessed it should just reference one of the static AngleTypes, but I couldn't get that to work with the PropertyDrawer
+        public readonly double fullCircleUnits; 
         
         public static float ConvertAngle(float inAngle, AngleType inAngleType, AngleType outAngleType)
         {

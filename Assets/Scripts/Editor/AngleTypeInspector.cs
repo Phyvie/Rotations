@@ -37,7 +37,7 @@ namespace Editor
                 {
                     // ObjectPath.Append(type); 
                 }
-                Debug.LogWarning("Couldn't find angleType in AngleType.AngleTypes for object: ");
+                Debug.LogWarning($"Couldn't find angleType in AngleType.AngleTypes for object: {((MonoBehaviour)(property.serializedObject.targetObject))}");
             }
             
             if (newIndex >= 0 && newIndex != currentIndex)

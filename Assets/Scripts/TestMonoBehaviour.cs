@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class TestMonoBehaviour : MonoBehaviour
 {
-    public AngleType[] testAngleTypeArray;
-    // public TestClass testClass; 
-    public TestClass[] testClassArray;  
-    public int testInt;
-
-    private void Start()
-    {
-    }
+    public TestClass[] mBTestClass = new TestClass[3]; 
+    // public EulerAngleRotation eulerAngleInMB; 
+    // [SerializeField] private SingleGimbleRotation[] MBTestGimbleRotationArray;
 }

@@ -4335,11 +4335,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ade78c4b03c1f048a4aae7105d9d121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testAngleTypeArray: []
-  testClassArray:
-  - testClassAngleTypeArray: []
-    testClassInt: 0
-  testInt: 31
+  mBTestClass:
+  - testInt: 3
+  - testInt: 5
+  - testInt: 7
 --- !u!1001 &7678552021489249906
 PrefabInstance:
   m_ObjectHideFlags: 0

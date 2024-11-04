@@ -99,6 +99,11 @@ namespace RotationTypes
 
         public EGimbleType GetGimbleType()
         {
+            if (gimble.Count <= 0)
+            {
+                return EGimbleType.Invalid; 
+            }
+            
             HashSet<EGimbleAxis> gimbleAxisSet = new HashSet<EGimbleAxis>();
             IEnumerator<SingleGimbleRotation> gimbleIterator = gimble.GetEnumerator();
             gimbleIterator.MoveNext(); 
