@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using ExtensionMethods;
 using UnityEngine;
 
 namespace RotationTypes
@@ -13,13 +15,18 @@ namespace RotationTypes
         
         public float this[int row, int column]
         {
-            get => InternalMatrix[row*Width+column];
+            get
+            {
+                Debug.Assert(row < height, $"row({row}) > height{(height)}");
+                Debug.Assert(column < width, $"column({column}) > width{(width)}");
+                return InternalMatrix[row * Width + column];
+            }
             set
             {
                 InternalMatrix[row*Width+column] = value;
             }
         }
-        
+
         public int Height
         {
             get => height;
@@ -32,14 +39,33 @@ namespace RotationTypes
             private set => width = value;
         }
         
-        //Warning this function is not tested, it might do something wrong
+        public Matrix(float[] inMatrix, int width, int height, bool isArrayRef = false)
+        {
+            Debug.Assert(inMatrix is not null);
+            Debug.Assert(inMatrix.Length == width * height);
+            Height = height;
+            Width = width;
+
+            if (isArrayRef)
+            {
+                InternalMatrix = inMatrix; 
+            }
+            else
+            {
+                InternalMatrix = new float[inMatrix.GetLength(0) * inMatrix.GetLength(1)];
+                Array.Copy(inMatrix, 0, InternalMatrix, 0, width * height);     
+            }
+        }
+        
+        //Warning this is not tested, Buffer.BlockCopy might not do what it's supposed to
         public Matrix(float[,] inMatrix)
         {
             Debug.Assert(inMatrix is not null);
-            InternalMatrix = new float[inMatrix.GetLength(0) * inMatrix.GetLength(1)];
             Height = inMatrix.GetLength(0);
-            Width = inMatrix.GetLength(1); 
-            Buffer.BlockCopy(inMatrix, 0, InternalMatrix, 0, inMatrix.GetLength(0) * inMatrix.GetLength(1)); //TODO: this BlockCopy does not do what it's supposed to do
+            Width = inMatrix.GetLength(1);
+
+            InternalMatrix = new float[inMatrix.GetLength(0) * inMatrix.GetLength(1)];
+            Buffer.BlockCopy(inMatrix, 0, InternalMatrix, 0, sizeof(float) * inMatrix.GetLength(0) * inMatrix.GetLength(1)); //TODO: this BlockCopy does not do what it's supposed to do
         }
 
         public Matrix(int width, int height)
@@ -58,6 +84,11 @@ namespace RotationTypes
             Array.Copy(inMatrix.InternalMatrix, InternalMatrix, 9);
         }
 
+        public static Matrix Zero(int size)
+        {
+            return new Matrix(size, size); 
+        }
+        
         public static Matrix Identity(int size)
         {
             Matrix identity = new Matrix(size , size);
@@ -80,7 +111,7 @@ namespace RotationTypes
 
         public static bool operator !=(Matrix firstMatrix, Matrix secondMatrix)
         {
-            return firstMatrix != null && !firstMatrix.Equals(secondMatrix);
+            return firstMatrix is not null && !firstMatrix.Equals(secondMatrix);
         }
 
         public override bool Equals(object obj)
@@ -141,23 +172,12 @@ namespace RotationTypes
         
         public static Matrix operator*(Matrix firstMatrix, Matrix secondMatrix)
         {
-            Debug.Assert(firstMatrix.Width != secondMatrix.Height, "firstMatrix.width != secondMatrix.height");
-            Debug.Assert(firstMatrix.Height != secondMatrix.Width, "firstMatrix.height != secondMatrix.width");
+            Debug.Assert(firstMatrix.Width == secondMatrix.Height, "firstMatrix.width != secondMatrix.height");
 
-            float[,] _newMatrix = new float[firstMatrix.Height,secondMatrix.Width];
-            for (int row = 0; row < firstMatrix.Height; row++)
-            {
-                for (int column = 0; column < secondMatrix.Width; column++)
-                {
-                    for (int k = 0; k < firstMatrix.Height; k++)
-                    {
-                        _newMatrix[row, column] += firstMatrix[k, column] * secondMatrix[row, k];
-                    }
-                }
-            }
-            
-            Matrix multipliedMatrix = new Matrix(_newMatrix); 
-            return multipliedMatrix; 
+            return new Matrix(MathExtensions.MatrixMultiply(
+                firstMatrix.InternalMatrix, firstMatrix.height, firstMatrix.width, 
+                secondMatrix.InternalMatrix, secondMatrix.width, secondMatrix.height), 
+                firstMatrix.height, secondMatrix.width, true); 
         }
 
         public static Vector2 operator *(Matrix matrix, Vector2 vector)
@@ -213,41 +233,168 @@ namespace RotationTypes
             );
         }
         
-        public Matrix Inverse()
+        public void SwitchRows(int rowIndexA, int rowIndexB)
+        {
+            InternalMatrix.SwitchRows(rowIndexA, rowIndexB, width); 
+        }
+
+        public void AddRowOntoRow(int from, int to, float multiplier)
+        {
+            if (Mathf.Max(from, to) > height)
+            {
+                throw new IndexOutOfRangeException($"{Mathf.Max(from, to)} > {height}"); 
+            }
+            
+            for (int column = 0; column < width; column++)
+            {
+                this[to, column] += this[from, column] * multiplier; 
+            }
+        }
+
+        public void MultiplyRow(int row, float multiplier)
+        {
+            if (row > height)
+            {
+                throw new IndexOutOfRangeException($"{row} > {height}"); 
+            }
+            
+            for (int column = 0; column < width; column++)
+            {
+                this[row, column] *= multiplier; 
+            }
+        }
+        
+        public Matrix Inverse() 
         {
             Debug.Assert(Height == Width, "Matrix must be square to find its inverse.");
+            
+            PLUDecomposition(out Matrix permutationMatrix, out Matrix lowerLeftMatrix, out Matrix upperRightMatrix);
 
-            int n = Height;
-            Matrix result = new Matrix(new float[n, n]);
-            Matrix copy = new Matrix(this);
+            Matrix upperRightInverse = upperRightMatrix.InverseUpperTriangularMatrix();
+            Matrix lowerLeftInverse = lowerLeftMatrix.InverseLowerTriangularMatrix();
+            Matrix permutationInverse = permutationMatrix.InversePermutationMatrix();
+            Matrix inverseMatrix = upperRightInverse * lowerLeftInverse * permutationInverse; 
+            
+            Debug.Assert(this == permutationMatrix * lowerLeftMatrix * upperRightMatrix, "PLU not correct");
+            Debug.Assert(inverseMatrix * this == Identity(height), "Inverse not correct");
+            return inverseMatrix;
+        }
 
-            for (int i = 0; i < n; i++)
-                result[i, i] = 1;
+        public void PLUDecomposition(out Matrix outP, out Matrix outL, out Matrix outU) //TODO: numerically stable pivot choosing
+        {
+            Matrix lowerLeft = Identity(width);
+            Matrix upperRight = new Matrix(this);
+            int[] permutation = Enumerable.Range(0, width).ToArray(); 
+            Matrix permutationMatrix = Zero(width);
 
-            for (int i = 0; i < n; i++)
             {
-                float diagVal = copy[i, i];
-                for (int j = 0; j < n; j++)
+                int column = 0;
+                int row = 0;
+                
+                while (row < height && column < width)
                 {
-                    copy[i, j] /= diagVal;
-                    result[i, j] /= diagVal;
-                }
-
-                for (int row = 0; row < n; row++)
-                {
-                    if (row != i)
+                    int pivotRow = row;
+                    float maxValue = 0;
+                    for (int i = row; i < height; i++)
                     {
-                        float rowFactor = copy[row, i];
-                        for (int col = 0; col < n; col++)
+                        if (maxValue < Mathf.Abs(upperRight[i, column]))
                         {
-                            copy[row, col] -= rowFactor * copy[i, col];
-                            result[row, col] -= rowFactor * result[i, col];
-                        }
+                            pivotRow = i; 
+                            maxValue = Mathf.Abs(upperRight[i, column]); 
+                        }    
                     }
+                    if (maxValue == 0)
+                    {
+                        column++; 
+                        continue; 
+                    }
+                    PLUSwitchRows(row, pivotRow);
+                
+                    for (int rowBelow = row + 1; rowBelow < height; rowBelow++)
+                    {
+                        PLUAddRowOntoRow(row, rowBelow, -(upperRight[rowBelow, column]/upperRight[row, column]));
+                    }
+                    
+                    row++; 
+                    column++; 
                 }
             }
 
-            return result;
+            for (int row = 0; row < permutation.Length; row++)
+            {
+                permutationMatrix[row, permutation[row]] = 1; 
+            }
+
+            outP = permutationMatrix.InversePermutationMatrix();
+            outL = lowerLeft;
+            outU = upperRight;
+
+            void PLUSwitchRows(int rowIndexA, int rowIndexB)
+            {
+                upperRight.SwitchRows(rowIndexA, rowIndexB);
+                for (int i = 0; i < Mathf.Min(rowIndexA, rowIndexB); i++)
+                {
+                    (lowerLeft[rowIndexA, i], lowerLeft[rowIndexB, i]) =
+                        (lowerLeft[rowIndexB, i], lowerLeft[rowIndexA, i]); 
+                }
+                (permutation[rowIndexA], permutation[rowIndexB]) = (permutation[rowIndexB], permutation[rowIndexA]); 
+            }
+            
+            void PLUAddRowOntoRow(int rowIndexA, int rowIndexB, float multiplier)
+            {
+                Debug.Assert(lowerLeft[rowIndexB, rowIndexA] == 0);
+                
+                upperRight.AddRowOntoRow(rowIndexA, rowIndexB, multiplier);
+                lowerLeft[rowIndexB, rowIndexA] = -multiplier; 
+            }
+        }
+
+        private Matrix InversePermutationMatrix()
+        {
+            return Transpose(); 
+        }
+
+        private Matrix InverseUpperTriangularMatrix()
+        {
+            Matrix resultMatrix = Identity(height);
+
+            for (int i = height - 1; i >= 0; i--)
+            {
+                resultMatrix[i, i] = 1 / this[i, i];
+                for (int j = i - 1; j >= 0; j--)
+                {
+                    float sum = 0;
+                    for (int k = j + 1; k <= i; k++)
+                    {
+                        sum += this[j, k] * resultMatrix[k, i];
+                    }
+
+                    resultMatrix[j, i] = -sum / this[j, j];
+                }
+            }
+
+            return resultMatrix; 
+        }
+
+        private Matrix InverseLowerTriangularMatrix()
+        {
+            Matrix resultMatrix = Identity(height);
+
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j <= i; j++)
+                {
+                    float sum = (i == j) ? 1 : 0;
+                    for (int k = i - 1; k >= j; k--)
+                    {
+                        sum -= this[i, k] * resultMatrix[k, j];
+                    }
+
+                    resultMatrix[i, j] = sum / this[i, i];
+                }
+            } 
+            
+            return resultMatrix; 
         }
         
         public Matrix Transpose()
@@ -257,7 +404,7 @@ namespace RotationTypes
             {
                 for (int column = 0; column < Width; column++)
                 {
-                    transposedMatrix[column, row] = InternalMatrix[row*Width+column];
+                    transposedMatrix[column, row] = this[row, column];
                 }
             }
             return transposedMatrix;
@@ -274,7 +421,7 @@ namespace RotationTypes
             return trace;
         }
 
-        public float Determinant() //TODO: this function is not doing what it's supposed to do
+        public float Determinant()
         {
             Debug.Assert(Height == Width, "Matrix must be square to calculate the determinant.");
 
@@ -282,20 +429,51 @@ namespace RotationTypes
             {
                 return Single.NaN;
             }
-            
+
             if (Height == 1)
+            {
                 return InternalMatrix[0];
+            }
 
             if (Height == 2)
-                return InternalMatrix[0] * InternalMatrix[3] - InternalMatrix[1] * InternalMatrix[2];
-
-            float determinant = 0;
-            for (int p = 0; p < Width; p++)
             {
-                Matrix subMatrix = CreateSubMatrix(this, 0, p);
-                determinant += InternalMatrix[0*Width+p] * subMatrix.Determinant() * (p % 2 == 0 ? 1 : -1);
+                return InternalMatrix[0] * InternalMatrix[3] - InternalMatrix[1] * InternalMatrix[2];
             }
-            return determinant;
+
+            if (Height == 3)
+            {
+                return 
+                    this[0, 0] * (this[1, 1] * this[2, 2] - this[1, 2] * this[2, 1]) + 
+                    this[0, 1] * (this[1, 0] * this[2, 2] - this[1, 2] * this[2, 0]) +
+                    this[0, 2] * (this[1, 0] * this[2, 1] - this[2, 0] * this[1, 1]); 
+            }
+
+            if (Height == 4)
+            {
+                return 0
+                       + this[0, 0] * CreateSubMatrix(this, 0, 0).Determinant()
+                       - this[0, 1] * CreateSubMatrix(this, 0, 1).Determinant()
+                       + this[0, 2] * CreateSubMatrix(this, 0, 2).Determinant()
+                       - this[0, 3] * CreateSubMatrix(this, 0, 3).Determinant()
+                    ; 
+            }
+            
+            //Laplace Expansion needs to create 4*3=12 Submatrices for a 5by5 matrix, therefore I'm not sure whether it is more or less efficient than a PLUDecomposition for a 5 by 5 matrix
+            
+            PLUDecomposition(out Matrix permutation, out Matrix lowerLeft, out Matrix upperRight);
+            
+            return lowerLeft.DiagonalProduct() * upperRight.DiagonalProduct();
+        }
+
+        public float DiagonalProduct()
+        {
+            Debug.Assert(Height == Width);
+            float result = 1;
+            for (int diagonalIndex = 0; diagonalIndex < Height; diagonalIndex++)
+            {
+                result *= this[diagonalIndex, diagonalIndex]; 
+            }
+            return result; 
         }
         
         private Matrix CreateSubMatrix(Matrix matrix, int excludingRow, int excludingCol)
@@ -320,11 +498,30 @@ namespace RotationTypes
 
         public bool IsSpecialOrthogonal()
         {
-            if (width == 0 || height == 0)
+            if (Width == 0 || Height == 0)
             {
                 return true; 
             }
-            return Math.Abs(Determinant() - 1) < 0.001 && Inverse() == Transpose(); 
+            
+            PLUDecomposition(out Matrix permutationMatrix, out Matrix lowerLeft, out Matrix upperRight);
+            
+            float determinant = lowerLeft.DiagonalProduct() * upperRight.DiagonalProduct();
+
+            if (Math.Abs(determinant - 1) < 0.001)
+            {
+                return false; 
+            }
+            
+            Matrix inverseMatrix = upperRight.InverseUpperTriangularMatrix() *
+                                   lowerLeft.InverseLowerTriangularMatrix() *
+                                   permutationMatrix.InversePermutationMatrix();
+
+            if (inverseMatrix != Transpose())
+            {
+                return false; 
+            }
+
+            return true; 
         }
     }
 }
