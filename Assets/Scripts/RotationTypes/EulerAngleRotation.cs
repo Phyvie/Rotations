@@ -13,43 +13,43 @@ namespace RotationTypes
     }
     
     [Serializable]
-    public class EulerAngleRotationDeprecated : RotationType
+    public class EulerAngleRotation : RotationType
     {
-        [FormerlySerializedAs("firstGimbleRing")] public GimbleRingDeprecated firstGimbleRingDeprecated; 
-        [FormerlySerializedAs("secondGimbleRing")] public GimbleRingDeprecated secondGimbleRingDeprecated; 
-        [FormerlySerializedAs("thirdGimbleRing")] public GimbleRingDeprecated thirdGimbleRingDeprecated;
-        private GimbleRingDeprecated[] gimble; 
-        private GimbleRingDeprecated Yaw => GetRingForAxis(EGimbleAxis.Yaw); 
-        private GimbleRingDeprecated Pitch => GetRingForAxis(EGimbleAxis.Pitch); 
-        private GimbleRingDeprecated Roll => GetRingForAxis(EGimbleAxis.Roll); 
+        public GimbleRing firstGimbleRing; 
+        public GimbleRing secondGimbleRing; 
+        public GimbleRing thirdGimbleRing;
+        private GimbleRing[] gimble; 
+        private GimbleRing Yaw => GetRingForAxis(EGimbleAxis.Yaw); 
+        private GimbleRing Pitch => GetRingForAxis(EGimbleAxis.Pitch); 
+        private GimbleRing Roll => GetRingForAxis(EGimbleAxis.Roll); 
         
-        private GimbleRingDeprecated GetRingForAxis(EGimbleAxis eAxis)
+        private GimbleRing GetRingForAxis(EGimbleAxis eAxis)
         {
-            GimbleRingDeprecated result = null;
-            if (firstGimbleRingDeprecated.eAxis == eAxis)
+            GimbleRing result = null;
+            if (firstGimbleRing.eAxis == eAxis)
             {
-                result = firstGimbleRingDeprecated; 
+                result = firstGimbleRing; 
             }
-            if (secondGimbleRingDeprecated.eAxis == eAxis)
+            if (secondGimbleRing.eAxis == eAxis)
             {
                 if (result is not null)
                 {
-                    Debug.LogWarning($"EulerAngleRotationDeprecated has multiple axis of type: {eAxis.ToString()}; returning the first rotation of given axis"); 
+                    Debug.LogWarning($"EulerAngleRotation has multiple axis of type: {eAxis.ToString()}; returning the first rotation of given axis"); 
                 }
                 else
                 {
-                    result = secondGimbleRingDeprecated; 
+                    result = secondGimbleRing; 
                 }
             }
-            if (thirdGimbleRingDeprecated.eAxis == eAxis)
+            if (thirdGimbleRing.eAxis == eAxis)
             {
                 if (result is not null)
                 {
-                    Debug.LogWarning($"EulerAngleRotationDeprecated has multiple axis of type: {eAxis.ToString()}; returning the first rotation of given axis"); 
+                    Debug.LogWarning($"EulerAngleRotation has multiple axis of type: {eAxis.ToString()}; returning the first rotation of given axis"); 
                 }
                 else
                 {
-                    result = thirdGimbleRingDeprecated; 
+                    result = thirdGimbleRing; 
                 }
             }
 
@@ -64,90 +64,78 @@ namespace RotationTypes
             set => isIntrinsic = value;
         }
 
-        [SerializeField] private bool gimbleRingsInheritAngleType;
+        [SerializeField] protected AngleType angleType = AngleType.Radian;
 
-        public bool GimbleRingsInheritAngleType
+        public AngleType AngleType
         {
-            get => gimbleRingsInheritAngleType;
-            set => gimbleRingsInheritAngleType = value;
-        }
-
-        [SerializeField] protected AngleType _angleType = AngleType.Radian;
-
-        public AngleType angleType
-        {
-            get => _angleType;
+            get => angleType;
             set => SetAngleType(value);
         }
         
-        public EulerAngleRotationDeprecated() : this (0, 0, 0, AngleType.Radian)
+        public EulerAngleRotation() : this (0, 0, 0, AngleType.Radian)
         {
         }
 
-        public EulerAngleRotationDeprecated(EulerAngleRotationDeprecated toCopy) : 
-            this(toCopy.firstGimbleRingDeprecated, toCopy.secondGimbleRingDeprecated, toCopy.thirdGimbleRingDeprecated, toCopy.angleType, bCopyRings: true, isIntrinsic: toCopy.isIntrinsic, ringsInheritAngleType: toCopy.gimbleRingsInheritAngleType)
+        public EulerAngleRotation(EulerAngleRotation toCopy) : 
+            this(toCopy.firstGimbleRing, toCopy.secondGimbleRing, toCopy.thirdGimbleRing, toCopy.AngleType, bCopyRings: true, isIntrinsic: toCopy.isIntrinsic)
         {
         }
         
-        public EulerAngleRotationDeprecated(float inYaw, float inPitch, float inRoll) : 
+        public EulerAngleRotation(float inYaw, float inPitch, float inRoll) : 
             this(inRoll, inYaw, inPitch, AngleType.Radian)
         {
         }
         
-        public EulerAngleRotationDeprecated(float inYaw, float inPitch, float inRoll, AngleType inAngleType) : //TODO: order of gimbleAxes
-            this(new GimbleRingDeprecated(EGimbleAxis.Yaw, inYaw, inAngleType, null), 
-                new GimbleRingDeprecated(EGimbleAxis.Pitch, inPitch, inAngleType, null), 
-                new GimbleRingDeprecated(EGimbleAxis.Roll, inRoll, inAngleType, null), 
+        public EulerAngleRotation(float inYaw, float inPitch, float inRoll, AngleType inAngleType) : //TODO: order of gimbleAxes
+            this(new GimbleRing(EGimbleAxis.Yaw, inYaw, inAngleType, null), 
+                new GimbleRing(EGimbleAxis.Pitch, inPitch, inAngleType, null), 
+                new GimbleRing(EGimbleAxis.Roll, inRoll, inAngleType, null), 
                 inAngleType)
         {
         }
 
-        public EulerAngleRotationDeprecated(
+        public EulerAngleRotation(
             float firstAngle, EGimbleAxis firstAxis, AngleType firstAngleType, 
             float secondAngle, EGimbleAxis secondAxis, AngleType secondAngleType, 
             float thirdAngle, EGimbleAxis thirdAxis, AngleType thirdAngleType, 
             AngleType inAngleType, bool bCopyRings = false, bool isIntrinsic = false, bool ringsInheritAngleType = true) : 
-            this(new GimbleRingDeprecated(firstAxis, firstAngle, firstAngleType, null), 
-                new GimbleRingDeprecated(secondAxis, secondAngle, secondAngleType, null), 
-                new GimbleRingDeprecated(thirdAxis, thirdAngle, thirdAngleType, null), 
+            this(new GimbleRing(firstAxis, firstAngle, firstAngleType, null), 
+                new GimbleRing(secondAxis, secondAngle, secondAngleType, null), 
+                new GimbleRing(thirdAxis, thirdAngle, thirdAngleType, null), 
                 inAngleType, bCopyRings, isIntrinsic, ringsInheritAngleType)
         {
         }
 
-        public EulerAngleRotationDeprecated(GimbleRingDeprecated firstRingDeprecated, GimbleRingDeprecated secondRingDeprecated, GimbleRingDeprecated thirdRingDeprecated,
+        public EulerAngleRotation(GimbleRing firstRing, GimbleRing secondRing, GimbleRing thirdRing,
             AngleType inAngleType, bool bCopyRings = false, bool isIntrinsic = true, bool ringsInheritAngleType = true)
         {
             if (bCopyRings)
             {
-                firstGimbleRingDeprecated = new GimbleRingDeprecated(firstRingDeprecated); 
-                secondGimbleRingDeprecated = new GimbleRingDeprecated(secondRingDeprecated); 
-                thirdGimbleRingDeprecated = new GimbleRingDeprecated(thirdRingDeprecated); 
+                firstGimbleRing = new GimbleRing(firstRing); 
+                secondGimbleRing = new GimbleRing(secondRing); 
+                thirdGimbleRing = new GimbleRing(thirdRing); 
             }
             else
             {
-                firstGimbleRingDeprecated = firstRingDeprecated;
-                secondGimbleRingDeprecated = secondRingDeprecated;
-                thirdGimbleRingDeprecated = thirdRingDeprecated;
+                firstGimbleRing = firstRing;
+                secondGimbleRing = secondRing;
+                thirdGimbleRing = thirdRing;
             }
-            firstGimbleRingDeprecated.parentEulerAngle = this; 
-            secondGimbleRingDeprecated.parentEulerAngle = this; 
-            thirdGimbleRingDeprecated.parentEulerAngle = this; 
             
-            if (angleType is null && inAngleType is null)
+            if (AngleType is null && inAngleType is null)
             {
-                Debug.LogError("EulerAngleConstructor: _angleType is null, setting _angleType to Radian");
-                angleType = AngleType.Radian;
+                Debug.LogError("EulerAngleConstructor: angleType is null, setting angleType to Radian");
+                AngleType = AngleType.Radian;
             }
             else
             {
-                angleType = inAngleType;
+                AngleType = inAngleType;
             }
 
-            gimbleRingsInheritAngleType = ringsInheritAngleType;
             this.isIntrinsic = isIntrinsic;
-            gimble = new GimbleRingDeprecated[]
+            gimble = new GimbleRing[]
             {
-                firstGimbleRingDeprecated, secondGimbleRingDeprecated, thirdGimbleRingDeprecated
+                firstGimbleRing, secondGimbleRing, thirdGimbleRing
             }; 
         }
         
@@ -155,18 +143,11 @@ namespace RotationTypes
         {
             if (value is null)
             {
-                Debug.LogError("EulerAngleRotationDeprecated.SetAngleType error: value is null"); 
+                Debug.LogError("EulerAngleRotation.SetAngleType error: value is null"); 
                 return; 
             }
             
-            if (gimbleRingsInheritAngleType)
-            {
-                foreach (GimbleRingDeprecated gimbleRing in gimble)
-                {
-                    gimbleRing.angleType = value; 
-                }
-            }
-            _angleType = value; 
+            angleType = value; 
         }
 
         public void SwitchGimbleOrder(int firstIndex, int secondIndex)
@@ -174,9 +155,9 @@ namespace RotationTypes
             (gimble[firstIndex], gimble[secondIndex]) = (gimble[secondIndex], gimble[firstIndex]); 
         }
         
-        public void SwitchGimbleOrder(GimbleRingDeprecated firstRingDeprecated, GimbleRingDeprecated secondRingDeprecated)
+        public void SwitchGimbleOrder(GimbleRing firstRing, GimbleRing secondRing)
         {
-            (firstRingDeprecated, secondRingDeprecated) = (secondRingDeprecated, firstRingDeprecated); //TODO: test this function
+            (firstRing, secondRing) = (secondRing, firstRing); //TODO: test this function
         }
 
         public bool IsGimbleValid()
@@ -187,7 +168,8 @@ namespace RotationTypes
         public EGimbleType GetGimbleType()
         {
             HashSet<EGimbleAxis> gimbleAxisSet = new HashSet<EGimbleAxis>();
-
+            gimbleAxisSet.Add(gimble[0].eAxis); 
+            
             if (gimbleAxisSet.Contains(gimble[1].eAxis))
             {
                 Debug.Log("Gimble Invalid because: FirstGimbleRing.eAxis == SecondGimbleRing.eAxis");
@@ -216,30 +198,43 @@ namespace RotationTypes
             }
         }
 
-        public override EulerAngleRotationDeprecated ToEulerAngleRotation()
+        public override EulerAngleRotation ToEulerAngleRotation()
         {
-            return new EulerAngleRotationDeprecated(this); 
+            return new EulerAngleRotation(this); 
         }
 
         public override QuaternionRotation ToQuaternionRotation() //TODO: adjust for IsIntrinsic
         {
             QuaternionRotation result = new QuaternionRotation();
-            foreach (GimbleRingDeprecated rotation in gimble)
+            foreach (GimbleRing rotation in gimble)
             {
-                result = result * rotation.toQuaternionRotation() * result.Inverse(); 
+                result = result * rotation.toQuaternionRotation(AngleType) * result.Inverse(); 
             }
             return result; 
         }
 
         public void GetValuesFromQuaternion(QuaternionRotation quaternionRotation) //TODO: test
         {
+            if (GetGimbleType() == EGimbleType.Invalid)
+            {
+                Debug.LogError("EulerAngleRotation.GetValuesFromQuaternion() error: GimbleType is Invalid");
+                return; 
+            }
+
+            if (GetGimbleType() == EGimbleType.TrueEulerAngle)
+            {
+                Debug.LogError("EulerAngleRotation.GetValuesFromQuaternion() error: Conversion from Quaternion to TrueEulerAngles not implemented");
+                return; 
+            }
+
+            
             QuaternionRotation quaternionRotationCopy = new QuaternionRotation(quaternionRotation); 
-            EulerAngleRotationDeprecated incompleteEulerAngleRotationDeprecated = new EulerAngleRotationDeprecated(this); 
+            EulerAngleRotation incompleteEulerAngleRotation = new EulerAngleRotation(this); 
             
             for (int i = 0; i < gimble.Length; i++)
             {
                 gimble[i].ExtractValueFromQuaternion(quaternionRotationCopy);  
-                QuaternionRotation inverseRotation = incompleteEulerAngleRotationDeprecated.ToQuaternionRotation().Inverse();
+                QuaternionRotation inverseRotation = incompleteEulerAngleRotation.ToQuaternionRotation().Inverse();
                 if (isIntrinsic || !isIntrinsic)
                 {
                     quaternionRotationCopy = inverseRotation * quaternionRotationCopy; 
@@ -256,21 +251,33 @@ namespace RotationTypes
         public override MatrixRotation ToMatrixRotation() //TODO: test this function
         {
             MatrixRotation result = new MatrixRotation(MatrixRotation.RotationIdentity());
-            foreach (GimbleRingDeprecated rotation in gimble)
+            foreach (GimbleRing rotation in gimble)
             {
-                result = result * rotation.toMatrixRotation() * result.Inverse(); 
+                result = result * rotation.toMatrixRotation(AngleType) * result.Inverse(); 
             }
             return result; 
         }
 
         public void GetValuesFromMatrix(MatrixRotation matrixRotation) //TODO: test this function
         {
+            if (GetGimbleType() == EGimbleType.Invalid)
+            {
+                Debug.LogError("EulerAngleRotation.GetValuesFromMatrix() error: GimbleType is Invalid");
+                return; 
+            }
+
+            if (GetGimbleType() == EGimbleType.TrueEulerAngle)
+            {
+                Debug.LogError("EulerAngleRotation.GetValuesFromMatrix() error: Conversion from Matrix to TrueEulerAngles not implemented");
+                return; 
+            }
+            
             MatrixRotation matrixRotationCopy = new MatrixRotation(matrixRotation); 
             
             for (int i = 0; i < gimble.Length; i++)
             {
                 gimble[i].ExtractValueFromMatrix(matrixRotationCopy); 
-                MatrixRotation inverseRotation = gimble[i].toMatrixRotation().Inverse();
+                MatrixRotation inverseRotation = gimble[i].toMatrixRotation(AngleType).Inverse();
                 if (isIntrinsic || !isIntrinsic)
                 {
                     matrixRotationCopy = inverseRotation * matrixRotationCopy; 

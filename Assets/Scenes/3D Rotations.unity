@@ -4057,24 +4057,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e85a9103fdbd4ce9ae5acfa8bdc882b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eulerAngleRotationDeprecated:
-    firstGimbleRingDeprecated:
-      parentEulerAngle:
-        rid: -2
+  eulerAngleRotation:
+    firstGimbleRing:
       eAxis: 2
       angle: 37
-    secondGimbleRingDeprecated:
-      parentEulerAngle:
-        rid: -2
+    secondGimbleRing:
       eAxis: 0
       angle: 0
-    thirdGimbleRingDeprecated:
-      parentEulerAngle:
-        rid: -2
+    thirdGimbleRing:
       eAxis: 0
       angle: 0
     isIntrinsic: 0
-    gimbleRingsInheritAngleType: 0
   quaternionRotation:
     _real: 1
     _i: 0
@@ -4097,11 +4090,6 @@ MonoBehaviour:
       height: 3
       width: 3
   _mbMatrix: {fileID: 0}
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
 --- !u!1 &2036741022
 GameObject:
   m_ObjectHideFlags: 0
@@ -4345,23 +4333,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ade78c4b03c1f048a4aae7105d9d121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testObject:
-    testName: initialisedTest
-    child:
-      parent:
-        rid: 5288731392434765830
-      childName: initialisedTest
-  references:
-    version: 2
-    RefIds:
-    - rid: 5288731392434765830
-      type: {class: TestClass, ns: , asm: Assembly-CSharp}
-      data:
-        testName: initialisedTest
-        child:
-          parent:
-            rid: 5288731392434765830
-          childName: initialisedTest
+  eulerAngle:
+    firstGimbleRing:
+      eAxis: 0
+      angle: 0
+    secondGimbleRing:
+      eAxis: 2
+      angle: 0
+    thirdGimbleRing:
+      eAxis: 1
+      angle: 0
+    isIntrinsic: 1
 --- !u!1001 &7678552021489249906
 PrefabInstance:
   m_ObjectHideFlags: 0

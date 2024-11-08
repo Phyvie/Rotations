@@ -13,11 +13,6 @@ namespace Editor
         {
             EditorGUI.BeginProperty(position, label, property);
             position.height = EditorGUIUtility.singleLineHeight;
-
-            EditorGUI.PropertyField(position, property.FindPropertyRelative("testName"));
-            position.y += EditorGUIUtility.singleLineHeight + 2; 
-            EditorGUI.PropertyField(position, property.FindPropertyRelative("child.childName")); 
-            position.y += EditorGUIUtility.singleLineHeight + 2; 
             
             EditorGUI.EndProperty();
         }

@@ -5,28 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b54c963-bad1-41cc-8b0e-252a0574fd2d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/EulerAngleRotationNewInspector.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/EulerAngleRotationNewInspector.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingNewInspector.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingNewInspector.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotationNew.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotationNew.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/3D Rotations.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/3D Rotations.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/AngleTypeInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/AngleTypeInspector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/EulerAngleRotationInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/EulerAngleRotationDeprecatedInspector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/EulerAngleRotationInspector.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/EulerAngleRotationDeprecatedInspector.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingDeprecatedInspector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingInspector.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingDeprecatedInspector.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/NestedPropertyDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/NestedPropertyDrawer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/EulerAngleRotationDeprecatedInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/EulerAngleRotationInspector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/EulerAngleRotationDeprecatedInspector.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/EulerAngleRotationInspector.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/EulerAngleRotationNewInspector.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/EulerAngleRotationNewInspector.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingDeprecatedInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingInspector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingDeprecatedInspector.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingInspector.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingNewInspector.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingNewInspector.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TestClassInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TestClassInspector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TestMonoBehaviourInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TestMonoBehaviourInspector.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AxisAngleRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AxisAngleRotation.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/ComplexRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/ComplexRotation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotationDeprecated.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotation.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotationDeprecated.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/GimbleRing.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/GimbleRingDeprecated.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/GimbleRing.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/GimbleRingDeprecated.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotationDeprecated.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotationDeprecated.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotation.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotationNew.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotationNew.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/GimbleRingDeprecated.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/GimbleRing.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/GimbleRingDeprecated.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/GimbleRing.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/MatrixRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/MatrixRotation.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/QuaternionRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/QuaternionRotation.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/RotationType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/RotationType.cs" afterDir="false" />
@@ -160,10 +157,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="22052">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="6120">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="22052" />
+      <option name="pid" value="6120" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -207,6 +204,7 @@
       <workItem from="1730993450921" duration="10202000" />
       <workItem from="1731081695328" duration="5750000" />
       <workItem from="1731088996285" duration="7374000" />
+      <workItem from="1731099759680" duration="1078000" />
     </task>
     <servers />
   </component>
@@ -219,62 +217,6 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotationDeprecated.cs</url>
-          <line>108</line>
-          <properties documentPath="D:\programming\Rotations\Assets\Scripts\RotationTypes\EulerAngleRotation.cs" initialLine="108" containingFunctionPresentation="Constructor 'EulerAngleRotation'">
-            <startOffsets>
-              <option value="3899" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3903" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="103" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotationDeprecated.cs</url>
-          <line>96</line>
-          <properties documentPath="D:\programming\Rotations\Assets\Scripts\RotationTypes\EulerAngleRotation.cs" initialLine="96" containingFunctionPresentation="Constructor 'EulerAngleRotation'">
-            <startOffsets>
-              <option value="3202" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3206" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="104" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotationDeprecated.cs</url>
-          <line>91</line>
-          <properties documentPath="D:\programming\Rotations\Assets\Scripts\RotationTypes\EulerAngleRotation.cs" initialLine="91" containingFunctionPresentation="Constructor 'EulerAngleRotation'">
-            <startOffsets>
-              <option value="2975" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2979" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="105" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotationDeprecated.cs</url>
-          <line>86</line>
-          <properties documentPath="D:\programming\Rotations\Assets\Scripts\RotationTypes\EulerAngleRotation.cs" initialLine="86" containingFunctionPresentation="Constructor 'EulerAngleRotation'">
-            <startOffsets>
-              <option value="2639" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2643" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="106" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Type#UnityEditor.SerializedProperty" memberName="minArraySize" />

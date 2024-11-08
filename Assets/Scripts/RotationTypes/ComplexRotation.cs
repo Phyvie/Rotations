@@ -87,9 +87,9 @@ namespace RotationTypes
             }
         }
 
-        public override EulerAngleRotationDeprecated ToEulerAngleRotation()
+        public override EulerAngleRotation ToEulerAngleRotation()
         {
-            return new EulerAngleRotationDeprecated(0, 0, _rotationAngle, AngleType.Radian); 
+            return new EulerAngleRotation(0, 0, _rotationAngle, AngleType.Radian); 
         }
 
         public override QuaternionRotation ToQuaternionRotation()

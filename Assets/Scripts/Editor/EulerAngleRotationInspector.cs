@@ -1,40 +1,33 @@
 using System;
-using ExtensionMethods;
 using RotationTypes;
 using UnityEditor;
 using UnityEngine;
 
 namespace Editor
 {
-    [CustomPropertyDrawer(typeof(EulerAngleRotationNew))]
-    public class EulerAngleRotationNewInspector : NestedPropertyDrawer<EulerAngleRotationNew>
+    [CustomPropertyDrawer(typeof(EulerAngleRotation))]
+    public class EulerAngleRotationInspector : NestedPropertyDrawer<EulerAngleRotation>
     {
-        private bool isInitialised = false;
-        
         private SerializedProperty firstGimbleRing;
         private SerializedProperty secondGimbleRing;
         private SerializedProperty thirdGimbleRing;
         private SerializedProperty angleTypeProperty;
-        private SerializedProperty gimbleRingsInheritAngleTypeProp;
+        private SerializedProperty isIntrinsicProperty; 
+
+        private bool isInitialised = false;
         
         private void Initialize(SerializedProperty property)
         {
             if (isInitialised)
             {
-                return; 
-            }
-
-            if (PropertyAsT is null)
-            {
-                Debug.LogError($"PropertyAsT<EulerAngleRotationNew> is null, can't Initialise Property");
-                return; 
+                // return; 
             }
             
             firstGimbleRing = property.FindPropertyRelative("firstGimbleRing");
             secondGimbleRing = property.FindPropertyRelative("secondGimbleRing"); 
             thirdGimbleRing = property.FindPropertyRelative("thirdGimbleRing"); 
             angleTypeProperty = property.FindPropertyRelative("angleType"); 
-            gimbleRingsInheritAngleTypeProp = property.FindPropertyRelative("gimbleRingsInheritAngleType");
+            isIntrinsicProperty = property.FindPropertyRelative("isIntrinsic");
             
             isInitialised = true; 
         }
@@ -47,29 +40,26 @@ namespace Editor
             EditorGUI.BeginProperty(position, label, property);
             position.height = EditorGUIUtility.singleLineHeight;
             
-            EulerAngleRotationNew targetEulerAngle = GetPropertyAsT<EulerAngleRotationNew>();
+            EulerAngleRotation targetEulerAngle = GetPropertyAsT<EulerAngleRotation>();
             if (targetEulerAngle is null)
             {
                 Debug.LogWarning("EulerAngleInspector: targetEulerAngle is null; this should only happen during initialisation or array-size change");
                 return; 
             }
             
-            // EGimbleType targetGimbleType = targetEulerAngle!.GetGimbleType();
-            property.isExpanded = EditorGUI.BeginFoldoutHeaderGroup(position, property.isExpanded, new GUIContent("NotImplementedName" /*$"eulerAngle({Enum.GetNames(typeof(EGimbleType))[(int) targetGimbleType]})"*/));
+            EGimbleType targetGimbleType = targetEulerAngle!.GetGimbleType();
+            property.isExpanded = EditorGUI.BeginFoldoutHeaderGroup(position, property.isExpanded, new GUIContent($"eulerAngle({Enum.GetNames(typeof(EGimbleType))[(int) targetGimbleType]})"));
             EditorGUI.EndFoldoutHeaderGroup(); //??? this is confusing, because seemingly all a BeginFoldoutHeaderGroup does is return whether it's toggled on or off, but not the actual indentation; 
             if (property.isExpanded)
             {
-                EditorGUI.indentLevel+=2;
+                EditorGUI.indentLevel+=2; 
                 position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 
                 
-                EditorGUI.PropertyField(position, property.FindPropertyRelative("ZyKa")); 
-                position.y += EditorGUI.GetPropertyHeight(property.FindPropertyRelative("ZyKa"));
+                isIntrinsicProperty.boolValue = EditorGUI.Toggle(position, "intrinsic", isIntrinsicProperty.boolValue);
+                position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
                 
                 EditorGUI.PropertyField(position, angleTypeProperty); 
                 position.y += EditorGUI.GetPropertyHeight(angleTypeProperty);
-
-                EditorGUI.PropertyField(position, gimbleRingsInheritAngleTypeProp); 
-                position.y += EditorGUI.GetPropertyHeight(gimbleRingsInheritAngleTypeProp);
                 
                 EditorGUI.PropertyField(position, firstGimbleRing); 
                 position.y += EditorGUI.GetPropertyHeight(firstGimbleRing);
@@ -91,15 +81,14 @@ namespace Editor
             Initialize(property);
             InitializePropertyNesting(property);
             
-            float foldedHeight = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 
             float unfoldedHeight =
-                    (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 2
-                    + EditorGUI.GetPropertyHeight(angleTypeProperty) 
-                    + EditorGUI.GetPropertyHeight(gimbleRingsInheritAngleTypeProp)
-                    + EditorGUI.GetPropertyHeight(firstGimbleRing)
-                    + EditorGUI.GetPropertyHeight(secondGimbleRing)
-                    + EditorGUI.GetPropertyHeight(thirdGimbleRing)
+                (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 2
+                + EditorGUI.GetPropertyHeight(angleTypeProperty) 
+                + EditorGUI.GetPropertyHeight(firstGimbleRing)
+                + EditorGUI.GetPropertyHeight(secondGimbleRing)
+                + EditorGUI.GetPropertyHeight(thirdGimbleRing)
                 ;
+            float foldedHeight = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 
             
             return (property.isExpanded ? unfoldedHeight : foldedHeight); 
         }

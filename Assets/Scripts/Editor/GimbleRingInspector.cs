@@ -4,11 +4,9 @@ using UnityEngine;
 
 namespace Editor
 {
-    [CustomPropertyDrawer(typeof(GimbleRingDeprecated))]
-    public class GimbleRingDeprecatedInspector : NestedPropertyDrawer<GimbleRingDeprecated>
+    [CustomPropertyDrawer(typeof(GimbleRing))]
+    public class GimbleRingInspector : NestedPropertyDrawer<GimbleRing>
     {
-        private SerializedProperty inheritsAngleTypeProp; 
-        private SerializedProperty angleTypeProp; 
         private SerializedProperty axisProp; 
         private SerializedProperty angleProp;
         private bool isInitialized = false; 
@@ -21,11 +19,10 @@ namespace Editor
             }
             if (PropertyAsT is null)
             {
-                Debug.LogError($"GimbleRingDeprecated-PropertyAsT is null, can't Initialise Property");
+                Debug.LogError($"GimbleRing-PropertyAsT is null, can't Initialise Property");
                 return; 
             }
             
-            angleTypeProp = property.FindPropertyRelative("ownAngleType");
             axisProp = property.FindPropertyRelative("eAxis");
             angleProp = property.FindPropertyRelative("angle");
 
@@ -45,12 +42,6 @@ namespace Editor
                 return; 
             }
             
-            if (!PropertyAsT.bInheritedAngleType)
-            {
-                EditorGUI.PropertyField(position, angleTypeProp);
-                position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-            }
-
             EditorGUI.PropertyField(position, axisProp);
             position.y += EditorGUI.GetPropertyHeight(axisProp);
 
@@ -67,12 +58,11 @@ namespace Editor
             
             if (PropertyAsT is null)
             {
-                Debug.LogWarning($"GimbleRingDeprecated-PropertyAsT is null, can't GetPropertyHeight");
+                Debug.LogWarning($"GimbleRing-PropertyAsT is null, can't GetPropertyHeight");
                 return 0; 
             }
 
             float propertyHeight =
-                (PropertyAsT.bInheritedAngleType ? 0 : EditorGUI.GetPropertyHeight(angleTypeProp) + EditorGUIUtility.standardVerticalSpacing) +
                 EditorGUI.GetPropertyHeight(axisProp) + EditorGUIUtility.standardVerticalSpacing + 
                 EditorGUI.GetPropertyHeight(angleProp);
 

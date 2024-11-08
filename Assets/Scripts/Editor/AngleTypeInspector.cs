@@ -32,7 +32,7 @@ namespace Editor
             if (currentIndex >= AngleType.AngleTypes.Length || currentIndex < 0)
             {
                 newIndex = 0;
-                Debug.LogWarning($"Couldn't find _angleType in AngleType.AngleTypes for object: {((MonoBehaviour)(property.serializedObject.targetObject))}");
+                Debug.LogWarning($"Couldn't find angleType in AngleType.AngleTypes for object: {((MonoBehaviour)(property.serializedObject.targetObject))}");
             }
             
             if (newIndex >= 0 && newIndex != currentIndex)

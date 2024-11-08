@@ -13,33 +13,27 @@ namespace RotationTypes
     }
 
     [Serializable]
-    public class GimbleRingDeprecated
+    public class GimbleRing
     {
-        private GimbleRingDeprecated()
+        private GimbleRing()
         {
             eAxis = EGimbleAxis.Yaw;
             angle = 0;
-            parentEulerAngle = null;
-            angleType = AngleType.Radian; 
         }
         
-        public GimbleRingDeprecated(EGimbleAxis inEAxis, float inAngle, AngleType ownAngleType, EulerAngleRotationDeprecated parentEulerAngle)
+        public GimbleRing(EGimbleAxis inEAxis, float inAngle, AngleType ownAngleType, EulerAngleRotation parentEulerAngle)
         {
             eAxis = inEAxis; 
             angle = inAngle;
-            angleType = ownAngleType;
-            this.parentEulerAngle = parentEulerAngle; 
         }
         
-        public GimbleRingDeprecated(GimbleRingDeprecated gimbleRingDeprecated)
+        public GimbleRing(GimbleRing gimbleRing)
         {
-            eAxis = gimbleRingDeprecated.eAxis;
-            angle = gimbleRingDeprecated.angle;
-            angleType = gimbleRingDeprecated.angleType;
-            parentEulerAngle = gimbleRingDeprecated.parentEulerAngle; 
+            eAxis = gimbleRing.eAxis;
+            angle = gimbleRing.angle;
         }
         
-        public Vector3 GetRotationAxis()
+        public Vector3 GetLocalRotationAxis()
         {
             return eAxis switch
             {
@@ -50,47 +44,26 @@ namespace RotationTypes
             }; 
         }
         
-        [SerializeReference] public EulerAngleRotationDeprecated parentEulerAngle; 
         public EGimbleAxis eAxis;
         public float angle;
 
-        public bool bInheritedAngleType =>
-            parentEulerAngle is null ? false : parentEulerAngle.GimbleRingsInheritAngleType; 
-        [SerializeField] private AngleType ownAngleType; 
-        
-        public AngleType angleType
+        public static GimbleRing Yaw(EulerAngleRotation parent)
         {
-            get => ownAngleType;
-            set
-            {
-                if (bInheritedAngleType)
-                {
-                    Debug.Log("Can't change _angleType because it's inherited from parent EulerAngleRotationDeprecated");
-                }
-                else
-                {
-                    ownAngleType = value; 
-                }
-            }
+            return new GimbleRing(EGimbleAxis.Yaw, (float)Math.PI / 2, AngleType.Radian, parent); 
         }
-
-        public static GimbleRingDeprecated Yaw(EulerAngleRotationDeprecated parent)
+        public static GimbleRing Pitch(EulerAngleRotation parent)
         {
-            return new GimbleRingDeprecated(EGimbleAxis.Yaw, (float)Math.PI / 2, AngleType.Radian, parent); 
+            return new GimbleRing(EGimbleAxis.Pitch, (float)Math.PI / 2, AngleType.Radian, parent); 
         }
-        public static GimbleRingDeprecated Pitch(EulerAngleRotationDeprecated parent)
+        public static GimbleRing Roll(EulerAngleRotation parent)
         {
-            return new GimbleRingDeprecated(EGimbleAxis.Pitch, (float)Math.PI / 2, AngleType.Radian, parent); 
-        }
-        public static GimbleRingDeprecated Roll(EulerAngleRotationDeprecated parent)
-        {
-            return new GimbleRingDeprecated(EGimbleAxis.Roll, (float)Math.PI / 2, AngleType.Radian, parent); 
+            return new GimbleRing(EGimbleAxis.Roll, (float)Math.PI / 2, AngleType.Radian, parent); 
         }
         
         
-        public MatrixRotation toMatrixRotation() //TODO: Test this Function
+        public MatrixRotation toMatrixRotation(AngleType angleType)
         {
-            float angleInRadian = AngleType.ConvertAngle(angle, ownAngleType, AngleType.Radian); 
+            float angleInRadian = AngleType.ConvertAngle(angle, angleType, AngleType.Radian); 
             
             return eAxis switch
             {
@@ -132,9 +105,9 @@ namespace RotationTypes
             }
         }
 
-        public QuaternionRotation toQuaternionRotation() //TODO: Test this Function
+        public QuaternionRotation toQuaternionRotation(AngleType angleType) //TODO: Test this Function
         {
-            return new QuaternionRotation(GetRotationAxis(), angle, ownAngleType);
+            return new QuaternionRotation(GetLocalRotationAxis(), angle);
         }
         
         public void ExtractValueFromQuaternion(QuaternionRotation q)

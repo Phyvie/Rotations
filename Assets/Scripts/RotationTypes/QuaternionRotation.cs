@@ -87,13 +87,8 @@ namespace RotationTypes
             k = inK; 
         }
 
-        public QuaternionRotation(Vector3 inAxis, float inAngle, AngleType angleType)
+        public QuaternionRotation(Vector3 inAxis, float inAngle)
         {
-            if (angleType != AngleType.Radian)
-            {
-                inAngle = AngleType.ConvertAngle(inAngle, angleType, AngleType.Radian);
-            }
-
             inAxis = inAxis.normalized;
             
             float cos = (float)Math.Cos(inAngle); 
@@ -236,9 +231,9 @@ namespace RotationTypes
                 ); 
         }
     
-        public override EulerAngleRotationDeprecated ToEulerAngleRotation()
+        public override EulerAngleRotation ToEulerAngleRotation()
         {
-            EulerAngleRotationDeprecated newEulerAngle = new EulerAngleRotationDeprecated(0, 0, 0); 
+            EulerAngleRotation newEulerAngle = new EulerAngleRotation(0, 0, 0); 
             newEulerAngle.GetValuesFromQuaternion(this);
             return newEulerAngle; 
         }

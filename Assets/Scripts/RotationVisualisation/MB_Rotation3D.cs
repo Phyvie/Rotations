@@ -8,7 +8,7 @@ namespace RotationVisualisation
     {
         #region RotationDataTypes
         #region Variables
-        [FormerlySerializedAs("eulerAngleRotation")] [SerializeField] private EulerAngleRotationDeprecated eulerAngleRotationDeprecated = new EulerAngleRotationDeprecated(); 
+        [FormerlySerializedAs("eulerAngleRotationDeprecated")] [SerializeField] private EulerAngleRotation eulerAngleRotation = new EulerAngleRotation(); 
         [SerializeField] private QuaternionRotation quaternionRotation = new QuaternionRotation();
         [SerializeField] private AxisAngleRotation axisAngleRotation = new AxisAngleRotation();
         [SerializeField] private MatrixRotation matrixRotation = new MatrixRotation();
@@ -17,16 +17,16 @@ namespace RotationVisualisation
 
         void UpdateRotationsBasedOn(RotationType rotationType)
         {
-            eulerAngleRotationDeprecated = eulerAngleRotationDeprecated.ToEulerAngleRotation(); 
-            quaternionRotation = eulerAngleRotationDeprecated.ToQuaternionRotation();
-            axisAngleRotation = eulerAngleRotationDeprecated.ToAxisAngleRotation();
-            matrixRotation = eulerAngleRotationDeprecated.ToMatrixRotation(); 
+            eulerAngleRotation = eulerAngleRotation.ToEulerAngleRotation(); 
+            quaternionRotation = eulerAngleRotation.ToQuaternionRotation();
+            axisAngleRotation = eulerAngleRotation.ToAxisAngleRotation();
+            matrixRotation = eulerAngleRotation.ToMatrixRotation(); 
         }
         
         [ContextMenu("UpdateBasedOnEuler")]
         void UpdateBasedOnEuler()
         {
-            UpdateRotationsBasedOn(eulerAngleRotationDeprecated);
+            UpdateRotationsBasedOn(eulerAngleRotation);
         }
         [ContextMenu("UpdateBasedOnQuaternion")]
         void UpdateBasedOnQuaternion()

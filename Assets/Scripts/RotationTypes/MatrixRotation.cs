@@ -102,9 +102,9 @@ namespace RotationTypes
             return HashCode.Combine(InternalMatrix, isRotationMatrix);
         }
         
-        public override EulerAngleRotationDeprecated ToEulerAngleRotation()
+        public override EulerAngleRotation ToEulerAngleRotation()
         {
-            EulerAngleRotationDeprecated newEulerAngle = new EulerAngleRotationDeprecated(0, 0, 0); 
+            EulerAngleRotation newEulerAngle = new EulerAngleRotation(0, 0, 0); 
             newEulerAngle.GetValuesFromMatrix(this);
             return newEulerAngle; 
         }
