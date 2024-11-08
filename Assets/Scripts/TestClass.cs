@@ -1,12 +1,28 @@
-using System.Collections.Generic;
-using RotationTypes;
+using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-[System.Serializable]
+[Serializable]
 public class TestClass
 {
-    // [SerializeField] private List<GimbleRing> testGimbleRotationArray;
-    [SerializeField] private int testInt;
-    [SerializeField] private float testFloat;
-    [SerializeField] private string testString; 
+    public TestClass(float testFloat)
+    {
+        this.testFloat = testFloat; 
+        child = new ChildClass(this); 
+    }
+
+    [SerializeField] public float testFloat = -1; 
+    [SerializeField] public ChildClass child;
+}
+
+[Serializable]
+public class ChildClass
+{
+    public ChildClass(TestClass parent)
+    {
+        this.parent = parent;
+        childTestFloat = parent.testFloat; 
+    }
+    [NonSerialized] public TestClass parent;    
+    [SerializeField] public float childTestFloat; 
 }

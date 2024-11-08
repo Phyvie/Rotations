@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Editor
 {
-    [CustomPropertyDrawer(typeof(GimbleRing))]
-    public class GimbleRingInspector : NestedPropertyDrawer<GimbleRing>
+    [CustomPropertyDrawer(typeof(GimbleRingDeprecated))]
+    public class GimbleRingDeprecatedInspector : NestedPropertyDrawer<GimbleRingDeprecated>
     {
         private SerializedProperty inheritsAngleTypeProp; 
         private SerializedProperty angleTypeProp; 
@@ -21,7 +21,7 @@ namespace Editor
             }
             if (PropertyAsT is null)
             {
-                Debug.LogError($"GimbleRing-PropertyAsT is null, can't Initialise Property");
+                Debug.LogError($"GimbleRingDeprecated-PropertyAsT is null, can't Initialise Property");
                 return; 
             }
             
@@ -67,7 +67,7 @@ namespace Editor
             
             if (PropertyAsT is null)
             {
-                Debug.LogWarning($"GimbleRing-PropertyAsT is null, can't GetPropertyHeight");
+                Debug.LogWarning($"GimbleRingDeprecated-PropertyAsT is null, can't GetPropertyHeight");
                 return 0; 
             }
 

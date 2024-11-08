@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Editor
 {
+    /*
     [CustomEditor(typeof(TestMonoBehaviour))]
     public class TestMonoBehaviourInspector : UnityEditor.Editor
     {
@@ -11,9 +12,10 @@ namespace Editor
         {
             serializedObject.Update();
 
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("euler"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("testObject"));
             
             serializedObject.ApplyModifiedProperties();
         }   
     }
+    */
 }

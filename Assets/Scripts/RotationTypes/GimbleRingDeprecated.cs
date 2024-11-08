@@ -13,9 +13,9 @@ namespace RotationTypes
     }
 
     [Serializable]
-    public class GimbleRing
+    public class GimbleRingDeprecated
     {
-        private GimbleRing()
+        private GimbleRingDeprecated()
         {
             eAxis = EGimbleAxis.Yaw;
             angle = 0;
@@ -23,7 +23,7 @@ namespace RotationTypes
             angleType = AngleType.Radian; 
         }
         
-        public GimbleRing(EGimbleAxis inEAxis, float inAngle, AngleType ownAngleType, EulerAngleRotation parentEulerAngle)
+        public GimbleRingDeprecated(EGimbleAxis inEAxis, float inAngle, AngleType ownAngleType, EulerAngleRotationDeprecated parentEulerAngle)
         {
             eAxis = inEAxis; 
             angle = inAngle;
@@ -31,12 +31,12 @@ namespace RotationTypes
             this.parentEulerAngle = parentEulerAngle; 
         }
         
-        public GimbleRing(GimbleRing gimbleRing)
+        public GimbleRingDeprecated(GimbleRingDeprecated gimbleRingDeprecated)
         {
-            eAxis = gimbleRing.eAxis;
-            angle = gimbleRing.angle;
-            angleType = gimbleRing.angleType;
-            parentEulerAngle = gimbleRing.parentEulerAngle; 
+            eAxis = gimbleRingDeprecated.eAxis;
+            angle = gimbleRingDeprecated.angle;
+            angleType = gimbleRingDeprecated.angleType;
+            parentEulerAngle = gimbleRingDeprecated.parentEulerAngle; 
         }
         
         public Vector3 GetRotationAxis()
@@ -50,7 +50,7 @@ namespace RotationTypes
             }; 
         }
         
-        [SerializeReference] public EulerAngleRotation parentEulerAngle; 
+        [SerializeReference] public EulerAngleRotationDeprecated parentEulerAngle; 
         public EGimbleAxis eAxis;
         public float angle;
 
@@ -65,7 +65,7 @@ namespace RotationTypes
             {
                 if (bInheritedAngleType)
                 {
-                    Debug.Log("Can't change angleType because it's inherited from parent EulerAngleRotation");
+                    Debug.Log("Can't change _angleType because it's inherited from parent EulerAngleRotationDeprecated");
                 }
                 else
                 {
@@ -74,17 +74,17 @@ namespace RotationTypes
             }
         }
 
-        public static GimbleRing Yaw(EulerAngleRotation parent)
+        public static GimbleRingDeprecated Yaw(EulerAngleRotationDeprecated parent)
         {
-            return new GimbleRing(EGimbleAxis.Yaw, (float)Math.PI / 2, AngleType.Radian, parent); 
+            return new GimbleRingDeprecated(EGimbleAxis.Yaw, (float)Math.PI / 2, AngleType.Radian, parent); 
         }
-        public static GimbleRing Pitch(EulerAngleRotation parent)
+        public static GimbleRingDeprecated Pitch(EulerAngleRotationDeprecated parent)
         {
-            return new GimbleRing(EGimbleAxis.Pitch, (float)Math.PI / 2, AngleType.Radian, parent); 
+            return new GimbleRingDeprecated(EGimbleAxis.Pitch, (float)Math.PI / 2, AngleType.Radian, parent); 
         }
-        public static GimbleRing Roll(EulerAngleRotation parent)
+        public static GimbleRingDeprecated Roll(EulerAngleRotationDeprecated parent)
         {
-            return new GimbleRing(EGimbleAxis.Roll, (float)Math.PI / 2, AngleType.Radian, parent); 
+            return new GimbleRingDeprecated(EGimbleAxis.Roll, (float)Math.PI / 2, AngleType.Radian, parent); 
         }
         
         

@@ -39,7 +39,7 @@ namespace RotationTypes
         }
         
         //AxisAngleRotation.ToEulerAngle() is the same as ToQuaternionRotation().ToEulerAngleRotation()
-        public override  EulerAngleRotation ToEulerAngleRotation()
+        public override  EulerAngleRotationDeprecated ToEulerAngleRotation()
         {
             Debug.LogWarning("AxisAngleRotation.ToEulerAngle() is the same as ToQuaternionRotation().ToEulerAngleRotation()");
             return ToQuaternionRotation().ToEulerAngleRotation(); 

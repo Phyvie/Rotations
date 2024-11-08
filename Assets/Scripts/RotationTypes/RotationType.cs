@@ -6,7 +6,7 @@ namespace RotationTypes
     [Serializable]
     public abstract class RotationType
     {
-        public abstract EulerAngleRotation ToEulerAngleRotation(); 
+        public abstract EulerAngleRotationDeprecated ToEulerAngleRotation(); 
         public abstract QuaternionRotation ToQuaternionRotation(); 
         public abstract MatrixRotation ToMatrixRotation(); 
         public abstract AxisAngleRotation ToAxisAngleRotation();

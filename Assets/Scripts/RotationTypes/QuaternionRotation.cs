@@ -236,9 +236,9 @@ namespace RotationTypes
                 ); 
         }
     
-        public override EulerAngleRotation ToEulerAngleRotation()
+        public override EulerAngleRotationDeprecated ToEulerAngleRotation()
         {
-            EulerAngleRotation newEulerAngle = new EulerAngleRotation(0, 0, 0); 
+            EulerAngleRotationDeprecated newEulerAngle = new EulerAngleRotationDeprecated(0, 0, 0); 
             newEulerAngle.GetValuesFromQuaternion(this);
             return newEulerAngle; 
         }

@@ -4057,20 +4057,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e85a9103fdbd4ce9ae5acfa8bdc882b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eulerAngleRotation:
-    firstGimbleRing:
+  eulerAngleRotationDeprecated:
+    firstGimbleRingDeprecated:
       parentEulerAngle:
-        rid: 5288731391316459540
+        rid: -2
       eAxis: 2
       angle: 37
-    secondGimbleRing:
+    secondGimbleRingDeprecated:
       parentEulerAngle:
-        rid: 5288731391316459540
+        rid: -2
       eAxis: 0
       angle: 0
-    thirdGimbleRing:
+    thirdGimbleRingDeprecated:
       parentEulerAngle:
-        rid: 5288731391316459540
+        rid: -2
       eAxis: 0
       angle: 0
     isIntrinsic: 0
@@ -4100,26 +4100,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 5288731391316459540
-      type: {class: EulerAngleRotation, ns: RotationTypes, asm: Assembly-CSharp}
-      data:
-        firstGimbleRing:
-          parentEulerAngle:
-            rid: 5288731391316459540
-          eAxis: 0
-          angle: 0
-        secondGimbleRing:
-          parentEulerAngle:
-            rid: 5288731391316459540
-          eAxis: 1
-          angle: 0
-        thirdGimbleRing:
-          parentEulerAngle:
-            rid: 5288731391316459540
-          eAxis: 2
-          angle: 0
-        isIntrinsic: 1
-        gimbleRingsInheritAngleType: 1
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &2036741022
 GameObject:
   m_ObjectHideFlags: 0
@@ -4363,47 +4345,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ade78c4b03c1f048a4aae7105d9d121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  euler:
-    firstGimbleRing:
-      parentEulerAngle:
-        rid: 5288731392434765824
-      eAxis: 0
-      angle: 0
-    secondGimbleRing:
-      parentEulerAngle:
-        rid: 5288731392434765824
-      eAxis: 1
-      angle: 0
-    thirdGimbleRing:
-      parentEulerAngle:
-        rid: 5288731392434765824
-      eAxis: 2
-      angle: 0
-    isIntrinsic: 0
-    gimbleRingsInheritAngleType: 0
+  testObject:
+    testName: initialisedTest
+    child:
+      parent:
+        rid: 5288731392434765830
+      childName: initialisedTest
   references:
     version: 2
     RefIds:
-    - rid: 5288731392434765824
-      type: {class: EulerAngleRotation, ns: RotationTypes, asm: Assembly-CSharp}
+    - rid: 5288731392434765830
+      type: {class: TestClass, ns: , asm: Assembly-CSharp}
       data:
-        firstGimbleRing:
-          parentEulerAngle:
-            rid: 5288731392434765824
-          eAxis: 0
-          angle: 0
-        secondGimbleRing:
-          parentEulerAngle:
-            rid: 5288731392434765824
-          eAxis: 1
-          angle: 0
-        thirdGimbleRing:
-          parentEulerAngle:
-            rid: 5288731392434765824
-          eAxis: 2
-          angle: 0
-        isIntrinsic: 1
-        gimbleRingsInheritAngleType: 1
+        testName: initialisedTest
+        child:
+          parent:
+            rid: 5288731392434765830
+          childName: initialisedTest
 --- !u!1001 &7678552021489249906
 PrefabInstance:
   m_ObjectHideFlags: 0

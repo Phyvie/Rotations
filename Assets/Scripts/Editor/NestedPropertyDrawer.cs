@@ -156,7 +156,7 @@ namespace Editor
 		        Debug.LogError($"Can't GetPropertyAs<{typeof(T).FullName}>, because parentObject is null");
 		        return default; 
 	        }
-	        if (parentObject is IList) //TODO: check whether this can replace an IsAssignableFrom
+	        if (parentObject is IList)
 	        {
 		        IList objectArray = (IList)parentObject;
 		        bool validArrayEntry = arrayIndex < objectArray.Count;
@@ -173,7 +173,7 @@ namespace Editor
 	        }
 	        else
 	        {
-		        returnValue = (T)propertyFieldInfo.GetValue(parentObject); //TODO! this actually doesn't work for lists //would be nice to have smth like FieldInfo.GetArrayValue
+		        returnValue = (T)propertyFieldInfo.GetValue(parentObject);
 	        }
 	        
 	        return returnValue; 
