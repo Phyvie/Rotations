@@ -31,9 +31,12 @@ namespace RotationTypes
             this.parentEulerAngle = parentEulerAngle; 
         }
         
-        public GimbleRing Clone(EulerAngleRotation parentGimble)
+        public GimbleRing(GimbleRing gimbleRing)
         {
-            return new GimbleRing(eAxis, angle, ownAngleType, parentGimble); 
+            eAxis = gimbleRing.eAxis;
+            angle = gimbleRing.angle;
+            angleType = gimbleRing.angleType;
+            parentEulerAngle = gimbleRing.parentEulerAngle; 
         }
         
         public Vector3 GetRotationAxis()

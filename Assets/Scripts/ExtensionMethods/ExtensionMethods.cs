@@ -2,6 +2,7 @@
 using System;
 using Unity.Mathematics;
 using Unity.VisualScripting.Dependencies.Sqlite;
+using UnityEditor;
 using UnityEngine;
 
 namespace ExtensionMethods

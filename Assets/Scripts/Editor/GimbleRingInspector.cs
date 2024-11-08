@@ -10,12 +10,34 @@ namespace Editor
         private SerializedProperty inheritsAngleTypeProp; 
         private SerializedProperty angleTypeProp; 
         private SerializedProperty axisProp; 
-        private SerializedProperty angleProp; 
+        private SerializedProperty angleProp;
+        private bool isInitialized = false; 
+        
+        private void Initialize(SerializedProperty property)
+        {
+            if (isInitialized)
+            {
+                return; 
+            }
+            if (PropertyAsT is null)
+            {
+                Debug.LogError($"GimbleRing-PropertyAsT is null, can't Initialise Property");
+                return; 
+            }
+            
+            angleTypeProp = property.FindPropertyRelative("ownAngleType");
+            axisProp = property.FindPropertyRelative("eAxis");
+            angleProp = property.FindPropertyRelative("angle");
+
+            isInitialized = true; 
+        }
         
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.BeginProperty(position, label, property);
             InitializePropertyNesting(property);
+            Initialize(property);
+            
+            EditorGUI.BeginProperty(position, label, property);
             position.height = EditorGUIUtility.singleLineHeight;
 
             if (PropertyAsT is null)
@@ -25,16 +47,13 @@ namespace Editor
             
             if (!PropertyAsT.bInheritedAngleType)
             {
-                angleTypeProp = property.FindPropertyRelative("ownAngleType");
                 EditorGUI.PropertyField(position, angleTypeProp);
                 position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
             }
 
-            axisProp = property.FindPropertyRelative("eAxis");
             EditorGUI.PropertyField(position, axisProp);
             position.y += EditorGUI.GetPropertyHeight(axisProp);
 
-            angleProp = property.FindPropertyRelative("angle");
             EditorGUI.PropertyField(position, angleProp);
             position.y += EditorGUI.GetPropertyHeight(angleProp);
 
@@ -43,15 +62,14 @@ namespace Editor
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
+            InitializePropertyNesting(property);
+            Initialize(property);
+            
             if (PropertyAsT is null)
             {
                 Debug.LogWarning($"GimbleRing-PropertyAsT is null, can't GetPropertyHeight");
                 return 0; 
             }
-            
-            angleTypeProp = property.FindPropertyRelative("ownAngleType");
-            axisProp = property.FindPropertyRelative("eAxis"); 
-            angleProp = property.FindPropertyRelative("angle");
 
             float propertyHeight =
                 (PropertyAsT.bInheritedAngleType ? 0 : EditorGUI.GetPropertyHeight(angleTypeProp) + EditorGUIUtility.standardVerticalSpacing) +

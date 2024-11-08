@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8b54c963-bad1-41cc-8b0e-252a0574fd2d" name="Changes" comment="" />
+    <list default="true" id="8b54c963-bad1-41cc-8b0e-252a0574fd2d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/3D Rotations.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/3D Rotations.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/EulerAngleRotationInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/EulerAngleRotationInspector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingInspector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ExtensionMethods/ExtensionMethods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ExtensionMethods/ExtensionMethods.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AxisAngleRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AxisAngleRotation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/GimbleRing.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/GimbleRing.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -128,10 +137,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="9044">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="10328">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="9044" />
+      <option name="pid" value="10328" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -173,6 +182,7 @@
       <workItem from="1730901172712" duration="18752000" />
       <workItem from="1730924437246" duration="13682000" />
       <workItem from="1730993450921" duration="10202000" />
+      <workItem from="1731081695328" duration="5750000" />
     </task>
     <servers />
   </component>
@@ -189,22 +199,23 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingInspector.cs</url>
-          <line>55</line>
-          <properties documentPath="D:\programming\Rotations\Assets\Scripts\Editor\GimbleRingInspector.cs" initialLine="55" containingFunctionPresentation="Method 'GetPropertyHeight'">
+          <line>47</line>
+          <properties documentPath="D:\programming\Rotations\Assets\Scripts\Editor\GimbleRingInspector.cs" initialLine="47" containingFunctionPresentation="Method 'OnGUI'">
             <startOffsets>
-              <option value="2080" />
+              <option value="1517" />
             </startOffsets>
             <endOffsets>
-              <option value="2402" />
+              <option value="1554" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="82" />
+          <option name="timeStamp" value="94" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Type#UnityEditor.SerializedProperty" memberName="minArraySize" />
+        <PinnedItemInfo parentTag="Type#RotationTypes.EulerAngleRotation" memberName="Pitch" />
       </pinned-members>
     </pin-to-top-manager>
   </component>

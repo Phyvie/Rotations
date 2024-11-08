@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace RotationTypes
 {
@@ -11,14 +9,52 @@ namespace RotationTypes
         Invalid, 
         TrueEulerAngle, 
         TaitBryanAngle, 
-        OversizedEulerAngle, 
-        OversizedTaitBryanAngle
     }
     
     [Serializable]
     public class EulerAngleRotation : RotationType
     {
-        [SerializeField] private List<GimbleRing> gimble;
+        public GimbleRing firstGimbleRing; 
+        public GimbleRing secondGimbleRing; 
+        public GimbleRing thirdGimbleRing;
+        private GimbleRing[] gimble; 
+        private GimbleRing Yaw => GetRingForAxis(EGimbleAxis.Yaw); 
+        private GimbleRing Pitch => GetRingForAxis(EGimbleAxis.Pitch); 
+        private GimbleRing Roll => GetRingForAxis(EGimbleAxis.Roll); 
+        
+        private GimbleRing GetRingForAxis(EGimbleAxis eAxis)
+        {
+            GimbleRing result = null;
+            if (firstGimbleRing.eAxis == eAxis)
+            {
+                result = firstGimbleRing; 
+            }
+            if (secondGimbleRing.eAxis == eAxis)
+            {
+                if (result is not null)
+                {
+                    Debug.LogWarning($"EulerAngleRotation has multiple axis of type: {eAxis.ToString()}; returning the first rotation of given axis"); 
+                }
+                else
+                {
+                    result = secondGimbleRing; 
+                }
+            }
+            if (thirdGimbleRing.eAxis == eAxis)
+            {
+                if (result is not null)
+                {
+                    Debug.LogWarning($"EulerAngleRotation has multiple axis of type: {eAxis.ToString()}; returning the first rotation of given axis"); 
+                }
+                else
+                {
+                    result = thirdGimbleRing; 
+                }
+            }
+
+            return result; 
+        }
+        
         [SerializeField] private bool isIntrinsic = true;
         
         public bool IsIntrinsic
@@ -43,67 +79,100 @@ namespace RotationTypes
             set => SetAngleType(value);
         }
         
-        public EulerAngleRotation()
+        public EulerAngleRotation() : this (0, 0, 0, AngleType.Radian)
         {
-            GimbleRing yaw = GimbleRing.Yaw(this);
-            GimbleRing pitch = GimbleRing.Pitch(this);
-            GimbleRing roll = GimbleRing.Roll(this);
-
-            gimble = new List<GimbleRing>() { yaw, pitch, roll}; 
         }
 
-        public EulerAngleRotation(List<GimbleRing> gimble)
+        public EulerAngleRotation(EulerAngleRotation toCopy) : 
+            this(toCopy.firstGimbleRing, toCopy.secondGimbleRing, toCopy.thirdGimbleRing, toCopy.angleType, bCopyRings: true, isIntrinsic: toCopy.isIntrinsic, ringsInheritAngleType: toCopy.gimbleRingsInheritAngleType)
         {
-            this.gimble = new List<GimbleRing>();
-            foreach (GimbleRing gimbleRing in gimble)
-            {
-                this.gimble.Add(gimbleRing);
-            }
-        }
-
-        public EulerAngleRotation(float inRoll, float inYaw, float inPitch) : 
-            this(inRoll, inYaw, inPitch, AngleType.Radian)
-        {
-            
         }
         
-        public EulerAngleRotation(float inRoll, float inYaw, float inPitch, AngleType inAngleType)
+        public EulerAngleRotation(float inYaw, float inPitch, float inRoll) : 
+            this(inRoll, inYaw, inPitch, AngleType.Radian)
         {
-            gimble = new List<GimbleRing>()
-            {
-                GimbleRing.Yaw(this), 
-                GimbleRing.Pitch(this), 
-                GimbleRing.Roll(this), 
-            }; 
-            
-            if (this.angleType is null && inAngleType is null)
-            {
-                Debug.LogError("Can't Construct EulerAngleRotation without angleType");
-                return; 
-            }
-
-            angleType = inAngleType; 
+        }
+        
+        public EulerAngleRotation(float inYaw, float inPitch, float inRoll, AngleType inAngleType) : 
+            this(new GimbleRing(EGimbleAxis.Yaw, inYaw, inAngleType, null), 
+                new GimbleRing(EGimbleAxis.Pitch, inPitch, inAngleType, null), 
+                new GimbleRing(EGimbleAxis.Roll, inRoll, inAngleType, null), 
+                inAngleType)
+        {
         }
 
+        public EulerAngleRotation(
+            float firstAngle, EGimbleAxis firstAxis, AngleType firstAngleType, 
+            float secondAngle, EGimbleAxis secondAxis, AngleType secondAngleType, 
+            float thirdAngle, EGimbleAxis thirdAxis, AngleType thirdAngleType, 
+            AngleType inAngleType, bool bCopyRings = false, bool isIntrinsic = false, bool ringsInheritAngleType = true) : 
+            this(new GimbleRing(firstAxis, firstAngle, firstAngleType, null), 
+                new GimbleRing(secondAxis, secondAngle, secondAngleType, null), 
+                new GimbleRing(thirdAxis, thirdAngle, thirdAngleType, null), 
+                inAngleType, bCopyRings, isIntrinsic, ringsInheritAngleType)
+        {
+        }
+
+        public EulerAngleRotation(GimbleRing firstRing, GimbleRing secondRing, GimbleRing thirdRing,
+            AngleType inAngleType, bool bCopyRings = false, bool isIntrinsic = true, bool ringsInheritAngleType = true)
+        {
+            if (bCopyRings)
+            {
+                firstGimbleRing = new GimbleRing(firstRing); 
+                secondGimbleRing = new GimbleRing(secondRing); 
+                thirdGimbleRing = new GimbleRing(thirdRing); 
+            }
+            else
+            {
+                firstGimbleRing = firstRing;
+                secondGimbleRing = secondRing;
+                thirdGimbleRing = thirdRing;
+            }
+            firstGimbleRing.parentEulerAngle = this; 
+            secondGimbleRing.parentEulerAngle = this; 
+            thirdGimbleRing.parentEulerAngle = this; 
+            
+            if (angleType is null && inAngleType is null)
+            {
+                Debug.LogError("EulerAngleConstructor: angleType is null, setting angleType to Radian");
+                angleType = AngleType.Radian;
+            }
+            else
+            {
+                angleType = inAngleType;
+            }
+
+            gimbleRingsInheritAngleType = ringsInheritAngleType;
+            this.isIntrinsic = isIntrinsic;
+            gimble = new GimbleRing[]
+            {
+                firstGimbleRing, secondGimbleRing, thirdGimbleRing
+            }; 
+        }
+        
         public void SetAngleType(AngleType value)
         {
-            foreach (GimbleRing gimbleRing in gimble)
+            if (value is null)
             {
-                gimbleRing.angleType = value; 
+                Debug.LogError("EulerAngleRotation.SetAngleType error: value is null"); 
+                return; 
+            }
+            
+            if (gimbleRingsInheritAngleType)
+            {
+                foreach (GimbleRing gimbleRing in gimble)
+                {
+                    gimbleRing.angleType = value; 
+                }
             }
             _angleType = value; 
         }
+
+        public void SwitchGimbleOrder(int firstIndex, int secondIndex)
+        {
+            (gimble[firstIndex], gimble[secondIndex]) = (gimble[secondIndex], gimble[firstIndex]); 
+        }
         
-        public void SetRotationValue(EGimbleAxis gimbleAxis, float value)
-        {
-            gimble.First(gimbleRing => gimbleRing.eAxis == gimbleAxis).angle = value; 
-        }
-
-        public float GetRotationValue(EGimbleAxis gimbleAxis)
-        {
-            return gimble.First(gimbleRing => gimbleRing.eAxis == gimbleAxis).angle; 
-        }
-
         public void SwitchGimbleOrder(GimbleRing firstRing, GimbleRing secondRing)
         {
             (firstRing, secondRing) = (secondRing, firstRing); //TODO: test this function
@@ -116,83 +185,42 @@ namespace RotationTypes
 
         public EGimbleType GetGimbleType()
         {
-            if (gimble.Count <= 0)
+            HashSet<EGimbleAxis> gimbleAxisSet = new HashSet<EGimbleAxis>();
+
+            if (gimbleAxisSet.Contains(gimble[1].eAxis))
             {
+                Debug.Log("Gimble Invalid because: FirstGimbleRing.eAxis == SecondGimbleRing.eAxis");
                 return EGimbleType.Invalid; 
             }
-            
-            HashSet<EGimbleAxis> gimbleAxisSet = new HashSet<EGimbleAxis>();
-            IEnumerator<GimbleRing> gimbleIterator = gimble.GetEnumerator();
-            gimbleIterator.MoveNext(); 
-            EGimbleAxis lastGimbleAxis = gimbleIterator.Current.eAxis;
-            gimbleAxisSet.Add(gimbleIterator.Current.eAxis); 
-            while (gimbleIterator.MoveNext())
+            else
             {
-                if (gimbleAxisSet.Contains(gimbleIterator.Current.eAxis))
-                {
-                    if (lastGimbleAxis != gimbleIterator.Current.eAxis)
-                    {
-                        if (gimble.Count > 3)
-                        {
-                            gimbleIterator.Dispose();
-                            return EGimbleType.OversizedEulerAngle; 
-                        }
-                        gimbleIterator.Dispose();
-                        return EGimbleType.TrueEulerAngle; 
-                    }
-                }
-
-                lastGimbleAxis = gimbleIterator.Current.eAxis; 
-                gimbleAxisSet.Add(gimbleIterator.Current.eAxis); 
+                gimbleAxisSet.Add(gimble[1].eAxis); 
             }
-            if (gimbleAxisSet.Count == 3)
+
+            if (gimbleAxisSet.Contains(gimble[2].eAxis))
             {
-                if (gimble.Count > 3)
+                if (gimble[2].eAxis == gimble[0].eAxis)
                 {
-                    gimbleIterator.Dispose();
-                    return EGimbleType.OversizedTaitBryanAngle; 
+                    return EGimbleType.TrueEulerAngle; 
                 }
-                gimbleIterator.Dispose();
+                else //if (gimble[2].eAxis == gimble[1].eAxis)
+                {
+                    Debug.Log("Gimble Invalid because: SecondGimbleRings.eAxis == ThirdGimbleRing.eAxis"); 
+                    return EGimbleType.Invalid; 
+                }
+            }
+            else
+            {
                 return EGimbleType.TaitBryanAngle; 
             }
-            
-            gimbleIterator.Dispose();
-            return EGimbleType.Invalid; 
-        }
-
-        public String GetAddButtonName()
-        {
-            EGimbleType gimbleType = GetGimbleType(); 
-            if (gimbleType != EGimbleType.Invalid)
-            {
-                return "Oversize Gimble"; 
-            }
-
-            if (gimble.Count >= 3)
-            {
-                return "Oversize Invalid Gimble"; 
-            }
-
-            return "Add GimbleRing"; 
-        }
-
-        public String GetRemoveButtonName()
-        {
-            EGimbleType gimbleType = GetGimbleType(); 
-            if (gimble.Count == 3)
-            {
-                return "Undersize Gimble"; 
-            }
-
-            return "Remove surplus GimbleRing"; 
         }
 
         public override EulerAngleRotation ToEulerAngleRotation()
         {
-            return new EulerAngleRotation(gimble); 
+            return new EulerAngleRotation(this); 
         }
 
-        public override QuaternionRotation ToQuaternionRotation() //TODO: test this function
+        public override QuaternionRotation ToQuaternionRotation() //TODO: adjust for IsIntrinsic
         {
             QuaternionRotation result = new QuaternionRotation();
             foreach (GimbleRing rotation in gimble)
@@ -202,16 +230,14 @@ namespace RotationTypes
             return result; 
         }
 
-        public void GetValuesFromQuaternion(QuaternionRotation quaternionRotation)
+        public void GetValuesFromQuaternion(QuaternionRotation quaternionRotation) //TODO: test
         {
             QuaternionRotation quaternionRotationCopy = new QuaternionRotation(quaternionRotation); 
-            List<GimbleRing> incompleteGimble = new List<GimbleRing>(); 
-            EulerAngleRotation incompleteEulerAngleRotation = new EulerAngleRotation(incompleteGimble); 
+            EulerAngleRotation incompleteEulerAngleRotation = new EulerAngleRotation(this); 
             
-            for (int i = 0; i < gimble.Count; i++)
+            for (int i = 0; i < gimble.Length; i++)
             {
                 gimble[i].ExtractValueFromQuaternion(quaternionRotationCopy);  
-                incompleteGimble.Add(gimble[i]);
                 QuaternionRotation inverseRotation = incompleteEulerAngleRotation.ToQuaternionRotation().Inverse();
                 if (isIntrinsic || !isIntrinsic)
                 {
@@ -225,7 +251,7 @@ namespace RotationTypes
             }
         }
         
-        //ToQuaternionRotation.ToMatrixRotation is cheaper, because converting from EulerAngles to another RotationType requires combining multiple rotations throughout the process which is cheaper in Quaternions
+        //ToQuaternionRotation.ToMatrixRotation is cheaper, because converting from EulerAngles to another RotationType requires combining and inversing multiple rotation, which is cheaper in Quaternions
         public override MatrixRotation ToMatrixRotation() //TODO: test this function
         {
             MatrixRotation result = new MatrixRotation(MatrixRotation.RotationIdentity());
@@ -236,17 +262,14 @@ namespace RotationTypes
             return result; 
         }
 
-        public void GetValuesFromMatrix(MatrixRotation matrixRotation)
+        public void GetValuesFromMatrix(MatrixRotation matrixRotation) //TODO: test this function
         {
             MatrixRotation matrixRotationCopy = new MatrixRotation(matrixRotation); 
-            List<GimbleRing> incompleteGimble = new List<GimbleRing>(); 
-            EulerAngleRotation incompleteEulerAngleRotation = new EulerAngleRotation(incompleteGimble); 
             
-            for (int i = 0; i < gimble.Count; i++)
+            for (int i = 0; i < gimble.Length; i++)
             {
                 gimble[i].ExtractValueFromMatrix(matrixRotationCopy); 
-                incompleteGimble.Add(gimble[i]);
-                MatrixRotation inverseRotation = incompleteEulerAngleRotation.ToMatrixRotation().Inverse();
+                MatrixRotation inverseRotation = gimble[i].toMatrixRotation().Inverse();
                 if (isIntrinsic || !isIntrinsic)
                 {
                     matrixRotationCopy = inverseRotation * matrixRotationCopy; 

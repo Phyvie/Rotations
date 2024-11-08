@@ -7,14 +7,14 @@ namespace RotationTypes
     [Serializable]
     public class AxisAngleRotation : RotationType
     {
-        [SerializeField] private Vector3 axisAngle;
         [SerializeField] protected AngleType _angleType = AngleType.Radian;
-
         public AngleType angleType
         {
             get => _angleType;
             set => SetAngleType(value);
         }
+        
+        [SerializeField] private Vector3 axisAngle;
         
         private Vector3 axis => axisAngle.normalized; 
         private float angle => axisAngle.magnitude;
