@@ -55,7 +55,7 @@ namespace RotationTypes
         public float angle;
 
         public bool bInheritedAngleType =>
-            parentEulerAngle is null ? false : parentEulerAngle.GimbleAxesInheritAngleType; 
+            parentEulerAngle is null ? false : parentEulerAngle.GimbleRingsInheritAngleType; 
         [SerializeField] private AngleType ownAngleType; 
         
         public AngleType angleType

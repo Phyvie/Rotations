@@ -11,7 +11,7 @@ namespace Editor
         {
             serializedObject.Update();
 
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("gimbleRing"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("euler"));
             
             serializedObject.ApplyModifiedProperties();
         }   

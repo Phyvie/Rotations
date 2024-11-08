@@ -5,7 +5,5 @@ using UnityEngine;
 
 public class TestMonoBehaviour : MonoBehaviour
 {
-    [SerializeField] private GimbleRing gimbleRing; 
-    [SerializeField] private GimbleRing[] gimbleArray;
-    [SerializeField] private List<GimbleRing> gimbleList;
+    [SerializeField] private EulerAngleRotation euler = new EulerAngleRotation(37, 13, 11); 
 }

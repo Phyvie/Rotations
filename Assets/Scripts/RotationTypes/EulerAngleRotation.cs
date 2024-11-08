@@ -65,7 +65,7 @@ namespace RotationTypes
 
         [SerializeField] private bool gimbleRingsInheritAngleType;
 
-        public bool GimbleAxesInheritAngleType
+        public bool GimbleRingsInheritAngleType
         {
             get => gimbleRingsInheritAngleType;
             set => gimbleRingsInheritAngleType = value;
@@ -93,7 +93,7 @@ namespace RotationTypes
         {
         }
         
-        public EulerAngleRotation(float inYaw, float inPitch, float inRoll, AngleType inAngleType) : 
+        public EulerAngleRotation(float inYaw, float inPitch, float inRoll, AngleType inAngleType) : //TODO: order of gimbleAxes
             this(new GimbleRing(EGimbleAxis.Yaw, inYaw, inAngleType, null), 
                 new GimbleRing(EGimbleAxis.Pitch, inPitch, inAngleType, null), 
                 new GimbleRing(EGimbleAxis.Roll, inRoll, inAngleType, null), 

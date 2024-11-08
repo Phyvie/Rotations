@@ -22,7 +22,7 @@ namespace Editor
         {
             if (isInitialised)
             {
-                return; 
+                // return; 
             }
             
             firstGimbleRing = property.FindPropertyRelative("firstGimbleRing");
@@ -31,6 +31,9 @@ namespace Editor
             angleTypeProperty = property.FindPropertyRelative("_angleType"); 
             gimbleRingsInheritAngleTypeProp = property.FindPropertyRelative("gimbleRingsInheritAngleType");
             isIntrinsicProperty = property.FindPropertyRelative("isIntrinsic");
+            ((GimbleRing)firstGimbleRing.boxedValue).parentEulerAngle = PropertyAsT; 
+            ((GimbleRing)secondGimbleRing.boxedValue).parentEulerAngle = PropertyAsT; 
+            ((GimbleRing)thirdGimbleRing.boxedValue).parentEulerAngle = PropertyAsT; 
             
             isInitialised = true; 
         }
@@ -73,7 +76,7 @@ namespace Editor
                 EditorGUI.PropertyField(position, thirdGimbleRing); 
                 position.y += EditorGUI.GetPropertyHeight(thirdGimbleRing);
 
-                PropertyAsT.GimbleAxesInheritAngleType = EditorGUI.Toggle(position, "inheritAngleType", PropertyAsT.GimbleAxesInheritAngleType); 
+                PropertyAsT.GimbleRingsInheritAngleType = EditorGUI.Toggle(position, "inheritAngleType", PropertyAsT.GimbleRingsInheritAngleType); 
                 position.y += EditorGUI.GetPropertyHeight(gimbleRingsInheritAngleTypeProp) + EditorGUIUtility.standardVerticalSpacing;
                 
                 
