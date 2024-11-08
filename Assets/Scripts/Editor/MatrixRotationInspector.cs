@@ -7,7 +7,7 @@ namespace Editor
     public class MatrixRotationInspector
     {
         [CustomPropertyDrawer(typeof(MatrixRotation))]
-        public class MatrixInspector : NestedPropertyDrawer
+        public class MatrixInspector : NestedPropertyDrawer<MatrixRotation>
         {
             private SerializedProperty internalMatrixProp; 
             

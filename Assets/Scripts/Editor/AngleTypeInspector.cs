@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Editor
 {
     [CustomPropertyDrawer(typeof(AngleType))]
-    public class AngleTypeInspector : NestedPropertyDrawer
+    public class AngleTypeInspector : NestedPropertyDrawer<AngleType>
     {
         public override void OnGUI(Rect positionRect, SerializedProperty property, GUIContent label)
         {
@@ -32,30 +32,18 @@ namespace Editor
             if (currentIndex >= AngleType.AngleTypes.Length || currentIndex < 0)
             {
                 newIndex = 0;
-                StringBuilder ObjectPath = new StringBuilder(); 
-                foreach(Type type in propertyTypeHierarchy)
-                {
-                    // ObjectPath.Append(type); 
-                }
                 Debug.LogWarning($"Couldn't find angleType in AngleType.AngleTypes for object: {((MonoBehaviour)(property.serializedObject.targetObject))}");
             }
             
             if (newIndex >= 0 && newIndex != currentIndex)
             {
                 SetPropertyToT(AngleType.AngleTypes[newIndex]);
-                // propertyFieldInfo.SetValue(parentObject, AngleType.AngleTypes[newIndex]); //TODO: deprecated
             }
             EditorGUI.EndProperty();
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            if (property.isArray)
-            {
-                return property.arraySize *
-                       (EditorGUIUtility.singleLineHeight * EditorGUIUtility.standardVerticalSpacing) -
-                       EditorGUIUtility.standardVerticalSpacing; 
-            }
             return EditorGUIUtility.singleLineHeight; 
         }
     }

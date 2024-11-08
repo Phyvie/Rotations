@@ -11,9 +11,7 @@ namespace Editor
         {
             serializedObject.Update();
 
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("mBTestClass"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("eulerAngleInMB"));
-            // EditorGUILayout.PropertyField(serializedObject.FindProperty("MBTestGimbleRotationArray"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("gimbleRing"));
             
             serializedObject.ApplyModifiedProperties();
         }   

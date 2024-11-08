@@ -4059,16 +4059,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eulerAngleRotation:
     gimble:
-    - inheritAngleTypeFromOwner: 0
+    - parentEulerAngle:
+        rid: 5288731376672833537
       eAxis: 0
-      angle: 0
-    - inheritAngleTypeFromOwner: 0
-      eAxis: 0
-      angle: 0
-    - inheritAngleTypeFromOwner: 0
-      eAxis: 0
-      angle: 0
+      angle: 1.5707964
+    - parentEulerAngle:
+        rid: 5288731376672833537
+      eAxis: 1
+      angle: 1.5707964
+    - parentEulerAngle:
+        rid: 5288731376672833537
+      eAxis: 2
+      angle: 1.5707964
     isIntrinsic: 1
+    gimbleRingsInheritAngleType: 1
   quaternionRotation:
     _real: 1
     _i: 0
@@ -4091,6 +4095,27 @@ MonoBehaviour:
       height: 3
       width: 3
   _mbMatrix: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 5288731376672833537
+      type: {class: EulerAngleRotation, ns: RotationTypes, asm: Assembly-CSharp}
+      data:
+        gimble:
+        - parentEulerAngle:
+            rid: 5288731376672833537
+          eAxis: 0
+          angle: 1.5707964
+        - parentEulerAngle:
+            rid: 5288731376672833537
+          eAxis: 1
+          angle: 1.5707964
+        - parentEulerAngle:
+            rid: 5288731376672833537
+          eAxis: 2
+          angle: 1.5707964
+        isIntrinsic: 1
+        gimbleRingsInheritAngleType: 0
 --- !u!1 &2036741022
 GameObject:
   m_ObjectHideFlags: 0
@@ -4334,41 +4359,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ade78c4b03c1f048a4aae7105d9d121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mBTestClass:
-  - testInt: 0
-    testFloat: 0
-    testString: 
-  - testInt: 0
-    testFloat: 0
-    testString: 
-  - testInt: 0
-    testFloat: 0
-    testString: 
-  eulerAngleInMB:
-  - gimble:
-    - inheritAngleTypeFromOwner: 0
-      eAxis: 0
-      angle: 0
-    - inheritAngleTypeFromOwner: 0
-      eAxis: 1
-      angle: 0
-    - inheritAngleTypeFromOwner: 0
-      eAxis: 2
-      angle: 0
-    isIntrinsic: 0
-  - gimble:
-    - inheritAngleTypeFromOwner: 0
-      eAxis: 1
-      angle: 0
-    - inheritAngleTypeFromOwner: 0
-      eAxis: 2
-      angle: 0
-    - inheritAngleTypeFromOwner: 0
-      eAxis: 0
-      angle: 0
-    isIntrinsic: 0
-  - gimble: []
-    isIntrinsic: 0
+  gimbleRing:
+    parentEulerAngle:
+      rid: -2
+    eAxis: 0
+    angle: 0
+  gimbleArray:
+  - parentEulerAngle:
+      rid: -2
+    eAxis: 0
+    angle: 0
+  gimbleList: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1001 &7678552021489249906
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -8,10 +8,17 @@ using UnityEngine;
 
 namespace Editor
 {
-    public class NestedPropertyDrawer : PropertyDrawer
+    public class NestedPropertyDrawer<T> : PropertyDrawer
     {
         private bool initialized = false;
-        protected object propertyObject = null;
+        protected object propertyAsObject = null;
+
+        protected T PropertyAsT
+        {
+	        get => GetPropertyAsT<T>();
+	        set => SetPropertyToT(value); 
+        }
+        
         protected object parentObject => propertyObjectHierarchy[^2]; 
         protected Type propertyType = null;
         protected FieldInfo propertyFieldInfo = null;
@@ -27,21 +34,19 @@ namespace Editor
         protected virtual void InitializePropertyNesting(SerializedProperty prop)
         {
             if (initialized)
-            {
-	            propertyObjectHierarchy.Clear();
-	            propertyTypeHierarchy.Clear(); 
-               // return; 
+            { 
+	            return; 
             }
 
             SerializedObject serializedObject = prop.serializedObject;
             string path = prop.propertyPath;
 
-            propertyObject = serializedObject?.targetObject;
-            propertyType = propertyObject?.GetType();
-			propertyObjectHierarchy.Add(propertyObject);
+            propertyAsObject = serializedObject?.targetObject;
+            propertyType = propertyAsObject?.GetType();
+			propertyObjectHierarchy.Add(propertyAsObject);
             propertyTypeHierarchy.Add(propertyType);
 			
-            if (string.IsNullOrEmpty(path) || propertyObject is null)
+            if (string.IsNullOrEmpty(path) || propertyAsObject is null)
             {
                 return; 
             }
@@ -66,14 +71,14 @@ namespace Editor
 					Match elementMatch = matchArrayElement.Match(pathNode);
 					if (elementMatch.Success && int.TryParse(elementMatch.Groups[1].Value, out arrayIndex))
 					{
-						IList objectArray = (IList)propertyObject;
+						IList objectArray = (IList)propertyAsObject;
 						bool validArrayEntry = objectArray != null && arrayIndex < objectArray.Count;
 						
-						propertyObject = validArrayEntry ? objectArray[arrayIndex] : null;
+						propertyAsObject = validArrayEntry ? objectArray[arrayIndex] : null;
 						propertyType = currentlyCheckedFieldType.IsArray
 							? currentlyCheckedFieldType.GetElementType()          //only set for arrays
 							: currentlyCheckedFieldType.GenericTypeArguments[0];  //type of `T` in List<T>
-						propertyObjectHierarchy.Add(propertyObject);
+						propertyObjectHierarchy.Add(propertyAsObject);
 						propertyTypeHierarchy.Add(propertyType);
 						propertyArrayIndicesHierarchy.Add(arrayIndex);
 					}
@@ -101,13 +106,13 @@ namespace Editor
 					while (field == null && instanceType != typeof(object));
 
 					//store object info for next iteration or to return
-					propertyObject = (field == null || propertyObject == null) ? null : field.GetValue(propertyObject);
+					propertyAsObject = (field == null || propertyAsObject == null) ? null : field.GetValue(propertyAsObject);
 					currentlyCheckedFieldType = field == null ? null : field.FieldType;
 					propertyType = currentlyCheckedFieldType;
 					propertyFieldInfo = fieldInfo;
 					arrayIndex = -1; 
 					
-					propertyObjectHierarchy.Add(propertyObject);
+					propertyObjectHierarchy.Add(propertyAsObject);
 					propertyTypeHierarchy.Add(propertyType); 
 					propertyArrayIndicesHierarchy.Add(-1);
 					propertyFieldInfoHierarchy.Add(field);

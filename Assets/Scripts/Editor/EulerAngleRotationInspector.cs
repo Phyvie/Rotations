@@ -6,10 +6,11 @@ using UnityEngine;
 namespace Editor
 {
     [CustomPropertyDrawer(typeof(EulerAngleRotation))]
-    public class EulerAngleRotationInspector : NestedPropertyDrawer
+    public class EulerAngleRotationInspector : NestedPropertyDrawer<EulerAngleRotation>
     {
         private SerializedProperty gimbleProperty;
         private SerializedProperty angleTypeProperty;
+        private SerializedProperty gimbleRingsInheritAngleTypeProp;
         
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -43,7 +44,12 @@ namespace Editor
                 gimbleProperty = property.FindPropertyRelative("gimble");
                 EditorGUI.PropertyField(position, gimbleProperty); 
                 position.y += EditorGUI.GetPropertyHeight(gimbleProperty) + EditorGUIUtility.standardVerticalSpacing;
-                EditorGUI.indentLevel-=2; 
+                
+                gimbleRingsInheritAngleTypeProp = property.FindPropertyRelative("gimbleRingsInheritAngleType");
+                EditorGUI.PropertyField(position, gimbleRingsInheritAngleTypeProp); 
+                position.y += EditorGUI.GetPropertyHeight(gimbleRingsInheritAngleTypeProp) + EditorGUIUtility.standardVerticalSpacing;
+                
+                EditorGUI.indentLevel-=2;
             }
             
             EditorGUI.EndProperty(); 
@@ -53,10 +59,14 @@ namespace Editor
         {
             angleTypeProperty = property.FindPropertyRelative("_angleType");
             gimbleProperty = property.FindPropertyRelative("gimble");
+            gimbleRingsInheritAngleTypeProp = property.FindPropertyRelative("gimbleRingsInheritAngleType");
+            
             float unfoldedHeight =
                 (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 2
                 + EditorGUI.GetPropertyHeight(angleTypeProperty) 
-                + EditorGUI.GetPropertyHeight(gimbleProperty);
+                + EditorGUI.GetPropertyHeight(gimbleProperty)
+                + EditorGUI.GetPropertyHeight(gimbleRingsInheritAngleTypeProp)
+                ;
             float foldedHeight = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 
             
             return (property.isExpanded ? unfoldedHeight : foldedHeight); 

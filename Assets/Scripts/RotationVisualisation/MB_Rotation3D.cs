@@ -1,5 +1,6 @@
 using RotationTypes;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RotationVisualisation
 {
@@ -21,7 +22,7 @@ namespace RotationVisualisation
             axisAngleRotation = eulerAngleRotation.ToAxisAngleRotation();
             matrixRotation = eulerAngleRotation.ToMatrixRotation(); 
         }
-        //TODO: Check the conversion between Rotations
+        
         [ContextMenu("UpdateBasedOnEuler")]
         void UpdateBasedOnEuler()
         {

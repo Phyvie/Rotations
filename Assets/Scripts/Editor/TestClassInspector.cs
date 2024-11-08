@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Editor
 {
     [CustomPropertyDrawer(typeof(TestClass))]
-    public class TestClassInspector : NestedPropertyDrawer
+    public class TestClassInspector : NestedPropertyDrawer<TestClass>
     {
         private SerializedProperty testGimbleRotationArrayProp;
         private SerializedProperty testIntProp; 

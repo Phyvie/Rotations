@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RotationTypes
 {
@@ -17,15 +18,7 @@ namespace RotationTypes
     [Serializable]
     public class EulerAngleRotation : RotationType
     {
-        [SerializeField] protected AngleType _angleType = AngleType.Radian;
-
-        public AngleType angleType
-        {
-            get => _angleType;
-            set => SetAngleType(value);
-        }
-
-        [SerializeField] private List<SingleGimbleRotation> gimble;
+        [SerializeField] private List<GimbleRing> gimble;
         [SerializeField] private bool isIntrinsic = true;
         
         public bool IsIntrinsic
@@ -34,19 +27,35 @@ namespace RotationTypes
             set => isIntrinsic = value;
         }
 
-        public EulerAngleRotation()
-        {
-            SingleGimbleRotation yaw = SingleGimbleRotation.Yaw.Clone();
-            SingleGimbleRotation pitch = SingleGimbleRotation.Pitch.Clone();
-            SingleGimbleRotation roll = SingleGimbleRotation.Roll.Clone();
+        [SerializeField] private bool gimbleRingsInheritAngleType;
 
-            gimble = new List<SingleGimbleRotation>() { yaw, pitch, roll}; 
+        public bool GimbleAxesInheritAngleType
+        {
+            get => gimbleRingsInheritAngleType;
+            set => gimbleRingsInheritAngleType = value;
         }
 
-        public EulerAngleRotation(List<SingleGimbleRotation> gimble)
+        [SerializeField] protected AngleType _angleType = AngleType.Radian;
+
+        public AngleType angleType
         {
-            this.gimble = new List<SingleGimbleRotation>();
-            foreach (SingleGimbleRotation gimbleRing in gimble)
+            get => _angleType;
+            set => SetAngleType(value);
+        }
+        
+        public EulerAngleRotation()
+        {
+            GimbleRing yaw = GimbleRing.Yaw(this);
+            GimbleRing pitch = GimbleRing.Pitch(this);
+            GimbleRing roll = GimbleRing.Roll(this);
+
+            gimble = new List<GimbleRing>() { yaw, pitch, roll}; 
+        }
+
+        public EulerAngleRotation(List<GimbleRing> gimble)
+        {
+            this.gimble = new List<GimbleRing>();
+            foreach (GimbleRing gimbleRing in gimble)
             {
                 this.gimble.Add(gimbleRing);
             }
@@ -60,11 +69,11 @@ namespace RotationTypes
         
         public EulerAngleRotation(float inRoll, float inYaw, float inPitch, AngleType inAngleType)
         {
-            gimble = new List<SingleGimbleRotation>()
+            gimble = new List<GimbleRing>()
             {
-                SingleGimbleRotation.Yaw.Clone(), 
-                SingleGimbleRotation.Pitch.Clone(), 
-                SingleGimbleRotation.Roll.Clone(), 
+                GimbleRing.Yaw(this), 
+                GimbleRing.Pitch(this), 
+                GimbleRing.Roll(this), 
             }; 
             
             if (this.angleType is null && inAngleType is null)
@@ -78,7 +87,7 @@ namespace RotationTypes
 
         public void SetAngleType(AngleType value)
         {
-            foreach (SingleGimbleRotation gimbleRing in gimble)
+            foreach (GimbleRing gimbleRing in gimble)
             {
                 gimbleRing.angleType = value; 
             }
@@ -95,9 +104,9 @@ namespace RotationTypes
             return gimble.First(gimbleRing => gimbleRing.eAxis == gimbleAxis).angle; 
         }
 
-        public void SwitchGimbleOrder(SingleGimbleRotation firstRotation, SingleGimbleRotation secondRotation)
+        public void SwitchGimbleOrder(GimbleRing firstRing, GimbleRing secondRing)
         {
-            (firstRotation, secondRotation) = (secondRotation, firstRotation); //TODO: test this function
+            (firstRing, secondRing) = (secondRing, firstRing); //TODO: test this function
         }
 
         public bool IsGimbleValid()
@@ -113,7 +122,7 @@ namespace RotationTypes
             }
             
             HashSet<EGimbleAxis> gimbleAxisSet = new HashSet<EGimbleAxis>();
-            IEnumerator<SingleGimbleRotation> gimbleIterator = gimble.GetEnumerator();
+            IEnumerator<GimbleRing> gimbleIterator = gimble.GetEnumerator();
             gimbleIterator.MoveNext(); 
             EGimbleAxis lastGimbleAxis = gimbleIterator.Current.eAxis;
             gimbleAxisSet.Add(gimbleIterator.Current.eAxis); 
@@ -186,7 +195,7 @@ namespace RotationTypes
         public override QuaternionRotation ToQuaternionRotation() //TODO: test this function
         {
             QuaternionRotation result = new QuaternionRotation();
-            foreach (SingleGimbleRotation rotation in gimble)
+            foreach (GimbleRing rotation in gimble)
             {
                 result = result * rotation.toQuaternionRotation() * result.Inverse(); 
             }
@@ -196,7 +205,7 @@ namespace RotationTypes
         public void GetValuesFromQuaternion(QuaternionRotation quaternionRotation)
         {
             QuaternionRotation quaternionRotationCopy = new QuaternionRotation(quaternionRotation); 
-            List<SingleGimbleRotation> incompleteGimble = new List<SingleGimbleRotation>(); 
+            List<GimbleRing> incompleteGimble = new List<GimbleRing>(); 
             EulerAngleRotation incompleteEulerAngleRotation = new EulerAngleRotation(incompleteGimble); 
             
             for (int i = 0; i < gimble.Count; i++)
@@ -220,7 +229,7 @@ namespace RotationTypes
         public override MatrixRotation ToMatrixRotation() //TODO: test this function
         {
             MatrixRotation result = new MatrixRotation(MatrixRotation.RotationIdentity());
-            foreach (SingleGimbleRotation rotation in gimble)
+            foreach (GimbleRing rotation in gimble)
             {
                 result = result * rotation.toMatrixRotation() * result.Inverse(); 
             }
@@ -230,7 +239,7 @@ namespace RotationTypes
         public void GetValuesFromMatrix(MatrixRotation matrixRotation)
         {
             MatrixRotation matrixRotationCopy = new MatrixRotation(matrixRotation); 
-            List<SingleGimbleRotation> incompleteGimble = new List<SingleGimbleRotation>(); 
+            List<GimbleRing> incompleteGimble = new List<GimbleRing>(); 
             EulerAngleRotation incompleteEulerAngleRotation = new EulerAngleRotation(incompleteGimble); 
             
             for (int i = 0; i < gimble.Count; i++)

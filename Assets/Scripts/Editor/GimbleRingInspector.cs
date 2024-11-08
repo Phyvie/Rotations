@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Editor
 {
-    [CustomPropertyDrawer(typeof(SingleGimbleRotation))]
-    public class SingleGimbleRotationInspector : PropertyDrawer
+    [CustomPropertyDrawer(typeof(GimbleRing))]
+    public class GimbleRingInspector : NestedPropertyDrawer<GimbleRing>
     {
         private SerializedProperty inheritsAngleTypeProp; 
         private SerializedProperty angleTypeProp; 
@@ -15,41 +15,50 @@ namespace Editor
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
-            position.height = EditorGUIUtility.singleLineHeight; 
+            InitializePropertyNesting(property);
+            position.height = EditorGUIUtility.singleLineHeight;
+
+            if (PropertyAsT is null)
+            {
+                return; 
+            }
             
-            inheritsAngleTypeProp = property.FindPropertyRelative("inheritAngleTypeFromOwner");
-            Debug.Log("hasOwnAngleTypeProperty: " + inheritsAngleTypeProp.boolValue);
-            if (!inheritsAngleTypeProp.boolValue)
+            if (!PropertyAsT.bInheritedAngleType)
             {
                 angleTypeProp = property.FindPropertyRelative("ownAngleType");
                 EditorGUI.PropertyField(position, angleTypeProp);
-                position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 
+                position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
             }
-            
-            axisProp = property.FindPropertyRelative("eAxis"); 
+
+            axisProp = property.FindPropertyRelative("eAxis");
             EditorGUI.PropertyField(position, axisProp);
-            position.y += EditorGUI.GetPropertyHeight(axisProp); 
-            
+            position.y += EditorGUI.GetPropertyHeight(axisProp);
+
             angleProp = property.FindPropertyRelative("angle");
             EditorGUI.PropertyField(position, angleProp);
-            position.y += EditorGUI.GetPropertyHeight(angleProp); 
-            
+            position.y += EditorGUI.GetPropertyHeight(angleProp);
+
             EditorGUI.EndProperty();
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            inheritsAngleTypeProp = property.FindPropertyRelative("inheritAngleTypeFromOwner");
+            if (PropertyAsT is null)
+            {
+                Debug.LogWarning($"GimbleRing-PropertyAsT is null, can't GetPropertyHeight");
+                return 0; 
+            }
+            
             angleTypeProp = property.FindPropertyRelative("ownAngleType");
             axisProp = property.FindPropertyRelative("eAxis"); 
             angleProp = property.FindPropertyRelative("angle");
 
-            float singlePropHeight =
-                (inheritsAngleTypeProp.boolValue ? EditorGUI.GetPropertyHeight(angleTypeProp) : 0) +
-                EditorGUI.GetPropertyHeight(axisProp) +
+            float propertyHeight =
+                (PropertyAsT.bInheritedAngleType ? 0 : EditorGUI.GetPropertyHeight(angleTypeProp) + EditorGUIUtility.standardVerticalSpacing) +
+                EditorGUI.GetPropertyHeight(axisProp) + EditorGUIUtility.standardVerticalSpacing + 
                 EditorGUI.GetPropertyHeight(angleProp);
 
-            return singlePropHeight; 
+            return propertyHeight; 
         }
     }
 }

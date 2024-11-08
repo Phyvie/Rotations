@@ -1,8 +1,6 @@
 using System;
-using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace RotationTypes
 {
@@ -15,18 +13,27 @@ namespace RotationTypes
     }
 
     [Serializable]
-    public class SingleGimbleRotation
+    public class GimbleRing
     {
-        public SingleGimbleRotation(EGimbleAxis inEAxis, float inAngle, AngleType ownAngleType)
+        private GimbleRing()
+        {
+            eAxis = EGimbleAxis.Yaw;
+            angle = 0;
+            parentEulerAngle = null;
+            angleType = AngleType.Radian; 
+        }
+        
+        public GimbleRing(EGimbleAxis inEAxis, float inAngle, AngleType ownAngleType, EulerAngleRotation parentEulerAngle)
         {
             eAxis = inEAxis; 
             angle = inAngle;
-            _ownAngleType = ownAngleType; 
+            angleType = ownAngleType;
+            this.parentEulerAngle = parentEulerAngle; 
         }
         
-        public SingleGimbleRotation Clone()
+        public GimbleRing Clone(EulerAngleRotation parentGimble)
         {
-            return new SingleGimbleRotation(eAxis, angle, ownAngleType); 
+            return new GimbleRing(eAxis, angle, ownAngleType, parentGimble); 
         }
         
         public Vector3 GetRotationAxis()
@@ -39,42 +46,44 @@ namespace RotationTypes
                 _ => throw new UnexpectedEnumValueException<EGimbleAxis>(eAxis)
             }; 
         }
+        
+        [SerializeReference] public EulerAngleRotation parentEulerAngle; 
+        public EGimbleAxis eAxis;
+        public float angle;
 
+        public bool bInheritedAngleType =>
+            parentEulerAngle is null ? false : parentEulerAngle.GimbleAxesInheritAngleType; 
+        [SerializeField] private AngleType ownAngleType; 
+        
         public AngleType angleType
         {
             get => ownAngleType;
             set
             {
-                if (inheritAngleTypeFromOwner)
+                if (bInheritedAngleType)
                 {
-                    ownAngleType = value; 
+                    Debug.Log("Can't change angleType because it's inherited from parent EulerAngleRotation");
                 }
                 else
                 {
-                    Debug.Log("SingleGimbleRotation hasWwnAngleType = true => must change ownAngleType in order to change angleType");
+                    ownAngleType = value; 
                 }
             }
         }
 
-        public AngleType ownAngleType
+        public static GimbleRing Yaw(EulerAngleRotation parent)
         {
-            get => _ownAngleType;
-            set
-            {
-                angle = AngleType.ConvertAngle(angle, _ownAngleType, value); 
-                _ownAngleType = value; 
-            }
+            return new GimbleRing(EGimbleAxis.Yaw, (float)Math.PI / 2, AngleType.Radian, parent); 
+        }
+        public static GimbleRing Pitch(EulerAngleRotation parent)
+        {
+            return new GimbleRing(EGimbleAxis.Pitch, (float)Math.PI / 2, AngleType.Radian, parent); 
+        }
+        public static GimbleRing Roll(EulerAngleRotation parent)
+        {
+            return new GimbleRing(EGimbleAxis.Roll, (float)Math.PI / 2, AngleType.Radian, parent); 
         }
         
-        
-        public bool inheritAngleTypeFromOwner = false; 
-        private AngleType _ownAngleType; 
-        public EGimbleAxis eAxis;
-        public float angle;
-        
-        public static readonly SingleGimbleRotation Yaw = new SingleGimbleRotation(EGimbleAxis.Yaw, (float) Math.PI/2, AngleType.Radian); 
-        public static readonly SingleGimbleRotation Pitch = new SingleGimbleRotation(EGimbleAxis.Pitch, (float) Math.PI/2, AngleType.Radian); 
-        public static readonly SingleGimbleRotation Roll = new SingleGimbleRotation(EGimbleAxis.Roll, (float) Math.PI/2, AngleType.Radian);
         
         public MatrixRotation toMatrixRotation() //TODO: Test this Function
         {
