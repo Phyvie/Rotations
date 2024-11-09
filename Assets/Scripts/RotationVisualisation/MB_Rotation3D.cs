@@ -1,59 +1,27 @@
+using System;
+using MeshGenerator;
 using RotationTypes;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace RotationVisualisation
 {
     public class MB_Rotation3D : MonoBehaviour
     {
-        #region RotationDataTypes
-        #region Variables
-        [FormerlySerializedAs("eulerAngleRotationDeprecated")] [SerializeField] private EulerAngleRotation eulerAngleRotation = new EulerAngleRotation(); 
-        [SerializeField] private QuaternionRotation quaternionRotation = new QuaternionRotation();
-        [SerializeField] private AxisAngleRotation axisAngleRotation = new AxisAngleRotation();
-        [SerializeField] private MatrixRotation matrixRotation = new MatrixRotation();
-        #endregion
-        #region ConverterFunction
+        [SerializeField] private RotationType activeRotationType; 
+        [SerializeField] private TorusGenerator ref_TorusGenerator;
+        [SerializeField] private GameObject ref_UnrotatedPoint;
+        [SerializeField] private GameObject ref_RotatedPoint;
 
-        void UpdateRotationsBasedOn(RotationType rotationType)
+        [SerializeField]
+        void UpdateTorusMesh()
         {
-            eulerAngleRotation = eulerAngleRotation.ToEulerAngleRotation(); 
-            quaternionRotation = eulerAngleRotation.ToQuaternionRotation();
-            axisAngleRotation = eulerAngleRotation.ToAxisAngleRotation();
-            matrixRotation = eulerAngleRotation.ToMatrixRotation(); 
+            
         }
-        
-        [ContextMenu("UpdateBasedOnEuler")]
-        void UpdateBasedOnEuler()
-        {
-            UpdateRotationsBasedOn(eulerAngleRotation);
-        }
-        [ContextMenu("UpdateBasedOnQuaternion")]
-        void UpdateBasedOnQuaternion()
-        {
-            UpdateRotationsBasedOn(quaternionRotation);
-        }
-        [ContextMenu("UpdateBasedOnAxisAngle")]
-        void UpdateBasedOnAxisAngle()
-        {
-            UpdateRotationsBasedOn(axisAngleRotation);
-        }
-        [ContextMenu("UpdateBasedOnMatrix")]
-        void UpdateBasedOnMatrix()
-        {
-            UpdateRotationsBasedOn(matrixRotation);
-        }
-        #endregion
-        #endregion
-        
-        #region RotationMonoBehaviourTypes   
-        [SerializeField] private MB_Matrix _mbMatrix;
 
-        [ContextMenu("ConnectMBMatrix")]
-        public void ConnectMBMatrix()
+        [SerializeField]
+        void UpdatePointRotation()
         {
-            _mbMatrix.RefMatrix = matrixRotation.InternalMatrix; 
+            ref_RotatedPoint.transform.position = activeRotationType.RotateVector(ref_UnrotatedPoint.transform.position); 
         }
-        #endregion
     }
 }

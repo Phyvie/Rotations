@@ -9,10 +9,11 @@ namespace MeshGenerator
         public float radius = 1f;
         public float tubeRadius = 0.3f;
 
-        void GenerateTorus() //TODO: test this function
+        [ContextMenu("GenerateTorus")]
+        void GenerateTorus() //TODO: Test this function
         {
-            Mesh mesh = new Mesh();
-            GetComponent<MeshFilter>().mesh = mesh;
+            Mesh torusMesh = new Mesh();
+            GetComponent<MeshFilter>().mesh = torusMesh;
             Vector3[] vertices = new Vector3[(segments + 1) * (rings + 1)];
             int[] triangles = new int[segments * rings * 6];
             Vector2[] uv = new Vector2[vertices.Length];
@@ -46,10 +47,10 @@ namespace MeshGenerator
                 }
             }
 
-            mesh.vertices = vertices;
-            mesh.triangles = triangles;
-            mesh.uv = uv;
-            mesh.RecalculateNormals();
+            torusMesh.vertices = vertices;
+            torusMesh.triangles = triangles;
+            torusMesh.uv = uv;
+            torusMesh.RecalculateNormals();
         }
     }
 }

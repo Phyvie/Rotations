@@ -10,7 +10,8 @@ namespace Editor
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
-
+            position.height = EditorGUIUtility.singleLineHeight; 
+            
             // Find the matrix field
             SerializedProperty arrayProperty = property.FindPropertyRelative("InternalMatrix");
             SerializedProperty heightProperty = property.FindPropertyRelative("height");

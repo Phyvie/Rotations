@@ -507,7 +507,7 @@ namespace RotationTypes
             
             float determinant = lowerLeft.DiagonalProduct() * upperRight.DiagonalProduct();
 
-            if (Math.Abs(determinant - 1) < 0.001)
+            if (Math.Abs(determinant - 1) > 0.001)
             {
                 return false; 
             }
