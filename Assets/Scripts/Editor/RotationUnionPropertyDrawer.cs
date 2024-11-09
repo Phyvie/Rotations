@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using RotationTypes;
 using UnityEditor;
 using UnityEditor.Graphs;
@@ -42,16 +43,19 @@ namespace Editor
             EditorGUI.BeginProperty(position, label, property);
             position.height = EditorGUIUtility.singleLineHeight;
 
-            SerializedProperty ZyKaProperty = property.FindPropertyRelative("ZyKaEnum"); 
+            SerializedProperty zyKaProp = property.FindPropertyRelative("zyKaEnum"); 
+            PropertyInfo ZyKaPropertyInfo = property.serializedObject.GetType().GetProperty("rotationUnion.zyKaEnum");
+            object ZyKaPropertyObject = (ZyKaPropertyInfo?.GetValue(property.serializedObject)); 
+            ERotationType ZyKaRotationType = ZyKaPropertyObject is not null ? (ERotationType) ZyKaPropertyObject : default; 
             ERotationType newRotationType =
-                (ERotationType)EditorGUI.EnumPopup(position, (ERotationType)ZyKaProperty.enumValueIndex);
-            if ((int)newRotationType != ZyKaProperty.enumValueIndex)
+                (ERotationType)EditorGUI.EnumPopup(position, ZyKaRotationType);
+            if (newRotationType != ZyKaRotationType)
             {
-                CallPropertyMethod_Copilot(property, "SetZyKaEnum", new object[]{newRotationType});
+                ZyKaPropertyInfo?.SetMethod.Invoke(property.serializedObject, new object[]{newRotationType}); 
             }
-            if ((int)newRotationType != ZyKaProperty.enumValueIndex) //TODO: remove this safety check
+            if (newRotationType != ZyKaRotationType)
             {
-                CallPropertyMethod_Copilot(property, "SetZyKaEnum", new object[]{newRotationType});
+                ZyKaPropertyInfo?.SetMethod.Invoke(property.serializedObject, new object[]{newRotationType}); 
             }
             position.y += EditorGUI.GetPropertyHeight(eRotationTypeProp); 
             

@@ -15,13 +15,23 @@ namespace RotationTypes
     [Serializable]
     public struct RotationUnion
     {
-        [SerializeField] public ERotationType ZyKaEnum;
+        [SerializeField] public ERotationType zyKaEnum;
+
+        public ERotationType ZyKaEnum
+        {
+            get => zyKaEnum;
+            set
+            {
+                Debug.Log($"NewZyKaEnumValue = {value}");
+                zyKaEnum = value;
+            }
+        }
 
         public void SetZyKaEnum(ERotationType newType)
         {
             Debug.Log($"ZyKaEnum = {newType}");
             Debug.Log($"eulerAngleRotation.firstGimbleRing.angle: {eulerAngleRotation.firstGimbleRing.angle}");
-            ZyKaEnum = newType; 
+            zyKaEnum = newType; 
         }
         
         [SerializeField] private ERotationType eRotationType;
