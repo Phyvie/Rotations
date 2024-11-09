@@ -205,5 +205,71 @@ namespace Editor
 		        propertyFieldInfo.SetValue(parentObject, newValue); 
 	        }
         }
+
+        protected void CallPropertyMethod(String methodName, object[] parameters)
+        {
+	        MethodInfo methodInfo = propertyType.GetMethod(methodName,
+		        BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+	        methodInfo?.Invoke(propertyAsObject, parameters); 
+        }
+        
+        
+        
+        // TODO: Check whether this Copilot stuff works
+        public void CallPropertyMethod_Copilot(SerializedProperty property, string methodName, object[] parameters) 
+        {
+          object targetObject = GetTargetObjectOfProperty(property); 
+          MethodInfo methodInfo = targetObject.GetType().GetMethod(methodName,
+	          BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+          if (methodInfo != null)
+          {
+	          property.serializedObject.ApplyModifiedProperties(); 
+          }
+          else
+          {
+	          Debug.LogError($"Method {methodName} not found on {targetObject}");
+          }
+        }
+
+        public object GetTargetObjectOfProperty(SerializedProperty prop)
+        {
+	        if (prop == null) return null;
+	        string[] path = prop.propertyPath.Replace(".Array.data[", "[").Split('.');
+	        object obj = prop.serializedObject.targetObject;
+	        foreach (string part in path)
+	        {
+		        if (part.Contains("["))
+		        {
+			        string[] arrayPart = part.Split('[', ']');
+			        int index = int.Parse(arrayPart[1]);
+			        obj = GetFieldValue(obj, arrayPart[0], index);
+		        }
+		        else
+		        {
+			        obj = GetFieldValue(obj, part);
+		        }
+	        }
+
+	        return obj;
+        }
+
+        private object GetFieldValue(object source, string fieldName)
+        {
+	        if (source == null) return null;
+	        var type = source.GetType();
+	        var field = type.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+	        if (field == null) return null;
+	        return field.GetValue(source);
+        }
+
+        private object GetFieldValue(object source, string fieldName, int index)
+        {
+	        var enumerable = GetFieldValue(source, fieldName) as System.Collections.IEnumerable;
+	        var enm = enumerable.GetEnumerator();
+	        while (index-- >= 0) enm.MoveNext();
+	        return enm.Current;
+        }
+        
+        
     }
 }
