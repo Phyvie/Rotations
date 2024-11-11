@@ -1,6 +1,3 @@
-using System;
-using System.Reflection;
-using System.Text;
 using RotationTypes;
 using UnityEditor;
 using UnityEngine;
@@ -8,7 +5,7 @@ using UnityEngine;
 namespace Editor
 {
     [CustomPropertyDrawer(typeof(AngleType))]
-    public class AngleTypeInspector : NestedPropertyDrawer<AngleType>
+    public class AngleTypeInspector : NestedPropertyDrawer
     {
         public override void OnGUI(Rect positionRect, SerializedProperty property, GUIContent label)
         {
@@ -21,7 +18,7 @@ namespace Editor
             int currentIndex = 0;
             foreach (AngleType angleType in AngleType.AngleTypes)
             {
-                if (GetPropertyAsT<AngleType>() == angleType)
+                if (objectHierarchy[~1] as AngleType == angleType)
                 {
                     break; 
                 }
@@ -37,7 +34,7 @@ namespace Editor
             
             if (newIndex >= 0 && newIndex != currentIndex)
             {
-                SetPropertyToT(AngleType.AngleTypes[newIndex]);
+                SetFieldValue(property, AngleType.AngleTypes[newIndex]); //TODO: test
             }
             EditorGUI.EndProperty();
         }

@@ -3419,41 +3419,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ade78c4b03c1f048a4aae7105d9d121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationUnion:
-    ZyKaEnum: 0
-    eRotationType: 0
-    eulerAngleRotation:
-      firstGimbleRing:
-        eAxis: 2
-        angle: 3
-      secondGimbleRing:
-        eAxis: 2
-        angle: 5
-      thirdGimbleRing:
-        eAxis: 2
-        angle: 7
-      isIntrinsic: 1
-    quaternionRotation:
-      _real: 1
-      _i: 0
-      _j: 0
-      _k: 0
-    axisAngleRotation:
-      axisAngle: {x: 0, y: 0, z: 0}
-    matrixRotation:
-      InternalMatrix:
-        InternalMatrix:
-        - 1
-        - 0
-        - 0
-        - 0
-        - 1
-        - 0
-        - 0
-        - 0
-        - 1
-        height: 3
-        width: 3
+  testObject:
+    testFloatField: 2
+  testObjectArray:
+  - testFloatField: -3
+  - testFloatField: -2
+  ZyKa: -3
 --- !u!1001 &7678552021489249906
 PrefabInstance:
   m_ObjectHideFlags: 0

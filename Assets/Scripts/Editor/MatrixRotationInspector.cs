@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Editor
 {
     [CustomPropertyDrawer(typeof(MatrixRotation))]
-    public class MatrixRotationInspector : NestedPropertyDrawer<MatrixRotation>
+    public class MatrixRotationInspector : NestedPropertyDrawer
     {
         private SerializedProperty internalMatrixProp; 
         
@@ -13,10 +13,8 @@ namespace Editor
         {
             EditorGUI.BeginProperty(position, label, property);
             position.height = EditorGUIUtility.singleLineHeight; 
-            
-            InitializePropertyNesting(property);
 
-            MatrixRotation matrixRotation = GetPropertyAsT<MatrixRotation>(); 
+            MatrixRotation matrixRotation = objectHierarchy[~1] as MatrixRotation; 
             property.isExpanded = EditorGUI.BeginFoldoutHeaderGroup(position, property.isExpanded, new GUIContent("Matrix" + (matrixRotation.isRotationMatrix ? " (Rotation)" : " (NotRotation)")));
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 
             EditorGUI.EndFoldoutHeaderGroup();

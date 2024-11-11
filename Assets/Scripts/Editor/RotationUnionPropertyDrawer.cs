@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Editor
 {
     [CustomPropertyDrawer(typeof(RotationUnion))]
-    public class RotationUnionPropertyDrawer : NestedPropertyDrawer<RotationUnion>
+    public class RotationUnionPropertyDrawer : NestedPropertyDrawer
     {
         private bool isInitialized = false; 
         

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Editor
 {
     [CustomPropertyDrawer(typeof(EulerAngleRotation))]
-    public class EulerAngleRotationInspector : NestedPropertyDrawer<EulerAngleRotation>
+    public class EulerAngleRotationInspector : NestedPropertyDrawer
     {
         private SerializedProperty firstGimbleRing;
         private SerializedProperty secondGimbleRing;
@@ -40,12 +40,7 @@ namespace Editor
             EditorGUI.BeginProperty(position, label, property);
             position.height = EditorGUIUtility.singleLineHeight;
             
-            EulerAngleRotation targetEulerAngle = GetPropertyAsT<EulerAngleRotation>();
-            if (targetEulerAngle is null)
-            {
-                Debug.LogWarning("EulerAngleInspector: targetEulerAngle is null; this should only happen during initialisation or array-size change");
-                return; 
-            }
+            EulerAngleRotation targetEulerAngle = GetObject<EulerAngleRotation>(property);
             
             EGimbleType targetGimbleType = targetEulerAngle!.GetGimbleType();
             property.isExpanded = EditorGUI.BeginFoldoutHeaderGroup(position, property.isExpanded, new GUIContent($"eulerAngle({Enum.GetNames(typeof(EGimbleType))[(int) targetGimbleType]})"));
