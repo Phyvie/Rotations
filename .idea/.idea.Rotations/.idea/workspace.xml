@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8b54c963-bad1-41cc-8b0e-252a0574fd2d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/NestedPropertyDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/NestedPropertyDrawer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/3D Rotations.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/3D Rotations.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TestClassInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TestClassInspector.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/TestScripts/TestClass.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TestScripts/TestClass.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TestScripts/TestMonoBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TestScripts/TestMonoBehaviour.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,7 +204,7 @@
       <workItem from="1731127258714" duration="1263000" />
       <workItem from="1731260013034" duration="16650000" />
       <workItem from="1731925069655" duration="5153000" />
-      <workItem from="1731965840676" duration="3133000" />
+      <workItem from="1731965840676" duration="5985000" />
     </task>
     <servers />
   </component>
@@ -218,23 +217,6 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Editor/TestClassInspector.cs</url>
-          <line>27</line>
-          <properties documentPath="D:\programming\Rotations\Assets\Scripts\Editor\TestClassInspector.cs" initialLine="27" containingFunctionPresentation="Method 'OnGUI'">
-            <startOffsets>
-              <option value="1039" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1185" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Type#UnityEditor.SerializedProperty" memberName="minArraySize" />

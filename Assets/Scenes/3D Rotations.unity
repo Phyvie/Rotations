@@ -3420,11 +3420,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testObject:
-    testFloatField: 2
+    testFloatField: -123
+    halfFloatField: -321
   testObjectArray:
-  - testFloatField: -3
+  - testFloatField: -5
+    halfFloatField: -2.5
   - testFloatField: -2
-  ZyKa: -3
+    halfFloatField: -1
 --- !u!1001 &7678552021489249906
 PrefabInstance:
   m_ObjectHideFlags: 0

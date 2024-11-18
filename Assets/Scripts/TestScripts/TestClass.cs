@@ -27,5 +27,12 @@ namespace TestScripts
                 halfFloatField = testFloatField / 2; 
             }
         }
+
+        public void SetTestFloat()
+        {
+            Debug.Log("SetTestFloat Called");
+            testFloatField = -123;
+            halfFloatField = -321; 
+        }
     }
 }
