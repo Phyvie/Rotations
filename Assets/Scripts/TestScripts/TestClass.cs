@@ -12,17 +12,19 @@ namespace TestScripts
         }
         
         [SerializeField] private float testFloatField;
+        [SerializeField] private float halfFloatField; 
         public float GSFloatProp
         {
             get
             {
-                Debug.Log($"testFloat.Get = {testFloatField}"); 
+                Debug.Log($" testFloatField: {testFloatField}" + (testFloatField/2 != halfFloatField ? $" !=halfFloatField {halfFloatField}" : "")); 
                 return testFloatField; 
             }
             set
             {
-                Debug.Log($"testFloat.Set({value})"); 
-                testFloatField = (float) Math.Truncate(value); 
+                Debug.Log($"setFloatField from: {testFloatField}, to({value})"); 
+                testFloatField = value;
+                halfFloatField = testFloatField / 2; 
             }
         }
     }

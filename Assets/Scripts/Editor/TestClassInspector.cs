@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Reflection;
-using Codice.CM.SEIDInfo;
 using TestScripts;
 using UnityEditor;
 using UnityEngine;
@@ -18,12 +16,29 @@ namespace Editor
             EditorGUI.BeginProperty(position, label, property);
             position.height = EditorGUIUtility.singleLineHeight;
             
-            TestClass testObject = GetObject<TestClass>(property); 
+            TestClass testObject = GetObject<TestClass>(property);
+
+            /*
+            SerializedProperty floatPropInfo = property.FindPropertyRelative("testFloatField"); 
+            float oldValue = floatPropInfo.floatValue;
+            EditorGUI.PropertyField(position, floatPropInfo);
+            float newValue = floatPropInfo.floatValue;
+            floatPropInfo.floatValue = oldValue; 
+            if (oldValue != newValue)
+            {
+                PropertyInfo gsFloatPropInfo = typeof(TestClass).GetProperty("GSFloatProp", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                gsFloatPropInfo!.SetMethod.Invoke(testObject, new object[] {newValue});
+            }
+            position.y += EditorGUIUtility.singleLineHeight + 2;
+            */
             
-            PropertyInfo gsFloatPropInfo = typeof(TestClass).GetProperty("GSFloatProp", BindingFlags.NonPublic | BindingFlags.Instance);
-            gsFloatPropInfo!.GetValue(testObject);
-            float newFloatValue = EditorGUI.FloatField(position, "gsFloatProp", testObject.GSFloatProp); //property.FindPropertyRelative("testFloatField").floatValue
-            //gsFloatPropInfo.SetMethod.Invoke(testObject, new object[] {newFloatValue});
+            PropertyInfo gsFloatPropInfo = typeof(TestClass).GetProperty("GSFloatProp", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            float newValue = EditorGUI.FloatField(position, "gsFloatProp", (float) gsFloatPropInfo!.GetValue(testObject)); 
+            gsFloatPropInfo!.SetMethod.Invoke(testObject, new object[] {newValue});
+            position.y += EditorGUIUtility.singleLineHeight + 2;
+            
+
+            EditorGUI.PropertyField(position, property.FindPropertyRelative("halfFloatField"));
             position.y += EditorGUIUtility.singleLineHeight + 2; 
             
             EditorGUI.EndProperty();
@@ -31,7 +46,7 @@ namespace Editor
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         { 
-            return EditorGUIUtility.singleLineHeight + 2; 
+            return (EditorGUIUtility.singleLineHeight + 2) * 2; 
         }
     }
 }

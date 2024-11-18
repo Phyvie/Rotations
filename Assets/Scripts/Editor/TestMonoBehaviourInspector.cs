@@ -12,8 +12,8 @@ namespace Editor
         {
             serializedObject.Update();
 
-            // EditorGUILayout.PropertyField(serializedObject.FindProperty("testObject"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("testObjectArray"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("testObject"));
+            // EditorGUILayout.PropertyField(serializedObject.FindProperty("testObjectArray"));
             // EditorGUILayout.PropertyField(serializedObject.FindProperty("ZyKa"));
             
             serializedObject.ApplyModifiedProperties();

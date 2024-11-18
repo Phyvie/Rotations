@@ -19,7 +19,7 @@ namespace Editor
         protected List<object> objectHierarchy = new List<object>();
         protected List<FieldInfo> fieldInfoHierarchy = new List<FieldInfo>();
 
-        protected object parentObject => objectHierarchy[~2]; 
+        protected object parentObject => objectHierarchy[^2]; 
         
         void AddToHierarchies(object obj, FieldInfo fieldInfo)
         {
@@ -37,7 +37,7 @@ namespace Editor
         {
             if (initialized)
             {
-	            return; 
+	            // return; //ZyKa!
             }
             
             ClearHierarchies();
@@ -64,14 +64,8 @@ namespace Editor
                 if (pathNode.Equals("Array"))
                 {
 	                i++;
-	                pathNode = splitPath[i]; 
-	                Match arrayMatch = arrayRegex.Match(pathNode);
-	                if (!arrayMatch.Success)
-	                {
-		                throw new Exception(); 
-	                }
-
-	                int.TryParse(arrayMatch.Groups[1].Value, out int arrayIndex); 
+	                pathNode = splitPath[i];
+	                int arrayIndex = GetIndexFromPathNode(pathNode); 
 	                GetFieldArrayObject(cObject, cFieldInfo, arrayIndex, out cObject);
                 }
                 else
@@ -124,21 +118,30 @@ namespace Editor
 	        return prop.serializedObject.FindProperty(parentPath); 
         }
 
-        protected int GetIndexOfProperty(SerializedProperty property)
+        protected int GetIndexOfSerializedProperty(SerializedProperty property)
         {
-	        object targetObject = property.serializedObject.targetObject;
 	        if (parentObject is IList objectList)
 	        {
 		        string path = property.propertyPath;
-		        int indexOpen = path.LastIndexOf("[");
-		        int indexClosed = path.LastIndexOf("]"); 
-		        int.TryParse(path.Substring(indexOpen, indexClosed - indexOpen), out int arrayIndex);
-		        return arrayIndex; 
+		        string lastPathNode = path.Substring(path.LastIndexOf('.') + 1);
+		        return GetIndexFromPathNode(lastPathNode); 
 	        }
 	        else
 	        {
 		        return -1; 
 	        }
+        }
+
+        protected int GetIndexFromPathNode(string pathNode)
+        {
+	        Match arrayMatch = arrayRegex.Match(pathNode);
+	        if (!arrayMatch.Success)
+	        {
+		        throw new Exception(); 
+	        }
+
+	        int.TryParse(arrayMatch.Groups[1].Value, out int arrayIndex);
+	        return arrayIndex; 
         }
         
         protected T GetObject<T>(SerializedProperty property)
@@ -146,7 +149,7 @@ namespace Editor
 	        object targetObject = property.serializedObject.targetObject;
 	        if (parentObject is IList<T> objectList)
 	        {
-		        return ((T[])fieldInfo.GetValue(targetObject))[GetIndexOfProperty(property)]; 
+		        return ((T[])fieldInfo.GetValue(targetObject))[GetIndexOfSerializedProperty(property)]; 
 	        }
 	        else
 	        {
@@ -158,14 +161,27 @@ namespace Editor
         {
 	        if (parentObject is IList objectArray)
 	        {
-		        objectArray[GetIndexOfProperty(property)] = newValue; 
+		        objectArray[GetIndexOfSerializedProperty(property)] = newValue; 
 	        }
-	        fieldInfo.SetValue(parentObject, newValue);
+	        else
+	        {
+		        fieldInfo.SetValue(parentObject, newValue);
+	        }
         }
 
-        protected void AttemptSetPropertyValue(object newValue, bool bSetFieldValueIfFailed)
+        protected bool SetPropertyValue(SerializedProperty property, object newValue)
         {
-	        throw new NotImplementedException(); 
+	        if (parentObject is IList objectArray)
+	        {
+		        throw new NotImplementedException(); 
+		        // objectArray[GetIndexOfSerializedProperty(property)]
+	        }
+	        else
+	        {
+		        throw new NotImplementedException(); 
+	        }
+
+	        return false; 
         }
     }
 }
