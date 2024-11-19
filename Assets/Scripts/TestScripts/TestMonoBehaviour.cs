@@ -1,4 +1,5 @@
 using System;
+using RotationTypes;
 using UnityEngine;
 
 namespace TestScripts
@@ -6,13 +7,16 @@ namespace TestScripts
     [ExecuteInEditMode]
     public class TestMonoBehaviour : MonoBehaviour
     {
+        [SerializeField] private AngleType angleTypeA = null; 
+        [SerializeField] private AngleType angleTypeB = AngleType.Degree; 
+        
         [SerializeField] private TestClass testObject; 
         [SerializeField] private TestClass[] testObjectArray; 
 
         [ContextMenu("RecreateTestObjectArray")]
         private void RecreateTestObjectArray()
         {
-            testObjectArray =  new TestClass[]{new TestClass(-1), new TestClass(-2), new TestClass(-3)};
+            testObjectArray =  new TestClass[]{new TestClass(), new TestClass(), new TestClass()};
         }
 
         public TestClass TestObject
@@ -27,6 +31,12 @@ namespace TestScripts
                 Debug.Log("Setting TestObject as Property");
                 testObject = value;
             }
+        }
+
+        private void Update()
+        {
+            Debug.Log(angleTypeA);
+            Debug.Log(angleTypeB);
         }
     }
 }

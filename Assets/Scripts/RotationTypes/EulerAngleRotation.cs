@@ -65,7 +65,7 @@ namespace RotationTypes
         }
 
         [SerializeField] protected AngleType angleType = AngleType.Radian;
-
+        
         public AngleType AngleType
         {
             get => angleType;

@@ -145,16 +145,17 @@ namespace Editor
         
         protected T GetObject<T>(SerializedProperty property)
         {
-	        object targetObject = property.serializedObject.targetObject;
+	        // object serializedObject = property.serializedObject.targetObject; //property.serializedObject.targetObject
 	        if (parentObject is IList<T> objectList)
 	        {
-		        return ((T[])fieldInfo.GetValue(targetObject))[GetIndexOfSerializedProperty(property)]; 
+		        return ((T[])fieldInfo.GetValue(parentObject))[GetIndexOfSerializedProperty(property)]; 
 	        }
 	        else
 	        {
-				return (T)fieldInfo.GetValue(targetObject);   
+		        object obj = fieldInfo.GetValue(parentObject); 
+				return (T)obj;   
 	        }
-        }
+        }	
 
         protected void SetFieldValue(SerializedProperty property, object newValue)
         {

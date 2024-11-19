@@ -18,7 +18,7 @@ namespace Editor
             int currentIndex = 0;
             foreach (AngleType angleType in AngleType.AngleTypes)
             {
-                if (objectHierarchy[~1] as AngleType == angleType)
+                if (objectHierarchy[^1] as AngleType == angleType)
                 {
                     break; 
                 }

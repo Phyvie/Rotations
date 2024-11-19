@@ -1,4 +1,5 @@
 using System.Reflection;
+using RotationTypes;
 using TestScripts;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -17,51 +18,32 @@ namespace Editor
             InitializePropertyNesting(property);
             EditorGUI.BeginProperty(position, label, property);
             position.height = EditorGUIUtility.singleLineHeight;
-            TestClass testObject = GetObject<TestClass>(property); 
-            //Finding the Properties
-            SerializedProperty multiplierSerialized = property.FindPropertyRelative("unitMultiplierField");
-            float oldValue = multiplierSerialized.floatValue;
-            SerializedProperty currentUnitsSerialized = property.FindPropertyRelative("currentUnitsField"); 
+            TestClass testObject = GetObject<TestClass>(property);
+
+            // SerializedProperty eulerRotProp = property.FindPropertyRelative("eulerAngleRotation");
+            // EditorGUI.PropertyField(position, eulerRotProp);
+            // position.y += EditorGUI.GetPropertyHeight(eulerRotProp); 
+                
+            // SerializedProperty angleWithTypeProp = property.FindPropertyRelative("angleWithType");
+            // EditorGUI.PropertyField(position, angleWithTypeProp);
+            // position.y += EditorGUI.GetPropertyHeight(angleWithTypeProp); 
             
-            /*
-            //Version 1: 
-            EditorGUI.PropertyField(position, multiplierSerialized, new GUIContent("unitMultiplierField.PropertyField"));
-            position.y += EditorGUIUtility.singleLineHeight + 2;
+            SerializedProperty angleTypeProp1 = property.FindPropertyRelative("angleTypeA");
+            EditorGUI.PropertyField(position, angleTypeProp1);
+            Debug.Log(angleTypeProp1.boxedValue); 
+            position.y += EditorGUI.GetPropertyHeight(angleTypeProp1); 
             
-            PropertyInfo gsFloatPropInfo = typeof(TestClass).GetProperty("GSUnitMultiplierField", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            
-            float newValue = multiplierSerialized.floatValue;
-            gsFloatPropInfo!.SetValue(testObject, newValue);
-            Debug.Log("currentUnitsSerialized: " + currentUnitsSerialized.floatValue); 
-            EditorGUI.PropertyField(position, currentUnitsSerialized);
-            position.y += EditorGUIUtility.singleLineHeight + 2;
-            */
-            
-            //Version 2: 
-            multiplierSerialized.floatValue = EditorGUI.FloatField(position, "unitMultiplierField.PropertyField", multiplierSerialized.floatValue);
-            position.y += EditorGUIUtility.singleLineHeight + 2;
-            
-            PropertyInfo gsFloatPropInfo = typeof(TestClass).GetProperty("GSUnitMultiplierField", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            
-            float newValue = multiplierSerialized.floatValue;
-            gsFloatPropInfo!.SetValue(testObject, newValue);
-            Debug.Log("currentUnitsSerialized: " + currentUnitsSerialized.floatValue); 
-            currentUnitsSerialized.floatValue = EditorGUI.FloatField(position, "unitMultiplierField.PropertyField", currentUnitsSerialized.floatValue);
-            position.y += EditorGUIUtility.singleLineHeight + 2;
-            
-            
-            
-            // EditorGUI.BeginChangeCheck(); 
-            // EditorGUI.EndChanceCheck(); 
-            
-            // EditorGUI.ApplyModifiedProperties(); 
+            SerializedProperty angleTypeProp2 = property.FindPropertyRelative("angleTypeB");
+            EditorGUI.PropertyField(position, angleTypeProp2);
+            Debug.Log(angleTypeProp2.boxedValue); 
+            position.y += EditorGUI.GetPropertyHeight(angleTypeProp2); 
             
             EditorGUI.EndProperty();
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         { 
-            return (EditorGUIUtility.singleLineHeight + 2) * 3; 
+            return 100; 
         }
     }
 }

@@ -1,13 +1,10 @@
-using RotationTypes;
 using RotationVisualisation;
 using UnityEditor; 
-using UnityEditor.UIElements; 
-using UnityEngine.UIElements; 
 
 namespace Editor
 {
     [CustomEditor(typeof(MB_Rotation3D), true)]
-    public class Rotation3D_Inspector : UnityEditor.Editor
+    public class MBRotation3D_Inspector : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
