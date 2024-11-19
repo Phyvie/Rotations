@@ -54,7 +54,6 @@ namespace Editor
 
             string[] splitPath = prop.propertyPath.Split('.');
             
-            Type cFieldType = null;
             FieldInfo cFieldInfo = null;
             object cObject = prop.serializedObject.targetObject; 
             
@@ -109,7 +108,7 @@ namespace Editor
 		        return null; 
 	        }
 	        string parentPath = prop.propertyPath.Substring(0, prop.propertyPath.LastIndexOf(".", StringComparison.Ordinal)); 
-	        Match arrayMatch = arrayRegex.Match(splitPath[~2]);
+	        Match arrayMatch = arrayRegex.Match(splitPath[^2]);
 	        if (arrayMatch.Success)
 	        {
 		        parentPath = parentPath.Substring(0, parentPath.LastIndexOf(".", StringComparison.Ordinal)); 
@@ -180,8 +179,6 @@ namespace Editor
 	        {
 		        throw new NotImplementedException(); 
 	        }
-
-	        return false; 
         }
     }
 }

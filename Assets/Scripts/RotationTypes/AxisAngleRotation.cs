@@ -86,7 +86,7 @@ namespace RotationTypes
 
         public void SetAngleType(AngleType value)
         {
-            axisAngle = axisAngle * (float) (value.fullCircleUnits / angleType.fullCircleUnits);
+            axisAngle = axisAngle * (float) (value.unitMultiplier / angleType.unitMultiplier);
             _angleType = value; 
         }
 

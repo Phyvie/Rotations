@@ -8,31 +8,30 @@ namespace TestScripts
     {
         public TestClass(float value)
         {
-            GSFloatProp = value; 
+            GSUnitMultiplierField = value; 
         }
-        
-        [SerializeField] private float testFloatField;
-        [SerializeField] private float halfFloatField; 
-        public float GSFloatProp
+
+        [SerializeField] private float unitMultiplierField;
+        [SerializeField] private float currentUnitsField; 
+        public float GSUnitMultiplierField
         {
             get
             {
-                Debug.Log($" testFloatField: {testFloatField}" + (testFloatField/2 != halfFloatField ? $" !=halfFloatField {halfFloatField}" : "")); 
-                return testFloatField; 
+                return unitMultiplierField; 
             }
             set
             {
-                Debug.Log($"setFloatField from: {testFloatField}, to({value})"); 
-                testFloatField = value;
-                halfFloatField = testFloatField / 2; 
+                // Debug.Log($"setFloatField from: {unitMultiplierField}, to({value})");
+                currentUnitsField *= value / unitMultiplierField; 
+                unitMultiplierField = value;
             }
         }
 
         public void SetTestFloat()
         {
             Debug.Log("SetTestFloat Called");
-            testFloatField = -123;
-            halfFloatField = -321; 
+            unitMultiplierField = -123;
+            currentUnitsField = -321; 
         }
     }
 }

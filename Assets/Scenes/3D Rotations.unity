@@ -3401,7 +3401,7 @@ Transform:
   m_GameObject: {fileID: 2110119353}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.03, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3420,13 +3420,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testObject:
-    testFloatField: -123
-    halfFloatField: -321
+    unitMultiplierField: 6
+    currentUnitsField: 3
   testObjectArray:
-  - testFloatField: -5
-    halfFloatField: -2.5
-  - testFloatField: -2
-    halfFloatField: -1
+  - unitMultiplierField: 0
+    currentUnitsField: 0
+  - unitMultiplierField: 0
+    currentUnitsField: 0
 --- !u!1001 &7678552021489249906
 PrefabInstance:
   m_ObjectHideFlags: 0

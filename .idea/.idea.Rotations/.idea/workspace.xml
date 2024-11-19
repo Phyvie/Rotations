@@ -7,8 +7,12 @@
     <list default="true" id="8b54c963-bad1-41cc-8b0e-252a0574fd2d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/3D Rotations.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/3D Rotations.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/NestedPropertyDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/NestedPropertyDrawer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TestClassInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TestClassInspector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AngleType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AngleType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AxisAngleRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AxisAngleRotation.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/TestScripts/TestClass.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TestScripts/TestClass.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TestScripts/TestMonoBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TestScripts/TestMonoBehaviour.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +23,12 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1a34d7ee85f44ff2a9df5d0ea5a6ee325735b0/1f/d77be55f/PropertyInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3bdab0a3d13f46e1ac146e949d456be43b600/48/71f93d65/FontAsset.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3d611f181d2047d0a4666e5262482490956800/15/80c3fa82/EditorGUI.cs" root0="SKIP_HIGHLIGHTING" />
@@ -27,6 +37,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3d611f181d2047d0a4666e5262482490956800/43/c43576a8/SerializedProperty.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3d611f181d2047d0a4666e5262482490956800/4e/b5711534/PropertyHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3d611f181d2047d0a4666e5262482490956800/c6/a06d2dba/InspectorElement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3d611f181d2047d0a4666e5262482490956800/d0/00cc01ad/MinMaxCurvePropertyDrawer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/467a840a914a47078e4ae9b0b1e8779e46ac00/06/42ffbf97/IEquatable`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/467a840a914a47078e4ae9b0b1e8779e46ac00/42/01c24803/RuntimePropertyInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/467a840a914a47078e4ae9b0b1e8779e46ac00/42/7df829a1/Type.cs" root0="SKIP_HIGHLIGHTING" />
@@ -57,13 +68,19 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.burst@1.8.15/Tests/Runtime/Shared/040-ControlFlows.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.mathematics@1.2.6/Unity.Mathematics/Noise/noise3D.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@14.0.11/Editor/Lighting/IESImporterEditor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@14.0.11/Runtime/2D/UTess2D/PlanarGraph.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.searcher@4.9.2/Tests/Editor/SearcherTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Editor/TMP_BaseShaderGUI.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Editor/TMP_CharacterPropertyDrawer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.7.6/Editor/inspectors/AnimationTrackInspector.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Editor/EventSystem/EventTriggerEditor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Editor/UI/GraphicEditor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Editor/UI/RectMask2DEditor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Editor/UI/SpriteDrawUtility.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/DefaultControls.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/RectMask2D.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/SpecializedCollections/IndexedSet.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Utility/ReflectionMethodsCache.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Tests/Editor/Canvas/RootCanvasTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Tests/Editor/TestBehaviourBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Tests/Runtime/Slider/SliderTests.cs" root0="SKIP_HIGHLIGHTING" />
@@ -152,10 +169,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="4476">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="13768">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="4476" />
+      <option name="pid" value="13768" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -205,6 +222,8 @@
       <workItem from="1731260013034" duration="16650000" />
       <workItem from="1731925069655" duration="5153000" />
       <workItem from="1731965840676" duration="5985000" />
+      <workItem from="1732023863031" duration="1549000" />
+      <workItem from="1732038214671" duration="4831000" />
     </task>
     <servers />
   </component>

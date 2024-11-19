@@ -7,18 +7,18 @@ namespace RotationTypes
     [Serializable]
     public class AngleType
     {
-        private AngleType(string angleTypeName, double fullCircleUnits)
+        private AngleType(string angleTypeName, double unitMultiplier)
         {
             this.angleTypeName = angleTypeName; 
-            this.fullCircleUnits = fullCircleUnits; 
+            this.unitMultiplier = unitMultiplier; 
         }
 
         public readonly string angleTypeName; 
-        public readonly double fullCircleUnits; 
+        public readonly double unitMultiplier; 
         
         public static float ConvertAngle(float inAngle, AngleType inAngleType, AngleType outAngleType)
         {
-            return (float) (inAngle / inAngleType.fullCircleUnits * outAngleType.fullCircleUnits); 
+            return (float) (inAngle / inAngleType.unitMultiplier * outAngleType.unitMultiplier); 
         }
         
         public static readonly AngleType Radian = new AngleType("Radian", 2 * Math.PI);

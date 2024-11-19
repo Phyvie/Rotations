@@ -8,7 +8,6 @@ namespace TestScripts
     {
         [SerializeField] private TestClass testObject; 
         [SerializeField] private TestClass[] testObjectArray; 
-        // [SerializeField] private int ZyKa = -3; 
 
         [ContextMenu("RecreateTestObjectArray")]
         private void RecreateTestObjectArray()
