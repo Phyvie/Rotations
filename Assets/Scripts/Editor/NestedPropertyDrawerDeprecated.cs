@@ -12,12 +12,6 @@ namespace Editor
     {
         private bool initialized = false;
         protected object propertyAsObject = null;
-
-        protected T PropertyAsT
-        {
-	        get => GetPropertyAsT<T>();
-	        set => SetPropertyToT(value); 
-        }
         
         protected object parentObject => propertyObjectHierarchy[^2]; 
         protected Type propertyType = null;
@@ -132,6 +126,7 @@ namespace Editor
 	        }
         }
 
+        /*
         protected T GetPropertyAsT<T>()
         {
 	        if (!initialized)
@@ -195,6 +190,7 @@ namespace Editor
 		        propertyFieldInfo.SetValue(parentObject, newValue); 
 	        }
         }
+        */
 
         protected void CallPropertyMethod(String methodName, object[] parameters)
         {

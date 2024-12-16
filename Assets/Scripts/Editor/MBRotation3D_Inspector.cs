@@ -10,10 +10,10 @@ namespace Editor
         {
             serializedObject.Update();
             
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("eulerAngleRotation"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("quaternionRotation"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("axisAngleRotation"));
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("matrixRotation"));
+            // EditorGUILayout.PropertyField(serializedObject.FindProperty("eulerAngleRotation"));
+            // EditorGUILayout.PropertyField(serializedObject.FindProperty("quaternionRotation"));
+            // EditorGUILayout.PropertyField(serializedObject.FindProperty("axisAngleRotation"));
+            // EditorGUILayout.PropertyField(serializedObject.FindProperty("matrixRotation"));
             
             serializedObject.ApplyModifiedProperties(); 
         }

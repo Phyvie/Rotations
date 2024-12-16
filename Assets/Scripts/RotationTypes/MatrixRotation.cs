@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 namespace RotationTypes
 {
     [Serializable]
-    public class MatrixRotation : RotationType
+    public class MatrixRotation : RotationParent
     {
         public bool isRotationMatrix => InternalMatrix.IsSpecialOrthogonal();
         // [SerializeField] private bool bExpandTo4x4; //TODO

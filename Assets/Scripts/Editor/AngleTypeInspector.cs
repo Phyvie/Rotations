@@ -36,6 +36,7 @@ namespace Editor
             {
                 SetFieldValue(property, AngleType.AngleTypes[newIndex]); //TODO: test
             }
+            
             EditorGUI.EndProperty();
         }
 

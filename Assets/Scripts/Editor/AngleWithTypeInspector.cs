@@ -1,5 +1,6 @@
 using System;
 using RotationTypes;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,17 +9,19 @@ namespace Editor
     [CustomPropertyDrawer(typeof(AngleWithType))]
     public class AngleWithTypeInspector : NestedPropertyDrawer
     {
+        private SerializedProperty showAngleTypeSelectorSP; 
         private SerializedProperty showAllAngleTypesSP;
         private SerializedProperty angleTypeSP;
-        private AngleType boxedAngleType; 
         private SerializedProperty circlePartsSP;
-
+        private AngleType boxedAngleType; 
+        
         void Initialize(SerializedProperty property)
         {
+            showAngleTypeSelectorSP = property.FindPropertyRelative("showAngleTypeSelector"); 
             showAllAngleTypesSP = property.FindPropertyRelative("showAllAngleTypes"); 
             angleTypeSP = property.FindPropertyRelative("angleType"); 
-            boxedAngleType = (AngleType)angleTypeSP.boxedValue; 
-            circlePartsSP = property.FindPropertyRelative("circleParts"); 
+            circlePartsSP = property.FindPropertyRelative("circleParts");
+            boxedAngleType = (AngleType) angleTypeSP.boxedValue; 
         }
         
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -28,11 +31,36 @@ namespace Editor
             InitializePropertyNesting(property);
             Initialize(property);
             position.height = EditorGUIUtility.singleLineHeight;
-            //Setting up the AngleType inspector
+
+            float viewWidth = EditorGUIUtility.currentViewWidth;
+            float offsetWidth = 30; 
+            float unitWidth = 80;
+            float foldoutWidth = 50; 
             
-            float unitWidth = 100;
-            float angleTypeWidth = 500;
-            float valueWidth = EditorGUIUtility.currentViewWidth - unitWidth - angleTypeWidth; 
+            if (true || showAngleTypeSelectorSP.boolValue && !showAllAngleTypesSP.boolValue)
+            {
+                Rect foldoutRect = new Rect(position);
+                foldoutRect.width = foldoutWidth; 
+                
+                Rect unitRect = new Rect(foldoutRect);
+                unitRect.width = unitWidth;
+                unitRect.x += foldoutWidth + offsetWidth; 
+                
+                Rect selectorRect = new Rect(unitRect);
+                selectorRect.width = viewWidth - unitWidth - offsetWidth;
+                selectorRect.x += unitWidth + offsetWidth;
+
+                float oldCircleParts = AngleType.ConvertAngle(circlePartsSP.floatValue, AngleType.CirclePart, boxedAngleType); 
+                float newAngleValue = EditorGUI.FloatField(unitRect, new GUIContent(""), oldCircleParts);
+                circlePartsSP.floatValue = AngleType.ConvertAngle(newAngleValue, boxedAngleType, AngleType.CirclePart); 
+                
+                EditorGUI.PropertyField(selectorRect, angleTypeSP);
+                
+                position.y += EditorGUI.GetPropertyHeight(angleTypeSP); 
+            }
+            
+            /*
+            //Setting up the AngleType inspector
             if (!showAllAngleTypesSP.boolValue)
             {
                 Rect valueRect = new Rect(position);
@@ -77,6 +105,7 @@ namespace Editor
 
                 position.width = EditorGUIUtility.currentViewWidth; 
             }
+            */
             
             EditorGUI.EndProperty();
         }

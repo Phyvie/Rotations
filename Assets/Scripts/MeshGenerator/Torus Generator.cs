@@ -1,7 +1,10 @@
+using UnityEditor;
 using UnityEngine;
 
 namespace MeshGenerator
 {
+    [RequireComponent(typeof(MeshFilter))]
+    [RequireComponent(typeof(MeshRenderer))]
     public class TorusGenerator : MonoBehaviour
     {
         [Range(3, 64)] public int segments = 24;
@@ -10,10 +13,12 @@ namespace MeshGenerator
         public float tubeRadius = 0.3f;
 
         [ContextMenu("GenerateTorus")]
-        void GenerateTorus() //TODO: Test this function
+        void GenerateTorus()
         {
             Mesh torusMesh = new Mesh();
+            Undo.RecordObject(torusMesh, "Generated Torus");
             GetComponent<MeshFilter>().mesh = torusMesh;
+            
             Vector3[] vertices = new Vector3[(segments + 1) * (rings + 1)];
             int[] triangles = new int[segments * rings * 6];
             Vector2[] uv = new Vector2[vertices.Length];
@@ -51,6 +56,8 @@ namespace MeshGenerator
             torusMesh.triangles = triangles;
             torusMesh.uv = uv;
             torusMesh.RecalculateNormals();
+            
+            Undo.FlushUndoRecordObjects();
         }
     }
 }

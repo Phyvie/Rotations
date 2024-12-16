@@ -1,65 +1,105 @@
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 
 namespace RotationTypes
 {
     [Serializable]
-    public class QuaternionRotation : RotationType
+    public class QuaternionRotation : RotationParent
     {
-        [SerializeField] private float _real;
-        [SerializeField] private float _i;
-        [SerializeField] private float _j;
-        [SerializeField] private float _k;
+        [SerializeField] private bool enforceNormalisation;
+        private float lastR; 
+        [SerializeField] private LockableFloat _r;
+        private float lastI; 
+        [SerializeField] private LockableFloat _i;
+        private float lastJ; 
+        [SerializeField] private LockableFloat _j;
+        private float lastK; 
+        [SerializeField] private LockableFloat _k;
         
-        /* In Mathematics Quaternion usually use the variables i, j and k;
+        /* In Mathematics Quaternion usually use the variables i, j and k for the second, third and fourth dimension value; 
          * However, Game Engines often use x, y, z and w, because the axis are called x, y and z
-         * Therefore the following properties are defined twice: once as real, i, j and k and once as w, x, y and z
+         * Therefore the following properties are defined twice: once as i, j, k and 'real' and once as x, y, z and w
          */
+        
         public float real
         {
-            get => _real;
-            set => _real = value;
+            get => _r;
+            set => SetValueChecked(ref _r, value); 
         }
 
         public float w
         {
-            get => _real;
-            set => _real = value;
+            get => _r;
+            set => SetValueChecked(ref _r, value); 
         }
 
         public float i
         {
             get => _i;
-            set => _i = value;
+            set => SetValueChecked(ref _i, value); 
         }
 
         public float x
         {
             get => _i;
-            set => _i = value;
+            set => SetValueChecked(ref _i, value); 
         }
 
         public float j
         {
             get => _j;
-            set => _j = value;
+            set => SetValueChecked(ref _j, value); 
         }
         public float y
         {
             get => _j;
-            set => _j = value;
+            set => SetValueChecked(ref _j, value); 
         }
         
 
         public float k
         {
             get => _k;
-            set => _k = value;
+            set => SetValueChecked(ref _k, value); 
         }
         public float z
         {
             get => _j;
-            set => _j = value;
+            set => SetValueChecked(ref _k, value); 
+        }
+
+        public LockableFloat GetInternalLockableFloatByIndex(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return _r; 
+                case 1:
+                    return _i; 
+                case 2:
+                    return _j; 
+                case 3:
+                    return _k; 
+                default:
+                    throw new IndexOutOfRangeException(); 
+            }
+        }
+        
+        private void SetValueChecked(ref LockableFloat _value, float newValue)
+        {
+            _value.Value = newValue;
+            if (enforceNormalisation)
+            {
+                GetLockedAndUnlockedLength(out float lockedLength, out float unlockedLength, out int lockedCount);
+                Math.Clamp(_value.Value, lockedLength - 1, 1 - lockedLength);
+                bool isRLocked = _value.isLocked; 
+                _value.isLocked = true;
+                NormalizeWithLocks();
+                _value.isLocked = isRLocked; 
+            }
         }
 
         public Vector3 Axis => new Vector3(i, j, k);
@@ -135,7 +175,7 @@ namespace RotationTypes
                 return false;
             }
 
-            return Math.Abs(qr1._real - qr2._real) < 0.0001f && Math.Abs(qr1._i - qr2._i) < 0.0001f && Math.Abs(qr1._j - qr2._j) < 0.0001f && Math.Abs(qr1._k - qr2._k) < 0.0001f;
+            return Math.Abs(qr1._r - qr2._r) < 0.0001f && Math.Abs(qr1._i - qr2._i) < 0.0001f && Math.Abs(qr1._j - qr2._j) < 0.0001f && Math.Abs(qr1._k - qr2._k) < 0.0001f;
         }
 
         public static bool operator !=(QuaternionRotation qr1, QuaternionRotation qr2)
@@ -145,7 +185,7 @@ namespace RotationTypes
 
         public override int GetHashCode()
         {
-            return Tuple.Create(_real, _i, _j, _k).GetHashCode();
+            return Tuple.Create(_r, _i, _j, _k).GetHashCode();
         }
         
         public static QuaternionRotation operator*(QuaternionRotation q1, QuaternionRotation q2)
@@ -218,6 +258,65 @@ namespace RotationTypes
         public float Size()
         {
             return Mathf.Sqrt(real * real + i * i + j * j + k * k); 
+        }
+
+        public void NormalizeWithLocks()
+        {
+            GetLockedAndUnlockedLength(out float lockedLength, out float unlockedLength, out int lockedCount);
+            if (lockedCount == 4)
+            {
+                Debug.LogError("Can't normalise Quaternion if all 4 values are locked");
+                return; 
+            }
+            if (lockedLength > 1)
+            {
+                Debug.LogError($"Can't normalise Quaternion if lockedLength = {lockedLength} > 1");
+                return; 
+            }
+
+            float ratio = 1 - lockedLength / unlockedLength; 
+            _r.value *= _r.isLocked ? 1 : ratio; 
+            _i.value *= _i.isLocked ? 1 : ratio; 
+            _j.value *= _j.isLocked ? 1 : ratio; 
+            _k.value *= _k.isLocked ? 1 : ratio; 
+            
+            
+        }
+
+        private void GetLockedAndUnlockedLength(out float lockedLength, out float unlockedLength, out int lockedCount)
+        {
+            int _lockedCount = 0; 
+            float lockedLengthSquared = 0;
+            float unlockedLengthSquared = 0; 
+            AddTo_Un_Locked_Value(ref _r.value, ref _r.isLocked);
+            AddTo_Un_Locked_Value(ref _i.value, ref _i.isLocked);
+            AddTo_Un_Locked_Value(ref _j.value, ref _j.isLocked);
+            AddTo_Un_Locked_Value(ref _k.value, ref _k.isLocked);
+            lockedCount = _lockedCount; 
+            lockedLength = Mathf.Sqrt(lockedLengthSquared);           
+            unlockedLength = Mathf.Sqrt(unlockedLengthSquared);
+            
+            void AddTo_Un_Locked_Value(ref float value, ref bool locked)
+            {
+                if (locked)
+                {
+                    lockedLengthSquared += value * value;
+                    _lockedCount++; 
+                }
+                else
+                {
+                    unlockedLengthSquared += value * value; 
+                }
+            }
+        }
+        
+        public void normalize()
+        {
+            float sizeSquared = SizeSquared();
+            _r.Value = _r.Value / sizeSquared; 
+            _i.Value = _i.Value / sizeSquared;
+            _j.Value = _j.Value / sizeSquared;
+            _k.Value = _k.Value / sizeSquared; 
         }
         
         public QuaternionRotation Normalize()

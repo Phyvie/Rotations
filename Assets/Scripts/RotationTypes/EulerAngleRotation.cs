@@ -13,7 +13,7 @@ namespace RotationTypes
     }
     
     [Serializable]
-    public class EulerAngleRotation : RotationType
+    public class EulerAngleRotation : RotationParent
     {
         public GimbleRing firstGimbleRing; 
         public GimbleRing secondGimbleRing; 
@@ -247,7 +247,7 @@ namespace RotationTypes
             }
         }
         
-        //ToQuaternionRotation.ToMatrixRotation is cheaper, because converting from EulerAngles to another RotationType requires combining and inversing multiple rotation, which is cheaper in Quaternions
+        //ToQuaternionRotation.ToMatrixRotation is cheaper, because converting from EulerAngles to another RotationParent requires combining and inversing multiple rotation, which is cheaper in Quaternions
         public override MatrixRotation ToMatrixRotation() //TODO: test this function
         {
             MatrixRotation result = new MatrixRotation(MatrixRotation.RotationIdentity());

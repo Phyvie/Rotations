@@ -19,24 +19,8 @@ namespace Editor
             EditorGUI.BeginProperty(position, label, property);
             position.height = EditorGUIUtility.singleLineHeight;
             TestClass testObject = GetObject<TestClass>(property);
-
-            // SerializedProperty eulerRotProp = property.FindPropertyRelative("eulerAngleRotation");
-            // EditorGUI.PropertyField(position, eulerRotProp);
-            // position.y += EditorGUI.GetPropertyHeight(eulerRotProp); 
-                
-            // SerializedProperty angleWithTypeProp = property.FindPropertyRelative("angleWithType");
-            // EditorGUI.PropertyField(position, angleWithTypeProp);
-            // position.y += EditorGUI.GetPropertyHeight(angleWithTypeProp); 
             
-            SerializedProperty angleTypeProp1 = property.FindPropertyRelative("angleTypeA");
-            EditorGUI.PropertyField(position, angleTypeProp1);
-            Debug.Log(angleTypeProp1.boxedValue); 
-            position.y += EditorGUI.GetPropertyHeight(angleTypeProp1); 
             
-            SerializedProperty angleTypeProp2 = property.FindPropertyRelative("angleTypeB");
-            EditorGUI.PropertyField(position, angleTypeProp2);
-            Debug.Log(angleTypeProp2.boxedValue); 
-            position.y += EditorGUI.GetPropertyHeight(angleTypeProp2); 
             
             EditorGUI.EndProperty();
         }

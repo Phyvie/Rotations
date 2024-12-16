@@ -5,7 +5,7 @@ using UnityEngine;
 namespace RotationTypes
 {
     [Serializable]
-    public class AxisAngleRotation : RotationType
+    public class AxisAngleRotation : RotationParent
     {
         [SerializeField] protected AngleType _angleType = AngleType.Radian;
         public AngleType angleType
@@ -86,7 +86,7 @@ namespace RotationTypes
 
         public void SetAngleType(AngleType value)
         {
-            axisAngle = axisAngle * (float) (value.unitMultiplier / angleType.unitMultiplier);
+            axisAngle = axisAngle * (float) (value.UnitMultiplier / angleType.UnitMultiplier);
             _angleType = value; 
         }
 

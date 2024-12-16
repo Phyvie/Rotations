@@ -4,7 +4,7 @@ using UnityEngine;
 namespace RotationTypes
 {
     [Serializable]
-    public abstract class RotationType
+    public abstract class RotationParent
     {
         public abstract EulerAngleRotation ToEulerAngleRotation(); 
         public abstract QuaternionRotation ToQuaternionRotation(); 

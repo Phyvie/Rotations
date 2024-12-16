@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+//TODO: check whether this clas is needed and if not then delete it
 namespace RotationTypes
 {
     [Serializable]
@@ -35,7 +36,7 @@ namespace RotationTypes
         }
         
         [SerializeField] private ERotationType eRotationType;
-        [SerializeField] private RotationType activeRotation; 
+        [SerializeField] private RotationParent activeRotation; 
         [SerializeField] private EulerAngleRotation eulerAngleRotation;
         [SerializeField] private QuaternionRotation quaternionRotation;
         [SerializeField] private AxisAngleRotation axisAngleRotation;
@@ -77,7 +78,7 @@ namespace RotationTypes
             return activeRotation; 
         }
 
-        public TRotationType GetValueOfTypeT<TRotationType>() where TRotationType : RotationType
+        public TRotationType GetValueOfTypeT<TRotationType>() where TRotationType : RotationParent
         {
             return (TRotationType) activeRotation; 
         }

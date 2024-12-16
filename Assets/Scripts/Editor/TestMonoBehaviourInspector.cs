@@ -12,10 +12,13 @@ namespace Editor
         {
             serializedObject.Update();
 
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("angleTypeA"));
-            Debug.Log(serializedObject.FindProperty("angleTypeA").boxedValue);
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("angleTypeB"));
-            Debug.Log(serializedObject.FindProperty("angleTypeB").boxedValue);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("quaternionRotation"));
+            
+            // EditorGUILayout.PropertyField(serializedObject.FindProperty("angleTypeA"));
+            // EditorGUILayout.PropertyField(serializedObject.FindProperty("angleTypeB"));
+            
+            // EditorGUILayout.PropertyField(serializedObject.FindProperty("angleWithTypeA"));
+            // EditorGUILayout.PropertyField(serializedObject.FindProperty("angleWithTypeB"));
             
             // EditorGUILayout.PropertyField(serializedObject.FindProperty("testObject"));
             // EditorGUILayout.PropertyField(serializedObject.FindProperty("testObjectArray"));

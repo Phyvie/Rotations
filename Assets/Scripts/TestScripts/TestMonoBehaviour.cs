@@ -7,15 +7,15 @@ namespace TestScripts
     [ExecuteInEditMode]
     public class TestMonoBehaviour : MonoBehaviour
     {
-        [SerializeField] private AngleType angleTypeA = null; 
-        [SerializeField] private AngleType angleTypeB = AngleType.Degree; 
+        [SerializeField] private QuaternionRotation quaternionRotation; 
         
         [SerializeField] private TestClass testObject; 
         [SerializeField] private TestClass[] testObjectArray; 
 
-        [ContextMenu("RecreateTestObjectArray")]
-        private void RecreateTestObjectArray()
+        [ContextMenu("RecreateTestObjectProperties")]
+        private void RecreateTestObjectProperties()
         {
+            testObject = new TestClass(); 
             testObjectArray =  new TestClass[]{new TestClass(), new TestClass(), new TestClass()};
         }
 
@@ -35,8 +35,7 @@ namespace TestScripts
 
         private void Update()
         {
-            Debug.Log(angleTypeA);
-            Debug.Log(angleTypeB);
+            
         }
     }
 }

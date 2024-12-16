@@ -8,7 +8,7 @@ namespace RotationVisualisation
     [RequireComponent(typeof(TorusGenerator))]
     public class MB_Rotation3D : MonoBehaviour
     {
-        [SerializeField] private RotationType activeRotationType; 
+        [SerializeField] private RotationParent _activeRotationParent; 
         [SerializeField] private TorusGenerator ref_TorusGenerator;
         [SerializeField] private GameObject ref_UnrotatedPoint;
         [SerializeField] private GameObject ref_RotatedPoint;
@@ -27,7 +27,7 @@ namespace RotationVisualisation
         [SerializeField]
         void UpdatePointRotation()
         {
-            ref_RotatedPoint.transform.position = activeRotationType.RotateVector(ref_UnrotatedPoint.transform.position); 
+            ref_RotatedPoint.transform.position = _activeRotationParent.RotateVector(ref_UnrotatedPoint.transform.position); 
         }
     }
 }

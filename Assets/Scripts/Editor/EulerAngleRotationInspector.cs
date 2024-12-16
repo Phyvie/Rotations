@@ -36,10 +36,8 @@ namespace Editor
         {
             Initialize(property);
             InitializePropertyNesting(property);
-            
             EditorGUI.BeginProperty(position, label, property);
             position.height = EditorGUIUtility.singleLineHeight;
-            
             EulerAngleRotation targetEulerAngle = GetObject<EulerAngleRotation>(property);
             
             EGimbleType targetGimbleType = targetEulerAngle!.GetGimbleType();

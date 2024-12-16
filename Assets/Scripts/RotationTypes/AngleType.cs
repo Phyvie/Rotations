@@ -1,33 +1,50 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace RotationTypes
 {
-    [Serializable]
+    [System.Serializable]
     public class AngleType
 
     {
     private AngleType(string angleTypeName, double unitMultiplier, string unitLabel)
     {
-        this.angleTypeName = angleTypeName;
-        this.unitMultiplier = unitMultiplier;
+        this.AngleTypeName = angleTypeName;
+        this.UnitMultiplier = unitMultiplier;
+        this.UnitLabel = unitLabel; 
     }
 
-    public readonly string angleTypeName;
-    public readonly double unitMultiplier;
-    public readonly string unitLabel;
-    [SerializeField] private bool thisEnforcedSerialization = true; 
+    [SerializeField] private string angleTypeName;
+    [SerializeField] private double unitMultiplier;
+    [SerializeField] private string unitLabel;
+
+    public string AngleTypeName
+    {
+        get => angleTypeName;
+        private set => angleTypeName = value;
+    }
     
+    public double UnitMultiplier
+    {
+        get => unitMultiplier;
+        private set => unitMultiplier = value;
+    }
+
+    public string UnitLabel
+    {
+        get => unitLabel;
+        private set => unitLabel = value;
+    }
+
+
     public static float ConvertAngle(float inAngle, AngleType inAngleType, AngleType outAngleType)
     {
-        return (float)(inAngle / inAngleType.unitMultiplier * outAngleType.unitMultiplier);
+        return (float)(inAngle / inAngleType.UnitMultiplier * outAngleType.UnitMultiplier);
     }
 
     public override string ToString()
     {
-        return angleTypeName + $"({unitMultiplier})({unitLabel})"; 
+        return AngleTypeName + $"({UnitMultiplier})({UnitLabel})"; 
     }
 
     public static readonly AngleType Radian = new AngleType("Radian", 2 * Math.PI, "2PI");
