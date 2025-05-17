@@ -5,21 +5,29 @@ namespace Visualisation
     public class Vis_PlaneArc : MonoBehaviour
     {
         [SerializeField] private Vector3 rotationAxis; 
-        [SerializeField] private float startingAngle; //+ZyKa create shader for arcs && make the shaders subsribe to this; maybe install unity-atoms 
+        [SerializeField] private float beginAngle; 
         [SerializeField] private float endingAngle; 
-        [SerializeField] private GameObject torus; 
-        [SerializeField] private GameObject circle;
+        [SerializeField] private M_CircleSector torusMaterial; 
+        [SerializeField] private M_CircleSector circleMaterial;
         
         public float StartingAngle
         {
-            get => startingAngle;
-            set => startingAngle = value;
+            get => beginAngle;
+            set
+            {
+                beginAngle = value;
+                UpdateVisualisation();
+            }
         }
 
         public float EndingAngle
         {
             get => endingAngle;
-            set => endingAngle = value;
+            set
+            {
+                endingAngle = value;
+                UpdateVisualisation();
+            }
         }
 
         public Vector3 RotationAxis
@@ -27,13 +35,26 @@ namespace Visualisation
             get => rotationAxis;
             set
             {
+                rotationAxis = value;
                 transform.rotation = Quaternion.FromToRotation(Vector3.right, rotationAxis);
+                UpdateVisualisation();
             }
         }
 
+        public void UpdateVisualisation()
+        {
+            transform.rotation = Quaternion.FromToRotation(Vector3.right, rotationAxis);
+            
+            torusMaterial.BeginAngle = beginAngle;
+            torusMaterial.EndAngle = endingAngle; 
+            
+            circleMaterial.BeginAngle = beginAngle;
+            circleMaterial.EndAngle = endingAngle;
+        }
+        
         public void OnValidate()
         {
-            StartingAngle = startingAngle;
+            StartingAngle = beginAngle;
             EndingAngle = endingAngle;
             RotationAxis = rotationAxis;
         }

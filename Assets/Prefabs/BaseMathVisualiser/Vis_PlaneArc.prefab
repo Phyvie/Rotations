@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2705781952457284527}
   - component: {fileID: 5177210245288019723}
   - component: {fileID: 9140821770695997679}
+  - component: {fileID: 3766871097072832070}
   m_Layer: 0
   m_Name: Torus
   m_TagString: Untagged
@@ -64,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2ab70e404c3464f43a9d554313b18f55, type: 2}
+  - {fileID: 2100000, guid: 33fdf24a949fe4b458d6eb6a85bb4e2e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -86,6 +87,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3766871097072832070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66024414259742215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 831c7a23584d487428fac8dabfc3461f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  editSharedMaterial: {fileID: 2100000, guid: 33fdf24a949fe4b458d6eb6a85bb4e2e, type: 2}
+  _beginAngle: 0
+  _endAngle: 0
 --- !u!1 &7239840537151496293
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,10 +149,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationAxis: {x: 0, y: 0, z: 0}
-  startingAngle: 0
+  beginAngle: 0
   endingAngle: 0
-  torus: {fileID: 0}
-  circle: {fileID: 0}
+  torusMaterial: {fileID: 3766871097072832070}
+  circleMaterial: {fileID: 6443256106142866425}
 --- !u!1 &7746308340713269120
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,7 +218,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f4665b321c4d106438478c434b6be567, type: 2}
+  - {fileID: 2100000, guid: 33fdf24a949fe4b458d6eb6a85bb4e2e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -236,4 +252,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 831c7a23584d487428fac8dabfc3461f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: f4665b321c4d106438478c434b6be567, type: 2}
+  editSharedMaterial: {fileID: 2100000, guid: 33fdf24a949fe4b458d6eb6a85bb4e2e, type: 2}
+  _beginAngle: 0
+  _endAngle: 0

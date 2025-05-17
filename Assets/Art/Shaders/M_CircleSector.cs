@@ -5,7 +5,7 @@ using UnityEngine;
 public class M_CircleSector : MonoBehaviour
 {
     [SerializeField] private Material editSharedMaterial;
-    [HideInInspector] public Material runtimeMaterialInstance; 
+    [HideInInspector] private Material runtimeMaterialInstance; 
     public Material material => Application.isPlaying ? runtimeMaterialInstance : editSharedMaterial;
 
     [SerializeField] private float _beginAngle;
@@ -57,9 +57,6 @@ public class M_CircleSector : MonoBehaviour
                 material.GetColor("_PositiveAngleColour") :
                 material.GetColor("_NegativeAngleColour"));
         material.SetFloat("FullRotations", fullRotations);
-        
-        Debug.Log(_beginAngle);
-        Debug.Log(_endAngle); 
     }
 
     private void OnValidate()

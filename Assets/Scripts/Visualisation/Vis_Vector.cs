@@ -19,7 +19,7 @@ namespace Visualisation
                 this.value = value;
             }
         }
-
+        
         public void SetLength(float length)
         {
             vectorLength.transform.localScale = new Vector3(length, 1, 1); 
