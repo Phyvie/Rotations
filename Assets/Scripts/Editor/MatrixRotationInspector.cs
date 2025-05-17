@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Editor
 {
-    [CustomPropertyDrawer(typeof(MatrixRotation))]
+    [CustomPropertyDrawer(typeof(RotParams_Matrix))]
     public class MatrixRotationInspector : NestedPropertyDrawer
     {
         private SerializedProperty internalMatrixProp; 
@@ -14,8 +14,8 @@ namespace Editor
             EditorGUI.BeginProperty(position, label, property);
             position.height = EditorGUIUtility.singleLineHeight; 
 
-            MatrixRotation matrixRotation = objectHierarchy[~1] as MatrixRotation; 
-            property.isExpanded = EditorGUI.BeginFoldoutHeaderGroup(position, property.isExpanded, new GUIContent("Matrix" + (matrixRotation.isRotationMatrix ? " (Rotation)" : " (NotRotation)")));
+            RotParams_Matrix rotParamsMatrix = objectHierarchy[~1] as RotParams_Matrix; 
+            property.isExpanded = EditorGUI.BeginFoldoutHeaderGroup(position, property.isExpanded, new GUIContent("Matrix" + (rotParamsMatrix.isRotationMatrix ? " (Rotation)" : " (NotRotation)")));
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 
             EditorGUI.EndFoldoutHeaderGroup();
             if (property.isExpanded)

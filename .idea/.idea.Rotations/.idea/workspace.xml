@@ -5,67 +5,126 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b54c963-bad1-41cc-8b0e-252a0574fd2d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/QuaternionRotationInspector.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/QuaternionRotationInspector.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/lockableFloatInspector.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/lockableFloatInspector.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/LockableFloat.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/LockableFloat.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes/AngleMath.hlsl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes/AngleMath.hlsl.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BaseClasses.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BaseClasses/Rotation.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/BaseClasses/Rotation.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/Unity EditorWindow.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/Unity EditorWindow.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/RotationParameterisation.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotationVisualisation/RotVis_AxisAngle.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotationVisualisation/RotVis_AxisAngle.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotationVisualisation/RotVis_EulerAngle.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotationVisualisation/RotVis_EulerAngle.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotationVisualisation/RotVis_Matrix.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotationVisualisation/RotVis_Matrix.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotationVisualisation/RotVis_Quaternion.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotationVisualisation/RotVis_Quaternion.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotationVisualisation/RotationVisualisation.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotationVisualisation/RotationVisualisation.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Visualisation.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Visualisation/Gizmo_Rotation.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Visualisation/Gizmo_Rotation.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Visualisation/Vis_PlaneArc.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Visualisation/Vis_PlaneArc.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Visualisation/Vis_Vector.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Visualisation/Vis_Vector.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/projectSettingsUpdater.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_Background.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_Background.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_Blue.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_Blue.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_CircleSegment.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_CircleSegment.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_Gray.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_Gray.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_Green.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_Green.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_Orange.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_Orange.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_Red.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_Red.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/CircleShader.shadergraph" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/CircleShader.shadergraph.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Matrix_InputField.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Matrix_InputField.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotationAxisPivot.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotationAxisPivot.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotationPointPivot.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotationPointPivot.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/SingleAxisRotation.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/SingleAxisRotation.prefab.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/3D Rotations.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/3D Rotations.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/AngleTypeInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/AngleTypeInspector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Deprecated/RotationExample.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Deprecated/RotationExample.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/AngleWithTypeInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/AngleWithTypeInspector.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/EulerAngleRotationInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/EulerAngleRotationInspector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/MBRotation3D_Inspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/MBRotation3D_Inspector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/NestedPropertyDrawerDeprecated.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/NestedPropertyDrawerDeprecated.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingInspector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/MatrixRotationInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/MatrixRotationInspector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/QuaternionRotationInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/QuaternionRotationInspector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotationUnionPropertyDrawer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotationUnionPropertyDrawer.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TestClassInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TestClassInspector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TestMonoBehaviourInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TestMonoBehaviourInspector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MeshGenerator/Torus Generator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MeshGenerator/Torus Generator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AngleType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AngleType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AngleWithType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AngleWithType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AxisAngleRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AxisAngleRotation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/ComplexRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/ComplexRotation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/MatrixRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/MatrixRotation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/QuaternionRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/QuaternionRotation.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/RotationType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/RotationParent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/RotationType.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/RotationParent.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/RotationUnion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/RotationUnion.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EditorUtility/SelectionBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/EditorUtility/SelectionBase.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ExtensionMethods/ExtensionMethods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ExtensionMethods/ExtensionMethods.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationMath.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AngleType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationMath/AngleType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AngleType.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationMath/AngleType.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AngleWithType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationMath/AngleWithType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AngleWithType.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationMath/AngleWithType.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AxisAngleRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/RotParams_AxisAngle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/AxisAngleRotation.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/RotParams_AxisAngle.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/ComplexRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/RotParams_Complex.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/ComplexRotation.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/RotParams_Complex.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/RotParams_EulerAngle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/EulerAngleRotation.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/RotParams_EulerAngle.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/GimbleRing.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/EulerAngleGimbleRing.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/GimbleRing.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/EulerAngleGimbleRing.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/LockableFloat.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ExtensionMethods/LockableFloat.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/LockableFloat.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ExtensionMethods/LockableFloat.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/Matrix.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationMath/Matrix.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/Matrix.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationMath/Matrix.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/MatrixRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/RotParams_Matrix.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/MatrixRotation.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/RotParams_Matrix.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/QuaternionRotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/RotParams_Quaternion.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/QuaternionRotation.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/RotParams_Quaternion.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/RotationParent.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/RotationParent.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/RotationParameterisation.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/RotationUnion.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationTypes/RotationUnion.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationVisualisation/MB_Rotation3D.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationVisualisation/MB_Rotation3D.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TestScripts/TestClass.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TestScripts/TestClass.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/TestScripts/TestMonoBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TestScripts/TestMonoBehaviour.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/SampleSceneProfile.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/SampleSceneProfile.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/URP-Balanced.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/URP-Balanced.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/URP-HighFidelity-Renderer.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/URP-HighFidelity-Renderer.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/URP-HighFidelity.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/URP-HighFidelity.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/URP-Performant.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/URP-Performant.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UniversalRenderPipelineGlobalSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UniversalRenderPipelineGlobalSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/SceneTemplateSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/SceneTemplateSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DpaMonitoringSettings">
+    <option name="firstShow" value="false" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1a34d7ee85f44ff2a9df5d0ea5a6ee325735b0/1f/d77be55f/PropertyInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3bdab0a3d13f46e1ac146e949d456be43b600/48/71f93d65/FontAsset.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3d611f181d2047d0a4666e5262482490956800/15/80c3fa82/EditorGUI.cs" root0="SKIP_HIGHLIGHTING" />
@@ -95,37 +154,20 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/779cc116a5954f1c9b92496e62345641175c00/57/23ec3f2b/Vector2Int.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/779cc116a5954f1c9b92496e62345641175c00/6d/939316ad/Vector2.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/779cc116a5954f1c9b92496e62345641175c00/75/5f211665/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/779cc116a5954f1c9b92496e62345641175c00/80/54ad349e/Quaternion.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/779cc116a5954f1c9b92496e62345641175c00/cd/70b1f19d/MonoBehaviour.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e6aa588f9882420485fca490ded58a721dee00/93/1f947a8f/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e6aa588f9882420485fca490ded58a721dee00/d3/23dae3a3/Object.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e6aa588f9882420485fca490ded58a721dee00/d6/7af1e97a/Debug.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e6aa588f9882420485fca490ded58a721dee00/ec/430332e5/Behaviour.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3ea01e77be99618395f448b16bd7cc2bd4248bd9e5d8474964b2d97f39c5d74/System.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/cca89918937e838503d883f1aa1784c57493a1cacd61b1f5fe1ebf5a1e3567a/System.Numerics.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Editor/MeshAssetGenerator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/ExtensionMethods/ExtensionMethods.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MeshGenerator/Torus Generator.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/RotationTypes/LockableFloat.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/RotationVisualisation/MB_Rotation3D.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.burst@1.8.15/Editor/BurstDisassembler.Core.ARM64.info.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.burst@1.8.15/Tests/Editor/BurstDisassemblerTests.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.burst@1.8.15/Tests/Runtime/FunctionPointerTests.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.burst@1.8.15/Tests/Runtime/Shared/040-ControlFlows.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.mathematics@1.2.6/Unity.Mathematics/Noise/noise3D.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@14.0.11/Editor/Lighting/IESImporterEditor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@14.0.11/Runtime/2D/UTess2D/PlanarGraph.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.searcher@4.9.2/Tests/Editor/SearcherTests.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Editor/TMP_BaseShaderGUI.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Editor/TMP_CharacterPropertyDrawer.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.7.6/Editor/inspectors/AnimationTrackInspector.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.timeline@1.7.6/Runtime/Attributes/TrackColorAttribute.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Editor/EventSystem/EventTriggerEditor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Editor/UI/GraphicEditor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Editor/UI/RectMask2DEditor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Editor/UI/SpriteDrawUtility.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/DefaultControls.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/RectMask2D.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/SpecializedCollections/IndexedSet.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Utility/ReflectionMethodsCache.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Tests/Editor/Canvas/RootCanvasTests.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Tests/Editor/TestBehaviourBase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Tests/Runtime/Slider/SliderTests.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Tests/Runtime/Util/PrivateFieldSetter.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@1.9.4/Editor/VisualScripting.Core/Utilities/MD4.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.shadergraph@911117698220/Editor/Data/Util/PooledList.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.shadergraph@911117698220/Editor/Drawing/PreviewManager.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
@@ -137,8 +179,10 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.46458924&quot;,
     &quot;git-widget-placeholder&quot;: &quot;PropertyInfo.SetMethod.Invoke&quot;,
@@ -146,19 +190,13 @@
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\Phyvie\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\Phyvie\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\Phyvie\\AppData\\Local\\Symbols\\src&quot;
-    ]
   }
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="C:\Program Files\UnityEditors\2022.3.32f1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="C:\Program Files\UnityEditors\6000.0.37f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-projectPath D:\programming\Rotations -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="D:\programming\Rotations" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -174,7 +212,7 @@
       <method v="2" />
     </configuration>
     <configuration name="Unit Tests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="C:\Program Files\UnityEditors\2022.3.32f1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="C:\Program Files\UnityEditors\6000.0.37f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath D:\programming\Rotations -testResults Logs/results.xml -testPlatform EditMode -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="D:\programming\Rotations" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -194,6 +232,9 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="projectPathOnTarget" />
+      <option name="runtimes">
+        <list />
+      </option>
       <option name="selectedOptions">
         <list />
       </option>
@@ -209,11 +250,16 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="3336">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="8244">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="3336" />
+      <option name="pid" value="8244" />
       <option name="projectPathOnTarget" />
+      <option name="runtimes">
+        <list>
+          <MonoRuntime />
+        </list>
+      </option>
       <option name="selectedOptions">
         <list />
       </option>
@@ -267,6 +313,17 @@
       <workItem from="1732052818304" duration="6594000" />
       <workItem from="1733600327613" duration="1881000" />
       <workItem from="1734283396722" duration="25244000" />
+      <workItem from="1742923950906" duration="2342000" />
+      <workItem from="1744193744108" duration="7231000" />
+      <workItem from="1744371957962" duration="731000" />
+      <workItem from="1744379236130" duration="4392000" />
+      <workItem from="1746308681233" duration="2411000" />
+      <workItem from="1746481859129" duration="5689000" />
+      <workItem from="1746978091366" duration="7049000" />
+      <workItem from="1747071928044" duration="1204000" />
+      <workItem from="1747316959320" duration="5665000" />
+      <workItem from="1747416299035" duration="2950000" />
+      <workItem from="1747431763936" duration="9460000" />
     </task>
     <servers />
   </component>
@@ -274,6 +331,11 @@
     <option name="version" value="3" />
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
+  <component name="UnityProjectDiscoverer">
+    <option name="hasUnityReference" value="true" />
+    <option name="unityProject" value="true" />
+    <option name="unityProjectFolder" value="true" />
+  </component>
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
@@ -282,31 +344,30 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <condition expression="!float.IsNaN(postValue) " language="C#" />
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Editor/QuaternionRotationInspector.cs</url>
-          <line>59</line>
-          <properties documentPath="D:\programming\Rotations\Assets\Scripts\Editor\QuaternionRotationInspector.cs" initialLine="58" containingFunctionPresentation="Method 'OnGUI'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/RotParams_Quaternion.cs</url>
+          <line>292</line>
+          <properties documentPath="D:\programming\Rotations\Assets\Scripts\RotationTypes\QuaternionRotation.cs" containingFunctionPresentation="Method 'GetLockedAndUnlockedLength'">
             <startOffsets>
-              <option value="2659" />
+              <option value="9101" />
             </startOffsets>
             <endOffsets>
-              <option value="2741" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="63" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/RotationTypes/QuaternionRotation.cs</url>
-          <line>287</line>
-          <properties documentPath="D:\programming\Rotations\Assets\Scripts\RotationTypes\QuaternionRotation.cs" initialLine="287" containingFunctionPresentation="Method 'GetLockedAndUnlockedLength'">
-            <startOffsets>
-              <option value="8914" />
-            </startOffsets>
-            <endOffsets>
-              <option value="8935" />
+              <option value="9154" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="64" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Art/Shaders/M_CircleSector.cs</url>
+          <line>16</line>
+          <properties documentPath="D:\programming\Rotations\Assets\Art\Shaders\M_CircleSector.cs" containingFunctionPresentation="Method 'Awake'">
+            <startOffsets>
+              <option value="572" />
+            </startOffsets>
+            <endOffsets>
+              <option value="573" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="65" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

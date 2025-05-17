@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Editor
 {
-    [CustomPropertyDrawer(typeof(EulerAngleRotation))]
+    [CustomPropertyDrawer(typeof(RotParams_EulerAngle))]
     public class EulerAngleRotationInspector : NestedPropertyDrawer
     {
         private SerializedProperty firstGimbleRing;
@@ -38,9 +38,9 @@ namespace Editor
             InitializePropertyNesting(property);
             EditorGUI.BeginProperty(position, label, property);
             position.height = EditorGUIUtility.singleLineHeight;
-            EulerAngleRotation targetEulerAngle = GetObject<EulerAngleRotation>(property);
+            RotParams_EulerAngle targetRotParamsEulerAngle = GetObject<RotParams_EulerAngle>(property);
             
-            EGimbleType targetGimbleType = targetEulerAngle!.GetGimbleType();
+            EGimbleType targetGimbleType = targetRotParamsEulerAngle!.GetGimbleType();
             property.isExpanded = EditorGUI.BeginFoldoutHeaderGroup(position, property.isExpanded, new GUIContent($"eulerAngle({Enum.GetNames(typeof(EGimbleType))[(int) targetGimbleType]})"));
             EditorGUI.EndFoldoutHeaderGroup(); //??? this is confusing, because seemingly all a BeginFoldoutHeaderGroup does is return whether it's toggled on or off, but not the actual indentation; 
             if (property.isExpanded)

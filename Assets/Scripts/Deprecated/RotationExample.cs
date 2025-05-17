@@ -14,8 +14,9 @@ public class RotationCircle : MonoBehaviour
     private readonly String SVN_endAngle = "_EndingAngle"; 
     private readonly String SVN_circleColor = "_CircleColour"; 
     
-    private Material shaderMaterial; 
-    
+    private Material shaderMaterial;
+    [SerializeField] private float AxisLengthMultiplier = 1.0f;
+
     void Start()
     {
         shaderMaterial = rotationPlane.GetComponent<MeshRenderer>().materials[0]; 
@@ -31,6 +32,7 @@ public class RotationCircle : MonoBehaviour
     void Update()
     {
         UpdateCircleShader(); 
+        UpdateAxisScale(); 
     }
 
     [ContextMenu("UpdateCircleShader")]
@@ -43,5 +45,14 @@ public class RotationCircle : MonoBehaviour
         shaderMaterial.SetFloat(SVN_endAngle, endingAngle);
         Debug.Log(endingAngle);
         shaderMaterial.SetColor(SVN_circleColor, circleColor);
+    }
+
+    [ContextMenu("UpdateAxisScale")]
+    void UpdateAxisScale()
+    {
+        rotationAxis.transform.localScale = new Vector3(
+            rotationAxis.transform.localScale.x,
+            rotationAxis.transform.localScale.y,
+            (endPointPivot.transform.localEulerAngles.z - startingPointPivot.transform.localEulerAngles.z) * AxisLengthMultiplier); 
     }
 }

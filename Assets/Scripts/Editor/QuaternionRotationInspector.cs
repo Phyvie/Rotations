@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Editor
 {
-    [CustomPropertyDrawer(typeof(QuaternionRotation))]
+    [CustomPropertyDrawer(typeof(RotParams_Quaternion))]
     public class QuaternionRotationInspector : NestedPropertyDrawer
     {
         private SerializedProperty SP_i; 
@@ -28,7 +28,7 @@ namespace Editor
             InitializePropertyNesting(property);
             EditorGUI.BeginProperty(position, label, property);
             position.height = EditorGUIUtility.singleLineHeight;
-            QuaternionRotation targetQuaternion = GetObject<QuaternionRotation>(property);
+            RotParams_Quaternion targetRotParamsQuaternion = GetObject<RotParams_Quaternion>(property);
 
             if (position.width == 1)
             {
@@ -56,11 +56,10 @@ namespace Editor
 
                 if (preValue != postValue)
                 {
-                    
-                    LockableFloat lockableFloat = targetQuaternion.GetInternalLockableFloatByIndex(i); 
-                    bool isLocked = targetQuaternion.GetInternalLockableFloatByIndex(i).isLocked;
+                    LockableFloat lockableFloat = targetRotParamsQuaternion.GetInternalLockableFloatByIndex(i); 
+                    bool isLocked = targetRotParamsQuaternion.GetInternalLockableFloatByIndex(i).isLocked;
                     lockableFloat.isLocked = true; 
-                    targetQuaternion.NormalizeWithLocks(); //TODO: this does not work as intended, because the stored value is not yet changed, only the SerializedField is changed
+                    targetRotParamsQuaternion.NormalizeWithLocks(); //TODO: this does not work as intended, because the stored value is not yet changed, only the SerializedField is changed
                     lockableFloat.isLocked = isLocked; 
                 }
             }

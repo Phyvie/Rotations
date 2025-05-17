@@ -1,13 +1,14 @@
 using System;
 using RotationTypes;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace TestScripts
 {
     [ExecuteInEditMode]
     public class TestMonoBehaviour : MonoBehaviour
     {
-        [SerializeField] private QuaternionRotation quaternionRotation; 
+        [FormerlySerializedAs("quaternionRotation")] [SerializeField] private RotParams_Quaternion rotParamsQuaternion; 
         
         [SerializeField] private TestClass testObject; 
         [SerializeField] private TestClass[] testObjectArray; 

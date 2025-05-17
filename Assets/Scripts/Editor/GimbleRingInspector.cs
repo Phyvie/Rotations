@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Editor
 {
-    [CustomPropertyDrawer(typeof(GimbleRing))]
+    [CustomPropertyDrawer(typeof(EulerAngleGimbleRing))]
     public class GimbleRingInspector : NestedPropertyDrawer
     {
         private SerializedProperty axisProp; 

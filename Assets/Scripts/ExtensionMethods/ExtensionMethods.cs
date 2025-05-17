@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using Unity.Mathematics;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEditor;
 using UnityEngine;
 
@@ -132,10 +131,34 @@ namespace ExtensionMethods
 
             Array.Copy(value, 0, array, rowIndex * array.GetLength(1), array.GetLength(1));
         }
+
+        public static void GetTransformRelativeTo(this Transform t, Transform transform, 
+            ref Vector3 relativePosition, ref Quaternion relativeRotation, ref Vector3 relativeScale)
+        {
+            if (transform is null)
+            {
+                relativePosition = t.position;
+                relativeRotation = t.rotation;
+                relativeScale = t.localScale;
+            }
+            else
+            {
+                relativePosition = transform.InverseTransformPoint(t.position);
+                relativeRotation = Quaternion.Inverse(transform.rotation) * t.rotation;
+                relativeScale = Vector3.Scale(t.lossyScale, transform.lossyScale);  
+            }
+        }
     }
 
     public static class MathExtensions
     {
+        public static float RangeModulo(float value, float2 range)
+        {
+            float min = Mathf.Min(range.x, range.y);
+            float max = Mathf.Max(range.x, range.y);
+            return Mathf.Repeat(value + min, max - min) + min; 
+        }
+        
         public static float[,] MatrixMultiply(this float[,] firstMatrix, float[,] secondMatrix)
         {
             int firstRows = firstMatrix.GetLength(0);
