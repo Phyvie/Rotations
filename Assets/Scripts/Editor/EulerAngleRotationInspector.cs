@@ -5,14 +5,12 @@ using UnityEngine;
 
 namespace Editor
 {
-    [CustomPropertyDrawer(typeof(RotParams_EulerAngle))]
+    [CustomPropertyDrawer(typeof(RotParams_EulerAngles))]
     public class EulerAngleRotationInspector : NestedPropertyDrawer
     {
         private SerializedProperty firstGimbleRing;
         private SerializedProperty secondGimbleRing;
         private SerializedProperty thirdGimbleRing;
-        private SerializedProperty angleTypeProperty;
-        private SerializedProperty isIntrinsicProperty; 
 
         private bool isInitialised = false;
         
@@ -26,8 +24,6 @@ namespace Editor
             firstGimbleRing = property.FindPropertyRelative("firstGimbleRing");
             secondGimbleRing = property.FindPropertyRelative("secondGimbleRing"); 
             thirdGimbleRing = property.FindPropertyRelative("thirdGimbleRing"); 
-            angleTypeProperty = property.FindPropertyRelative("angleType"); 
-            isIntrinsicProperty = property.FindPropertyRelative("isIntrinsic");
             
             isInitialised = true; 
         }
@@ -38,21 +34,15 @@ namespace Editor
             InitializePropertyNesting(property);
             EditorGUI.BeginProperty(position, label, property);
             position.height = EditorGUIUtility.singleLineHeight;
-            RotParams_EulerAngle targetRotParamsEulerAngle = GetObject<RotParams_EulerAngle>(property);
+            RotParams_EulerAngles targetRotParamsEulerAngles = GetObject<RotParams_EulerAngles>(property);
             
-            EGimbleType targetGimbleType = targetRotParamsEulerAngle!.GetGimbleType();
+            EGimbleType targetGimbleType = targetRotParamsEulerAngles!.GetGimbleType();
             property.isExpanded = EditorGUI.BeginFoldoutHeaderGroup(position, property.isExpanded, new GUIContent($"eulerAngle({Enum.GetNames(typeof(EGimbleType))[(int) targetGimbleType]})"));
             EditorGUI.EndFoldoutHeaderGroup(); //??? this is confusing, because seemingly all a BeginFoldoutHeaderGroup does is return whether it's toggled on or off, but not the actual indentation; 
             if (property.isExpanded)
             {
                 EditorGUI.indentLevel+=2; 
                 position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 
-                
-                isIntrinsicProperty.boolValue = EditorGUI.Toggle(position, "intrinsic", isIntrinsicProperty.boolValue);
-                position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-                
-                EditorGUI.PropertyField(position, angleTypeProperty); 
-                position.y += EditorGUI.GetPropertyHeight(angleTypeProperty);
                 
                 EditorGUI.PropertyField(position, firstGimbleRing); 
                 position.y += EditorGUI.GetPropertyHeight(firstGimbleRing);
@@ -76,7 +66,6 @@ namespace Editor
             
             float unfoldedHeight =
                 (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 2
-                + EditorGUI.GetPropertyHeight(angleTypeProperty) 
                 + EditorGUI.GetPropertyHeight(firstGimbleRing)
                 + EditorGUI.GetPropertyHeight(secondGimbleRing)
                 + EditorGUI.GetPropertyHeight(thirdGimbleRing)

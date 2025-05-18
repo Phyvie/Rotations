@@ -1,44 +1,45 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace RotationTypes
 {
+    //-ZyKa AngleTypes
     [Serializable]
     public class RotParams_AxisAngle : RotationParameterisation
     {
-        [SerializeField] protected AngleType _angleType = AngleType.Radian;
-        public AngleType angleType
+        [SerializeField] private Vector3 rotationVector; 
+        
+        public Vector3 RotationVector
         {
-            get => _angleType;
-            set => SetAngleType(value);
+            get => rotationVector;
+            set => rotationVector = value;
         }
         
-        [SerializeField] private Vector3 axisAngle;
+        public Vector3 Axis => RotationVector.normalized; 
+        public float Angle => RotationVector.magnitude;
         
-        private Vector3 axis => axisAngle.normalized; 
-        private float angle => axisAngle.magnitude;
-        private float angleInRadian => AngleType.ConvertAngle(angle, angleType, AngleType.Radian); 
-
         public RotParams_AxisAngle()
         {
             
         }
         
-        public RotParams_AxisAngle(Vector3 inAxisAngle, AngleType inAngleType)
+        #region Constructors
+        public RotParams_AxisAngle(Vector3 inRotationVector)
         {
-            angleType = inAngleType; 
-            axisAngle = inAxisAngle; 
+            RotationVector = inRotationVector; 
         }
 
-        public RotParams_AxisAngle(Vector3 inAxis, float inAngle, AngleType inAngleType)
+        public RotParams_AxisAngle(Vector3 inAxis, float inAngle)
         {
-            angleType = inAngleType; 
             inAxis = inAxis.normalized;
-            axisAngle = inAxis * inAngle;
+            RotationVector = inAxis * inAngle;
         }
+        #endregion //Constructors
         
+        #region Converters
         //AxisAngleRotation.ToEulerAngle() is the same as ToQuaternionRotation().ToEulerAngleRotation()
-        public override  RotParams_EulerAngle ToEulerAngleRotation()
+        public override  RotParams_EulerAngles ToEulerAngleRotation()
         {
             Debug.LogWarning("AxisAngleRotation.ToEulerAngle() is the same as ToQuaternionRotation().ToEulerAngleRotation()");
             return ToQuaternionRotation().ToEulerAngleRotation(); 
@@ -46,19 +47,19 @@ namespace RotationTypes
 
         public override RotParams_Quaternion ToQuaternionRotation()
         {
-            return new RotParams_Quaternion(axis, angle); 
+            return new RotParams_Quaternion(Axis, Angle); 
         }
 
         //AxisAngleRotation.ToMatrixRotation() is the same as ToQuaternionRotation().ToMatrixRotation()
         public override RotParams_Matrix ToMatrixRotation()
         {
-            //TODO: understand this formula (maybe visualise?) and correct it to be left-handed (in case it's righthanded)
-            float x = axis.x;
-            float y = axis.y;
-            float z = axis.z;
+            //TODO: understand this formula (maybe visualise?) and correct it to be left-handed (in case it's right-handed)
+            float x = Axis.x;
+            float y = Axis.y;
+            float z = Axis.z;
         
-            float cosTheta = Mathf.Cos(angle);
-            float sinTheta = Mathf.Sin(angle);
+            float cosTheta = Mathf.Cos(Angle);
+            float sinTheta = Mathf.Sin(Angle);
             float oneMinusCosTheta = 1 - cosTheta;
 
             RotParams_Matrix rotParamsMatrix = new RotParams_Matrix(new float[3, 3]); 
@@ -80,23 +81,17 @@ namespace RotationTypes
 
         public override RotParams_AxisAngle ToAxisAngleRotation()
         {
-            return new RotParams_AxisAngle(axisAngle, angleType); 
+            return new RotParams_AxisAngle(RotationVector); 
         }
-
-        public void SetAngleType(AngleType value)
-        {
-            axisAngle = axisAngle * (float) (value.UnitMultiplier / angleType.UnitMultiplier);
-            _angleType = value; 
-        }
+        #endregion //Converters
 
         public override Vector3 RotateVector(Vector3 inVector)
         {
             //Rodrigues' rotation formula (righthand-version) TODO: Try to understand it, visualise it and make it left-handed
-            float _angleInRadian = angleInRadian; 
             Vector3 rotatedVector = 
-                inVector * Mathf.Cos(_angleInRadian) + 
-                Vector3.Cross(axis, inVector) * Mathf.Sin(_angleInRadian) + 
-                axis * Vector3.Dot(axis, inVector) * (1 - Mathf.Cos(_angleInRadian));
+                inVector * Mathf.Cos(Angle) + 
+                Vector3.Cross(Axis, inVector) * Mathf.Sin(Angle) + 
+                Axis * Vector3.Dot(Axis, inVector) * (1 - Mathf.Cos(Angle));
 
             return rotatedVector; 
         }

@@ -111,7 +111,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EndAngle: 1.4142135
+    - _EndAngle: 0
     - _EnvironmentReflections: 1
     - _FullRotations: 0
     - _GlossMapScale: 0
@@ -135,7 +135,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _InsideAngleColour: {r: 0, g: 1, b: 0.14795849, a: 1}
+    - _InsideAngleColour: {r: 1, g: 0.9831019, b: 0, a: 1}
     - _NegativeAngleColour: {r: 1, g: 0.98310196, b: 0, a: 1}
     - _OutsideAngleColour: {r: 1, g: 1, b: 1, a: 0.07843138}
     - _PositiveAngleColour: {r: 0, g: 1, b: 0.14795852, a: 1}

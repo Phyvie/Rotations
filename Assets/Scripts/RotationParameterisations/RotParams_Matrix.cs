@@ -101,11 +101,11 @@ namespace RotationTypes
             return HashCode.Combine(InternalMatrix, isRotationMatrix);
         }
         
-        public override RotParams_EulerAngle ToEulerAngleRotation()
+        public override RotParams_EulerAngles ToEulerAngleRotation()
         {
-            RotParams_EulerAngle newRotParamsEulerAngle = new RotParams_EulerAngle(0, 0, 0); 
-            newRotParamsEulerAngle.GetValuesFromMatrix(this);
-            return newRotParamsEulerAngle; 
+            RotParams_EulerAngles newRotParamsEulerAngles = new RotParams_EulerAngles(0, 0, 0); 
+            newRotParamsEulerAngles.GetValuesFromMatrix(this);
+            return newRotParamsEulerAngles; 
         }
 
         public override RotParams_Quaternion ToQuaternionRotation()

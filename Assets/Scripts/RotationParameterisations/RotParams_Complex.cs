@@ -87,9 +87,9 @@ namespace RotationTypes
             }
         }
 
-        public override RotParams_EulerAngle ToEulerAngleRotation()
+        public override RotParams_EulerAngles ToEulerAngleRotation()
         {
-            return new RotParams_EulerAngle(0, 0, _rotationAngle, AngleType.Radian); 
+            return new RotParams_EulerAngles(0, 0, _rotationAngle); 
         }
 
         public override RotParams_Quaternion ToQuaternionRotation()
@@ -111,7 +111,7 @@ namespace RotationTypes
 
         public override RotParams_AxisAngle ToAxisAngleRotation()
         {
-            return new RotParams_AxisAngle(Vector3.back * _rotationAngle, AngleType.Radian); 
+            return new RotParams_AxisAngle(Vector3.back * _rotationAngle); 
         }
 
         public void SetAngleType(AngleType value)

@@ -1,22 +1,29 @@
 using RotationTypes;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Visualisation;
 
 namespace RotationVisualisation
 {
     //-ZyKa check which MonoBehaviours can be reduced to Behaviour or Component
     public class RotVis_AxisAngle : MonoBehaviour
-    { 
-        [SerializeField] private Vector3 rotationVector;
+    {
+        [SerializeField] private RotParams_AxisAngle rotParams_AxisAngle; 
         [SerializeField] private Vis_Vector vis_rotationVector;
         [SerializeField] private Vis_PlaneArc vis_PlaneArc; 
         
+        public RotParams_AxisAngle RotParams
+        {
+            get => rotParams_AxisAngle;
+            set => rotParams_AxisAngle = value;
+        }
+        
         public Vector3 RotationVector
         {
-            get => rotationVector;
+            get => RotParams.RotationVector;
             set
             {
-                rotationVector = value;
+                RotParams.RotationVector = value;
                 UpdateVisualisation();
             }
         }
@@ -36,14 +43,14 @@ namespace RotationVisualisation
         public void UpdateVisualisation()
         {
             vis_rotationVector.Value = RotationVector;
-            vis_PlaneArc.RotationAxis = Axis; 
+            vis_PlaneArc.LocalRotationAxis = Axis; 
             vis_PlaneArc.StartingAngle = 0; 
             vis_PlaneArc.EndingAngle = RotationVector.magnitude;
         }
 
         private void OnValidate()
         {
-            RotationVector = rotationVector;
+            RotationVector = RotParams.RotationVector;
         }
     }
 }

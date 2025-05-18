@@ -36,8 +36,8 @@ namespace Editor
                 return; 
             }
 
-            SP_EnforceNormalisation.boolValue = EditorGUI.Toggle(position, new GUIContent("Enforce Normalisation / Rotation"), SP_EnforceNormalisation.boolValue);
-            position.y += EditorGUIUtility.singleLineHeight; 
+            // SP_EnforceNormalisation.boolValue = EditorGUI.Toggle(position, new GUIContent("Enforce Normalisation / Rotation"), SP_EnforceNormalisation.boolValue); //-ZyKa Inspector -ZyKa Quaternion EnforceNormalisation
+            // position.y += EditorGUIUtility.singleLineHeight; 
             
             float fieldWidth = position.width; 
             float labelWidth = 10;

@@ -28,7 +28,7 @@ namespace Visualisation
 
         public void SetDirectionFromQuaternion(Quaternion rotation)
         {
-            transform.rotation = rotation; 
+            transform.localRotation = rotation; 
         }
         
         public void SetDirectionFromCoordinates(Vector3 directionCoordinates)

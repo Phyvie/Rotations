@@ -1,10 +1,11 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Visualisation
 {
     public class Vis_PlaneArc : MonoBehaviour
     {
-        [SerializeField] private Vector3 rotationAxis; 
+        [SerializeField] private Vector3 localRotationAxis; 
         [SerializeField] private float beginAngle; 
         [SerializeField] private float endingAngle; 
         [SerializeField] private M_CircleSector torusMaterial; 
@@ -30,33 +31,39 @@ namespace Visualisation
             }
         }
 
-        public Vector3 RotationAxis
+        public Vector3 LocalRotationAxis
         {
-            get => rotationAxis;
+            get => localRotationAxis;
             set
             {
-                rotationAxis = value;
-                transform.rotation = Quaternion.FromToRotation(Vector3.right, rotationAxis);
+                localRotationAxis = value;
+                transform.localRotation = Quaternion.FromToRotation(Vector3.right, localRotationAxis);
                 UpdateVisualisation();
             }
         }
-
+        
         public void UpdateVisualisation()
         {
-            transform.rotation = Quaternion.FromToRotation(Vector3.right, rotationAxis);
-            
-            torusMaterial.BeginAngle = beginAngle;
-            torusMaterial.EndAngle = endingAngle; 
-            
-            circleMaterial.BeginAngle = beginAngle;
-            circleMaterial.EndAngle = endingAngle;
+            transform.localRotation = Quaternion.FromToRotation(Vector3.right, localRotationAxis);
+
+            if (torusMaterial != null)
+            {
+                torusMaterial.BeginAngle = beginAngle;
+                torusMaterial.EndAngle = endingAngle; 
+            }
+
+            if (circleMaterial != null)
+            {
+                circleMaterial.BeginAngle = beginAngle;
+                circleMaterial.EndAngle = endingAngle;
+            }
         }
         
         public void OnValidate()
         {
             StartingAngle = beginAngle;
             EndingAngle = endingAngle;
-            RotationAxis = rotationAxis;
+            LocalRotationAxis = localRotationAxis;
         }
     }
 }
