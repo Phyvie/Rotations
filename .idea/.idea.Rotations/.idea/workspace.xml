@@ -6,14 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="8b54c963-bad1-41cc-8b0e-252a0574fd2d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_Angle.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_Angle.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_Angle.shadergraph" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_Angle.shadergraph.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/EulerAngleRotationInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/EulerAngleRotationInspector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/GimbleRingInspector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/RotParams_EulerAngles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/RotParams_EulerAngles.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/_RotParams_EulerAngleGimbleRing.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/_RotParams_EulerAngleGimbalRing.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/_RotParams_EulerAngleGimbleRing.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationParameterisations/_RotParams_EulerAngleGimbalRing.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotationVisualisation/RotVis_EulerAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotationVisualisation/RotVis_EulerAngle.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Visualisation/Vis_PlaneArc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Visualisation/Vis_PlaneArc.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,7 +235,7 @@
       <workItem from="1747431763936" duration="9460000" />
       <workItem from="1747490482857" duration="8102000" />
       <workItem from="1747579304351" duration="5303000" />
-      <workItem from="1747667715952" duration="5575000" />
+      <workItem from="1747667715952" duration="8546000" />
     </task>
     <servers />
   </component>
@@ -282,6 +280,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="65" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/RotationVisualisation/RotVis_EulerAngle.cs</url>
+          <line>48</line>
+          <properties documentPath="D:\programming\Rotations\Assets\Scripts\RotationVisualisation\RotVis_EulerAngle.cs" containingFunctionPresentation="Method 'VisUpdateRings'">
+            <startOffsets>
+              <option value="1667" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1668" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="82" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
