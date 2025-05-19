@@ -1,10 +1,10 @@
-using RotationTypes;
+using Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor
+namespace RotationTypes
 {
-    [CustomPropertyDrawer(typeof(_RotParams_EulerAngleGimbleRing))]
+    [CustomPropertyDrawer(typeof(_RotParams_EulerAngleGimbalRing))]
     public class GimbleRingInspector : NestedPropertyDrawer
     {
         private SerializedProperty axisProp; 
@@ -17,8 +17,8 @@ namespace Editor
             {
                 return; 
             }
-            axisProp = property.FindPropertyRelative("eAxis");
-            angleProp = property.FindPropertyRelative("angle");
+            axisProp = property.FindPropertyRelative(nameof(_RotParams_EulerAngleGimbalRing.eAxis));
+            angleProp = property.FindPropertyRelative(_RotParams_EulerAngleGimbalRing.NameOfAngle);
 
             isInitialized = true; 
         }
@@ -44,7 +44,8 @@ namespace Editor
             Initialize(property);
             
             float propertyHeight =
-                EditorGUI.GetPropertyHeight(axisProp) + EditorGUIUtility.standardVerticalSpacing + 
+                EditorGUI.GetPropertyHeight(axisProp) + 
+                EditorGUIUtility.standardVerticalSpacing + 
                 EditorGUI.GetPropertyHeight(angleProp);
 
             return propertyHeight; 

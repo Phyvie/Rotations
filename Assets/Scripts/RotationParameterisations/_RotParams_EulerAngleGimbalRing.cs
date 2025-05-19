@@ -13,7 +13,7 @@ namespace RotationTypes
     }
 
     [Serializable]
-    public class _RotParams_EulerAngleGimbleRing
+    public class _RotParams_EulerAngleGimbalRing
     {
         public EGimbleAxis eAxis;
         public Vector3 RotationAxis => eAxis switch
@@ -24,7 +24,9 @@ namespace RotationTypes
             _ => Vector3.zero
         };
 
-        private float _angle;
+        [SerializeField] private float _angle; //!ZyKa
+        public static string NameOfAngle => nameof(_angle); //for PropertyDrawer
+        
         public float Angle
         {
             get => _angle;
@@ -32,48 +34,37 @@ namespace RotationTypes
         }
         
         #region Constructors
-        private _RotParams_EulerAngleGimbleRing()
+        private _RotParams_EulerAngleGimbalRing()
         {
             eAxis = EGimbleAxis.Yaw;
             Angle = 0;
         }
         
-        public _RotParams_EulerAngleGimbleRing(EGimbleAxis inEAxis, float inAngle)
+        public _RotParams_EulerAngleGimbalRing(EGimbleAxis inEAxis, float inAngle)
         {
             eAxis = inEAxis; 
             Angle = inAngle;
         }
         
-        public _RotParams_EulerAngleGimbleRing(_RotParams_EulerAngleGimbleRing rotParamsEulerAngleGimbleRing)
+        public _RotParams_EulerAngleGimbalRing(_RotParams_EulerAngleGimbalRing rotParamsEulerAngleGimbalRing)
         {
-            eAxis = rotParamsEulerAngleGimbleRing.eAxis;
-            Angle = rotParamsEulerAngleGimbleRing.Angle;
+            eAxis = rotParamsEulerAngleGimbalRing.eAxis;
+            Angle = rotParamsEulerAngleGimbalRing.Angle;
         }
         
-        public static _RotParams_EulerAngleGimbleRing Yaw()
+        public static _RotParams_EulerAngleGimbalRing Yaw()
         {
-            return new _RotParams_EulerAngleGimbleRing(EGimbleAxis.Yaw, (float)Math.PI / 2); 
+            return new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Yaw, (float)Math.PI / 2); 
         }
-        public static _RotParams_EulerAngleGimbleRing Pitch(RotParams_EulerAngles parent)
+        public static _RotParams_EulerAngleGimbalRing Pitch(RotParams_EulerAngles parent)
         {
-            return new _RotParams_EulerAngleGimbleRing(EGimbleAxis.Pitch, (float)Math.PI / 2); 
+            return new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Pitch, (float)Math.PI / 2); 
         }
-        public static _RotParams_EulerAngleGimbleRing Roll(RotParams_EulerAngles parent)
+        public static _RotParams_EulerAngleGimbalRing Roll(RotParams_EulerAngles parent)
         {
-            return new _RotParams_EulerAngleGimbleRing(EGimbleAxis.Roll, (float)Math.PI / 2); 
+            return new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Roll, (float)Math.PI / 2); 
         }
         #endregion //Constructors
-        
-        public Vector3 GetLocalRotationAxis() //+ZyKa is this actually the local axis or is it the gloabl axis?
-        {
-            return eAxis switch
-            {
-                EGimbleAxis.Yaw => Vector3.up,
-                EGimbleAxis.Pitch => Vector3.left,
-                EGimbleAxis.Roll => Vector3.forward,
-                _ => throw new InvalidEnumArgumentException()
-            }; 
-        }
         
         #region Converters
         public RotParams_Matrix toMatrixRotation()
@@ -120,7 +111,7 @@ namespace RotationTypes
 
         public RotParams_Quaternion toQuaternionRotation() 
         {
-            return new RotParams_Quaternion(GetLocalRotationAxis(), Angle);
+            return new RotParams_Quaternion(RotationAxis, Angle);
         }
         
         public void ExtractValueFromQuaternion(RotParams_Quaternion q)

@@ -8,9 +8,9 @@ namespace Editor
     [CustomPropertyDrawer(typeof(RotParams_EulerAngles))]
     public class EulerAngleRotationInspector : NestedPropertyDrawer
     {
-        private SerializedProperty firstGimbleRing;
-        private SerializedProperty secondGimbleRing;
-        private SerializedProperty thirdGimbleRing;
+        private SerializedProperty SP_outer;
+        private SerializedProperty SP_middle;
+        private SerializedProperty SP_inner;
 
         private bool isInitialised = false;
         
@@ -21,9 +21,9 @@ namespace Editor
                 // return; 
             }
             
-            firstGimbleRing = property.FindPropertyRelative("firstGimbleRing");
-            secondGimbleRing = property.FindPropertyRelative("secondGimbleRing"); 
-            thirdGimbleRing = property.FindPropertyRelative("thirdGimbleRing"); 
+            SP_outer = property.FindPropertyRelative(nameof(RotParams_EulerAngles.outer));
+            SP_middle = property.FindPropertyRelative(nameof(RotParams_EulerAngles.middle)); 
+            SP_inner = property.FindPropertyRelative(nameof(RotParams_EulerAngles.inner)); 
             
             isInitialised = true; 
         }
@@ -44,14 +44,14 @@ namespace Editor
                 EditorGUI.indentLevel+=2; 
                 position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 
                 
-                EditorGUI.PropertyField(position, firstGimbleRing); 
-                position.y += EditorGUI.GetPropertyHeight(firstGimbleRing);
+                EditorGUI.PropertyField(position, SP_outer); 
+                position.y += EditorGUI.GetPropertyHeight(SP_outer);
 
-                EditorGUI.PropertyField(position, secondGimbleRing); 
-                position.y += EditorGUI.GetPropertyHeight(secondGimbleRing);
+                EditorGUI.PropertyField(position, SP_middle); 
+                position.y += EditorGUI.GetPropertyHeight(SP_middle);
 
-                EditorGUI.PropertyField(position, thirdGimbleRing); 
-                position.y += EditorGUI.GetPropertyHeight(thirdGimbleRing);
+                EditorGUI.PropertyField(position, SP_inner); 
+                position.y += EditorGUI.GetPropertyHeight(SP_inner);
                 
                 EditorGUI.indentLevel-=2;
             }
@@ -66,9 +66,9 @@ namespace Editor
             
             float unfoldedHeight =
                 (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 2
-                + EditorGUI.GetPropertyHeight(firstGimbleRing)
-                + EditorGUI.GetPropertyHeight(secondGimbleRing)
-                + EditorGUI.GetPropertyHeight(thirdGimbleRing)
+                + EditorGUI.GetPropertyHeight(SP_outer)
+                + EditorGUI.GetPropertyHeight(SP_middle)
+                + EditorGUI.GetPropertyHeight(SP_inner)
                 ;
             float foldedHeight = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 
             

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Visualisation
 {
@@ -61,9 +60,9 @@ namespace Visualisation
         
         public void OnValidate()
         {
-            StartingAngle = beginAngle;
-            EndingAngle = endingAngle;
-            LocalRotationAxis = localRotationAxis;
+            // StartingAngle = beginAngle;
+            // EndingAngle = endingAngle;
+            // LocalRotationAxis = localRotationAxis;
         }
     }
 }

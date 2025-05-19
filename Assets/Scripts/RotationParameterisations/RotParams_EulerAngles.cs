@@ -15,17 +15,17 @@ namespace RotationTypes
     [Serializable]
     public class RotParams_EulerAngles : RotationParameterisation
     {
-        public _RotParams_EulerAngleGimbleRing outer; 
-        public _RotParams_EulerAngleGimbleRing middle; 
-        public _RotParams_EulerAngleGimbleRing inner;
-        private _RotParams_EulerAngleGimbleRing[] gimbal => new[] { outer, middle, inner }; 
-        private _RotParams_EulerAngleGimbleRing Yaw => GetRingForAxis(EGimbleAxis.Yaw); 
-        private _RotParams_EulerAngleGimbleRing Pitch => GetRingForAxis(EGimbleAxis.Pitch); 
-        private _RotParams_EulerAngleGimbleRing Roll => GetRingForAxis(EGimbleAxis.Roll); 
+        public _RotParams_EulerAngleGimbalRing outer; 
+        public _RotParams_EulerAngleGimbalRing middle; 
+        public _RotParams_EulerAngleGimbalRing inner;
+        private _RotParams_EulerAngleGimbalRing[] gimbal => new[] { outer, middle, inner }; 
+        private _RotParams_EulerAngleGimbalRing Yaw => GetRingForAxis(EGimbleAxis.Yaw); 
+        private _RotParams_EulerAngleGimbalRing Pitch => GetRingForAxis(EGimbleAxis.Pitch); 
+        private _RotParams_EulerAngleGimbalRing Roll => GetRingForAxis(EGimbleAxis.Roll); 
         
-        private _RotParams_EulerAngleGimbleRing GetRingForAxis(EGimbleAxis eAxis)
+        private _RotParams_EulerAngleGimbalRing GetRingForAxis(EGimbleAxis eAxis)
         {
-            _RotParams_EulerAngleGimbleRing result = null;
+            _RotParams_EulerAngleGimbalRing result = null;
             if (outer.eAxis == eAxis)
             {
                 result = outer; 
@@ -67,9 +67,9 @@ namespace RotationTypes
         }
         
         public RotParams_EulerAngles(float inYaw, float inPitch, float inRoll) : 
-            this(new _RotParams_EulerAngleGimbleRing(EGimbleAxis.Yaw, inYaw), 
-                new _RotParams_EulerAngleGimbleRing(EGimbleAxis.Pitch, inPitch), 
-                new _RotParams_EulerAngleGimbleRing(EGimbleAxis.Roll, inRoll))
+            this(new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Yaw, inYaw), 
+                new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Pitch, inPitch), 
+                new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Roll, inRoll))
         {
         }
         
@@ -78,20 +78,20 @@ namespace RotationTypes
             float secondAngle, EGimbleAxis secondAxis,  
             float thirdAngle, EGimbleAxis thirdAxis,  
             bool bCopyRings = false) : 
-            this(new _RotParams_EulerAngleGimbleRing(firstAxis, firstAngle), 
-                new _RotParams_EulerAngleGimbleRing(secondAxis, secondAngle), 
-                new _RotParams_EulerAngleGimbleRing(thirdAxis, thirdAngle), 
+            this(new _RotParams_EulerAngleGimbalRing(firstAxis, firstAngle), 
+                new _RotParams_EulerAngleGimbalRing(secondAxis, secondAngle), 
+                new _RotParams_EulerAngleGimbalRing(thirdAxis, thirdAngle), 
                 bCopyRings)
         {
         }
 
-        public RotParams_EulerAngles(_RotParams_EulerAngleGimbleRing firstRing, _RotParams_EulerAngleGimbleRing secondRing, _RotParams_EulerAngleGimbleRing thirdRing, bool bCopyRings = false)
+        public RotParams_EulerAngles(_RotParams_EulerAngleGimbalRing firstRing, _RotParams_EulerAngleGimbalRing secondRing, _RotParams_EulerAngleGimbalRing thirdRing, bool bCopyRings = false)
         {
             if (bCopyRings)
             {
-                outer = new _RotParams_EulerAngleGimbleRing(firstRing); 
-                middle = new _RotParams_EulerAngleGimbleRing(secondRing); 
-                inner = new _RotParams_EulerAngleGimbleRing(thirdRing); 
+                outer = new _RotParams_EulerAngleGimbalRing(firstRing); 
+                middle = new _RotParams_EulerAngleGimbalRing(secondRing); 
+                inner = new _RotParams_EulerAngleGimbalRing(thirdRing); 
             }
             else
             {
@@ -107,7 +107,7 @@ namespace RotationTypes
             (gimbal[firstIndex], gimbal[secondIndex]) = (gimbal[secondIndex], gimbal[firstIndex]); 
         }
         
-        public void SwitchGimbleOrder(_RotParams_EulerAngleGimbleRing firstRing, _RotParams_EulerAngleGimbleRing secondRing)
+        public void SwitchGimbleOrder(_RotParams_EulerAngleGimbalRing firstRing, _RotParams_EulerAngleGimbalRing secondRing)
         {
             (firstRing, secondRing) = (secondRing, firstRing); //TODO: test this function
         }
@@ -119,25 +119,25 @@ namespace RotationTypes
 
         public EGimbleType GetGimbleType()
         {
-            HashSet<EGimbleAxis> gimbleAxisSet = new HashSet<EGimbleAxis>();
-            gimbleAxisSet.Add(gimbal[0].eAxis); 
+            HashSet<EGimbleAxis> gimbalAxisSet = new HashSet<EGimbleAxis>();
+            gimbalAxisSet.Add(gimbal[0].eAxis); 
             
-            if (gimbleAxisSet.Contains(gimbal[1].eAxis))
+            if (gimbalAxisSet.Contains(gimbal[1].eAxis))
             {
                 return EGimbleType.Invalid; 
             }
             else
             {
-                gimbleAxisSet.Add(gimbal[1].eAxis); 
+                gimbalAxisSet.Add(gimbal[1].eAxis); 
             }
 
-            if (gimbleAxisSet.Contains(gimbal[2].eAxis))
+            if (gimbalAxisSet.Contains(gimbal[2].eAxis))
             {
                 if (gimbal[2].eAxis == gimbal[0].eAxis)
                 {
                     return EGimbleType.TrueEulerAngle; 
                 }
-                else //if (gimble[2].eAxis == gimble[1].eAxis)
+                else //if (gimbal[2].eAxis == gimbal[1].eAxis)
                 {
                     return EGimbleType.Invalid; 
                 }
@@ -148,6 +148,11 @@ namespace RotationTypes
             }
         }
 
+        public static bool AreAxesMatching(RotParams_EulerAngles a, RotParams_EulerAngles b)
+        {
+            return a.outer.eAxis == b.outer.eAxis && a.middle.eAxis == b.middle.eAxis && a.inner.eAxis == b.inner.eAxis;
+        }
+
         public override RotParams_EulerAngles ToEulerAngleRotation()
         {
             return new RotParams_EulerAngles(this); 
@@ -156,7 +161,7 @@ namespace RotationTypes
         public override RotParams_Quaternion ToQuaternionRotation() //TODO: adjust for IsIntrinsic
         {
             RotParams_Quaternion result = new RotParams_Quaternion();
-            foreach (_RotParams_EulerAngleGimbleRing rotation in gimbal)
+            foreach (_RotParams_EulerAngleGimbalRing rotation in gimbal)
             {
                 result = result * rotation.toQuaternionRotation() * result.Inverse(); 
             }
@@ -199,7 +204,7 @@ namespace RotationTypes
         public override RotParams_Matrix ToMatrixRotation() //TODO: test this function
         {
             RotParams_Matrix result = new RotParams_Matrix(RotParams_Matrix.RotationIdentity());
-            foreach (_RotParams_EulerAngleGimbleRing rotation in gimbal)
+            foreach (_RotParams_EulerAngleGimbalRing rotation in gimbal)
             {
                 result = result * rotation.toMatrixRotation() * result.Inverse(); 
             }
