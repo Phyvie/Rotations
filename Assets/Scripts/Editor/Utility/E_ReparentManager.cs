@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using ExtensionMethods;
+using MathExtensions;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;

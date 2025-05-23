@@ -1,9 +1,7 @@
 {
     "name": "EditorInspector",
     "rootNamespace": "",
-    "references": [
-        "GUID:59e2078b1b83a474e81c516e0bce26f3"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

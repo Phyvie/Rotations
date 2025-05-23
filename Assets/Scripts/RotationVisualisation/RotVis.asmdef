@@ -3,8 +3,8 @@
     "rootNamespace": "",
     "references": [
         "GUID:c669e3270c9d1514dbd021764f117673",
-        "GUID:59e2078b1b83a474e81c516e0bce26f3",
-        "MathVis"
+        "GUID:cba0f0564951dae4cb690e9ce0e92666",
+        "GUID:157f71002f96d094d838ace3a78e13e6"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using ExtensionMethods;
 using UnityEngine;
 
 namespace MathExtensions
@@ -128,7 +127,7 @@ namespace MathExtensions
             {
                 for (int column = 0; column < Width; column++)
                 {
-                    if (Math.Abs(InternalMatrix[row*Width+column] - other.InternalMatrix[row*Width+column]) > tolerance)
+                    if (System.Math.Abs(InternalMatrix[row*Width+column] - other.InternalMatrix[row*Width+column]) > tolerance)
                         return false;
                 }
             }
@@ -174,7 +173,7 @@ namespace MathExtensions
         {
             Debug.Assert(firstMatrix.Width == secondMatrix.Height, "firstMatrix.width != secondMatrix.height");
 
-            return new Matrix(ExtensionMethods.MathExtensions.MatrixMultiply(
+            return new Matrix(Math.MatrixMultiply(
                 firstMatrix.InternalMatrix, firstMatrix.height, firstMatrix.width, 
                 secondMatrix.InternalMatrix, secondMatrix.width, secondMatrix.height), 
                 firstMatrix.height, secondMatrix.width, true); 
@@ -505,7 +504,7 @@ namespace MathExtensions
             
             float determinant = lowerLeft.DiagonalProduct() * upperRight.DiagonalProduct();
 
-            if (Math.Abs(determinant - 1) > 0.001)
+            if (System.Math.Abs(determinant - 1) > 0.001)
             {
                 return false; 
             }

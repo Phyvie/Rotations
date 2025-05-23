@@ -1,4 +1,4 @@
-using ExtensionMethods;
+using MathExtensions;
 using UnityEngine;
 
 namespace Visualisation
@@ -131,7 +131,7 @@ namespace Visualisation
             weights[2] = LocalRotationAxis.z * LocalRotationAxis.z;
 
             transform.localRotation =
-                ExtensionMethods.MathExtensions.QuaternionInterpolateAsRotationVectors(orientations, weights);
+                Math.QuaternionInterpolateAsRotationVectors(orientations, weights);
         }
 
         static readonly Quaternion OrientationNormalUp = new Quaternion(0, 0, 0, 1);

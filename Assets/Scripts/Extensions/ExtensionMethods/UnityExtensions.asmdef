@@ -1,8 +1,8 @@
 {
-    "name": "MathExtensions",
+    "name": "UnityExtensions",
     "rootNamespace": "",
     "references": [
-        "GUID:59e2078b1b83a474e81c516e0bce26f3"
+        "GUID:d8b63aba1907145bea998dd612889d6b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

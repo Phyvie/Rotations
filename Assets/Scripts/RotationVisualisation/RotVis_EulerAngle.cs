@@ -1,5 +1,5 @@
 using System;
-using ExtensionMethods;
+using MathExtensions;
 using RotParams;
 using UnityEngine;
 using Visualisation;
