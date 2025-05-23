@@ -1,15 +1,17 @@
 using System;
+using MathExtensions;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace RotationTypes
+
+namespace RotParams
 {
     [Serializable]
-    public class RotParams_Matrix : RotationParameterisation
+    public class RotParams_Matrix : RotParams
     {
         public bool isRotationMatrix => InternalMatrix.IsSpecialOrthogonal();
         [SerializeField] public Matrix InternalMatrix;
 
+        #region Constructors
         public RotParams_Matrix()
         {
             InternalMatrix = new Matrix(Matrix.Identity(3)); 
@@ -25,15 +27,6 @@ namespace RotationTypes
             matrix = new Matrix(matrix);
         }
         
-        public float this[int row, int column]
-        {
-            get => InternalMatrix[row, column];
-            set
-            {
-                InternalMatrix[row, column] = value;
-            }
-        }
-
         public static RotParams_Matrix RotationIdentity()
         {
             return new RotParams_Matrix(Matrix.Identity(3));
@@ -43,17 +36,44 @@ namespace RotationTypes
         {
             return new RotParams_Matrix(Matrix.Identity(4)); 
         }
+        #endregion //Constructors
+        
+        #region GetSet
+        public float this[int row, int column]
+        {
+            get => InternalMatrix[row, column];
+            set
+            {
+                InternalMatrix[row, column] = value;
+            }
+        }
+        
+        public Vector3 GetRow(int row)
+        {
+            return new Vector3(InternalMatrix[row, 0], InternalMatrix[row, 1], InternalMatrix[row, 2]); 
+        }
 
-        public RotParams_Matrix Inverse()
+        public Vector3 GetColumn(int column)
         {
-            return new RotParams_Matrix(InternalMatrix.Inverse()); 
+            return new Vector3(InternalMatrix[0, column], InternalMatrix[1, column], InternalMatrix[2, column]);
         }
-        
-        public static RotParams_Matrix operator*(RotParams_Matrix first, RotParams_Matrix second)
+
+        public void SetRow(Vector3 row, int rowIndex)
         {
-            return new RotParams_Matrix(first.InternalMatrix * second.InternalMatrix); 
+            InternalMatrix[rowIndex, 0] = row.x;
+            InternalMatrix[rowIndex, 1] = row.y;
+            InternalMatrix[rowIndex, 2] = row.z;
         }
-        
+
+        public void SetColumn(Vector3 column, int columnIndex)
+        {
+            InternalMatrix[0, columnIndex] = column.x;
+            InternalMatrix[1, columnIndex] = column.y;
+            InternalMatrix[2, columnIndex] = column.z;
+        }
+        #endregion
+
+        #region Comparison
         public static bool operator==(RotParams_Matrix first, RotParams_Matrix second)
         {
             if (first is null && second is null)
@@ -95,12 +115,26 @@ namespace RotationTypes
 
             return false; 
         }
-
+        #endregion //Comparison
+        
+        #region Math
+        public RotParams_Matrix Inverse()
+        {
+            return new RotParams_Matrix(InternalMatrix.Inverse()); 
+        }
+        
+        public static RotParams_Matrix operator*(RotParams_Matrix first, RotParams_Matrix second)
+        {
+            return new RotParams_Matrix(first.InternalMatrix * second.InternalMatrix); 
+        }
+        #endregion //Math
+        
         public override int GetHashCode()
         {
             return HashCode.Combine(InternalMatrix, isRotationMatrix);
         }
         
+        #region Converters
         public override RotParams_EulerAngles ToEulerAngleRotation()
         {
             RotParams_EulerAngles newRotParamsEulerAngles = new RotParams_EulerAngles(0, 0, 0); 
@@ -167,6 +201,7 @@ namespace RotationTypes
         {
             return ToQuaternionRotation().ToAxisAngleRotation(); 
         }
+        #endregion //Converters
 
         public override Vector3 RotateVector(Vector3 inVector)
         {

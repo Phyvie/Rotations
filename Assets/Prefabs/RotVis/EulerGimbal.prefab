@@ -267,7 +267,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4758980111551920935}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.923077, y: 0.92307687, z: 0.923077}
   m_ConstrainProportionsScale: 0
@@ -341,6 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localRotationAxis: {x: 1, y: 0, z: 0}
+  localForwardVector: {x: 0, y: 0, z: 0}
   beginAngle: 0
   endingAngle: 0
   torusMaterial: {fileID: 0}
@@ -372,7 +373,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4976681947260355434}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9285715, y: 0.9285715, z: 0.9285714}
   m_ConstrainProportionsScale: 0
@@ -446,6 +447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localRotationAxis: {x: 1, y: 0, z: 0}
+  localForwardVector: {x: 0, y: 0, z: 0}
   beginAngle: 0
   endingAngle: 0
   torusMaterial: {fileID: 0}
@@ -477,7 +479,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6446721322427425129}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.0000005364416, y: 0.00000020861616, z: -0.70710677, w: 0.7071067}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9259255, y: 0.9259261, z: 0.92592597}
   m_ConstrainProportionsScale: 0
@@ -551,6 +553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   localRotationAxis: {x: 1, y: 0, z: 0}
+  localForwardVector: {x: 0, y: 0, z: 0}
   beginAngle: 0
   endingAngle: 0
   torusMaterial: {fileID: 0}

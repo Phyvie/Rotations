@@ -1,0 +1,16 @@
+{
+    "name": "MathExtensions",
+    "rootNamespace": "",
+    "references": [
+        "GUID:59e2078b1b83a474e81c516e0bce26f3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

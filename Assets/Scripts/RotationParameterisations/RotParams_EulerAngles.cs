@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace RotationTypes
+namespace RotParams
 {
     public enum EGimbleType
     {
@@ -13,7 +13,7 @@ namespace RotationTypes
     }
     
     [Serializable]
-    public class RotParams_EulerAngles : RotationParameterisation
+    public class RotParams_EulerAngles : RotParams
     {
         public _RotParams_EulerAngleGimbalRing outer; 
         public _RotParams_EulerAngleGimbalRing middle; 

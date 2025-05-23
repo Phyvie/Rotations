@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 
-namespace RotationTypes
+namespace RotParams
 {
     [Serializable]
-    public class RotParams_Quaternion : RotationParameterisation
+    public class RotParams_Quaternion : RotParams
     {
         [SerializeField] private bool enforceNormalisation; //-ZyKa Quaternion enforceNormalisation
         private float lastR;

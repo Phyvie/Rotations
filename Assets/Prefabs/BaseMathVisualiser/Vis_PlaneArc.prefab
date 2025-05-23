@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 66024414259742215}
-  m_Mesh: {fileID: -1077765914501896503, guid: d15715dd1400f61478c2d42cb069f453, type: 3}
+  m_Mesh: {fileID: -7262605851722276555, guid: d15715dd1400f61478c2d42cb069f453, type: 3}
 --- !u!23 &9140821770695997679
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -148,7 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7466f4bac16547c7a774699302670536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationAxis: {x: 0, y: 0, z: 0}
+  localRotationAxis: {x: 0, y: 0, z: 0}
+  localForwardVector: {x: 0, y: 0, z: 0}
   beginAngle: 0
   endingAngle: 0
   torusMaterial: {fileID: 3766871097072832070}
@@ -194,7 +195,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7746308340713269120}
-  m_Mesh: {fileID: -1443373176975192723, guid: d15715dd1400f61478c2d42cb069f453, type: 3}
+  m_Mesh: {fileID: -2124705421725058983, guid: d15715dd1400f61478c2d42cb069f453, type: 3}
 --- !u!23 &4110588104382066183
 MeshRenderer:
   m_ObjectHideFlags: 0

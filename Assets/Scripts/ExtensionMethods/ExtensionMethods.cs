@@ -1,8 +1,6 @@
-
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
-using UnityEditor;
 using UnityEngine;
 
 namespace ExtensionMethods
@@ -152,11 +150,65 @@ namespace ExtensionMethods
 
     public static class MathExtensions
     {
+        public static Vector3 GetOrthogonalisedVector(this Vector3 reference, Vector3 toOrthogonalise)
+        {
+            return Vector3.Cross(Vector3.Cross(reference, toOrthogonalise), reference); 
+        }
+        
         public static float RangeModulo(float value, float2 range)
         {
             float min = Mathf.Min(range.x, range.y);
             float max = Mathf.Max(range.x, range.y);
             return Mathf.Repeat(value + min, max - min) + min; 
+        }
+
+        public static readonly Quaternion CylicQuaternion = Quaternion.LookRotation(Vector3.right, Vector3.forward);
+
+        public static Vector3 CyclicAxisRotation(this Vector3 v)
+        {
+            return new Vector3(v.y, v.z, v.x); 
+        }
+
+        public static Vector3 ToRotationVector(this Quaternion a)
+        {
+            a.ToAngleAxis(out float angle, out Vector3 axis); 
+            return axis * angle; 
+        }
+
+        public static Quaternion RotationVectorToQuaternion(this Vector3 a)
+        {
+            return Quaternion.AngleAxis(a.magnitude, a.normalized);
+        }
+        
+        public static Quaternion InterpolateAsRotationVectors(Quaternion a, Quaternion b, float weightA, float weightB, bool normaliseWeights = true)
+        {
+            Vector3 lerpedRotationVector =  a.ToRotationVector() * weightA + b.ToRotationVector() * weightB;
+            if (normaliseWeights)
+            {
+                float weightSum = weightA + weightB;
+                lerpedRotationVector /= weightSum;
+            }
+            return lerpedRotationVector.RotationVectorToQuaternion();
+        }
+
+        public static Quaternion QuaternionInterpolateAsRotationVectors(Quaternion[] quats, float[] weights, bool normaliseWeights = true)
+        {
+            Vector3 lerpedRotationVector = Vector3.zero;
+            if (quats.Length != weights.Length)
+            {
+                Debug.LogError($"quats.Length = {quats.Length} != weights.Length = {weights.Length}"); 
+                return new Quaternion(0, 0, 0, 0); 
+            }
+            for (int i = 0; i < quats.Length; i++)
+            {
+                lerpedRotationVector += quats[i].ToRotationVector() * weights[i]; 
+            }
+            if (normaliseWeights)
+            {
+                float weightSum = weights.Sum(); 
+                lerpedRotationVector /= weightSum;
+            }
+            return lerpedRotationVector.RotationVectorToQuaternion(); 
         }
         
         public static float[,] MatrixMultiply(this float[,] firstMatrix, float[,] secondMatrix)

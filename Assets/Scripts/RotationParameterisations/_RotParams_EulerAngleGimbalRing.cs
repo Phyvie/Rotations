@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using UnityEngine;
 
-namespace RotationTypes
+namespace RotParams
 {
     [Serializable]
     public enum EGimbleAxis
@@ -54,15 +54,15 @@ namespace RotationTypes
         
         public static _RotParams_EulerAngleGimbalRing Yaw()
         {
-            return new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Yaw, (float)Math.PI / 2); 
+            return new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Yaw, (float)Mathf.PI / 2); 
         }
         public static _RotParams_EulerAngleGimbalRing Pitch(RotParams_EulerAngles parent)
         {
-            return new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Pitch, (float)Math.PI / 2); 
+            return new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Pitch, (float)Mathf.PI / 2); 
         }
         public static _RotParams_EulerAngleGimbalRing Roll(RotParams_EulerAngles parent)
         {
-            return new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Roll, (float)Math.PI / 2); 
+            return new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Roll, (float)Mathf.PI / 2); 
         }
         #endregion //Constructors
         

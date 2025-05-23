@@ -2,11 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace RotationTypes
+namespace RotParams
 {
     //-ZyKa AngleTypes
     [Serializable]
-    public class RotParams_AxisAngle : RotationParameterisation
+    public class RotParams_AxisAngle : RotParams
     {
         [SerializeField] private Vector3 rotationVector; 
         

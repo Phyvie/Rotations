@@ -218,19 +218,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 516a4a98e4004dcf918a34ab7ee2cb35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab45Arc: {fileID: 8255271828390535156, guid: fc4754d7011963c4090342d826a55cac,
-    type: 3}
-  prefab45ArcTapered: {fileID: -8199263956240271104, guid: fc4754d7011963c4090342d826a55cac,
-    type: 3}
-  prefab270Arc: {fileID: -681254455708047963, guid: fc4754d7011963c4090342d826a55cac,
-    type: 3}
-  prefab270ArcTapered: {fileID: -3384900774486197099, guid: fc4754d7011963c4090342d826a55cac,
-    type: 3}
-  rotationAxis: {x: 1, y: 0, z: 0}
-  arcType: 3
-  arc: {fileID: 6292740693678461201}
-  head: {fileID: 4089037500825023643}
-  headPos45: {x: 0, y: 0.44, z: 0.89}
-  eulerRot45: {x: -25, y: 0, z: -90}
-  headPos270: {x: 0, y: 0.1, z: -1}
-  eulerRot270: {x: 0, y: 0, z: 90}

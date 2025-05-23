@@ -1,4 +1,4 @@
-using RotationTypes;
+using RotParams;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Visualisation;

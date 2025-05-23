@@ -1,0 +1,18 @@
+{
+    "name": "MathVis",
+    "rootNamespace": "",
+    "references": [
+        "GUID:157f71002f96d094d838ace3a78e13e6",
+        "GUID:59e2078b1b83a474e81c516e0bce26f3",
+        "GUID:94c9b2ed20b5ce94d8345b2d70ac239d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
