@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8455772064219788096}
   - component: {fileID: 1506664299132041371}
   m_Layer: 0
-  m_Name: MatrixRotation
+  m_Name: RotVis_MatrixRotation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class M_CircleSector : M_ShaderValueController
 {
+    [SerializeField] private Color _positiveAngleColor;
+    [SerializeField] private Color _negativeAngleColor;
+    [SerializeField] private Color _outsideAngleColor; 
     [SerializeField] private float _beginAngle;
     [SerializeField] private float _endAngle;
     private int _fullRotations;
@@ -28,10 +31,43 @@ public class M_CircleSector : M_ShaderValueController
         }
     }
 
+    public Color PositiveAngleColor
+    {
+        get => _positiveAngleColor;
+        set
+        {
+            _positiveAngleColor = value;
+            material.SetColor("_PositiveAngleColour", PositiveAngleColor);
+        }
+    }
+
+    public Color NegativeAngleColor
+    {
+        get => _negativeAngleColor;
+        set
+        {
+            _negativeAngleColor = value;
+            material.SetColor("_NegativeAngleColour", NegativeAngleColor);
+        }
+    }
+
+    public Color OutsideAngleColor
+    {
+        get => _outsideAngleColor;
+        set
+        {
+            _outsideAngleColor = value;
+            material.SetColor("_OutsideAngleColour", OutsideAngleColor);
+        }
+    }
+
     void UpdateShader()
     {
         if (material == null) return;
         
+        material.SetColor("_PositiveAngleColour", PositiveAngleColor);
+        material.SetColor("_NegativeAngleColour", NegativeAngleColor);
+        material.SetColor("_OutsideAngleColour", OutsideAngleColor);
         material.SetFloat("_BeginAngle", _beginAngle);
         material.SetFloat("_EndAngle", _endAngle);
         material.SetColor("_InsideAngleColour", 

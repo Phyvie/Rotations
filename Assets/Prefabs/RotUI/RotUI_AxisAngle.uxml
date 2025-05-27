@@ -1,0 +1,8 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:VisualElement name="Root" style="flex-grow: 1; flex-direction: row; justify-content: space-between;">
+        <engine:Slider label="X" value="0" high-value="1" name="XValue" direction="Vertical" inverted="false" show-input-field="false" style="flex-direction: column; position: relative;" />
+        <engine:Slider label="X" value="0" high-value="1" name="YValue" direction="Vertical" inverted="false" show-input-field="false" />
+        <engine:Slider label="X" value="0" high-value="1" name="ZValue" direction="Vertical" inverted="false" show-input-field="false" />
+        <engine:Slider label="X" value="0" high-value="1" name="LValue" direction="Vertical" inverted="false" show-input-field="false" />
+    </engine:VisualElement>
+</engine:UXML>

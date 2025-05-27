@@ -1,7 +1,0 @@
-<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI%20Toolkit/UISS_ZyKa.uss?fileID=7433441132597879392&amp;guid=0905dff1f7d203140818ec64f834ac17&amp;type=3#UISS_ZyKa" />
-    <engine:VisualElement style="flex-direction: row;">
-        <engine:Label text="WriteSomeValueInHere&#10;" />
-        <engine:Button text="Button" enabled="true" />
-    </engine:VisualElement>
-</engine:UXML>

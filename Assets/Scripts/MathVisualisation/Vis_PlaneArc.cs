@@ -1,5 +1,8 @@
+using System;
 using MathExtensions;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Math = MathExtensions.Math;
 
 namespace Visualisation
 {
@@ -9,6 +12,8 @@ namespace Visualisation
         [SerializeField] private Vector3 localForwardVector;
         [SerializeField] private float beginAngle;
         [SerializeField] private float endingAngle;
+        [FormerlySerializedAs("_positiveAngleColor")] [SerializeField] private Color _positiveAngleColorOverwrite;
+        [FormerlySerializedAs("_negativeAngleColor")] [SerializeField] private Color _negativeAngleColorOverwrite;
         [SerializeField] private M_CircleSector torusMaterial;
         [SerializeField] private M_CircleSector circleMaterial;
         
@@ -60,7 +65,7 @@ namespace Visualisation
             set
             {
                 beginAngle = value;
-                VisUpdateShader();
+                VisUpdateShaderAngle();
             }
         }
 
@@ -70,14 +75,48 @@ namespace Visualisation
             set
             {
                 endingAngle = value;
-                VisUpdateShader();
+                VisUpdateShaderAngle();
             }
         }
         
+        public Color PositiveAngleColor
+        {
+            get => _positiveAngleColorOverwrite;
+            set
+            {
+                _positiveAngleColorOverwrite = value;
+                if (torusMaterial != null)
+                {
+                    torusMaterial.PositiveAngleColor = value;
+                }
+                if (circleMaterial != null)
+                {
+                    circleMaterial.PositiveAngleColor = value;
+                }
+            }
+        }
+
+        public Color NegativeAngleColor
+        {
+            get => _negativeAngleColorOverwrite;
+            set
+            {
+                _negativeAngleColorOverwrite = value;
+                if (torusMaterial != null)
+                {
+                    torusMaterial.NegativeAngleColor = value;
+                }
+                if (circleMaterial != null)
+                {
+                    circleMaterial.NegativeAngleColor = value;
+                }
+            }
+        }
+
         public void VisUpdate()
         {
             VisUpdateRotation();
-            VisUpdateShader(); 
+            VisUpdateShaderAngle(); 
         }
 
         private void VisUpdateRotation()
@@ -85,7 +124,7 @@ namespace Visualisation
             VisUpdateRotationViaRotatingFromPreviousToCurrent(); 
         }
 
-        private void VisUpdateShader()
+        private void VisUpdateShaderAngle()
         {
             if (torusMaterial != null)
             {
@@ -102,7 +141,6 @@ namespace Visualisation
         
         public void OnValidate()
         {
-            // AdjustForwardToUp();
             VisUpdate();
         }
         

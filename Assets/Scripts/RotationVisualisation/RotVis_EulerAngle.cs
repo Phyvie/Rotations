@@ -21,6 +21,17 @@ namespace RotationVisualisation
         [SerializeField] private RailRingPair outer;
         [SerializeField] private RailRingPair middle;
         [SerializeField] private RailRingPair inner;
+
+        [SerializeField] private GameObject rotObj;
+
+        [SerializeField] private Color PosYawColor; 
+        [SerializeField] private Color NegYawColor;
+        
+        [SerializeField] private Color PosPitchColor;
+        [SerializeField] private Color NegPitchColor;
+        
+        [SerializeField] private Color PosRollColor;
+        [SerializeField] private Color NegRollColor;
         
         public void VisUpdate()
         {
@@ -28,10 +39,12 @@ namespace RotationVisualisation
             {
                 VisReset(); 
                 VisUpdateRailsForUnrotatedGimbal();
+                VisUpdateRotObjReset(); 
+                VisUpdatePlaneArcShaderColors();
                 _previousRotParamAxes = new RotParams_EulerAngles(_rotParams);
             }
             VisUpdateRingRotations();
-            // VisUpdatePlaneArcShaders(); 
+            VisUpdatePlaneArcShaders(); 
         }
 
         private void VisReset()
@@ -60,11 +73,19 @@ namespace RotationVisualisation
             Vector3 innerUp = _rotParams.inner.RotationAxis;
             Vector3 outerForward = Vector3.Dot(outerUp, middleUp) == 0 ? middleUp : outerUp.CyclicAxisRotation();
             Vector3 middleForward = Vector3.Dot(outerUp, middleUp) == 0 ? Vector3.Cross(middleUp, outerUp) : middleUp.CyclicAxisRotation();
-            Vector3 innerForward = Vector3.Dot(middleUp, innerUp) == 0 ? Vector3.Cross(middleUp, innerUp) : innerUp.CyclicAxisRotation();
+            Vector3 innerForward = Vector3.Dot(middleUp, innerUp) == 0 ? Vector3.Cross(innerUp, middleUp) : innerUp.CyclicAxisRotation();
             
             outer.rail.transform.rotation = Quaternion.LookRotation(outerForward, outerUp); 
             middle.rail.transform.rotation = Quaternion.LookRotation(middleForward, middleUp); 
             inner.rail.transform.rotation = Quaternion.LookRotation(innerForward, innerUp);
+        }
+
+        private void VisUpdateRotObjReset()
+        {
+            if (rotObj != null)
+            {
+                rotObj.transform.rotation = Quaternion.identity; 
+            }
         }
 
         private void VisFullUpdateRotations()
@@ -88,21 +109,49 @@ namespace RotationVisualisation
             inner.ring.transform.rotation = outerRingRotation * middleRingRotation * innerRingRotation * innerRailRotation; 
         }
 
+        private void VisUpdatePlaneArcShaderColors()
+        {
+            VisUpdatePlaneArcShaderColourSingle(_rotParams.outer, outer.vis_planeArc);
+            VisUpdatePlaneArcShaderColourSingle(_rotParams.middle, middle.vis_planeArc);
+            VisUpdatePlaneArcShaderColourSingle(_rotParams.inner, inner.vis_planeArc);
+        }
+
+        private void VisUpdatePlaneArcShaderColourSingle(_RotParams_EulerAngleGimbalRing gimbalRing, Vis_PlaneArc visPlaneArc)
+        {
+            switch (gimbalRing.eAxis)
+            {
+                case EGimbleAxis.Yaw:
+                    visPlaneArc.PositiveAngleColor = PosYawColor; 
+                    visPlaneArc.NegativeAngleColor = NegYawColor;
+                    break;
+                case EGimbleAxis.Pitch:
+                    visPlaneArc.PositiveAngleColor = PosPitchColor;
+                    visPlaneArc.NegativeAngleColor = NegPitchColor;
+                    break;
+                case EGimbleAxis.Roll:
+                    visPlaneArc.PositiveAngleColor = PosRollColor;
+                    visPlaneArc.NegativeAngleColor = NegRollColor;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+        
         private void VisUpdatePlaneArcShaders()
         {
             if (outer.vis_planeArc != null)
             {
-                outer.vis_planeArc.EndingAngle = _rotParams.outer.Angle;
+                outer.vis_planeArc.StartingAngle = -_rotParams.outer.Angle;
             }
 
             if (middle.vis_planeArc != null)
             {
-                middle.vis_planeArc.EndingAngle = _rotParams.middle.Angle;
+                middle.vis_planeArc.StartingAngle = -_rotParams.middle.Angle;
             }
             
             if (inner.vis_planeArc != null)
             {
-                inner.vis_planeArc.EndingAngle = _rotParams.inner.Angle;
+                inner.vis_planeArc.StartingAngle = -_rotParams.inner.Angle;
             }
         }
         
