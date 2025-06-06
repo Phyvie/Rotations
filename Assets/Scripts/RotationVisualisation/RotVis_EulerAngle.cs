@@ -8,6 +8,7 @@ namespace RotationVisualisation
 {
     public class RotVis_EulerAngle : MonoBehaviour
     {
+        [SerializeField] private bool updateBasedOnPosition;
         [SerializeField] private RotParams_EulerAngles _rotParams;
         private RotParams_EulerAngles _previousRotParamAxes = new RotParams_EulerAngles();
 
@@ -33,6 +34,24 @@ namespace RotationVisualisation
         [SerializeField] private Color PosRollColor;
         [SerializeField] private Color NegRollColor;
         
+        private void Update()
+        {
+            if (!updateBasedOnPosition)
+            {
+                return; 
+            }
+            _rotParams.outer.Angle = transform.eulerAngles.y * Mathf.Deg2Rad;
+            _rotParams.middle.Angle = transform.eulerAngles.x * Mathf.Deg2Rad;
+            _rotParams.inner.Angle = transform.eulerAngles.z * Mathf.Deg2Rad;
+            
+            VisReset(); 
+            VisUpdateRailsForUnrotatedGimbal();
+            VisUpdateRotObjReset(); 
+            VisUpdatePlaneArcShaderColors();
+            VisUpdateRingRotations();
+            VisUpdatePlaneArcShaders(); 
+        }
+
         public void VisUpdate()
         {
             if (!RotParams_EulerAngles.AreAxesMatching(_rotParams, _previousRotParamAxes))

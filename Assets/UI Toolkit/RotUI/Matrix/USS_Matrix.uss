@@ -1,0 +1,27 @@
+#XVector {
+    width: 33%;
+}
+
+#YVector {
+    width: 33%;
+}
+
+#ZVector {
+    width: 33%;
+}
+
+#ColumnLabelContainer {
+    display: flex;
+    -unity-text-align: upper-center;
+}
+
+#ColumnLabelContainer Label {
+}
+
+#ColumnLabelContainer FloatField > Label {
+    display: flex;
+}
+
+#ColumnLabelContainer FloatField > #unity-text-input {
+    display: none;
+}

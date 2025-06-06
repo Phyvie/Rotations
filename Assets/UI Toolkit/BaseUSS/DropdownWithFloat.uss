@@ -1,0 +1,7 @@
+.DropdownWithFloat > DropdownField > Label {
+    display: none;
+}
+
+.DropdownWithFloat > FloatField > Label {
+    display: none;
+}

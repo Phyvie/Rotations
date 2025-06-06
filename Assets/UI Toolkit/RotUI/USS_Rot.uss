@@ -1,0 +1,27 @@
+UICC_AxisAngle {
+    width: 500px;
+    height: 300px;
+    flex-grow: 1;
+    background-color: rgb(240, 240, 240);
+}
+
+UICC_Quaternion {
+    width: 500px;
+    height: 300px;
+    flex-grow: 1;
+    background-color: rgb(240, 240, 240);
+}
+
+UICC_EulerAngle {
+    width: 500px;
+    height: 300px;
+    flex-grow: 1;
+    background-color: rgb(240, 240, 240);
+}
+
+UICC_Matrix {
+    width: 500px;
+    height: 300px;
+    flex-grow: 1;
+    background-color: rgb(240, 240, 240);
+}

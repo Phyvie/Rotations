@@ -342,6 +342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc092fa2e1eb4593a2085b0aac8252d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  updateBasedOnPosition: 0
   _rotParams:
     outer:
       eAxis: 0

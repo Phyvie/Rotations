@@ -34,8 +34,13 @@ namespace RotationTypes
             EditorGUI.PropertyField(position, axisProp);
             position.y += EditorGUI.GetPropertyHeight(axisProp);
 
-            EditorGUI.PropertyField(position, angleProp);
-            position.y += EditorGUI.GetPropertyHeight(angleProp);
+            float degrees = angleProp.floatValue * Mathf.Rad2Deg;
+            degrees = EditorGUI.FloatField(position, label, degrees);
+            angleProp.floatValue = degrees * Mathf.Deg2Rad;
+            position.y += EditorGUIUtility.singleLineHeight;
+
+            // EditorGUI.PropertyField(position, angleProp);
+            // position.y += EditorGUI.GetPropertyHeight(angleProp);
 
             EditorGUI.EndProperty();
         }
