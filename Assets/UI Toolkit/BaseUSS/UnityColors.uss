@@ -14,7 +14,8 @@
     background-color: rgba(42, 42, 42, 0);
 }
 
-.unityUIFieldColor .unity-base-field__input {
+.unityUIFieldColor FloatInput, 
+.unityUIFieldColor EnumField > VisualElement {
     background-color: rgba(42, 42, 42, 0);
     border-top-width: 2px;
     border-left-width: 2px;
@@ -30,6 +31,11 @@
     border-bottom-left-radius: 4px;
 }
 
+EnumField .unity-enum-field__input
+{
+    border-width: 0;  
+}
+
 .unityUITextColor .unity-text-element {
     color: rgb(196, 196, 196);
 }
@@ -38,6 +44,6 @@
     -unity-background-image-tint-color: rgb(196, 196, 196);
 }
 
-.unityUIFieldColor VisualElement {
-    background-color: rgba(42, 42, 42, 0);
+.vector--horizontal > VisualElement {
+    flex-direction: row;
 }

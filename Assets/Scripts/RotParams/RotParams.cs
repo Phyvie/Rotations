@@ -4,7 +4,7 @@ using UnityEngine;
 namespace RotParams
 {
     [Serializable]
-    public abstract class RotParams //RotationParameterization
+    public abstract class RotParams // -ZyKa check out Source Generators (e.g. CommunityToolkit.MVVM) for IDataSourceViewHashProvider Hash Generation in child classes
     {
         public abstract RotParams_EulerAngles ToEulerAngleRotation(); 
         public abstract RotParams_Quaternion ToQuaternionRotation(); 

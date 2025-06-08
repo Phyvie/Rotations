@@ -36,8 +36,8 @@ namespace Editor
             position.height = EditorGUIUtility.singleLineHeight;
             RotParams_EulerAngles targetRotParamsEulerAngles = GetObject<RotParams_EulerAngles>(property);
             
-            EGimbleType targetGimbleType = targetRotParamsEulerAngles!.GetGimbleType();
-            property.isExpanded = EditorGUI.BeginFoldoutHeaderGroup(position, property.isExpanded, new GUIContent($"eulerAngle({Enum.GetNames(typeof(EGimbleType))[(int) targetGimbleType]})"));
+            EGimbalType targetGimbalType = targetRotParamsEulerAngles!.GetGimbalType();
+            property.isExpanded = EditorGUI.BeginFoldoutHeaderGroup(position, property.isExpanded, new GUIContent($"eulerAngle({Enum.GetNames(typeof(EGimbalType))[(int) targetGimbalType]})"));
             EditorGUI.EndFoldoutHeaderGroup(); //??? this is confusing, because seemingly all a BeginFoldoutHeaderGroup does is return whether it's toggled on or off, but not the actual indentation; 
             if (property.isExpanded)
             {

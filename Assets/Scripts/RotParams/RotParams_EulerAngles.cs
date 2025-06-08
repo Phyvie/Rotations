@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
+using Unity.Properties;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace RotParams
 {
-    public enum EGimbleType
+    public enum EGimbalType
     {
-        Invalid, 
+        InvalidGimbalOrder, 
         TrueEulerAngle, 
         TaitBryanAngle, 
     }
@@ -21,7 +22,9 @@ namespace RotParams
         private _RotParams_EulerAngleGimbalRing[] gimbal => new[] { outer, middle, inner }; 
         private _RotParams_EulerAngleGimbalRing Yaw => GetRingForAxis(EGimbleAxis.Yaw); 
         private _RotParams_EulerAngleGimbalRing Pitch => GetRingForAxis(EGimbleAxis.Pitch); 
-        private _RotParams_EulerAngleGimbalRing Roll => GetRingForAxis(EGimbleAxis.Roll); 
+        private _RotParams_EulerAngleGimbalRing Roll => GetRingForAxis(EGimbleAxis.Roll);
+        [CreateProperty]
+        private string GimbalType => Enum.GetName(typeof(EGimbalType), GetGimbalType()); 
         
         private _RotParams_EulerAngleGimbalRing GetRingForAxis(EGimbleAxis eAxis)
         {
@@ -114,17 +117,17 @@ namespace RotParams
 
         public bool IsGimbleValid()
         {
-            return GetGimbleType() != EGimbleType.Invalid; 
+            return GetGimbalType() != EGimbalType.InvalidGimbalOrder; 
         }
 
-        public EGimbleType GetGimbleType()
+        public EGimbalType GetGimbalType()
         {
             HashSet<EGimbleAxis> gimbalAxisSet = new HashSet<EGimbleAxis>();
             gimbalAxisSet.Add(gimbal[0].eAxis); 
             
             if (gimbalAxisSet.Contains(gimbal[1].eAxis))
             {
-                return EGimbleType.Invalid; 
+                return EGimbalType.InvalidGimbalOrder; 
             }
             else
             {
@@ -135,16 +138,16 @@ namespace RotParams
             {
                 if (gimbal[2].eAxis == gimbal[0].eAxis)
                 {
-                    return EGimbleType.TrueEulerAngle; 
+                    return EGimbalType.TrueEulerAngle; 
                 }
                 else //if (gimbal[2].eAxis == gimbal[1].eAxis)
                 {
-                    return EGimbleType.Invalid; 
+                    return EGimbalType.InvalidGimbalOrder; 
                 }
             }
             else
             {
-                return EGimbleType.TaitBryanAngle; 
+                return EGimbalType.TaitBryanAngle; 
             }
         }
 
@@ -170,13 +173,13 @@ namespace RotParams
 
         public void GetValuesFromQuaternion(RotParams_Quaternion rotParamsQuaternion) //TODO: test
         {
-            if (GetGimbleType() == EGimbleType.Invalid)
+            if (GetGimbalType() == EGimbalType.InvalidGimbalOrder)
             {
                 Debug.LogError("EulerAngleRotation.GetValuesFromQuaternion() error: GimbleType is Invalid");
                 return; 
             }
 
-            if (GetGimbleType() == EGimbleType.TrueEulerAngle)
+            if (GetGimbalType() == EGimbalType.TrueEulerAngle)
             {
                 Debug.LogError("EulerAngleRotation.GetValuesFromQuaternion() error: Conversion from Quaternion to TrueEulerAngles not implemented");
                 return; 
@@ -213,13 +216,13 @@ namespace RotParams
 
         public void GetValuesFromMatrix(RotParams_Matrix rotParamsMatrix) //TODO: test this function
         {
-            if (GetGimbleType() == EGimbleType.Invalid)
+            if (GetGimbalType() == EGimbalType.InvalidGimbalOrder)
             {
                 Debug.LogError("EulerAngleRotation.GetValuesFromMatrix() error: GimbleType is Invalid");
                 return; 
             }
 
-            if (GetGimbleType() == EGimbleType.TrueEulerAngle)
+            if (GetGimbalType() == EGimbalType.TrueEulerAngle)
             {
                 Debug.LogError("EulerAngleRotation.GetValuesFromMatrix() error: Conversion from Matrix to TrueEulerAngles not implemented");
                 return; 

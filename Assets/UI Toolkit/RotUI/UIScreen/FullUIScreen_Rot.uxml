@@ -1,11 +1,25 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <engine:Template name="UID_AxisAngle" src="project://database/Assets/UI%20Toolkit/RotUI/AxisAngle/UID_AxisAngle.uxml?fileID=9197481963319205126&amp;guid=959c3fa76db3fac43a696054de3b72aa&amp;type=3#UID_AxisAngle" />
+    <engine:Template name="UID_EulerAngle" src="project://database/Assets/UI%20Toolkit/RotUI/EulerAngle/UID_EulerAngle.uxml?fileID=9197481963319205126&amp;guid=edd2d061bb270cd4c93b0c281f09e666&amp;type=3#UID_EulerAngle" />
+    <engine:Template name="UID_Quaternion" src="project://database/Assets/UI%20Toolkit/RotUI/Quaternion/UID_Quaternion.uxml?fileID=9197481963319205126&amp;guid=e8e275ab96cc4f54eba1128f991b32e0&amp;type=3#UID_Quaternion" />
     <Style src="project://database/Assets/UI%20Toolkit/RotUI/ZyKaTest.uss?fileID=7433441132597879392&amp;guid=74f55f451ebf05e4cb8fabf816bf23a4&amp;type=3#ZyKaTest" />
     <engine:VisualElement style="flex-grow: 1; flex-direction: row;">
         <engine:VisualElement name="LeftScreenPart" class="ScreenPart" style="flex-grow: 0;">
             <engine:VisualElement name="RotVis" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.3); height: 50%;" />
             <engine:VisualElement name="RotUI" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.7); height: 50%; justify-content: space-around;">
                 <engine:Instance template="UID_AxisAngle" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:VisualElement name="MiddleScreenPart" class="ScreenPart" style="flex-grow: 0;">
+            <engine:VisualElement name="RotVis" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.3); height: 50%;" />
+            <engine:VisualElement name="RotUI" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.7); height: 50%; justify-content: space-around;">
+                <engine:Instance template="UID_EulerAngle" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:VisualElement name="RightScreenPart" class="ScreenPart" style="flex-grow: 0;">
+            <engine:VisualElement name="RotVis" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.3); height: 50%;" />
+            <engine:VisualElement name="RotUI" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.7); height: 50%; justify-content: space-around;">
+                <engine:Instance template="UID_Quaternion" />
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>

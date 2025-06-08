@@ -6,7 +6,11 @@
     <Style src="project://database/Assets/UI%20Toolkit/RotUI/EulerAngle/USS_EulerAngle.uss?fileID=7433441132597879392&amp;guid=21c9eeed5551e394c976aa29277a2b00&amp;type=3#USS_EulerAngle" />
     <engine:VisualElement name="EulerAngleRoot" data-source-type="RotParams.RotParams_EulerAngles, RotParams" class="unityUIBackgroundColor unityUIFieldColor unityUITextColor" style="flex-grow: 1;">
         <engine:VisualElement style="flex-grow: 1;">
-            <engine:Label text="True Euler Angle" class="centeredText" style="width: 50%;" />
+            <engine:Label text="True Euler Angles" class="centeredText" style="width: 50%;">
+                <Bindings>
+                    <engine:DataBinding property="text" data-source-path="GimbalType" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:Label>
             <engine:VisualElement style="width: 50%;" />
         </engine:VisualElement>
         <engine:VisualElement name="FirstAxis" class="enumWithFloat container--horizontalspacearound">

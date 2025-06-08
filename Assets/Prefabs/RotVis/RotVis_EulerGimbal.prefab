@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: 33fdf24a949fe4b458d6eb6a85bb4e2e, type: 2}
-  _positiveAngleColor: {r: 0, g: 0, b: 0, a: 0}
-  _negativeAngleColor: {r: 0, g: 0, b: 0, a: 0}
+  _positiveAngleColor: {r: 1, g: 0.45, b: 0.45, a: 0}
+  _negativeAngleColor: {r: 0.55, g: 0.24803925, b: 0.24803925, a: 0}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
   _beginAngle: -0
   _endAngle: 0
@@ -205,8 +205,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: 33fdf24a949fe4b458d6eb6a85bb4e2e, type: 2}
-  _positiveAngleColor: {r: 0, g: 0, b: 0, a: 0}
-  _negativeAngleColor: {r: 0, g: 0, b: 0, a: 0}
+  _positiveAngleColor: {r: 0.45, g: 1, b: 0.45, a: 0}
+  _negativeAngleColor: {r: 0.2475, g: 0.55, b: 0.2475, a: 0}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
   _beginAngle: -0
   _endAngle: 0
@@ -398,7 +398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4520340664653103367}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.50000006, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.50000006, w: -0.5}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -488,7 +488,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4758980111551920935}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.00000008940697, y: -0.00000014901161, z: -0.7071067, w: 0.7071068}
+  m_LocalRotation: {x: -0.000000014901158, y: -0.00000034272662, z: -0.7071068, w: 0.7071067}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.923077, y: 0.92307687, z: 0.923077}
   m_ConstrainProportionsScale: 0
@@ -565,8 +565,8 @@ MonoBehaviour:
   localForwardVector: {x: 0, y: 0, z: 0}
   beginAngle: -0
   endingAngle: 0
-  _positiveAngleColorOverwrite: {r: 0, g: 0, b: 0, a: 0}
-  _negativeAngleColorOverwrite: {r: 0, g: 0, b: 0, a: 0}
+  _positiveAngleColorOverwrite: {r: 0.45, g: 1, b: 0.45, a: 0}
+  _negativeAngleColorOverwrite: {r: 0.2475, g: 0.55, b: 0.2475, a: 0}
   torusMaterial: {fileID: 4982370344158795608}
   circleMaterial: {fileID: 4837300017244231248}
 --- !u!114 &4982370344158795608
@@ -582,8 +582,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: c3ddc9ccf28e8d74b90bcb502dab5996, type: 2}
-  _positiveAngleColor: {r: 0, g: 0, b: 0, a: 0}
-  _negativeAngleColor: {r: 0, g: 0, b: 0, a: 0}
+  _positiveAngleColor: {r: 0.45, g: 1, b: 0.45, a: 0}
+  _negativeAngleColor: {r: 0.2475, g: 0.55, b: 0.2475, a: 0}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
   _beginAngle: -0
   _endAngle: 0
@@ -692,8 +692,8 @@ MonoBehaviour:
   localForwardVector: {x: 0, y: 0, z: 0}
   beginAngle: -0
   endingAngle: 0
-  _positiveAngleColorOverwrite: {r: 0, g: 0, b: 0, a: 0}
-  _negativeAngleColorOverwrite: {r: 0, g: 0, b: 0, a: 0}
+  _positiveAngleColorOverwrite: {r: 1, g: 0.45, b: 0.45, a: 0}
+  _negativeAngleColorOverwrite: {r: 0.55, g: 0.24803925, b: 0.24803925, a: 0}
   torusMaterial: {fileID: 2333320410219279108}
   circleMaterial: {fileID: 665319245755013321}
 --- !u!114 &2333320410219279108
@@ -709,8 +709,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: c3ddc9ccf28e8d74b90bcb502dab5996, type: 2}
-  _positiveAngleColor: {r: 0, g: 0, b: 0, a: 0}
-  _negativeAngleColor: {r: 0, g: 0, b: 0, a: 0}
+  _positiveAngleColor: {r: 1, g: 0.45, b: 0.45, a: 0}
+  _negativeAngleColor: {r: 0.55, g: 0.24803925, b: 0.24803925, a: 0}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
   _beginAngle: -0
   _endAngle: 0
@@ -742,7 +742,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6446721322427425129}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000059604645, y: -0.000000029802322, z: -0.7071067, w: 0.70710695}
+  m_LocalRotation: {x: 0.0000000037252823, y: 0.000000014901158, z: -0.70710677, w: 0.70710677}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9259255, y: 0.9259261, z: 0.92592597}
   m_ConstrainProportionsScale: 0
@@ -819,8 +819,8 @@ MonoBehaviour:
   localForwardVector: {x: 0, y: 0, z: 0}
   beginAngle: -0
   endingAngle: 0
-  _positiveAngleColorOverwrite: {r: 0, g: 0, b: 0, a: 0}
-  _negativeAngleColorOverwrite: {r: 0, g: 0, b: 0, a: 0}
+  _positiveAngleColorOverwrite: {r: 0.45, g: 0.45, b: 1, a: 0}
+  _negativeAngleColorOverwrite: {r: 0.2475, g: 0.2475, b: 0.55, a: 0}
   torusMaterial: {fileID: 7110365489252294482}
   circleMaterial: {fileID: 2405914394118555245}
 --- !u!114 &7110365489252294482
@@ -836,8 +836,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: c3ddc9ccf28e8d74b90bcb502dab5996, type: 2}
-  _positiveAngleColor: {r: 0, g: 0, b: 0, a: 0}
-  _negativeAngleColor: {r: 0, g: 0, b: 0, a: 0}
+  _positiveAngleColor: {r: 0.45, g: 0.45, b: 1, a: 0}
+  _negativeAngleColor: {r: 0.2475, g: 0.2475, b: 0.55, a: 0}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
   _beginAngle: -0
   _endAngle: 0
@@ -1029,8 +1029,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: 33fdf24a949fe4b458d6eb6a85bb4e2e, type: 2}
-  _positiveAngleColor: {r: 0, g: 0, b: 0, a: 0}
-  _negativeAngleColor: {r: 0, g: 0, b: 0, a: 0}
+  _positiveAngleColor: {r: 0.45, g: 0.45, b: 1, a: 0}
+  _negativeAngleColor: {r: 0.2475, g: 0.2475, b: 0.55, a: 0}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
   _beginAngle: -0
   _endAngle: 0
@@ -1148,22 +1148,22 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8bae74f32b9eebe489084472581ea602,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.500001
+      value: -0.499999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8bae74f32b9eebe489084472581ea602,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.50000167
+      value: 0.49999833
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8bae74f32b9eebe489084472581ea602,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.49999836
+      value: -0.50000167
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8bae74f32b9eebe489084472581ea602,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.499999
+      value: -0.50000095
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8bae74f32b9eebe489084472581ea602,
         type: 3}

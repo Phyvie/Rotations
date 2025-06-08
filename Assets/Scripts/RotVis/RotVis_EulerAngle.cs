@@ -9,7 +9,7 @@ namespace RotationVisualisation
 {
     public class RotVis_EulerAngle : RotVis<RotParams_EulerAngles>
     {
-        [SerializeField] private bool updateBasedOnPosition;
+        [SerializeField] private bool updateBasedOnPosition; //0ZyKa What is this doing here, do I still need it?
         private RotParams_EulerAngles _previousRotParamAxes = new RotParams_EulerAngles();
 
         [Serializable]
@@ -59,7 +59,7 @@ namespace RotationVisualisation
 
         public override void VisUpdate()
         {
-            if (!RotParams_EulerAngles.AreAxesMatching(_rotParams, _previousRotParamAxes))
+            if (_previousRotParamAxes == null || !RotParams_EulerAngles.AreAxesMatching(_rotParams, _previousRotParamAxes))
             {
                 VisReset(); 
                 VisUpdateRailsForUnrotatedGimbal();
@@ -181,7 +181,7 @@ namespace RotationVisualisation
         
         private void OnValidate()
         {
-            if (_rotParams.GetGimbleType() == EGimbleType.Invalid)
+            if (_rotParams.GetGimbalType() == EGimbalType.InvalidGimbalOrder)
             {
                 Debug.LogWarning("{gameObject.name} is set to an invalid GimbalType");
             }
