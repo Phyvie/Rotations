@@ -12,37 +12,36 @@
         <engine:VisualElement name="FirstAxis" class="enumWithFloat container--horizontalspacearound">
             <engine:EnumField value="Center" type="RotParams.EGimbleAxis, RotParams">
                 <Bindings>
-                    <engine:DataBinding property="value" data-source-path="outer.eAxis" binding-mode="ToTarget" />
+                    <engine:DataBinding property="value" data-source-path="outer.eAxis" binding-mode="TwoWay" />
                 </Bindings>
             </engine:EnumField>
             <engine:FloatField label="Float Field">
                 <Bindings>
-                    <engine:DataBinding property="value" data-source-path="outer.Angle" binding-mode="ToTarget" />
+                    <engine:DataBinding property="value" data-source-path="outer.Angle" binding-mode="TwoWay" />
                 </Bindings>
             </engine:FloatField>
         </engine:VisualElement>
         <engine:VisualElement name="SecondAxis" class="enumWithFloat container--horizontalspacearound">
             <engine:EnumField value="Center" type="RotParams.EGimbleAxis, RotParams">
                 <Bindings>
-                    <engine:DataBinding property="value" data-source-path="middle.eAxis" binding-mode="ToTarget" />
+                    <engine:DataBinding property="value" data-source-path="middle.eAxis" binding-mode="TwoWay" />
                 </Bindings>
             </engine:EnumField>
             <engine:FloatField label="Float Field">
                 <Bindings>
-                    <engine:DataBinding property="value" data-source-path="middle.Angle" binding-mode="ToTarget" />
+                    <engine:DataBinding property="value" data-source-path="middle.Angle" binding-mode="TwoWay" />
                 </Bindings>
             </engine:FloatField>
         </engine:VisualElement>
         <engine:VisualElement name="ThirdAxis" class="enumWithFloat container--horizontalspacearound">
             <engine:EnumField value="Center" type="RotParams.EGimbleAxis, RotParams">
                 <Bindings>
-                    <engine:DataBinding property="value" data-source-path="inner.eAxis" binding-mode="ToTarget" />
+                    <engine:DataBinding property="value" data-source-path="inner.eAxis" binding-mode="TwoWay" />
                 </Bindings>
             </engine:EnumField>
             <engine:FloatField label="Float Field">
                 <Bindings>
-                    <engine:DataBinding property="value" data-source-path="outer.Angle" binding-mode="ToTarget" />
-                    <engine:DataBinding property="label" data-source-path="inner.Angle" binding-mode="ToTarget" />
+                    <engine:DataBinding property="label" data-source-path="inner.Angle" binding-mode="TwoWay" />
                 </Bindings>
             </engine:FloatField>
         </engine:VisualElement>

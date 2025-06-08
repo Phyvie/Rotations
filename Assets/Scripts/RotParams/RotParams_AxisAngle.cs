@@ -1,4 +1,5 @@
 using System;
+using Unity.Properties;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,15 +11,27 @@ namespace RotParams
     {
         [SerializeField] private Vector3 rotationVector; 
         
+        [CreateProperty]
         public Vector3 RotationVector
         {
             get => rotationVector;
             set => rotationVector = value;
         }
         
-        public Vector3 Axis => RotationVector.normalized; 
-        public float Angle => RotationVector.magnitude;
-        
+        [CreateProperty]
+        public Vector3 Axis
+        {
+            get => RotationVector.normalized;
+            set => RotationVector = value * Angle;
+        }
+
+        [CreateProperty]
+        public float Angle
+        {
+            get => RotationVector.magnitude;
+            set => RotationVector = value * Axis; 
+        }
+
         public RotParams_AxisAngle()
         {
             

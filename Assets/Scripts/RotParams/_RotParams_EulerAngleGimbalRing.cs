@@ -140,7 +140,7 @@ namespace RotParams
 
         public string GetRotationName()
         {
-            GetRotationAxisName(eAxis); 
+            return GetRotationAxisName(eAxis); 
         }
 
         public static string GetRotationAxisName(EGimbleAxis eAxis)
@@ -153,17 +153,5 @@ namespace RotParams
                 _ => throw new ArgumentOutOfRangeException()
             }; 
         }
-        
-        #region UIConverters
-        [InitializeOnLoadMethod]
-        public static void RegisterConverters()
-        {
-            ConverterGroup group = new ConverterGroup("AxisNames"); 
-            
-            group.AddConverter((ref EGimbleAxis axis) => GetRotationAxisName(axis));
-            
-            ConverterGroups.RegisterConverterGroup(group);
-        }
-        #endregion UIConverters
     }
 }

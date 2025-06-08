@@ -3,9 +3,21 @@
     <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/BoxLayouts.uss?fileID=7433441132597879392&amp;guid=f0491e6785d76264da46194eb373072c&amp;type=3#BoxLayouts" />
     <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UserInputFields.uss?fileID=7433441132597879392&amp;guid=6dd3f635675e8f246b205a73e8f7b1dd&amp;type=3#UserInputFields" />
     <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UnityColors.uss?fileID=7433441132597879392&amp;guid=05afd8f5bd01ac04682fabbc8e02db4f&amp;type=3#UnityColors" />
-    <engine:VisualElement name="MatrixRoot" class="container--horizontalspacearound unityUIBackgroundColor unityUIFieldColor unityUITextColor" style="width: 500px; height: 250px;">
-        <engine:Vector3Field label="Right (X-Vector)" name="XVector" class="vector--pure" style="flex-direction: column;" />
-        <engine:Vector3Field label="Up (Y-Vector)" name="YVector" class="vector--pure" style="flex-direction: column;" />
-        <engine:Vector3Field label="Forward (Z-Vector)" name="ZVector" class="vector--pure" style="flex-direction: column;" />
+    <engine:VisualElement name="MatrixRoot" data-source-type="RotParams.RotParams_Matrix, RotParams" class="container--horizontalspacearound unityUIBackgroundColor unityUIFieldColor unityUITextColor" style="width: 500px; height: 250px;">
+        <engine:Vector3Field label="Right (X-Vector)" name="XVector" class="vector--pure" style="flex-direction: column; width: 33%;">
+            <Bindings>
+                <engine:DataBinding property="value" data-source-path="XVector" binding-mode="ToTarget" />
+            </Bindings>
+        </engine:Vector3Field>
+        <engine:Vector3Field label="Up (Y-Vector)" name="YVector" class="vector--pure" style="flex-direction: column; width: 33%;">
+            <Bindings>
+                <engine:DataBinding property="value" data-source-path="YVector" binding-mode="ToTarget" />
+            </Bindings>
+        </engine:Vector3Field>
+        <engine:Vector3Field label="Forward (Z-Vector)" name="ZVector" class="vector--pure" style="flex-direction: column; width: 33%;">
+            <Bindings>
+                <engine:DataBinding property="value" data-source-path="ZVector" binding-mode="ToTarget" />
+            </Bindings>
+        </engine:Vector3Field>
     </engine:VisualElement>
 </engine:UXML>

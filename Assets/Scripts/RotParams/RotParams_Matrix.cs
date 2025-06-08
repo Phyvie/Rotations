@@ -1,5 +1,6 @@
 using System;
 using MathExtensions;
+using Unity.Properties;
 using UnityEngine;
 
 
@@ -39,6 +40,27 @@ namespace RotParams
         #endregion //Constructors
         
         #region GetSet
+        [CreateProperty]
+        public Vector3 XVector
+        {
+            get => GetColumn(0);
+            set => SetColumn(value, 0); 
+        }
+        
+        [CreateProperty]
+        public Vector3 YVector
+        {
+            get => GetColumn(1);
+            set => SetColumn(value, 1); 
+        }
+
+        [CreateProperty]
+        public Vector3 ZVector
+        {
+            get => GetColumn(2);
+            set => SetColumn(value, 2); 
+        }
+        
         public float this[int row, int column]
         {
             get => InternalMatrix[row, column];

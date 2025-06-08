@@ -99,7 +99,7 @@ Material:
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _BeginAngle: -0.87266463
+    - _BeginAngle: -0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1

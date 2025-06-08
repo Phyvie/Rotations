@@ -1,4 +1,5 @@
 using System;
+using Unity.Properties;
 using UnityEngine;
 
 namespace RotParams
@@ -8,7 +9,7 @@ namespace RotParams
     {
         [SerializeField] private bool enforceNormalisation; //-ZyKa Quaternion enforceNormalisation
         private float lastR;
-        [SerializeField] private LockableFloat _r;
+        [SerializeField] private LockableFloat _r; //-ZyKa figure out whether you need a LockableFloat here or not
         private float lastI;
         [SerializeField] private LockableFloat _i;
         private float lastJ;
@@ -108,12 +109,10 @@ namespace RotParams
 
         #endregion //ControlledValueAccessors
 
+        [CreateProperty]
         public Vector3 Axis
         {
-            get
-            {
-                return new Vector3(x, y, z).normalized;
-            }
+            get => new Vector3(x, y, z).normalized;
             set
             {
                 float sinAngle = Mathf.Sin(Angle/2); 
@@ -123,6 +122,7 @@ namespace RotParams
             }
         }
 
+        [CreateProperty]
         public float Angle
         {
             get
@@ -134,15 +134,26 @@ namespace RotParams
                 real = Mathf.Cos(value / 2); 
             }
         }
-        
-        public Vector3 AxisAngle => Axis * Angle;
 
+        [CreateProperty]
+        public Vector4 Vector4
+        {
+            get => new Vector4(w, x, y, z); 
+            set
+            {
+                w = value.w; 
+                x = value.x;
+                y = value.y;
+                z = value.z;
+            }
+        }
+        
         public RotParams_Quaternion()
         {
-            real = 1;
-            i = 0;
-            j = 0;
-            k = 0;
+            w = 1;
+            x = 0;
+            y = 0;
+            z = 0;
         }
 
         public RotParams_Quaternion(RotParams_Quaternion rotParamsQuaternion) : this(rotParamsQuaternion.real,
