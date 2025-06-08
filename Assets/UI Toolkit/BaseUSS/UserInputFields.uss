@@ -1,0 +1,70 @@
+.floatField--pure {
+    margin: 0;
+    padding: 0;
+    justify-content: space-around;
+    align-items: stretch;
+    align-self: stretch;
+    align-content: stretch;
+    flex-grow: 1;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.floatField--pure > Label {
+    font-size: 12px;
+    min-height: auto;
+    min-width: auto;
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    border-radius: 0;
+    -unity-text-align: middle-center;
+}
+
+.floatField--pure > #unity-text-input {
+    flex-grow: 1;
+    margin: 0;
+    padding: 0;
+}
+
+.vector--pure {
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: space-around;
+    align-self: stretch;
+    align-content: stretch;
+    margin: 0;
+    padding: 0;
+}
+
+.vector--pure Label {
+    min-height: auto;
+    min-width: auto;
+}
+
+.vector--pure #unity-text-input {
+    padding: 5px;
+}
+
+.vector--pure #unity-text-input > TextElement {
+    padding: 0;
+}
+
+.vector--pure FloatField > Label {
+    display: none;
+    -unity-text-align: middle-center;
+}
+
+.vector--pure VisualElement {
+    justify-content: space-around;
+}
+
+.enumWithFloat > EnumField > Label {
+    display: none;
+}
+
+.enumWithFloat > FloatField > Label {
+    display: none;
+}

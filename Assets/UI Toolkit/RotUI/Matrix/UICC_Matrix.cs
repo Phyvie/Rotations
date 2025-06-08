@@ -3,6 +3,7 @@ using UnityEngine.UIElements;
 
 namespace UI_Toolkit.RotUI
 {
+    /*
     [UxmlElement]
     public partial class UICC_Matrix : VisualElement
     {
@@ -44,4 +45,5 @@ namespace UI_Toolkit.RotUI
             #endregion Compose
         }
     }
+    */
 }

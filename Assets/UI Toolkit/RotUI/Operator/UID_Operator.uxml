@@ -1,0 +1,6 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/RotUI/USS_Rot.uss?fileID=7433441132597879392&amp;guid=13a4e7952ce03644eac0a699c3aecf34&amp;type=3#USS_Rot" />
+    <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/labeledFloat.uss?fileID=7433441132597879392&amp;guid=6dd3f635675e8f246b205a73e8f7b1dd&amp;type=3#labeledFloat" />
+    <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/BoxLayouts.uss?fileID=7433441132597879392&amp;guid=f0491e6785d76264da46194eb373072c&amp;type=3#BoxLayouts" />
+    <UI_Toolkit.RotUI.UICC_AxisAngle />
+</engine:UXML>

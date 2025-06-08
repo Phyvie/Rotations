@@ -1,4 +1,5 @@
 using System;
+using BaseClasses;
 using MathExtensions;
 using RotParams;
 using UnityEngine;
@@ -6,10 +7,9 @@ using Visualisation;
 
 namespace RotationVisualisation
 {
-    public class RotVis_EulerAngle : MonoBehaviour
+    public class RotVis_EulerAngle : RotVis<RotParams_EulerAngles>
     {
         [SerializeField] private bool updateBasedOnPosition;
-        [SerializeField] private RotParams_EulerAngles _rotParams;
         private RotParams_EulerAngles _previousRotParamAxes = new RotParams_EulerAngles();
 
         [Serializable]
@@ -33,6 +33,11 @@ namespace RotationVisualisation
         
         [SerializeField] private Color PosRollColor;
         [SerializeField] private Color NegRollColor;
+
+        public RotVis_EulerAngle(RotParams_EulerAngles rotParams) : base(rotParams)
+        {
+            
+        }
         
         private void Update()
         {
@@ -52,7 +57,7 @@ namespace RotationVisualisation
             VisUpdatePlaneArcShaders(); 
         }
 
-        public void VisUpdate()
+        public override void VisUpdate()
         {
             if (!RotParams_EulerAngles.AreAxesMatching(_rotParams, _previousRotParamAxes))
             {

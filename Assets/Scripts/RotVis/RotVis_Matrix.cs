@@ -1,18 +1,23 @@
 using System;
+using BaseClasses;
 using RotParams;
 using UnityEngine;
 using Visualisation;
 
 namespace RotationVisualisation
 {
-    public class RotVis_Matrix : MonoBehaviour
+    public class RotVis_Matrix : RotVis<RotParams_Matrix>
     {
-        [SerializeField] private RotParams_Matrix rotParams;
         [SerializeField] private Vis_Vector visVectorRight; 
         [SerializeField] private Vis_Vector visVectorUp; 
         [SerializeField] private Vis_Vector visVectorForward;
 
-        private void VisUpdate()
+        public RotVis_Matrix(RotParams_Matrix rotParams_Matrix) : base(rotParams_Matrix)
+        {
+            
+        }
+        
+        public override void VisUpdate()
         {
             if (visVectorRight is null)
             {
@@ -20,15 +25,15 @@ namespace RotationVisualisation
             }
             if (visVectorRight is not null)
             {
-                visVectorRight.Value = rotParams.GetColumn(0);
+                visVectorRight.Value = _rotParams.GetColumn(0);
             }
             if (visVectorUp is not null)
             {
-                visVectorUp.Value = rotParams.GetColumn(1);
+                visVectorUp.Value = _rotParams.GetColumn(1);
             }
             if (visVectorForward is not null)
             {
-                visVectorForward.Value = rotParams.GetColumn(2);
+                visVectorForward.Value = _rotParams.GetColumn(2);
             }
         }
 

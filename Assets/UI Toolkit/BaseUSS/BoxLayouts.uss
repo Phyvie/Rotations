@@ -1,8 +1,13 @@
 .container--horizontalspacearound {
     flex-direction: row;
     justify-content: space-around;
+    border-color: rgb(0, 0, 0);
+    border-width: 0;
+    flex-grow: 1;
 }
 
-.CenteredText {
+.centeredText {
+    align-self: stretch;
+    align-content: stretch;
     -unity-text-align: middle-center;
 }

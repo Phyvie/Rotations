@@ -1,15 +1,21 @@
+using BaseClasses;
 using RotParams;
 using UnityEngine;
 using Visualisation;
 
 namespace RotationVisualisation
 {
-    public class RotVis_Quaternion : MonoBehaviour
+    public class RotVis_Quaternion : RotVis<RotParams_Quaternion>
     {
         
         [SerializeField] private RotParams_Quaternion rotParams_Quaternion; 
         [SerializeField] private Vis_Vector vis_rotationVector;
-        [SerializeField] private Vis_PlaneArc vis_PlaneArc; 
+        [SerializeField] private Vis_PlaneArc vis_PlaneArc;
+
+        public RotVis_Quaternion(RotParams_Quaternion rotParams_Quaternion) : base(rotParams_Quaternion)
+        {
+            
+        }
         
         public RotParams_Quaternion RotParams
         {
@@ -23,7 +29,7 @@ namespace RotationVisualisation
             set
             {
                 RotParams.Axis = value;
-                UpdateVisualisation();
+                VisUpdate();
             }
         }
 
@@ -33,11 +39,11 @@ namespace RotationVisualisation
             set
             {
                 RotParams.Angle = value; 
-                UpdateVisualisation();
+                VisUpdate();
             }
         }
 
-        public void UpdateVisualisation()
+        public override void VisUpdate()
         {
             vis_rotationVector.Value = Axis * Angle;
             vis_PlaneArc.LocalRotationAxis = Axis; 

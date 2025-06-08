@@ -1,0 +1,10 @@
+.ScreenPart {
+    flex-grow: 1;
+    justify-content: space-between;
+    align-self: auto;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    width: 33%;
+}

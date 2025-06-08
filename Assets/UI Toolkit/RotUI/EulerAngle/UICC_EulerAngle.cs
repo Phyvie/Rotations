@@ -4,21 +4,22 @@ using UnityEngine.UIElements;
 
 namespace UI_Toolkit.RotUI
 {
+    /*
     [UxmlElement]
     public partial class UICC_EulerAngle : VisualElement
     {
         public UICC_EulerAngle()
         {
             #region Load Stylesheets
-#if UNITY_EDITOR
+    #if UNITY_EDITOR
             var rotStyle = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/UI Toolkit/RotUI/USS_Rot.uss");
             var boxLayoutStyle = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/UI Toolkit/BaseUSS/BoxLayouts.uss");
-            var dropdownStyle = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/UI Toolkit/BaseUSS/DropdownWithFloat.uss");
+            var dropdownStyle = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/UI Toolkit/BaseUSS/enumWithFloat.uss");
 
             if (rotStyle != null) styleSheets.Add(rotStyle);
             if (boxLayoutStyle != null) styleSheets.Add(boxLayoutStyle);
             if (dropdownStyle != null) styleSheets.Add(dropdownStyle);
-#endif
+    #endif
             #endregion // Load Stylesheets
 
             #region Root Setup
@@ -33,7 +34,7 @@ namespace UI_Toolkit.RotUI
                 {
                     name = "FirstAxis" // repeated name; you may want to make these unique in practice
                 };
-                axisContainer.AddToClassList("DropdownWithFloat");
+                axisContainer.AddToClassList("enumWithFloat");
 
                 axisContainer.style.flexGrow = 1; // [MARKED]
                 axisContainer.style.flexDirection = FlexDirection.Row; // [MARKED]
@@ -55,4 +56,5 @@ namespace UI_Toolkit.RotUI
             #endregion // Add Axes
         }
     }
+    */
 }

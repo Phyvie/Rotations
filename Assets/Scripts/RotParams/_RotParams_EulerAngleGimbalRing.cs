@@ -1,6 +1,9 @@
 using System;
 using System.ComponentModel;
+using Unity.Properties;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace RotParams
 {
@@ -15,6 +18,7 @@ namespace RotParams
     [Serializable]
     public class _RotParams_EulerAngleGimbalRing
     {
+        #region Variables
         public EGimbleAxis eAxis;
         public Vector3 RotationAxis => eAxis switch
         {
@@ -27,11 +31,13 @@ namespace RotParams
         [SerializeField] private float _angle; //!ZyKa
         public static string NameOfAngle => nameof(_angle); //for PropertyDrawer
         
+        [CreateProperty]
         public float Angle
         {
             get => _angle;
             set => _angle = value;
         }
+        #endregion
         
         #region Constructors
         private _RotParams_EulerAngleGimbalRing()
@@ -134,6 +140,11 @@ namespace RotParams
 
         public string GetRotationName()
         {
+            GetRotationAxisName(eAxis); 
+        }
+
+        public static string GetRotationAxisName(EGimbleAxis eAxis)
+        {
             return eAxis switch
             {
                 EGimbleAxis.Yaw => "Yaw",
@@ -142,5 +153,17 @@ namespace RotParams
                 _ => throw new ArgumentOutOfRangeException()
             }; 
         }
+        
+        #region UIConverters
+        [InitializeOnLoadMethod]
+        public static void RegisterConverters()
+        {
+            ConverterGroup group = new ConverterGroup("AxisNames"); 
+            
+            group.AddConverter((ref EGimbleAxis axis) => GetRotationAxisName(axis));
+            
+            ConverterGroups.RegisterConverterGroup(group);
+        }
+        #endregion UIConverters
     }
 }

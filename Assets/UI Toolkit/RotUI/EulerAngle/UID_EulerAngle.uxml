@@ -1,6 +1,50 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/RotUI/USS_Rot.uss?fileID=7433441132597879392&amp;guid=13a4e7952ce03644eac0a699c3aecf34&amp;type=3#USS_Rot" />
     <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/BoxLayouts.uss?fileID=7433441132597879392&amp;guid=f0491e6785d76264da46194eb373072c&amp;type=3#BoxLayouts" />
-    <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/DropdownWithFloat.uss?fileID=7433441132597879392&amp;guid=94cad59a4ebe1184094b7be00e297f7f&amp;type=3#DropdownWithFloat" />
-    <UI_Toolkit.RotUI.UICC_EulerAngle />
+    <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UserInputFields.uss?fileID=7433441132597879392&amp;guid=6dd3f635675e8f246b205a73e8f7b1dd&amp;type=3#UserInputFields" />
+    <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UnityColors.uss?fileID=7433441132597879392&amp;guid=05afd8f5bd01ac04682fabbc8e02db4f&amp;type=3#UnityColors" />
+    <Style src="project://database/Assets/UI%20Toolkit/RotUI/EulerAngle/USS_EulerAngle.uss?fileID=7433441132597879392&amp;guid=21c9eeed5551e394c976aa29277a2b00&amp;type=3#USS_EulerAngle" />
+    <engine:VisualElement name="EulerAngleRoot" data-source-type="RotParams.RotParams_EulerAngles, RotParams" class="unityUIBackgroundColor unityUIFieldColor unityUITextColor" style="flex-grow: 1;">
+        <engine:VisualElement style="flex-grow: 1;">
+            <engine:Label text="True Euler Angle" class="centeredText" style="width: 50%;" />
+            <engine:VisualElement style="width: 50%;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="FirstAxis" class="enumWithFloat container--horizontalspacearound">
+            <engine:EnumField value="Center" type="RotParams.EGimbleAxis, RotParams">
+                <Bindings>
+                    <engine:DataBinding property="value" data-source-path="outer.eAxis" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:EnumField>
+            <engine:FloatField label="Float Field">
+                <Bindings>
+                    <engine:DataBinding property="value" data-source-path="outer.Angle" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:FloatField>
+        </engine:VisualElement>
+        <engine:VisualElement name="SecondAxis" class="enumWithFloat container--horizontalspacearound">
+            <engine:EnumField value="Center" type="RotParams.EGimbleAxis, RotParams">
+                <Bindings>
+                    <engine:DataBinding property="value" data-source-path="middle.eAxis" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:EnumField>
+            <engine:FloatField label="Float Field">
+                <Bindings>
+                    <engine:DataBinding property="value" data-source-path="middle.Angle" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:FloatField>
+        </engine:VisualElement>
+        <engine:VisualElement name="ThirdAxis" class="enumWithFloat container--horizontalspacearound">
+            <engine:EnumField value="Center" type="RotParams.EGimbleAxis, RotParams">
+                <Bindings>
+                    <engine:DataBinding property="value" data-source-path="inner.eAxis" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:EnumField>
+            <engine:FloatField label="Float Field">
+                <Bindings>
+                    <engine:DataBinding property="value" data-source-path="outer.Angle" binding-mode="ToTarget" />
+                    <engine:DataBinding property="label" data-source-path="inner.Angle" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:FloatField>
+        </engine:VisualElement>
+    </engine:VisualElement>
 </engine:UXML>

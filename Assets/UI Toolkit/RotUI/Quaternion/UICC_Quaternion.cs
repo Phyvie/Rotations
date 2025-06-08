@@ -3,6 +3,7 @@ using UnityEngine.UIElements;
 
 namespace UI_Toolkit.RotUI
 {
+    /*
     [UxmlElement]
     public partial class UICC_Quaternion : VisualElement
     {
@@ -112,4 +113,5 @@ namespace UI_Toolkit.RotUI
             #endregion // Compose
         }
     }
+    */
 }
