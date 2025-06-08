@@ -6,7 +6,7 @@ using Visualisation;
 namespace RotationVisualisation
 {
     //-ZyKa check which MonoBehaviours can be reduced to Behaviour or Component
-    public class RotVis_AxisAngle : RotVis<RotParams_AxisAngle>
+    public class RotVis_AxisAngle : RotVis
     {
         [SerializeField] private Vis_Vector vis_rotationVector;
         [SerializeField] private Vis_PlaneArc vis_PlaneArc;
@@ -15,13 +15,27 @@ namespace RotationVisualisation
         {
             
         }
+
+        [SerializeField] private RotParams_AxisAngle rotParams;
+        public override RotParams.RotParams GetRotParams()
+        {
+            return rotParams; 
+        }
+
+        public override void SetRotParams(RotParams.RotParams newRotParams)
+        {
+            if (newRotParams.GetType().IsSubclassOf(typeof(RotParams_AxisAngle)))
+            {
+                rotParams = (RotParams_AxisAngle)newRotParams;
+            }
+        }
         
         public Vector3 RotationVector
         {
-            get => RotParams.RotationVector;
+            get => rotParams.RotationVector;
             set
             {
-                RotParams.RotationVector = value;
+                rotParams.RotationVector = value;
                 VisUpdate();
             }
         }
@@ -48,7 +62,7 @@ namespace RotationVisualisation
 
         private void OnValidate()
         {
-            RotationVector = RotParams.RotationVector;
+            RotationVector = rotParams.RotationVector;
         }
     }
 }

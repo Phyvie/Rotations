@@ -342,16 +342,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc092fa2e1eb4593a2085b0aac8252d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotParams:
-    outer:
-      eAxis: 0
-      _angle: 0
-    middle:
-      eAxis: 1
-      _angle: 0
-    inner:
-      eAxis: 2
-      _angle: 0
   updateBasedOnPosition: 0
   outer:
     rail: {fileID: 6957279353251134465}
@@ -372,6 +362,16 @@ MonoBehaviour:
   NegPitchColor: {r: 0.2475, g: 0.55, b: 0.2475, a: 0}
   PosRollColor: {r: 0.45, g: 0.45, b: 1, a: 0}
   NegRollColor: {r: 0.2475, g: 0.2475, b: 0.55, a: 0}
+  rotParams:
+    outer:
+      eAxis: 0
+      _angle: 0
+    middle:
+      eAxis: 1
+      _angle: 0
+    inner:
+      eAxis: 2
+      _angle: 0
 --- !u!1 &4520340664653103367
 GameObject:
   m_ObjectHideFlags: 0

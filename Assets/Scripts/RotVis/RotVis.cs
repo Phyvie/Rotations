@@ -3,20 +3,17 @@ using UnityEngine.Serialization;
 
 namespace BaseClasses
 {
-    public abstract class RotVis<TRotParams> : MonoBehaviour
+    public abstract class RotVis : MonoBehaviour
     {
-        [FormerlySerializedAs("rotParams")] [SerializeField] protected TRotParams _rotParams;
-
-        public RotVis(TRotParams rotParams)
-        {
-            _rotParams = rotParams;
-            VisUpdate();
-        }
+        private System.Type type; 
         
-        public TRotParams RotParams
+        public abstract RotParams.RotParams GetRotParams(); 
+        public abstract void SetRotParams(RotParams.RotParams rotParams);
+        
+        public RotVis(RotParams.RotParams rotParams)
         {
-            get => _rotParams;
-            set => _rotParams = value;
+            SetRotParams(rotParams);
+            VisUpdate();
         }
         
         public abstract void VisUpdate(); 

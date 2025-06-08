@@ -1,7 +1,6 @@
-using RotationVisualisation;
-using RotParams;
+using RotContainers;
 
-public class EulerContainer : TypedRotationContainer<RotParams_EulerAngles, RotVis_EulerAngle>
+public class EulerContainer : TypedRotationContainer
 {
     
 }

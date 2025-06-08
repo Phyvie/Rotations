@@ -2,43 +2,40 @@ using BaseClasses;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class TypedRotationContainer<TRotParams, TRotVis> : MonoBehaviour 
-    where TRotParams : RotParams.RotParams, new()
-    where TRotVis : RotVis<TRotParams>
+namespace RotContainers
 {
-    public TRotParams rotParams;
-
-    public GameObject rotVisRootObject; 
-    public TRotVis rotVis;
-    public GameObject rotVisPrefab; 
-    
-    public VisualElement rotUI; 
-    public VisualTreeAsset rotUIPrefab;
-    
-    public virtual void Init(VisualElement UIParent)
+    public class TypedRotationContainer : MonoBehaviour
     {
-        rotParams = new TRotParams();
-        InitVis();
-        InitUI(UIParent); 
-    }
-
-    public void InitVis()
-    {
-        if (rotVis is null)
+        [SerializeField] private GameObject rotVisGO;
+        [SerializeField] private RotVis rotVis; 
+        private VisualElement rotUI; 
+        
+        public void SpawnTypedRotation(ref RotParams.RotParams rotParams, GameObject rotVisPrefab, Transform rotVisParent, VisualTreeAsset visualTreeAsset, VisualElement visualParent)
         {
-            if (rotVisRootObject != null)
-            {
-                Destroy(rotVisRootObject);
-            }
-            rotVisRootObject = Instantiate(rotVisPrefab, this.transform, true);
-            rotVis = rotVisRootObject.GetComponent<TRotVis>();
+            SpawnVis(rotVisPrefab, ref rotParams, this.transform);
+            SpawnUI(visualTreeAsset, ref rotParams, visualParent);
         }
-        rotVis.RotParams = rotParams;
-    }
+        
+        public void SpawnVis(GameObject prefab, ref RotParams.RotParams rotParams, Transform parent)
+        {
+            if (rotVisGO != null)
+            {
+                Destroy(rotVisGO);
+            }
+            rotVisGO = Instantiate(prefab, parent); 
+            rotVis = prefab.GetComponent<RotVis>();
+            rotVis.SetRotParams(rotParams); 
+        }
 
-    public void InitUI(VisualElement parent)
-    {
-        VisualElement rotUI = rotUIPrefab.CloneTree();
-        parent.Add(rotUI); 
+        public void SpawnUI(VisualTreeAsset visualTreeAsset, ref RotParams.RotParams rotParams, VisualElement parent)
+        {
+            if (rotUI != null)
+            {
+                rotUI.RemoveFromHierarchy();
+            }
+            rotUI = visualTreeAsset.CloneTree();
+            parent.Add(rotUI);
+            rotUI.dataSource = rotParams; 
+        }
     }
 }

@@ -7,7 +7,7 @@ using Visualisation;
 
 namespace RotationVisualisation
 {
-    public class RotVis_EulerAngle : RotVis<RotParams_EulerAngles>
+    public class RotVis_EulerAngle : RotVis
     {
         [SerializeField] private bool updateBasedOnPosition; //0ZyKa What is this doing here, do I still need it?
         private RotParams_EulerAngles _previousRotParamAxes = new RotParams_EulerAngles();
@@ -39,15 +39,29 @@ namespace RotationVisualisation
             
         }
         
+        [SerializeField] private RotParams_EulerAngles rotParams;
+        public override RotParams.RotParams GetRotParams()
+        {
+            return rotParams; 
+        }
+
+        public override void SetRotParams(RotParams.RotParams newRotParams)
+        {
+            if (newRotParams.GetType().IsSubclassOf(typeof(RotParams_EulerAngles)))
+            {
+                rotParams = (RotParams_EulerAngles)newRotParams;
+            }
+        }
+        
         private void Update()
         {
             if (!updateBasedOnPosition)
             {
                 return; 
             }
-            _rotParams.outer.Angle = transform.eulerAngles.y * Mathf.Deg2Rad;
-            _rotParams.middle.Angle = transform.eulerAngles.x * Mathf.Deg2Rad;
-            _rotParams.inner.Angle = transform.eulerAngles.z * Mathf.Deg2Rad;
+            rotParams.outer.Angle = transform.eulerAngles.y * Mathf.Deg2Rad;
+            rotParams.middle.Angle = transform.eulerAngles.x * Mathf.Deg2Rad;
+            rotParams.inner.Angle = transform.eulerAngles.z * Mathf.Deg2Rad;
             
             VisReset(); 
             VisUpdateRailsForUnrotatedGimbal();
@@ -59,13 +73,13 @@ namespace RotationVisualisation
 
         public override void VisUpdate()
         {
-            if (_previousRotParamAxes == null || !RotParams_EulerAngles.AreAxesMatching(_rotParams, _previousRotParamAxes))
+            if (_previousRotParamAxes == null || !RotParams_EulerAngles.AreAxesMatching(rotParams, _previousRotParamAxes))
             {
                 VisReset(); 
                 VisUpdateRailsForUnrotatedGimbal();
                 VisUpdateRotObjReset(); 
                 VisUpdatePlaneArcShaderColors();
-                _previousRotParamAxes = new RotParams_EulerAngles(_rotParams);
+                _previousRotParamAxes = new RotParams_EulerAngles(rotParams);
             }
             VisUpdateRingRotations();
             VisUpdatePlaneArcShaders(); 
@@ -85,16 +99,16 @@ namespace RotationVisualisation
         
         private void VisUpdateRingRotations()
         {
-            outer.ring.transform.localRotation = new Quaternion(0, Mathf.Sin(_rotParams.outer.Angle/2), 0, Mathf.Cos(_rotParams.outer.Angle/2)); 
-            middle.ring.transform.localRotation = new Quaternion(0, Mathf.Sin(_rotParams.middle.Angle/2), 0, Mathf.Cos(_rotParams.middle.Angle/2)); 
-            inner.ring.transform.localRotation = new Quaternion(0, Mathf.Sin(_rotParams.inner.Angle/2), 0, Mathf.Cos(_rotParams.inner.Angle/2));
+            outer.ring.transform.localRotation = new Quaternion(0, Mathf.Sin(rotParams.outer.Angle/2), 0, Mathf.Cos(rotParams.outer.Angle/2)); 
+            middle.ring.transform.localRotation = new Quaternion(0, Mathf.Sin(rotParams.middle.Angle/2), 0, Mathf.Cos(rotParams.middle.Angle/2)); 
+            inner.ring.transform.localRotation = new Quaternion(0, Mathf.Sin(rotParams.inner.Angle/2), 0, Mathf.Cos(rotParams.inner.Angle/2));
         }
 
         private void VisUpdateRailsForUnrotatedGimbal()
         {
-            Vector3 outerUp = _rotParams.outer.RotationAxis;
-            Vector3 middleUp = _rotParams.middle.RotationAxis;
-            Vector3 innerUp = _rotParams.inner.RotationAxis;
+            Vector3 outerUp = rotParams.outer.RotationAxis;
+            Vector3 middleUp = rotParams.middle.RotationAxis;
+            Vector3 innerUp = rotParams.inner.RotationAxis;
             Vector3 outerForward = Vector3.Dot(outerUp, middleUp) == 0 ? middleUp : outerUp.CyclicAxisRotation();
             Vector3 middleForward = Vector3.Dot(outerUp, middleUp) == 0 ? Vector3.Cross(middleUp, outerUp) : middleUp.CyclicAxisRotation();
             Vector3 innerForward = Vector3.Dot(middleUp, innerUp) == 0 ? Vector3.Cross(innerUp, middleUp) : innerUp.CyclicAxisRotation();
@@ -114,30 +128,30 @@ namespace RotationVisualisation
 
         private void VisFullUpdateRotations()
         {
-            Quaternion outerRailRotation = Quaternion.LookRotation(_rotParams.outer.RotationAxis, Vector3.Cross(_rotParams.middle.RotationAxis, _rotParams.outer.RotationAxis)); 
+            Quaternion outerRailRotation = Quaternion.LookRotation(rotParams.outer.RotationAxis, Vector3.Cross(rotParams.middle.RotationAxis, rotParams.outer.RotationAxis)); 
             outer.rail.transform.rotation = outerRailRotation;
             
-            Quaternion outerRingRotation = Quaternion.AngleAxis(_rotParams.outer.Angle * Mathf.Rad2Deg, _rotParams.outer.RotationAxis);
+            Quaternion outerRingRotation = Quaternion.AngleAxis(rotParams.outer.Angle * Mathf.Rad2Deg, rotParams.outer.RotationAxis);
             outer.ring.transform.rotation = outerRingRotation * outerRailRotation;
             
-            Quaternion middleRailRotation = Quaternion.LookRotation(_rotParams.middle.RotationAxis, Vector3.Cross(_rotParams.outer.RotationAxis, _rotParams.middle.RotationAxis)); 
+            Quaternion middleRailRotation = Quaternion.LookRotation(rotParams.middle.RotationAxis, Vector3.Cross(rotParams.outer.RotationAxis, rotParams.middle.RotationAxis)); 
             middle.rail.transform.rotation = middleRailRotation * outerRingRotation;
             
-            Quaternion middleRingRotation = Quaternion.AngleAxis(_rotParams.middle.Angle * Mathf.Rad2Deg, _rotParams.middle.RotationAxis);
+            Quaternion middleRingRotation = Quaternion.AngleAxis(rotParams.middle.Angle * Mathf.Rad2Deg, rotParams.middle.RotationAxis);
             middle.ring.transform.rotation = outerRingRotation * middleRingRotation * middleRailRotation; 
             
-            Quaternion innerRailRotation = Quaternion.LookRotation(_rotParams.inner.RotationAxis, Vector3.Cross(_rotParams.middle.RotationAxis, _rotParams.inner.RotationAxis)); 
+            Quaternion innerRailRotation = Quaternion.LookRotation(rotParams.inner.RotationAxis, Vector3.Cross(rotParams.middle.RotationAxis, rotParams.inner.RotationAxis)); 
             inner.rail.transform.rotation = outerRingRotation * middleRingRotation * innerRailRotation;
             
-            Quaternion innerRingRotation = Quaternion.AngleAxis(_rotParams.inner.Angle * Mathf.Rad2Deg, _rotParams.inner.RotationAxis);
+            Quaternion innerRingRotation = Quaternion.AngleAxis(rotParams.inner.Angle * Mathf.Rad2Deg, rotParams.inner.RotationAxis);
             inner.ring.transform.rotation = outerRingRotation * middleRingRotation * innerRingRotation * innerRailRotation; 
         }
 
         private void VisUpdatePlaneArcShaderColors()
         {
-            VisUpdatePlaneArcShaderColourSingle(_rotParams.outer, outer.vis_planeArc);
-            VisUpdatePlaneArcShaderColourSingle(_rotParams.middle, middle.vis_planeArc);
-            VisUpdatePlaneArcShaderColourSingle(_rotParams.inner, inner.vis_planeArc);
+            VisUpdatePlaneArcShaderColourSingle(rotParams.outer, outer.vis_planeArc);
+            VisUpdatePlaneArcShaderColourSingle(rotParams.middle, middle.vis_planeArc);
+            VisUpdatePlaneArcShaderColourSingle(rotParams.inner, inner.vis_planeArc);
         }
 
         private void VisUpdatePlaneArcShaderColourSingle(_RotParams_EulerAngleGimbalRing gimbalRing, Vis_PlaneArc visPlaneArc)
@@ -165,23 +179,23 @@ namespace RotationVisualisation
         {
             if (outer.vis_planeArc != null)
             {
-                outer.vis_planeArc.StartingAngle = -_rotParams.outer.Angle;
+                outer.vis_planeArc.StartingAngle = -rotParams.outer.Angle;
             }
 
             if (middle.vis_planeArc != null)
             {
-                middle.vis_planeArc.StartingAngle = -_rotParams.middle.Angle;
+                middle.vis_planeArc.StartingAngle = -rotParams.middle.Angle;
             }
             
             if (inner.vis_planeArc != null)
             {
-                inner.vis_planeArc.StartingAngle = -_rotParams.inner.Angle;
+                inner.vis_planeArc.StartingAngle = -rotParams.inner.Angle;
             }
         }
         
         private void OnValidate()
         {
-            if (_rotParams.GetGimbalType() == EGimbalType.InvalidGimbalOrder)
+            if (rotParams.GetGimbalType() == EGimbalType.InvalidGimbalOrder)
             {
                 Debug.LogWarning("{gameObject.name} is set to an invalid GimbalType");
             }

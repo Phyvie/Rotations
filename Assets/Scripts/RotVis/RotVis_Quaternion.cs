@@ -5,40 +5,46 @@ using Visualisation;
 
 namespace RotationVisualisation
 {
-    public class RotVis_Quaternion : RotVis<RotParams_Quaternion>
+    public class RotVis_Quaternion : RotVis
     {
-        
-        [SerializeField] private RotParams_Quaternion rotParams_Quaternion; 
         [SerializeField] private Vis_Vector vis_rotationVector;
         [SerializeField] private Vis_PlaneArc vis_PlaneArc;
-
+        
         public RotVis_Quaternion(RotParams_Quaternion rotParams_Quaternion) : base(rotParams_Quaternion)
         {
             
         }
-        
-        public RotParams_Quaternion RotParams
+
+        [SerializeField] private RotParams_Quaternion rotParams;
+        public override RotParams.RotParams GetRotParams()
         {
-            get => rotParams_Quaternion;
-            set => rotParams_Quaternion = value;
+            return rotParams; 
+        }
+
+        public override void SetRotParams(RotParams.RotParams newRotParams)
+        {
+            if (newRotParams.GetType().IsSubclassOf(typeof(RotParams_Quaternion)))
+            {
+                rotParams = (RotParams_Quaternion)newRotParams;
+            }
         }
         
         public Vector3 Axis
         {
-            get => RotParams.Axis;
+            get => rotParams.Axis;
             set
             {
-                RotParams.Axis = value;
+                rotParams.Axis = value;
                 VisUpdate();
             }
         }
 
         public float Angle
         {
-            get => RotParams.Angle;
+            get => rotParams.Angle;
             set
             {
-                RotParams.Angle = value; 
+                rotParams.Angle = value; 
                 VisUpdate();
             }
         }
@@ -53,8 +59,8 @@ namespace RotationVisualisation
 
         private void OnValidate()
         {
-            Angle = rotParams_Quaternion.Angle;
-            Axis = rotParams_Quaternion.Axis;
+            Angle = rotParams.Angle;
+            Axis = rotParams.Axis;
         }
     }
 }
