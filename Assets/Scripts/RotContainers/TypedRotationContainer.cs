@@ -6,17 +6,19 @@ namespace RotContainers
 {
     public class TypedRotationContainer : MonoBehaviour
     {
+        [SerializeField] private RotParams.RotParams rotParams; 
         [SerializeField] private GameObject rotVisGO;
         [SerializeField] private RotVis rotVis; 
         private VisualElement rotUI; 
         
-        public void SpawnTypedRotation(ref RotParams.RotParams rotParams, GameObject rotVisPrefab, Transform rotVisParent, VisualTreeAsset visualTreeAsset, VisualElement visualParent)
+        public void SpawnTypedRotation(ref RotParams.RotParams newRotParams, GameObject rotVisPrefab, Transform rotVisParent, VisualTreeAsset visualTreeAsset, VisualElement visualParent)
         {
-            SpawnVis(rotVisPrefab, ref rotParams, this.transform);
-            SpawnUI(visualTreeAsset, ref rotParams, visualParent);
+            rotParams = newRotParams;
+            SpawnVis(rotVisPrefab, this.transform);
+            SpawnUI(visualTreeAsset, visualParent);
         }
         
-        public void SpawnVis(GameObject prefab, ref RotParams.RotParams rotParams, Transform parent)
+        public void SpawnVis(GameObject prefab, Transform parent)
         {
             if (rotVisGO != null)
             {
@@ -27,7 +29,7 @@ namespace RotContainers
             rotVis.SetRotParams(rotParams); 
         }
 
-        public void SpawnUI(VisualTreeAsset visualTreeAsset, ref RotParams.RotParams rotParams, VisualElement parent)
+        public void SpawnUI(VisualTreeAsset visualTreeAsset, VisualElement parent)
         {
             if (rotUI != null)
             {
