@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace Visualisation
@@ -78,8 +79,17 @@ namespace Visualisation
 
         private void OnValidate()
         {
-            RotationAxis = rotationAxis; 
-            ArcType = arcType;
+            if (EditorApplication.isPlayingOrWillChangePlaymode && !EditorApplication.isPlaying)
+            {
+                return; 
+            }
+            #if UNITY_EDITOR
+            EditorApplication.delayCall += () =>
+            {
+                RotationAxis = rotationAxis;
+                ArcType = arcType;
+            };
+            #endif
         }
     }
 }

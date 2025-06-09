@@ -33,10 +33,6 @@ namespace RotationVisualisation
         
         public override void VisUpdate()
         {
-            if (visVectorRight is null)
-            {
-                Debug.Log("IsApplicationPlaying: " + Application.isPlaying);
-            }
             if (visVectorRight is not null)
             {
                 visVectorRight.Value = rotParams.GetColumn(0);
