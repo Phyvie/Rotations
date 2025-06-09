@@ -1,0 +1,18 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/RotUI/USS_Rot.uss?fileID=7433441132597879392&amp;guid=13a4e7952ce03644eac0a699c3aecf34&amp;type=3#USS_Rot" />
+    <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UserInputFields.uss?fileID=7433441132597879392&amp;guid=6dd3f635675e8f246b205a73e8f7b1dd&amp;type=3#UserInputFields" />
+    <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/BoxLayouts.uss?fileID=7433441132597879392&amp;guid=f0491e6785d76264da46194eb373072c&amp;type=3#BoxLayouts" />
+    <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UnityColors.uss?fileID=7433441132597879392&amp;guid=05afd8f5bd01ac04682fabbc8e02db4f&amp;type=3#UnityColors" />
+    <engine:VisualElement name="Root" data-source-type="RotContainers.GeneralRotationContainer, RotContainers" class="unityUIBackgroundColor unityUIFieldColor unityUITextColor container--horizontalspacearound" style="flex-grow: 1; flex-direction: row; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
+        <engine:DropdownField style="flex-grow: 1;">
+            <Bindings>
+                <engine:DataBinding property="choices" data-source-path="SelectableRotationTypes" binding-mode="ToTargetOnce" />
+                <engine:DataBinding property="index" data-source-path="SelectedTypeIndex" binding-mode="TwoWay" />
+            </Bindings>
+        </engine:DropdownField>
+        <engine:Toggle name="VisualisationToggle" />
+        <engine:VisualElement name="ContextMenu" style="flex-grow: 1;">
+            <engine:Label text="WIP: ContextMenu" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

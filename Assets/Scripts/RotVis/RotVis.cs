@@ -5,14 +5,13 @@ namespace BaseClasses
 {
     public abstract class RotVis : MonoBehaviour
     {
-        private System.Type type; 
-        
         public abstract RotParams.RotParams GetRotParams(); 
-        public abstract void SetRotParams(RotParams.RotParams rotParams);
+        
+        public abstract void SetRotParams(ref RotParams.RotParams rotParams);
         
         public RotVis(RotParams.RotParams rotParams)
         {
-            SetRotParams(rotParams);
+            SetRotParams(ref rotParams);
             VisUpdate();
         }
         

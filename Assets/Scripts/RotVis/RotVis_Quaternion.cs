@@ -21,11 +21,12 @@ namespace RotationVisualisation
             return rotParams; 
         }
 
-        public override void SetRotParams(RotParams.RotParams newRotParams)
+        public override void SetRotParams(ref RotParams.RotParams newRotParams)
         {
-            if (newRotParams.GetType().IsSubclassOf(typeof(RotParams_Quaternion)))
+            if (newRotParams is RotParams_Quaternion rotParamsQuaternion)
             {
-                rotParams = (RotParams_Quaternion)newRotParams;
+                rotParams = rotParamsQuaternion;
+                VisUpdate();
             }
         }
         

@@ -22,11 +22,12 @@ namespace RotationVisualisation
             return rotParams; 
         }
 
-        public override void SetRotParams(RotParams.RotParams newRotParams)
+        public override void SetRotParams(ref RotParams.RotParams newRotParams)
         {
-            if (newRotParams.GetType().IsSubclassOf(typeof(RotParams_AxisAngle)))
+            if (newRotParams is RotParams_AxisAngle rotParamsAxisAngle)
             {
-                rotParams = (RotParams_AxisAngle)newRotParams;
+                rotParams = rotParamsAxisAngle;
+                VisUpdate();
             }
         }
         

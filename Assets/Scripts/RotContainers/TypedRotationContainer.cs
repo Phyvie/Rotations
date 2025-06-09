@@ -1,4 +1,6 @@
+using System;
 using BaseClasses;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -6,7 +8,7 @@ namespace RotContainers
 {
     public class TypedRotationContainer : MonoBehaviour
     {
-        [SerializeField] private RotParams.RotParams rotParams; 
+        [SerializeReference] private RotParams.RotParams rotParams; 
         [SerializeField] private GameObject rotVisGO;
         [SerializeField] private RotVis rotVis; 
         private VisualElement rotUI; 
@@ -22,11 +24,22 @@ namespace RotContainers
         {
             if (rotVisGO != null)
             {
-                Destroy(rotVisGO);
+                #if UNITY_EDITOR
+                if (EditorApplication.isPlaying)
+                {
+                    Destroy(rotVisGO);   
+                }
+                else
+                {
+                    DestroyImmediate(rotVisGO);
+                }
+                #else
+                Destroy(rotVisGO); 
+                #endif
             }
             rotVisGO = Instantiate(prefab, parent); 
-            rotVis = prefab.GetComponent<RotVis>();
-            rotVis.SetRotParams(rotParams); 
+            rotVis = rotVisGO.GetComponent<RotVis>();
+            rotVis.SetRotParams(ref rotParams); 
         }
 
         public void SpawnUI(VisualTreeAsset visualTreeAsset, VisualElement parent)
@@ -38,6 +51,11 @@ namespace RotContainers
             rotUI = visualTreeAsset.CloneTree();
             parent.Add(rotUI);
             rotUI.dataSource = rotParams; 
+        }
+
+        private void OnValidate()
+        {
+            rotVis.VisUpdate();   
         }
     }
 }

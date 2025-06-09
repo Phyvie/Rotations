@@ -45,11 +45,12 @@ namespace RotationVisualisation
             return rotParams; 
         }
 
-        public override void SetRotParams(RotParams.RotParams newRotParams)
+        public override void SetRotParams(ref RotParams.RotParams newRotParams)
         {
-            if (newRotParams.GetType().IsSubclassOf(typeof(RotParams_EulerAngles)))
+            if (newRotParams is RotParams_EulerAngles rotParamsEulerAngles)
             {
-                rotParams = (RotParams_EulerAngles)newRotParams;
+                rotParams = rotParamsEulerAngles;
+                VisUpdate();
             }
         }
         
