@@ -1,3 +1,4 @@
+using System;
 using BaseClasses;
 using RotParams;
 using UnityEngine;
@@ -22,7 +23,7 @@ namespace RotationVisualisation
             return rotParams; 
         }
 
-        public override void SetRotParams(ref RotParams.RotParams newRotParams)
+        public override void SetRotParamsByRef(ref RotParams.RotParams newRotParams)
         {
             if (newRotParams is RotParams_AxisAngle rotParamsAxisAngle)
             {
@@ -41,29 +42,37 @@ namespace RotationVisualisation
             }
         }
 
-        public Vector3 Axis
+        public Vector3 NormalisedAxis
         {
-            get => RotationVector.normalized;
-            set => RotationVector = RotationVector.magnitude * value.normalized;
+            get => rotParams.NormalisedAxis;
+            set => rotParams.NormalisedAxis = value.normalized;
         }
 
-        public float Angle
+        public float AngleInRadian
         {
-            get => RotationVector.magnitude; 
-            set => RotationVector = RotationVector.normalized * Angle;
+            get => rotParams.AngleInRadian; 
+            set => rotParams.AngleInRadian = value;
         }
 
         public override void VisUpdate()
         {
             vis_rotationVector.Value = RotationVector;
-            vis_PlaneArc.LocalRotationAxis = Axis; 
+            vis_PlaneArc.LocalRotationAxis = NormalisedAxis; 
             vis_PlaneArc.StartingAngle = 0; 
             vis_PlaneArc.EndingAngle = RotationVector.magnitude;
+            VisUpdateRotationObject(); 
         }
 
         private void OnValidate()
         {
-            RotationVector = rotParams.RotationVector;
+            try
+            {
+                VisUpdate();
+            }
+            catch (Exception e)
+            {
+                Debug.Log($"{name} OnValidateError {e.Message}");
+            }
         }
     }
 }

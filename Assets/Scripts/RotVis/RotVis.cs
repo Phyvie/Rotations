@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -5,16 +6,59 @@ namespace BaseClasses
 {
     public abstract class RotVis : MonoBehaviour
     {
+        [SerializeField] private Camera cam; 
+        [SerializeField] private GameObject rotationObjectParent; //used in order to apply rotation (i.e. setting the parameters to 0 while keeping the objects orientation)
+        [SerializeField] protected GameObject rotationObject;
+
+        public Camera Cam
+        {
+            get => cam;
+            set => cam = value;
+        }
+        
         public abstract RotParams.RotParams GetRotParams(); 
         
-        public abstract void SetRotParams(ref RotParams.RotParams rotParams);
+        public abstract void SetRotParamsByRef(ref RotParams.RotParams rotParams);
         
         public RotVis(RotParams.RotParams rotParams)
         {
-            SetRotParams(ref rotParams);
+            SetRotParamsByRef(ref rotParams);
             VisUpdate();
         }
         
-        public abstract void VisUpdate(); 
+        public abstract void VisUpdate();
+
+        public void VisUpdateRotationObject()
+        {
+            rotationObject.transform.localRotation = GetRotParams().ToUnityQuaternion(); 
+        }
+        
+        public void ReplaceRotationObject(GameObject newRotationObject, bool isPrefab)
+        {
+            Transform parent = rotationObject.transform.parent;
+            Destroy(rotationObject);
+            if (isPrefab)
+            {
+                Instantiate(newRotationObject, parent);
+            }
+            else
+            {
+                rotationObject = newRotationObject;
+                newRotationObject.transform.SetParent(parent);
+            }
+        }
+
+        [ContextMenu("ApplyObjectRotation")]
+        public void ApplyObjectRotation()
+        {
+            rotationObjectParent.transform.localRotation = GetRotParams().ToUnityQuaternion();
+            GetRotParams().ResetToIdentity(); 
+        }
+
+        [ContextMenu("ResetAppliedObjectRotation")]
+        public void ResetAppliedObjectRotation()
+        {
+            rotationObjectParent.transform.rotation = Quaternion.identity; 
+        }
     }
 }

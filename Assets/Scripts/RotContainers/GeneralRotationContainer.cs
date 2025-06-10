@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using RotParams;
+using UI_Toolkit;
 using Unity.Properties;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 namespace RotContainers
@@ -13,30 +14,55 @@ namespace RotContainers
     {
         #region RuntimeVariables
         [SerializeField] private UIDocument uiDocument;
-        [SerializeField] private VisualTreeAsset uiMenuAsset;
 
-        private VisualElement _uiMenu; 
-        
-        private RotParams.RotParams _rotParams;
-        [SerializeField] private TypedRotationContainer typedRotationContainer;
-        #endregion
-
-        #region UISlots
-        [Serializable]
-        public class UISlot
+        public UIDocument UIDocument
         {
-            [SerializeField] public string ContainerName; 
-            public VisualElement Container;
-
-            public void Init(VisualElement visualElement)
+            get => uiDocument;
+            set
             {
-                Container = visualElement.Q(ContainerName);
+                Destroy(uiDocument);
+                uiDocument = value;
             }
         }
 
-        [SerializeField] private UISlot uiRotSlot;
-        [SerializeField] private UISlot uiMenuSlot; 
-        #endregion UISlots
+        [Tooltip("This is only needed when the UIDocument is not set externally (e.g. by FullScreenMultiRotationContainer); Thus the component must create a UIDocument itself")]
+        [SerializeField] private VisualTreeAsset fullScreenUIAsset;
+        [SerializeField] private PanelSettings panelSettingsAsset;
+
+        [Tooltip("This is not the object which contains uiMenu & UIRotSlot, rather it is the visualElement into which the uiRoot will be spawned")]
+        [SerializeField] private string uiParentName; 
+        private VisualElement _uiParent; //the slot into which the _uiRoot will be spawned
+
+        [Tooltip("This is the VisualElement which actually contains uiMenuLine & RotParamsSlot")]
+        [SerializeField] private VisualTreeAsset uiFullContainerAsset;
+        private VisualElement _uiRoot; //the actual root containing the menuLine + UIRotSlot
+        
+        [SerializeField] private VisualTreeAsset uiMenuAsset;
+        [SerializeField] private string uiMenuName = "uiMenuLine"; 
+        private VisualElement _uiMenu; 
+        
+        [SerializeField] private UISlotReference uiRotSlot;
+        //Prefabs for UIRot are below in the #region UITypeSelectionControls
+        
+        private RotParams.RotParams _rotParams;
+        [SerializeField] private TypedRotationContainer typedRotationContainer;
+
+        
+        [SerializeField] private GameObject cameraPrefab;
+        [SerializeField] private Camera visCamera; 
+        public Camera VisCamera
+        {
+            get => visCamera;
+            set
+            {
+                if (visCamera != null && visCamera != value)
+                {
+                    Destroy(visCamera);
+                }
+                visCamera = value;
+            }
+        }
+        #endregion
         
         #region RotationTypeData
         [Serializable]
@@ -92,20 +118,62 @@ namespace RotContainers
         }
         #endregion UITypeSelectionControls
         
-        private void Awake()
+        [ContextMenu("Init Rotation Container")]
+        public void SelfInitialize()
         {
-            Init(); 
+            if (uiDocument == null)
+            {
+                uiDocument = gameObject.AddComponent<UIDocument>();
+                uiDocument.visualTreeAsset = fullScreenUIAsset; 
+                uiDocument.panelSettings = panelSettingsAsset;
+            }
+            
+            if (_uiParent == null)
+            {
+                _uiParent = uiDocument.rootVisualElement.Q<VisualElement>(uiParentName);
+                
+                if (_uiParent == null)
+                {
+                    Debug.LogWarning($"{name} could not find uiRotationRoot");
+                    _uiParent = uiDocument.rootVisualElement;
+                }
+            }
+            
+            if (_uiRoot == null)
+            {
+                _uiRoot = uiFullContainerAsset.CloneTree(); 
+                _uiParent.Add(_uiRoot); 
+            }
+            
+            _uiMenu = _uiParent.Q<VisualElement>(uiMenuName);
+            if (_uiMenu == null)
+            {
+                Debug.LogWarning($"{name} could not find uiMenu");
+                return; 
+            }
+            _uiMenu.dataSource = this;
+            
+            uiRotSlot.Initialize(_uiRoot);
+            uiRotSlot.UISlot.dataSource = _rotParams; 
+            
+            if (VisCamera ==null)
+            {
+                VisCamera = Instantiate(cameraPrefab, this.transform).GetComponent<Camera>();
+            }
+
+            SelectedTypeIndex = SelectedTypeIndex; //-ZyKa RotationContainer this line ensures that the RotUI is properly initiated
         }
 
-        [ContextMenu("Init Rotation Container")]
-        public void Init()
+        public void InitializeExternally(UIDocument newUIDocument, VisualElement visualParent)
         {
-            uiRotSlot.Init(uiDocument.rootVisualElement);
-            uiMenuSlot.Init(uiDocument.rootVisualElement);
+            uiDocument = newUIDocument;
+            SetUIParent(visualParent);
+        }
 
-            _uiMenu = uiMenuAsset.CloneTree(); 
-            uiMenuSlot.Container.Add(_uiMenu);
-            _uiMenu.dataSource = this; 
+        public void SetUIParent(VisualElement newUIParent)
+        {
+            _uiParent = newUIParent;
+            uiParentName = newUIParent.name; 
         }
 
         public void GenerateNewRotation<RotParamsType>() where RotParamsType : RotParams.RotParams, new()
@@ -130,7 +198,7 @@ namespace RotContainers
                 throw new NullReferenceException();
             }
             
-            typedRotationContainer.SpawnTypedRotation(ref _rotParams, prefab.visPrefab, this.transform, prefab.uiPrefab, uiRotSlot.Container); 
+            typedRotationContainer.SpawnTypedRotation(ref _rotParams, prefab.visPrefab, this.transform, prefab.uiPrefab, uiRotSlot); 
         }
 
         //accessor function for the templated version
@@ -189,11 +257,13 @@ namespace RotContainers
 
         private void OnValidate()
         {
+            /* !ZyKa OnValidate
             if (EditorApplication.isPlayingOrWillChangePlaymode && !Application.isPlaying)
             {
                 return; 
             }
-            Init(); 
+            Init();
+            */ 
         }
     }
 }

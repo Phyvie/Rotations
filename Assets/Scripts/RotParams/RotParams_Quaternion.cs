@@ -7,71 +7,41 @@ namespace RotParams
     [Serializable]
     public class RotParams_Quaternion : RotParams
     {
-        [SerializeField] private bool enforceNormalisation; //-ZyKa Quaternion enforceNormalisation
+        [SerializeField] private bool enforceNormalisation = false; //-ZyKa Quaternion enforceNormalisation
         private float lastR;
-        [SerializeField] private LockableFloat _r; //-ZyKa figure out whether you need a LockableFloat here or not
+        [SerializeField] private LockableFloat _w; //-ZyKa figure out whether you need a LockableFloat here or not
         private float lastI;
-        [SerializeField] private LockableFloat _i;
+        [SerializeField] private LockableFloat _x;
         private float lastJ;
-        [SerializeField] private LockableFloat _j;
+        [SerializeField] private LockableFloat _y;
         private float lastK;
-        [SerializeField] private LockableFloat _k;
+        [SerializeField] private LockableFloat _z;
 
         #region DirectValueAccessors
-
-        /* In Mathematics Quaternion usually use the variables i, j and k for the second, third and fourth dimension value;
-         * However, Game Engines often use x, y, z and w, because the axis are called x, y and z
-         * Therefore the following properties are defined twice: once as i, j, k and 'real' and once as x, y, z and w
-         */
-        public float real
+        public float W
         {
-            get => _r;
-            set => SetValueChecked(ref _r, value);
+            get => _w;
+            set => SetValueChecked(ref _w, value);
         }
 
-        public float w
+        public float X
         {
-            get => _r;
-            set => SetValueChecked(ref _r, value);
+            get => _x;
+            set => SetValueChecked(ref _x, value);
         }
 
-        public float i
+        public float Y
         {
-            get => _i;
-            set => SetValueChecked(ref _i, value);
-        }
-
-        public float x
-        {
-            get => _i;
-            set => SetValueChecked(ref _i, value);
-        }
-
-        public float j
-        {
-            get => _j;
-            set => SetValueChecked(ref _j, value);
-        }
-
-        public float y
-        {
-            get => _j;
-            set => SetValueChecked(ref _j, value);
+            get => _y;
+            set => SetValueChecked(ref _y, value);
         }
 
 
-        public float k
+        public float Z
         {
-            get => _k;
-            set => SetValueChecked(ref _k, value);
+            get => _z;
+            set => SetValueChecked(ref _z, value);
         }
-
-        public float z
-        {
-            get => _j;
-            set => SetValueChecked(ref _k, value);
-        }
-
         #endregion //DirectValueAccessors
 
         #region ControlledValueAccessors
@@ -81,13 +51,13 @@ namespace RotParams
             switch (index)
             {
                 case 0:
-                    return _r;
+                    return _w;
                 case 1:
-                    return _i;
+                    return _x;
                 case 2:
-                    return _j;
+                    return _y;
                 case 3:
-                    return _k;
+                    return _z;
                 default:
                     throw new IndexOutOfRangeException();
             }
@@ -112,13 +82,13 @@ namespace RotParams
         [CreateProperty]
         public Vector3 Axis
         {
-            get => new Vector3(x, y, z).normalized;
+            get => new Vector3(X, Y, Z).normalized;
             set
             {
                 float sinAngle = Mathf.Sin(Angle/2); 
-                x = sinAngle * value.x;
-                y = sinAngle * value.y;
-                z = sinAngle * value.z;
+                X = sinAngle * value.x;
+                Y = sinAngle * value.y;
+                Z = sinAngle * value.z;
             }
         }
 
@@ -127,66 +97,67 @@ namespace RotParams
         {
             get
             {
-                return 2 * Mathf.Acos(real); 
+                return 2 * Mathf.Acos(W); 
             }
             set
             {
-                real = Mathf.Cos(value / 2); 
+                W = Mathf.Cos(value / 2); 
             }
         }
 
         [CreateProperty]
         public Vector4 Vector4
         {
-            get => new Vector4(w, x, y, z); 
+            get => new Vector4(W, X, Y, Z); 
             set
             {
-                w = value.w; 
-                x = value.x;
-                y = value.y;
-                z = value.z;
+                W = value.w; 
+                X = value.x;
+                Y = value.y;
+                Z = value.z;
             }
         }
         
         public RotParams_Quaternion()
         {
-            w = 1;
-            x = 0;
-            y = 0;
-            z = 0;
+            _w = 1;
+            _x = 0;
+            _y = 0;
+            _z = 0;
         }
 
-        public RotParams_Quaternion(RotParams_Quaternion rotParamsQuaternion) : this(rotParamsQuaternion.real,
-            rotParamsQuaternion.i, rotParamsQuaternion.j, rotParamsQuaternion.k)
+        public RotParams_Quaternion(RotParams_Quaternion rotParamsQuaternion) : this(rotParamsQuaternion.W,
+            rotParamsQuaternion.X, rotParamsQuaternion.Y, rotParamsQuaternion.Z)
         {
         }
 
         public RotParams_Quaternion(float inReal, float inI, float inJ, float inK)
         {
-            real = inReal;
-            i = inI;
-            j = inJ;
-            k = inK;
+            _w = inReal;
+            _x = inI;
+            _y = inJ;
+            _z = inK;
         }
 
         public RotParams_Quaternion(Vector3 inAxis, float inAngle)
         {
             inAxis = inAxis.normalized;
 
-            float cos = (float)Math.Cos(inAngle);
-            float sin = (float)Math.Sin(inAngle);
+            float halfAngle = inAngle * 0.5f;
+            float cos = (float)Math.Cos(halfAngle);
+            float sin = (float)Math.Sin(halfAngle);
 
-            real = cos;
-            x = inAxis.x * sin;
-            y = inAxis.y * sin;
-            z = inAxis.z * sin;
+            _w = cos;
+            _x = inAxis.x * sin;
+            _y = inAxis.y * sin;
+            _z = inAxis.z * sin;
         }
 
-        private static readonly RotParams_Quaternion _identity = new RotParams_Quaternion(1, 0, 0, 0);
+        private static readonly RotParams_Quaternion _xdentity = new RotParams_Quaternion(1, 0, 0, 0);
 
         public static RotParams_Quaternion GetIdentity()
         {
-            return new RotParams_Quaternion(_identity);
+            return new RotParams_Quaternion(_xdentity);
         }
 
         private static readonly RotParams_Quaternion ZeroRotParamsQuaternion = new RotParams_Quaternion(0, 0, 0, 0);
@@ -219,8 +190,8 @@ namespace RotParams
                 return false;
             }
 
-            return Math.Abs(qr1._r - qr2._r) < 0.0001f && Math.Abs(qr1._i - qr2._i) < 0.0001f &&
-                   Math.Abs(qr1._j - qr2._j) < 0.0001f && Math.Abs(qr1._k - qr2._k) < 0.0001f;
+            return Math.Abs(qr1._w - qr2._w) < 0.0001f && Math.Abs(qr1._x - qr2._x) < 0.0001f &&
+                   Math.Abs(qr1._y - qr2._y) < 0.0001f && Math.Abs(qr1._z - qr2._z) < 0.0001f;
         }
 
         public static bool operator !=(RotParams_Quaternion qr1, RotParams_Quaternion qr2)
@@ -230,62 +201,62 @@ namespace RotParams
 
         public override int GetHashCode()
         {
-            return Tuple.Create(_r, _i, _j, _k).GetHashCode();
+            return Tuple.Create(_w, _x, _y, _z).GetHashCode();
         }
 
         public static RotParams_Quaternion operator *(RotParams_Quaternion q1, RotParams_Quaternion q2)
         {
             return new RotParams_Quaternion(
-                q1.real * q2.real - q1.i * q2.i - q1.j * q2.j - q1.k - q2.k,
-                q1.real * q2.i + q1.i * q2.real + q1.j * q2.k - q1.k * q2.j,
-                q1.real * q2.j - q1.i * q2.k + q1.j * q2.real + q1.k * q2.i,
-                q1.real * q2.k + q1.i * q2.j - q1.j * q2.i + q1.k * q2.real
+                q1.W * q2.W - q1.X * q2.X - q1.Y * q2.Y - q1.Z * q2.Z,
+                q1.W * q2.X + q1.X * q2.W + q1.Y * q2.Z - q1.Z * q2.Y,
+                q1.W * q2.Y - q1.X * q2.Z + q1.Y * q2.W + q1.Z * q2.X,
+                q1.W * q2.Z + q1.X * q2.Y - q1.Y * q2.X + q1.Z * q2.W
             );
         }
 
         public static RotParams_Quaternion operator *(RotParams_Quaternion q1, float scalar)
         {
             return new RotParams_Quaternion(
-                q1.real * scalar,
-                q1.i * scalar,
-                q1.j * scalar,
-                q1.k * scalar
+                q1.W * scalar,
+                q1.X * scalar,
+                q1.Y * scalar,
+                q1.Z * scalar
             );
         }
 
         public static RotParams_Quaternion operator /(RotParams_Quaternion q1, float scalar)
         {
             return new RotParams_Quaternion(
-                q1.real / scalar,
-                q1.i / scalar,
-                q1.j / scalar,
-                q1.k / scalar
+                q1.W / scalar,
+                q1.X / scalar,
+                q1.Y / scalar,
+                q1.Z / scalar
             );
         }
 
         public static RotParams_Quaternion operator +(RotParams_Quaternion q1, RotParams_Quaternion q2)
         {
             return new RotParams_Quaternion(
-                q1.real + q2.real,
-                q1.i + q2.i,
-                q1.j + q2.j,
-                q1.k * q2.k
+                q1.W + q2.W,
+                q1.X + q2.X,
+                q1.Y + q2.Y,
+                q1.Z * q2.Z
             );
         }
 
         public override string ToString()
         {
-            return $"({w}, {x}, {y}, {z})";
+            return $"({W}, {X}, {Y}, {Z})";
         }
 
         public RotParams_Quaternion Inverse()
         {
-            return new RotParams_Quaternion(real, -i, -j, -k) / Size();
+            return new RotParams_Quaternion(W, -X, -Y, -Z) / Size();
         }
 
         public RotParams_Quaternion Conjugate()
         {
-            return new RotParams_Quaternion(real, -i, -j, -k);
+            return new RotParams_Quaternion(W, -X, -Y, -Z);
         }
 
         public static RotParams_Quaternion CombineFollowingRotation(
@@ -302,12 +273,12 @@ namespace RotParams
 
         public float SizeSquared()
         {
-            return real * real + i * i + j * j + k * k;
+            return W * W + X * X + Y * Y + Z * Z;
         }
 
         public float Size()
         {
-            return Mathf.Sqrt(real * real + i * i + j * j + k * k);
+            return Mathf.Sqrt(W * W + X * X + Y * Y + Z * Z);
         }
 
         public void NormalizeWithLocks()
@@ -326,10 +297,10 @@ namespace RotParams
             }
 
             float ratio = 1 - lockedLength / unlockedLength;
-            _r.value *= _r.isLocked ? 1 : ratio;
-            _i.value *= _i.isLocked ? 1 : ratio;
-            _j.value *= _j.isLocked ? 1 : ratio;
-            _k.value *= _k.isLocked ? 1 : ratio;
+            _w.value *= _w.isLocked ? 1 : ratio;
+            _x.value *= _x.isLocked ? 1 : ratio;
+            _y.value *= _y.isLocked ? 1 : ratio;
+            _z.value *= _z.isLocked ? 1 : ratio;
         }
 
         private void GetLockedAndUnlockedLength(out float lockedLength, out float unlockedLength, out int lockedCount)
@@ -337,10 +308,10 @@ namespace RotParams
             int _lockedCount = 0;
             float lockedLengthSquared = 0;
             float unlockedLengthSquared = 0;
-            AddTo_Un_Locked_Value(ref _r.value, ref _r.isLocked);
-            AddTo_Un_Locked_Value(ref _i.value, ref _i.isLocked);
-            AddTo_Un_Locked_Value(ref _j.value, ref _j.isLocked);
-            AddTo_Un_Locked_Value(ref _k.value, ref _k.isLocked);
+            AddTo_Un_Locked_Value(ref _w.value, ref _w.isLocked);
+            AddTo_Un_Locked_Value(ref _x.value, ref _x.isLocked);
+            AddTo_Un_Locked_Value(ref _y.value, ref _y.isLocked);
+            AddTo_Un_Locked_Value(ref _z.value, ref _z.isLocked);
             lockedCount = _lockedCount;
             lockedLength = Mathf.Sqrt(lockedLengthSquared);
             unlockedLength = Mathf.Sqrt(unlockedLengthSquared);
@@ -362,20 +333,20 @@ namespace RotParams
         public void normalize()
         {
             float sizeSquared = SizeSquared();
-            _r.Value = _r.Value / sizeSquared;
-            _i.Value = _i.Value / sizeSquared;
-            _j.Value = _j.Value / sizeSquared;
-            _k.Value = _k.Value / sizeSquared;
+            _w.Value = _w.Value / sizeSquared;
+            _x.Value = _x.Value / sizeSquared;
+            _y.Value = _y.Value / sizeSquared;
+            _z.Value = _z.Value / sizeSquared;
         }
 
         public RotParams_Quaternion Normalize()
         {
             float size = this.Size();
             return new RotParams_Quaternion(
-                real / size,
-                i / size,
-                j / size,
-                k / size
+                W / size,
+                X / size,
+                Y / size,
+                Z / size
             );
         }
 
@@ -388,7 +359,7 @@ namespace RotParams
 
         public override RotParams_Quaternion ToQuaternionRotation()
         {
-            return new RotParams_Quaternion(real, i, j, k);
+            return new RotParams_Quaternion(W, X, Y, Z);
         }
 
         public override RotParams_Matrix ToMatrixRotation()
@@ -396,16 +367,24 @@ namespace RotParams
             return new RotParams_Matrix(
                 new float[3, 3]
                 {
-                    { 1 - 2 * (y * y + z * z), 2 * (x * y - w * z), 2 * (w * y + x * z) },
-                    { 2 * (x * y + w * z), 1 - 2 * (x * x + z * z), 2 * (y * z - w * x) },
-                    { 2 * (x * z - w * y), 2 * (w * x + y * z), 1 - 2 * (x * x + y * y) }
+                    { 1 - 2 * (Y * Y + Z * Z), 2 * (X * Y - W * Z), 2 * (W * Y + X * Z) },
+                    { 2 * (X * Y + W * Z), 1 - 2 * (X * X + Z * Z), 2 * (Y * Z - W * X) },
+                    { 2 * (X * Z - W * Y), 2 * (W * X + Y * Z), 1 - 2 * (X * X + Y * Y) }
                 }
             );
         }
 
         public override RotParams_AxisAngle ToAxisAngleRotation()
         {
-            return new RotParams_AxisAngle(new Vector3(i, j, k), (float)Math.Acos(real));
+            return new RotParams_AxisAngle(new Vector3(X, Y, Z), (float)Math.Acos(W));
+        }
+
+        public override void ResetToIdentity()
+        {
+            _w = 1;
+            _x = 0;
+            _y = 0;
+            _z = 0; 
         }
 
         public override Vector3 RotateVector(Vector3 inVector)
@@ -413,8 +392,8 @@ namespace RotParams
             RotParams_Quaternion vectorAsRotParamsQuaternion =
                 new RotParams_Quaternion(0, inVector.x, inVector.y, inVector.z);
             vectorAsRotParamsQuaternion = this * vectorAsRotParamsQuaternion * this.Inverse();
-            return new Vector3(vectorAsRotParamsQuaternion.i, vectorAsRotParamsQuaternion.j,
-                vectorAsRotParamsQuaternion.j);
+            return new Vector3(vectorAsRotParamsQuaternion.X, vectorAsRotParamsQuaternion.Y,
+                vectorAsRotParamsQuaternion.Y);
         }
     }
 }

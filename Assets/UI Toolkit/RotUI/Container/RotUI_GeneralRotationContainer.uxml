@@ -1,10 +1,10 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:Template name="RotUI_ContextLine" src="project://database/Assets/UI%20Toolkit/RotUI/Container/RotUI_ContextLine.uxml?fileID=9197481963319205126&amp;guid=78e16fe7c76a899429952db85117e024&amp;type=3#RotUI_ContextLine" />
+    <engine:Template name="RotUI_ContextLine" src="project://database/Assets/UI%20Toolkit/RotUI/Container/RotUI_MenuLine.uxml?fileID=9197481963319205126&amp;guid=78e16fe7c76a899429952db85117e024&amp;type=3#RotUI_MenuLine" />
     <engine:Template name="UID_EulerAngle" src="project://database/Assets/UI%20Toolkit/RotUI/EulerAngle/UID_EulerAngle.uxml?fileID=9197481963319205126&amp;guid=edd2d061bb270cd4c93b0c281f09e666&amp;type=3#UID_EulerAngle" />
-    <engine:VisualElement name="Root" style="flex-grow: 1;">
-        <engine:Instance template="RotUI_ContextLine" />
-        <engine:VisualElement name="RotParamsContainer" style="flex-grow: 1;">
-            <engine:Instance template="UID_EulerAngle" />
-        </engine:VisualElement>
+    <engine:VisualElement name="Root" data-source-type="RotContainers.GeneralRotationContainer, RotContainers" style="flex-grow: 1;">
+        <engine:Instance template="RotUI_ContextLine" name="uiMenuLine" />
+        <UI_Toolkit.UISlot name="RotParamsSlot">
+            <engine:Instance template="UID_EulerAngle" style="height: 200px;" />
+        </UI_Toolkit.UISlot>
     </engine:VisualElement>
 </engine:UXML>

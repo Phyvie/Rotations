@@ -5,7 +5,6 @@ using UnityEngine.Serialization;
 
 namespace RotParams
 {
-    //-ZyKa AngleTypes
     [Serializable]
     public class RotParams_AxisAngle : RotParams
     {
@@ -19,17 +18,31 @@ namespace RotParams
         }
         
         [CreateProperty]
-        public Vector3 Axis
+        public Vector3 NormalisedAxis
         {
             get => RotationVector.normalized;
-            set => RotationVector = value * Angle;
+            set => RotationVector = value * AngleInRadian;
         }
 
         [CreateProperty]
-        public float Angle
+        public float AngleInRadian
         {
             get => RotationVector.magnitude;
-            set => RotationVector = value * Axis; 
+            set => RotationVector = value * NormalisedAxis; 
+        }
+
+        [CreateProperty]
+        public float AngleInDegrees
+        {
+            get => AngleInRadian * 180 / Mathf.PI;
+            set => AngleInRadian = value * 180 / Mathf.PI;
+        }
+
+        [CreateProperty]
+        public float AngleInCircleParts
+        {
+            get => AngleInRadian / (2 * Mathf.PI);
+            set => AngleInRadian = value * 2 * Mathf.PI;
         }
 
         public RotParams_AxisAngle()
@@ -60,19 +73,20 @@ namespace RotParams
 
         public override RotParams_Quaternion ToQuaternionRotation()
         {
-            return new RotParams_Quaternion(Axis, Angle); 
+            RotParams_Quaternion asQuat = new RotParams_Quaternion(NormalisedAxis, AngleInRadian); 
+            return asQuat; 
         }
 
         //AxisAngleRotation.ToMatrixRotation() is the same as ToQuaternionRotation().ToMatrixRotation()
         public override RotParams_Matrix ToMatrixRotation()
         {
             //TODO: understand this formula (maybe visualise?) and correct it to be left-handed (in case it's right-handed)
-            float x = Axis.x;
-            float y = Axis.y;
-            float z = Axis.z;
+            float x = NormalisedAxis.x;
+            float y = NormalisedAxis.y;
+            float z = NormalisedAxis.z;
         
-            float cosTheta = Mathf.Cos(Angle);
-            float sinTheta = Mathf.Sin(Angle);
+            float cosTheta = Mathf.Cos(AngleInRadian);
+            float sinTheta = Mathf.Sin(AngleInRadian);
             float oneMinusCosTheta = 1 - cosTheta;
 
             RotParams_Matrix rotParamsMatrix = new RotParams_Matrix(new float[3, 3]); 
@@ -96,15 +110,22 @@ namespace RotParams
         {
             return new RotParams_AxisAngle(RotationVector); 
         }
+
+        public override void ResetToIdentity()
+        {
+            NormalisedAxis = Vector3.up;
+            AngleInRadian = 0;
+        }
+
         #endregion //Converters
 
         public override Vector3 RotateVector(Vector3 inVector)
         {
             //Rodrigues' rotation formula (righthand-version) TODO: Try to understand it, visualise it and make it left-handed
             Vector3 rotatedVector = 
-                inVector * Mathf.Cos(Angle) + 
-                Vector3.Cross(Axis, inVector) * Mathf.Sin(Angle) + 
-                Axis * Vector3.Dot(Axis, inVector) * (1 - Mathf.Cos(Angle));
+                inVector * Mathf.Cos(AngleInRadian) + 
+                Vector3.Cross(NormalisedAxis, inVector) * Mathf.Sin(AngleInRadian) + 
+                NormalisedAxis * Vector3.Dot(NormalisedAxis, inVector) * (1 - Mathf.Cos(AngleInRadian));
 
             return rotatedVector; 
         }

@@ -23,7 +23,7 @@ namespace RotationVisualisation
             return rotParams; 
         }
 
-        public override void SetRotParams(ref RotParams.RotParams newRotParams)
+        public override void SetRotParamsByRef(ref RotParams.RotParams newRotParams)
         {
             if (newRotParams is RotParams_Matrix rotParamsMatrix)
             {
@@ -36,21 +36,29 @@ namespace RotationVisualisation
         {
             if (visVectorRight is not null)
             {
-                visVectorRight.Value = rotParams.GetColumn(0);
+                visVectorRight.Value = rotParams.XVector;
             }
             if (visVectorUp is not null)
             {
-                visVectorUp.Value = rotParams.GetColumn(1);
+                visVectorUp.Value = rotParams.YVector;
             }
             if (visVectorForward is not null)
             {
-                visVectorForward.Value = rotParams.GetColumn(2);
+                visVectorForward.Value = rotParams.ZVector;
             }
+            VisUpdateRotationObject();
         }
 
         private void OnValidate()
         {
-            VisUpdate();
+            try
+            {
+                VisUpdate();
+            }
+            catch (Exception e)
+            {
+                Debug.Log($"{name} OnValidateError {e.Message}");
+            }
         }
     }
 }

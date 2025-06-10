@@ -3,6 +3,7 @@ using System.ComponentModel;
 using Unity.Properties;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 namespace RotParams
@@ -28,34 +29,50 @@ namespace RotParams
             _ => Vector3.zero
         };
 
-        [SerializeField] private float _angle; //!ZyKa
-        public static string NameOfAngle => nameof(_angle); //for PropertyDrawer
+        [FormerlySerializedAs("_angle")] [SerializeField] private float angleInRadian; 
+        public static string NameOfAngle => nameof(angleInRadian); //for PropertyDrawer
         
         [CreateProperty]
-        public float Angle
+        public float AngleInRadian
         {
-            get => _angle;
-            set => _angle = value;
+            get => angleInRadian;
+            set => angleInRadian = value;
         }
+
+        [CreateProperty]
+        public float AngleInDegrees
+        {
+            get => angleInRadian * Mathf.Rad2Deg;
+            set => angleInRadian = value * Mathf.Deg2Rad;
+        }
+
+        [CreateProperty]
+        public float AngleInCircleParts
+        {
+            get => angleInRadian / (2.0f * Mathf.PI);
+            set => angleInRadian = value * (2.0f * Mathf.PI);
+        }
+            
+            
         #endregion
         
         #region Constructors
         private _RotParams_EulerAngleGimbalRing()
         {
             eAxis = EGimbleAxis.Yaw;
-            Angle = 0;
+            AngleInRadian = 0;
         }
         
-        public _RotParams_EulerAngleGimbalRing(EGimbleAxis inEAxis, float inAngle)
+        public _RotParams_EulerAngleGimbalRing(EGimbleAxis inEAxis, float inAngleInRadian)
         {
             eAxis = inEAxis; 
-            Angle = inAngle;
+            AngleInRadian = inAngleInRadian;
         }
         
         public _RotParams_EulerAngleGimbalRing(_RotParams_EulerAngleGimbalRing rotParamsEulerAngleGimbalRing)
         {
             eAxis = rotParamsEulerAngleGimbalRing.eAxis;
-            Angle = rotParamsEulerAngleGimbalRing.Angle;
+            AngleInRadian = rotParamsEulerAngleGimbalRing.AngleInRadian;
         }
         
         public static _RotParams_EulerAngleGimbalRing Yaw()
@@ -79,21 +96,21 @@ namespace RotParams
             {
                 EGimbleAxis.Yaw => new RotParams_Matrix(new float[3,3]
                 {
-                    { Mathf.Cos(Angle),  0, Mathf.Sin(Angle) },
+                    { Mathf.Cos(AngleInRadian),  0, Mathf.Sin(AngleInRadian) },
                     {          0,                1,              0           },
-                    { -Mathf.Sin(Angle), 0, Mathf.Cos(Angle) }
+                    { -Mathf.Sin(AngleInRadian), 0, Mathf.Cos(AngleInRadian) }
                 }),
                 EGimbleAxis.Pitch => new RotParams_Matrix(new float[3,3]
                 {
-                    { Mathf.Cos(Angle), -Mathf.Sin(Angle),  0 },
-                    { Mathf.Sin(Angle),  Mathf.Cos(Angle),  0 },
+                    { Mathf.Cos(AngleInRadian), -Mathf.Sin(AngleInRadian),  0 },
+                    { Mathf.Sin(AngleInRadian),  Mathf.Cos(AngleInRadian),  0 },
                     {           0,                          0,              1 }
                 }),
                 EGimbleAxis.Roll => new RotParams_Matrix(new float[3,3]
                 {
                     { 1,              0,                       0            },
-                    { 0, Mathf.Cos(Angle), -Mathf.Sin(Angle) },
-                    { 0, Mathf.Sin(Angle), Mathf.Cos(Angle) }
+                    { 0, Mathf.Cos(AngleInRadian), -Mathf.Sin(AngleInRadian) },
+                    { 0, Mathf.Sin(AngleInRadian), Mathf.Cos(AngleInRadian) }
                 }),
                 _ => throw new InvalidEnumArgumentException()
             }; 
@@ -104,20 +121,20 @@ namespace RotParams
             switch (eAxis)
             {
                 case EGimbleAxis.Yaw:
-                    Angle = Mathf.Atan2(m[2, 0], m[0, 0]); 
+                    AngleInRadian = Mathf.Atan2(m[2, 0], m[0, 0]); 
                     break; 
                 case EGimbleAxis.Pitch:
-                    Angle = Mathf.Atan2(m[0, 1], m[0, 0]); 
+                    AngleInRadian = Mathf.Atan2(m[0, 1], m[0, 0]); 
                     break; 
                 case EGimbleAxis.Roll:
-                    Angle = Mathf.Atan2(m[2, 1], m[1, 1]); 
+                    AngleInRadian = Mathf.Atan2(m[2, 1], m[1, 1]); 
                     break; 
             }
         }
 
         public RotParams_Quaternion toQuaternionRotation() 
         {
-            return new RotParams_Quaternion(RotationAxis, Angle);
+            return new RotParams_Quaternion(RotationAxis, AngleInRadian);
         }
         
         public void ExtractValueFromQuaternion(RotParams_Quaternion q)
@@ -126,13 +143,13 @@ namespace RotParams
             switch (eAxis)
             {
                 case EGimbleAxis.Yaw:
-                    Angle = Mathf.Atan2(2.0f * (q.w * q.z + q.x * q.y), 1.0f - 2.0f * (q.y * q.y + q.z * q.z));
+                    AngleInRadian = Mathf.Atan2(2.0f * (q.W * q.Z + q.X * q.Y), 1.0f - 2.0f * (q.Y * q.Y + q.Z * q.Z));
                     break; 
                 case EGimbleAxis.Pitch:
-                    Angle = Mathf.Atan2(2.0f * (q.w * q.y - q.z * q.x), 1.0f - 2.0f * (q.y * q.y + q.z * q.z));
+                    AngleInRadian = Mathf.Atan2(2.0f * (q.W * q.Y - q.Z * q.X), 1.0f - 2.0f * (q.Y * q.Y + q.Z * q.Z));
                     break; 
                 case EGimbleAxis.Roll:
-                    Angle = Mathf.Atan2(2.0f * (q.w * q.x + q.y*q.z), 1.0f - 2.0f*(q.x * q.x + q.y * q.y)); 
+                    AngleInRadian = Mathf.Atan2(2.0f * (q.W * q.X + q.Y*q.Z), 1.0f - 2.0f*(q.X * q.X + q.Y * q.Y)); 
                     break; 
             }
         }

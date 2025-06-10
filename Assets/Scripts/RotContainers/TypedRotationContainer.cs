@@ -1,5 +1,6 @@
 using System;
 using BaseClasses;
+using UI_Toolkit;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -9,11 +10,13 @@ namespace RotContainers
     public class TypedRotationContainer : MonoBehaviour
     {
         [SerializeReference] private RotParams.RotParams rotParams; 
+        [Tooltip("Do not set this reference manually, it will be spawned from the outside by GeneralRotationContainer")] //-ZyKa RotationContainers; enable setting this manually & ensure that the rotParams are updated accordingly
         [SerializeField] private GameObject rotVisGO;
-        [SerializeField] private RotVis rotVis; 
+        [Tooltip("Do not set this reference manually, it will be spawned from the outside by GeneralRotationContainer")]
+        [SerializeField] private RotVis rotVis;
         private VisualElement rotUI; 
         
-        public void SpawnTypedRotation(ref RotParams.RotParams newRotParams, GameObject rotVisPrefab, Transform rotVisParent, VisualTreeAsset visualTreeAsset, VisualElement visualParent)
+        public void SpawnTypedRotation(ref RotParams.RotParams newRotParams, GameObject rotVisPrefab, Transform rotVisParent, VisualTreeAsset visualTreeAsset, UISlotReference visualParent)
         {
             rotParams = newRotParams;
             SpawnVis(rotVisPrefab, this.transform);
@@ -39,23 +42,29 @@ namespace RotContainers
             }
             rotVisGO = Instantiate(prefab, parent); 
             rotVis = rotVisGO.GetComponent<RotVis>();
-            rotVis.SetRotParams(ref rotParams); 
+            rotVis.SetRotParamsByRef(ref rotParams); 
         }
 
-        public void SpawnUI(VisualTreeAsset visualTreeAsset, VisualElement parent)
+        public void SpawnUI(VisualTreeAsset visualTreeAsset, UISlotReference parent)
         {
             if (rotUI != null)
             {
                 rotUI.RemoveFromHierarchy();
             }
             rotUI = visualTreeAsset.CloneTree();
-            parent.Add(rotUI);
+            parent.PlaceInSlot(rotUI);
             rotUI.dataSource = rotParams; 
         }
 
         private void OnValidate()
         {
-            rotVis.VisUpdate();   
+            /* !ZyKa OnValidate
+            if (EditorApplication.isPlayingOrWillChangePlaymode && !Application.isPlaying)
+            {
+                return; 
+            }
+            rotVis.VisUpdate();
+            */   
         }
     }
 }

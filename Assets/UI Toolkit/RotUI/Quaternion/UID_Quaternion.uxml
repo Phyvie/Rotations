@@ -3,7 +3,6 @@
     <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UserInputFields.uss?fileID=7433441132597879392&amp;guid=6dd3f635675e8f246b205a73e8f7b1dd&amp;type=3#UserInputFields" />
     <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/BoxLayouts.uss?fileID=7433441132597879392&amp;guid=f0491e6785d76264da46194eb373072c&amp;type=3#BoxLayouts" />
     <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UnityColors.uss?fileID=7433441132597879392&amp;guid=05afd8f5bd01ac04682fabbc8e02db4f&amp;type=3#UnityColors" />
-    
     <engine:VisualElement name="Background" data-source-type="RotParams.RotParams_Quaternion, RotParams" class="unityUIBackgroundColor unityUIFieldColor unityUITextColor" style="flex-grow: 1;">
         <engine:VisualElement name="SinCosLabelContainer" style="flex-grow: 1; flex-direction: row;">
             <engine:VisualElement style="flex-grow: 1; width: 60%;" />
@@ -14,7 +13,7 @@
                 <engine:Label text="Sin(" name="SinLabel" class="centeredText" />
                 <engine:FloatField name="AlphaField" class="floatField--pure">
                     <Bindings>
-                        <engine:DataBinding property="value" data-source-path="Angle" binding-mode="ToTarget" />
+                        <engine:DataBinding property="value" data-source-path="Angle" binding-mode="TwoWay" />
                     </Bindings>
                 </engine:FloatField>
                 <engine:Label text=")" name="SinLabelClose" class="centeredText" />
@@ -24,7 +23,7 @@
                 <engine:Label text="Cos(" name="CosOpen" class="centeredText" />
                 <engine:FloatField name="Alpha" class="floatField--pure">
                     <Bindings>
-                        <engine:DataBinding property="value" data-source-path="Angle" binding-mode="ToTarget" />
+                        <engine:DataBinding property="value" data-source-path="Angle" binding-mode="TwoWay" />
                     </Bindings>
                 </engine:FloatField>
                 <engine:Label text=")" name="CosClose" class="centeredText" />
@@ -33,7 +32,7 @@
             <engine:VisualElement name="UnitVectorContainer" class="container--horizontalspacearound" style="width: 40%; flex-direction: column;">
                 <engine:Vector3Field class="vector--pure">
                     <Bindings>
-                        <engine:DataBinding property="value" data-source-path="Axis" binding-mode="ToTarget" />
+                        <engine:DataBinding property="value" data-source-path="Axis" binding-mode="TwoWay" />
                     </Bindings>
                 </engine:Vector3Field>
             </engine:VisualElement>
@@ -42,7 +41,7 @@
             <engine:Label text="=" />
             <engine:Vector4Field label="Unit Quaternion" class="vector--pure vector--horizontal">
                 <Bindings>
-                    <engine:DataBinding property="value" data-source-path="Vector4" binding-mode="ToTarget" />
+                    <engine:DataBinding property="value" data-source-path="Vector4" binding-mode="TwoWay" />
                 </Bindings>
             </engine:Vector4Field>
         </engine:VisualElement>

@@ -1,0 +1,12 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:VisualElement name="Horizontal" style="flex-grow: 1;">
+        <engine:VisualElement name="Vertical1" style="flex-grow: 1; flex-direction: row;">
+            <engine:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI%20Toolkit/Cam.renderTexture?fileID=8400000&amp;guid=8d38503c1014117498d988842d5e3957&amp;type=2#Cam&quot;);" />
+            <engine:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI%20Toolkit/Cam1.renderTexture?fileID=8400000&amp;guid=1744cb498b741f4498fd3269ce6a94e7&amp;type=2#Cam1&quot;);" />
+        </engine:VisualElement>
+        <engine:VisualElement name="Vertical2" style="flex-grow: 1; flex-direction: row;">
+            <engine:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI%20Toolkit/Cam2.renderTexture?fileID=8400000&amp;guid=383757de37f644f43bcf3de4e1138ed5&amp;type=2#Cam2&quot;);" />
+            <engine:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI%20Toolkit/Cam3.renderTexture?fileID=8400000&amp;guid=6c40c76127c53e34991522fa8bf051e4&amp;type=2#Cam3&quot;);" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -161,12 +162,13 @@ namespace RotParams
             return new RotParams_EulerAngles(this); 
         }
 
-        public override RotParams_Quaternion ToQuaternionRotation() //TODO: adjust for IsIntrinsic
+        public override RotParams_Quaternion ToQuaternionRotation()
         {
             RotParams_Quaternion result = new RotParams_Quaternion();
-            foreach (_RotParams_EulerAngleGimbalRing rotation in gimbal)
+            foreach (_RotParams_EulerAngleGimbalRing rotation in gimbal.Reverse())
             {
-                result = result * rotation.toQuaternionRotation() * result.Inverse(); 
+                RotParams_Quaternion asQuat = rotation.toQuaternionRotation();
+                result = asQuat * result; 
             }
             return result; 
         }
@@ -247,6 +249,13 @@ namespace RotParams
         public override RotParams_AxisAngle ToAxisAngleRotation()
         {
             return ToQuaternionRotation().ToAxisAngleRotation(); 
+        }
+
+        public override void ResetToIdentity()
+        {
+            outer.AngleInRadian = 0; 
+            middle.AngleInRadian = 0;
+            inner.AngleInRadian = 0;
         }
 
         public override Vector3 RotateVector(Vector3 inVector)

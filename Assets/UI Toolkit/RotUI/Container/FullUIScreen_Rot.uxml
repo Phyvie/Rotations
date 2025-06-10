@@ -1,13 +1,8 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:Template name="RotUI_GeneralRotationContainer" src="project://database/Assets/UI%20Toolkit/RotUI/Container/RotUI_GeneralRotationContainer.uxml?fileID=9197481963319205126&amp;guid=ffaa3d0decbc86b4cbfeb90cccf81b0f&amp;type=3#RotUI_GeneralRotationContainer" />
     <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/BoxLayouts.uss?fileID=7433441132597879392&amp;guid=f0491e6785d76264da46194eb373072c&amp;type=3#BoxLayouts" />
     <Style src="project://database/Assets/UI%20Toolkit/RotUI/USS_Rot.uss?fileID=7433441132597879392&amp;guid=13a4e7952ce03644eac0a699c3aecf34&amp;type=3#USS_Rot" />
-    <engine:VisualElement class="container--horizontalspacearound" style="flex-grow: 1; flex-direction: row; align-content: stretch;">
-        <engine:VisualElement name="LeftScreenPart" class="SplitScreenContainer">
-            <engine:VisualElement name="RotVis" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.3); height: 50%;" />
-            <engine:Instance template="RotUI_GeneralRotationContainer" style="margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;" />
-        </engine:VisualElement>
-        <engine:VisualElement class="SplitScreenContainer" />
-        <engine:VisualElement class="SplitScreenContainer" />
+    <engine:VisualElement name="Root_FullScreen" style="flex-grow: 1; flex-direction: column; align-content: stretch;">
+        <engine:VisualElement name="RotVisContainer" style="flex-grow: 1;" />
+        <engine:VisualElement name="RotUIContainer" style="flex-grow: 1;" />
     </engine:VisualElement>
 </engine:UXML>

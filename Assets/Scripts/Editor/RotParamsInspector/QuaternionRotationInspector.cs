@@ -7,19 +7,17 @@ namespace Editor
     [CustomPropertyDrawer(typeof(RotParams_Quaternion))]
     public class QuaternionRotationInspector : NestedPropertyDrawer
     {
-        private SerializedProperty SP_i; 
-        private SerializedProperty SP_j; 
-        private SerializedProperty SP_k; 
-        private SerializedProperty SP_real;
-        private SerializedProperty SP_EnforceNormalisation; 
+        private SerializedProperty SP_x; 
+        private SerializedProperty SP_y; 
+        private SerializedProperty SP_z; 
+        private SerializedProperty SP_w;
 
         private void Initialize(SerializedProperty property)
         {
-            SP_i = property.FindPropertyRelative("_i"); 
-            SP_j = property.FindPropertyRelative("_j"); 
-            SP_k = property.FindPropertyRelative("_k"); 
-            SP_real = property.FindPropertyRelative("_r");
-            SP_EnforceNormalisation = property.FindPropertyRelative("enforceNormalisation"); 
+            SP_x = property.FindPropertyRelative("_x"); 
+            SP_y = property.FindPropertyRelative("_y"); 
+            SP_z = property.FindPropertyRelative("_z"); 
+            SP_w = property.FindPropertyRelative("_w");
         }
         
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -43,7 +41,7 @@ namespace Editor
             float labelWidth = 10;
             float valueWidth = (fieldWidth / 4) - labelWidth; 
             float spacing = 10;
-            SerializedProperty[] valuesSP = new SerializedProperty[] { SP_real, SP_i, SP_j, SP_k};
+            SerializedProperty[] valuesSP = new SerializedProperty[] { SP_w, SP_x, SP_y, SP_z};
             for (int i = 0; i < 4; i++)
             {
                 SerializedProperty SP = valuesSP[i]; 

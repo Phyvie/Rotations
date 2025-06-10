@@ -21,7 +21,7 @@
             </engine:EnumField>
             <engine:FloatField label="Float Field">
                 <Bindings>
-                    <engine:DataBinding property="value" data-source-path="outer.Angle" binding-mode="TwoWay" />
+                    <engine:DataBinding property="value" data-source-path="outer.AngleInDegrees" binding-mode="TwoWay" />
                 </Bindings>
             </engine:FloatField>
         </engine:VisualElement>
@@ -33,7 +33,7 @@
             </engine:EnumField>
             <engine:FloatField label="Float Field">
                 <Bindings>
-                    <engine:DataBinding property="value" data-source-path="middle.Angle" binding-mode="TwoWay" />
+                    <engine:DataBinding property="value" data-source-path="middle.AngleInDegrees" binding-mode="TwoWay" />
                 </Bindings>
             </engine:FloatField>
         </engine:VisualElement>
@@ -46,6 +46,7 @@
             <engine:FloatField label="Float Field">
                 <Bindings>
                     <engine:DataBinding property="label" data-source-path="inner.Angle" binding-mode="TwoWay" />
+                    <engine:DataBinding property="value" data-source-path="inner.AngleInDegrees" binding-mode="ToTarget" />
                 </Bindings>
             </engine:FloatField>
         </engine:VisualElement>

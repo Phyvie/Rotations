@@ -72,6 +72,11 @@ namespace RotParams
             return new RotParams_AxisAngle(Vector3.back * _rotationAngle); 
         }
 
+        public override void ResetToIdentity()
+        {
+            ComplexNumber = new Vector2(0, 0);
+        }
+
         public override Vector3 RotateVector(Vector3 inVector)
         {
             Vector2 rotatedVector = RotateVector2_ViaComplex(new Vector2(inVector.x, inVector.y)); 

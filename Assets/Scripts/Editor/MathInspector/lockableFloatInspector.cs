@@ -1,6 +1,7 @@
 using System.Globalization;
 using RotParams;
 using UnityEditor;
+using UnityEditor.TerrainTools;
 using UnityEngine;
 
 namespace Editor

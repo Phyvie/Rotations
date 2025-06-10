@@ -25,7 +25,7 @@ namespace RotParams
 
         public RotParams_Matrix(Matrix matrix)
         {
-            matrix = new Matrix(matrix);
+            InternalMatrix = new Matrix(matrix);
         }
         
         public static RotParams_Matrix RotationIdentity()
@@ -44,21 +44,21 @@ namespace RotParams
         public Vector3 XVector
         {
             get => GetColumn(0);
-            set => SetColumn(value, 0); 
+            set => SetColumn(0, value); 
         }
         
         [CreateProperty]
         public Vector3 YVector
         {
             get => GetColumn(1);
-            set => SetColumn(value, 1); 
+            set => SetColumn(1, value); 
         }
 
         [CreateProperty]
         public Vector3 ZVector
         {
             get => GetColumn(2);
-            set => SetColumn(value, 2); 
+            set => SetColumn(2, value); 
         }
         
         public float this[int row, int column]
@@ -80,14 +80,14 @@ namespace RotParams
             return new Vector3(InternalMatrix[0, column], InternalMatrix[1, column], InternalMatrix[2, column]);
         }
 
-        public void SetRow(Vector3 row, int rowIndex)
+        public void SetRow(int rowIndex, Vector3 row)
         {
             InternalMatrix[rowIndex, 0] = row.x;
             InternalMatrix[rowIndex, 1] = row.y;
             InternalMatrix[rowIndex, 2] = row.z;
         }
 
-        public void SetColumn(Vector3 column, int columnIndex)
+        public void SetColumn(int columnIndex, Vector3 column)
         {
             InternalMatrix[0, columnIndex] = column.x;
             InternalMatrix[1, columnIndex] = column.y;
@@ -168,8 +168,28 @@ namespace RotParams
         {
             if (!isRotationMatrix)
             {
-                Debug.LogError("RotationMatrix.ToQuaternionRotation error: Matrix is not a RotationMatrix");
-                return RotParams_Quaternion.GetZeroQuaternion(); 
+                Debug.LogWarning($"{nameof(ToQuaternionRotation)} error: Matrix is not a RotationMatrix");
+                // return new RotParams_Quaternion(); //!ZyKa
+            
+                //-ZyKa MatrixToRotationMatrix, adjust so that the priority of directions can be chosen by user
+                Vector3 Forward = GetColumn(2).normalized;
+                Vector3 Up = GetColumn(1).normalized;
+                Vector3 Right = Vector3.Cross(Up,Forward).normalized;
+                Up = Vector3.Cross(Forward,Right);
+                
+                RotParams_Matrix AdjustedMatrix = new RotParams_Matrix(InternalMatrix);
+                
+                AdjustedMatrix.SetColumn(0, Right);
+                AdjustedMatrix.SetColumn(1, Up);
+                AdjustedMatrix.SetColumn(2, Forward);
+                
+                if (!AdjustedMatrix.isRotationMatrix)
+                {
+                    Debug.LogError($"{nameof(ToQuaternionRotation)}: error: Matrix column-vectors are parallel");
+                    return new RotParams_Quaternion(); 
+                }
+                
+                return AdjustedMatrix.ToQuaternionRotation(); 
             }
 
             float trace = InternalMatrix.Trace();
@@ -223,6 +243,12 @@ namespace RotParams
         {
             return ToQuaternionRotation().ToAxisAngleRotation(); 
         }
+
+        public override void ResetToIdentity()
+        {
+            InternalMatrix = Matrix.Identity(3);
+        }
+
         #endregion //Converters
 
         public override Vector3 RotateVector(Vector3 inVector)

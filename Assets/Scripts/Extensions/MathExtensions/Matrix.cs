@@ -7,6 +7,7 @@ namespace MathExtensions
     [Serializable]
     public class Matrix
     {
+        #region Variables
         [SerializeField] private float[] InternalMatrix = Array.Empty<float>();
 
         [SerializeField] private int height; 
@@ -37,7 +38,9 @@ namespace MathExtensions
             get => width;
             private set => width = value;
         }
+        #endregion Variables
         
+        #region Constructors
         public Matrix(float[] inMatrix, int width, int height, bool isArrayRef = false)
         {
             Debug.Assert(inMatrix is not null);
@@ -102,7 +105,9 @@ namespace MathExtensions
         {
             return new Matrix(inMatrix); 
         }
+        #endregion Constructors
         
+        #region Comparison
         public static bool operator ==(Matrix firstMatrix, Matrix secondMatrix)
         {
             return firstMatrix != null && firstMatrix.Equals(secondMatrix);
@@ -138,20 +143,9 @@ namespace MathExtensions
         {
             return InternalMatrix.GetHashCode();
         }
+        #endregion Comparison
         
-        public void PrintMatrix()
-        {
-            for (int rowIndex = 0; rowIndex < InternalMatrix.GetLength(0); rowIndex++)
-            {
-                string rowString = "";
-                for (int columnIndex = 0; columnIndex < InternalMatrix.GetLength(1); columnIndex++)
-                {
-                    rowString += InternalMatrix[rowIndex*Width+columnIndex].ToString("F2") + " ";
-                }
-                Debug.Log(rowString);
-            }
-        }
-        
+        #region MatrixArithmetic
         public static Matrix operator +(Matrix firstMatrix, Matrix secondMatrix)
         {
             Debug.Assert(firstMatrix.Height == secondMatrix.Height, "Matrices must have the same height.");
@@ -178,7 +172,9 @@ namespace MathExtensions
                 secondMatrix.InternalMatrix, secondMatrix.width, secondMatrix.height), 
                 firstMatrix.height, secondMatrix.width, true); 
         }
+        #endregion MatrixArithmetic
 
+        #region MatrixVectorArithmetic
         public static Vector2 operator *(Matrix matrix, Vector2 vector)
         {
             Debug.Assert(matrix.width == 2, "Matrix width must be 2 for multiplication with Vector2.");
@@ -231,7 +227,9 @@ namespace MathExtensions
                 matrix[3, 0] * vector.x + matrix[3, 1] * vector.y + matrix[3, 2] * vector.z + matrix[3, 3] * vector.w
             );
         }
+        #endregion MatrixVectorArithmetic
         
+        #region RowColumnOperators
         public void SwitchRows(int rowIndexA, int rowIndexB)
         {
             InternalMatrix.SwitchRows(rowIndexA, rowIndexB, width); 
@@ -262,7 +260,9 @@ namespace MathExtensions
                 this[row, column] *= multiplier; 
             }
         }
+        #endregion RowColumnArithmetic
         
+        #region MatrixSpecificOperations
         public Matrix Inverse() 
         {
             Debug.Assert(Height == Width, "Matrix must be square to find its inverse.");
@@ -323,10 +323,22 @@ namespace MathExtensions
             {
                 permutationMatrix[row, permutation[row]] = 1; 
             }
-
+            
             outP = permutationMatrix.InversePermutationMatrix();
             outL = lowerLeft;
             outU = upperRight;
+
+            /*
+            if (outP * outL * outU != this)
+            {
+                Debug.LogError("PLU Decomposition failed");
+            }
+            else
+            {
+                Debug.Log("PLU Decomposition succeeded");
+            }
+            */
+            
 
             void PLUSwitchRows(int rowIndexA, int rowIndexB)
             {
@@ -409,6 +421,28 @@ namespace MathExtensions
             return transposedMatrix;
         }
         
+        private Matrix CreateSubMatrix(Matrix matrix, int excludingRow, int excludingCol)
+        {
+            float[,] result = new float[matrix.Height - 1, matrix.Width - 1];
+            int r = -1;
+            for (int rowIndex = 0; rowIndex < matrix.Height; rowIndex++)
+            {
+                if (rowIndex == excludingRow)
+                    continue;
+                r++;
+                int c = -1;
+                for (int columnIndex = 0; columnIndex < matrix.Width; columnIndex++)
+                {
+                    if (columnIndex == excludingCol)
+                        continue;
+                    result[r, ++c] = matrix.InternalMatrix[rowIndex * Width + columnIndex];
+                }
+            }
+            return new Matrix(result);
+        }
+        #endregion MatrixSpecificOperations
+        
+        #region MatrixProperties
         public float Trace()
         {
             Debug.Assert(Height == Width, "Matrix must be square to calculate the trace.");
@@ -462,40 +496,135 @@ namespace MathExtensions
             return lowerLeft.DiagonalProduct() * upperRight.DiagonalProduct();
         }
 
-        public float DiagonalProduct()
+        public int PermutationMatrixDeterminant()
         {
-            Debug.Assert(Height == Width);
-            float result = 1;
-            for (int diagonalIndex = 0; diagonalIndex < Height; diagonalIndex++)
+            int[] permutation = new int[height];
+            for (int row = 0; row < height; row++)
             {
-                result *= this[diagonalIndex, diagonalIndex]; 
-            }
-            return result; 
-        }
-        
-        private Matrix CreateSubMatrix(Matrix matrix, int excludingRow, int excludingCol)
-        {
-            float[,] result = new float[matrix.Height - 1, matrix.Width - 1];
-            int r = -1;
-            for (int rowIndex = 0; rowIndex < matrix.Height; rowIndex++)
-            {
-                if (rowIndex == excludingRow)
-                    continue;
-                r++;
-                int c = -1;
-                for (int columnIndex = 0; columnIndex < matrix.Width; columnIndex++)
+                for (int col = 0; col < width; col++)
                 {
-                    if (columnIndex == excludingCol)
-                        continue;
-                    result[r, ++c] = matrix.InternalMatrix[rowIndex * Width + columnIndex];
+                    if (Mathf.Approximately(this[row, col], 1.0f)) 
+                    {
+                        permutation[row] = col;
+                        break;
+                    }
+                    if (!Mathf.Approximately(this[row, col], 0.0f))
+                    {
+                        Debug.LogError($"{nameof(PermutationMatrixDeterminant)} error: should only be used for Permutation matrices");
+                        return 0; 
+                    }
                 }
             }
-            return new Matrix(result);
-        }
 
+            int swaps = PermutationMatrixCountSwaps(permutation);
+            return (swaps % 2 == 0) ? 1 : -1;
+        }
+        
+        private int PermutationMatrixCountSwaps(int[] perm)
+        {
+            bool[] visited = new bool[perm.Length];
+            int swapCount = 0;
+
+            for (int i = 0; i < perm.Length; i++)
+            {
+                if (!visited[i])
+                {
+                    int cycleLength = 0;
+                    int j = i;
+
+                    while (!visited[j])
+                    {
+                        visited[j] = true;
+                        j = perm[j]; 
+                        cycleLength++;
+                    }
+
+                    swapCount += (cycleLength - 1);
+                }
+            }
+
+            return swapCount;
+        }
+        
+        public bool IsDiagonal()
+        {
+            if (Width != Height)
+            {
+                return false; 
+            }
+
+            if (Width == 0)
+            {
+                return true; 
+            }
+
+            for (int i = 0; i < Height; i++)
+            {
+                for (int j = 0; j < Width; j++)
+                {
+                    if (i == j)
+                    {
+                        continue; 
+                    }
+                    else
+                    {
+                        if (this[i, j] != 0)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            
+            return true; 
+        }
+        
         public bool IsSpecialOrthogonal()
         {
-            if (Width == 0 || Height == 0)
+            //This function is manually calculating the inverse instead of using .Inverse(), because that way the determinant can be calculated via the results from the PLU decomposition
+            if (Width != Height)
+            {
+                return false;
+            }
+            
+            if (Width == 0)
+            {
+                return true; 
+            }
+            
+            PLUDecomposition(out Matrix permutationMatrix, out Matrix lowerLeft, out Matrix upperRight);
+            
+            float determinant = permutationMatrix.PermutationMatrixDeterminant() * lowerLeft.DiagonalProduct() * upperRight.DiagonalProduct();
+
+            if (System.Math.Abs(determinant - 1) > 0.001)
+            {
+                return false; 
+            }
+            
+            Matrix inverseMatrix = upperRight.InverseUpperTriangularMatrix() *
+                                   lowerLeft.InverseLowerTriangularMatrix() *
+                                   permutationMatrix.InversePermutationMatrix();
+
+            Matrix transposeMatrix = Transpose(); 
+            
+            if (inverseMatrix == transposeMatrix)
+            {
+                return true; 
+            }
+            else
+            {
+                return false; 
+            }
+        }
+
+        public bool IsOrthogonalUpToScale()
+        {
+            if (Width != Height)
+            {
+                return false;
+            }
+            
+            if (Width == 0)
             {
                 return true; 
             }
@@ -513,12 +642,53 @@ namespace MathExtensions
                                    lowerLeft.InverseLowerTriangularMatrix() *
                                    permutationMatrix.InversePermutationMatrix();
 
-            if (inverseMatrix != Transpose())
+            Matrix GramMatrix = inverseMatrix * Transpose();
+            if (GramMatrix.IsDiagonal())
+            {
+                return true;                
+            }
+            else
+            {
+                return false;
+            }
+        }
+        
+        public bool IsOrthonormal()
+        {
+            if (Width != Height)
             {
                 return false; 
             }
+            if (Width == 0)
+            {
+                return true; 
+            }
+            return Inverse() == Transpose(); 
+        }
 
-            return true; 
+        public float DiagonalProduct()
+        {
+            Debug.Assert(Height == Width);
+            float result = 1;
+            for (int diagonalIndex = 0; diagonalIndex < Height; diagonalIndex++)
+            {
+                result *= this[diagonalIndex, diagonalIndex]; 
+            }
+            return result; 
+        }
+        #endregion MatrixProperties
+        
+        public void PrintMatrix()
+        {
+            for (int rowIndex = 0; rowIndex < InternalMatrix.GetLength(0); rowIndex++)
+            {
+                string rowString = "";
+                for (int columnIndex = 0; columnIndex < InternalMatrix.GetLength(1); columnIndex++)
+                {
+                    rowString += InternalMatrix[rowIndex*Width+columnIndex].ToString("F2") + " ";
+                }
+                Debug.Log(rowString);
+            }
         }
     }
 }

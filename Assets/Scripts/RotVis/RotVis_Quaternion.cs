@@ -1,3 +1,4 @@
+using System;
 using BaseClasses;
 using RotParams;
 using UnityEngine;
@@ -21,7 +22,7 @@ namespace RotationVisualisation
             return rotParams; 
         }
 
-        public override void SetRotParams(ref RotParams.RotParams newRotParams)
+        public override void SetRotParamsByRef(ref RotParams.RotParams newRotParams)
         {
             if (newRotParams is RotParams_Quaternion rotParamsQuaternion)
             {
@@ -56,12 +57,19 @@ namespace RotationVisualisation
             vis_PlaneArc.LocalRotationAxis = Axis; 
             vis_PlaneArc.StartingAngle = 0; 
             vis_PlaneArc.EndingAngle = Angle;
+            VisUpdateRotationObject();
         }
 
         private void OnValidate()
         {
-            Angle = rotParams.Angle;
-            Axis = rotParams.Axis;
+            try
+            {
+                VisUpdate();
+            }
+            catch (Exception e)
+            {
+                Debug.Log($"{name} OnValidateError {e.Message}");
+            }
         }
     }
 }
