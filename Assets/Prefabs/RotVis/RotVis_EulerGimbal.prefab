@@ -374,7 +374,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc092fa2e1eb4593a2085b0aac8252d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
   rotationObjectParent: {fileID: 3905336753690019281}
   rotationObject: {fileID: 5755434052658261447}
   outer:

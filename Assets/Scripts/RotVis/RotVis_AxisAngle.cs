@@ -34,10 +34,10 @@ namespace RotationVisualisation
         
         public Vector3 RotationVector
         {
-            get => rotParams.RotationVector;
+            get => rotParams.RotationVectorInRadian;
             set
             {
-                rotParams.RotationVector = value;
+                rotParams.RotationVectorInRadian = value;
                 VisUpdate();
             }
         }

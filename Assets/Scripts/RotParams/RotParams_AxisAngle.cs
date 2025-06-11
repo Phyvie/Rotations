@@ -8,34 +8,42 @@ namespace RotParams
     [Serializable]
     public class RotParams_AxisAngle : RotParams
     {
-        [SerializeField] private Vector3 rotationVector; 
+        [SerializeField] private Vector3 axis;
+        [SerializeField] private float angleInRadian; 
         
         [CreateProperty]
-        public Vector3 RotationVector
+        public Vector3 RotationVectorInRadian
         {
-            get => rotationVector;
-            set => rotationVector = value;
+            get => axis * angleInRadian;
+            set
+            {
+                axis = value.normalized;
+                angleInRadian = value.magnitude; 
+            }
         }
         
+        
+
+
         [CreateProperty]
         public Vector3 NormalisedAxis
         {
-            get => RotationVector.normalized;
-            set => RotationVector = value * AngleInRadian;
+            get => axis;
+            set => axis = value;
         }
 
         [CreateProperty]
         public float AngleInRadian
         {
-            get => RotationVector.magnitude;
-            set => RotationVector = value * NormalisedAxis; 
+            get => angleInRadian;
+            set => angleInRadian = value; 
         }
 
         [CreateProperty]
         public float AngleInDegrees
         {
-            get => AngleInRadian * 180 / Mathf.PI;
-            set => AngleInRadian = value * 180 / Mathf.PI;
+            get => angleInRadian / Mathf.PI * 180;
+            set => angleInRadian = value / 180 * Mathf.PI;
         }
 
         [CreateProperty]
@@ -51,15 +59,15 @@ namespace RotParams
         }
         
         #region Constructors
-        public RotParams_AxisAngle(Vector3 inRotationVector)
+        public RotParams_AxisAngle(Vector3 inRotationVectorInRadian)
         {
-            RotationVector = inRotationVector; 
+            RotationVectorInRadian = inRotationVectorInRadian; 
         }
 
         public RotParams_AxisAngle(Vector3 inAxis, float inAngle)
         {
             inAxis = inAxis.normalized;
-            RotationVector = inAxis * inAngle;
+            RotationVectorInRadian = inAxis * inAngle;
         }
         #endregion //Constructors
         
@@ -108,7 +116,7 @@ namespace RotParams
 
         public override RotParams_AxisAngle ToAxisAngleRotation()
         {
-            return new RotParams_AxisAngle(RotationVector); 
+            return new RotParams_AxisAngle(RotationVectorInRadian); 
         }
 
         public override void ResetToIdentity()

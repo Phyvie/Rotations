@@ -6,15 +6,8 @@ namespace BaseClasses
 {
     public abstract class RotVis : MonoBehaviour
     {
-        [SerializeField] private Camera cam; 
         [SerializeField] private GameObject rotationObjectParent; //used in order to apply rotation (i.e. setting the parameters to 0 while keeping the objects orientation)
         [SerializeField] protected GameObject rotationObject;
-
-        public Camera Cam
-        {
-            get => cam;
-            set => cam = value;
-        }
         
         public abstract RotParams.RotParams GetRotParams(); 
         
