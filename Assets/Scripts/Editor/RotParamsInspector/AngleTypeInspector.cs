@@ -25,7 +25,7 @@ namespace Editor
                 currentIndex++; 
             }
 
-            int newIndex = EditorGUI.Popup(positionRect, currentIndex, AngleType.AngleTypeNames);
+            int newIndex = EditorGUI.Popup(positionRect, currentIndex, AngleType.AngleTypeNames.ToArray());
             if (currentIndex >= AngleType.AngleTypes.Length || currentIndex < 0)
             {
                 newIndex = 0;

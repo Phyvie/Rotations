@@ -9,22 +9,8 @@ namespace RotParams
     public class RotParams_AxisAngle : RotParams
     {
         [SerializeField] private Vector3 axis;
-        [SerializeField] private float angleInRadian; 
+        [SerializeField] private AngleWithType typedAngle; 
         
-        [CreateProperty]
-        public Vector3 RotationVectorInRadian
-        {
-            get => axis * angleInRadian;
-            set
-            {
-                axis = value.normalized;
-                angleInRadian = value.magnitude; 
-            }
-        }
-        
-        
-
-
         [CreateProperty]
         public Vector3 NormalisedAxis
         {
@@ -35,24 +21,75 @@ namespace RotParams
         [CreateProperty]
         public float AngleInRadian
         {
-            get => angleInRadian;
-            set => angleInRadian = value; 
+            get => typedAngle.AngleInRadian;
+            set => typedAngle.AngleInRadian = value; 
         }
 
         [CreateProperty]
         public float AngleInDegrees
         {
-            get => angleInRadian / Mathf.PI * 180;
-            set => angleInRadian = value / 180 * Mathf.PI;
+            get => typedAngle.AngleInDegree;
+            set => typedAngle.AngleInDegree = value;
         }
 
         [CreateProperty]
         public float AngleInCircleParts
         {
-            get => AngleInRadian / (2 * Mathf.PI);
-            set => AngleInRadian = value * 2 * Mathf.PI;
+            get => typedAngle.AngleInCircleParts;
+            set => typedAngle.AngleInCircleParts = value;
         }
 
+        [CreateProperty]
+        public float AngleInCurrentUnit
+        {
+            get => typedAngle.AngleInCurrentUnit;
+            set => typedAngle.AngleInCurrentUnit = value;
+        }
+
+        [CreateProperty]
+        public Vector3 RotationVectorInRadian
+        {
+            get => axis * AngleInRadian;
+            set
+            {
+                axis = value.normalized;
+                AngleInRadian = value.magnitude; 
+            }
+        }
+
+        [CreateProperty]
+        public Vector3 RotationVectorInDegrees
+        {
+            get => axis * AngleInDegrees;
+            set
+            {
+                axis = value.normalized;
+                AngleInRadian = value.magnitude; 
+            }
+        }
+        
+        [CreateProperty]
+        public Vector3 RotationVectorInCircleParts
+        {
+            get => axis * AngleInCircleParts;
+            set
+            {
+                axis = value.normalized;
+                AngleInCircleParts = value.magnitude; 
+            }
+        }
+
+        [CreateProperty]
+        public Vector3 RotationVectorInCurrentUnit
+        {
+            get => axis * typedAngle; 
+            set 
+            {
+                axis = value.normalized;
+                typedAngle.AngleInCurrentUnit = value.magnitude;
+            }
+        }
+        
         public RotParams_AxisAngle()
         {
             

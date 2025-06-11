@@ -4,14 +4,14 @@ using UnityEngine.UIElements;
 
 public class ZyKaAngleWithType : MonoBehaviour
 {
-    [SerializeField] private UIDocument uiDocument; 
+    [SerializeField] private UIDocument uiDoc; 
     [SerializeField] private AngleWithType angleWithType;
 
     private void Awake()
     {
-        if (uiDocument != null)
+        if (uiDoc != null)
         {
-            uiDocument.rootVisualElement.dataSource = this; 
+            uiDoc.rootVisualElement.dataSource = angleWithType;
         }
     }
 }

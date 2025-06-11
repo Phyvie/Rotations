@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Unity.Properties;
 using UnityEngine;
 
@@ -12,7 +14,6 @@ namespace RotParams
         [SerializeField] private float _angleInRadian = 0f;
 
         #region Constructors
-
         private AngleWithType() { }
 
         public AngleWithType(AngleType angleType, float valueInAngleType, bool showAngleTypeSelector = true, bool showAllAngleTypes = false)
@@ -108,7 +109,24 @@ namespace RotParams
         {
             return $"{AngleInCurrentUnit:F2} {angleType?.UnitLabel}";
         }
-
         #endregion Overrides
+        
+        #region UI Toolkit Binding Support
+        // Expose the angle types as choice strings for DropdownField.choices
+        [CreateProperty]
+        public List<string> AngleTypeChoices => AngleType.AngleTypeNames;
+
+        // Index of current type in the list
+        [CreateProperty]
+        public int AngleTypeIndex
+        {
+            get => Array.IndexOf(AngleType.AngleTypes, angleType);
+            set
+            {
+                if (value >= 0 && value < AngleType.AngleTypes.Length)
+                    angleType = AngleType.AngleTypes[value];
+            }
+        }
+        #endregion
     }
 }
