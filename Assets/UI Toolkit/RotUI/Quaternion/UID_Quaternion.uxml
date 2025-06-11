@@ -3,6 +3,7 @@
     <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UserInputFields.uss?fileID=7433441132597879392&amp;guid=6dd3f635675e8f246b205a73e8f7b1dd&amp;type=3#UserInputFields" />
     <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/BoxLayouts.uss?fileID=7433441132597879392&amp;guid=f0491e6785d76264da46194eb373072c&amp;type=3#BoxLayouts" />
     <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UnityColors.uss?fileID=7433441132597879392&amp;guid=05afd8f5bd01ac04682fabbc8e02db4f&amp;type=3#UnityColors" />
+    <Style src="project://database/Assets/UI%20Toolkit/RotUI/Quaternion/USS_Quaternion.uss?fileID=7433441132597879392&amp;guid=e897557bb9c9e6a49ac065b7f20433c3&amp;type=3#USS_Quaternion" />
     <engine:VisualElement name="Background" data-source-type="RotParams.RotParams_Quaternion, RotParams" class="unityUIBackgroundColor unityUIFieldColor unityUITextColor" style="flex-grow: 1;">
         <engine:VisualElement name="SinCosLabelContainer" style="flex-grow: 1; flex-direction: row;">
             <engine:VisualElement style="flex-grow: 1; width: 60%;" />
@@ -37,13 +38,30 @@
                 </engine:Vector3Field>
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:VisualElement name="QuatContainer" class="container--horizontalspacearound">
-            <engine:Label text="=" />
-            <engine:Vector4Field label="Unit Quaternion" class="vector--pure vector--horizontal">
-                <Bindings>
-                    <engine:DataBinding property="value" data-source-path="Vector4" binding-mode="TwoWay" />
-                </Bindings>
-            </engine:Vector4Field>
+        <engine:VisualElement name="QuatContainer">
+            <engine:Label text="= Unit Vector" />
+            <engine:VisualElement name="ManualVector" class="container--horizontalspacearound wxyz centeredText" style="flex-grow: 1;">
+                <engine:FloatField value="42.2" name="W" />
+                <engine:Label text="+" />
+                <engine:FloatField value="42.2" name="X">
+                    <Bindings>
+                        <engine:DataBinding property="value" data-source-path="X" binding-mode="TwoWay" />
+                    </Bindings>
+                </engine:FloatField>
+                <engine:Label text="i +" />
+                <engine:FloatField value="42.2" name="Y">
+                    <Bindings>
+                        <engine:DataBinding property="value" data-source-path="Y" binding-mode="TwoWay" />
+                    </Bindings>
+                </engine:FloatField>
+                <engine:Label text="j +" />
+                <engine:FloatField value="42.2" name="Z">
+                    <Bindings>
+                        <engine:DataBinding property="value" data-source-path="Z" binding-mode="TwoWay" />
+                    </Bindings>
+                </engine:FloatField>
+                <engine:Label text="k" />
+            </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

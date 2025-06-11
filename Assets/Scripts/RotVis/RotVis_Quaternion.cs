@@ -8,6 +8,7 @@ namespace RotationVisualisation
 {
     public class RotVis_Quaternion : RotVis
     {
+        //-ZyKa Quaternion -ZyKa RotVis update this to be able to take in non-unit quaternions
         [SerializeField] private Vis_Vector vis_rotationVector;
         [SerializeField] private Vis_PlaneArc vis_PlaneArc;
         

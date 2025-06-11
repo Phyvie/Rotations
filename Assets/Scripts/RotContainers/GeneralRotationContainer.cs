@@ -13,6 +13,9 @@ namespace RotContainers
     public class GeneralRotationContainer : MonoBehaviour
     {
         #region RuntimeVariables
+        [SerializeField] private bool InitializeOnAwake = false;
+        [SerializeField] private bool InitializeOnStart = true; 
+        
         [SerializeField] private UIDocument uiDocument;
 
         public UIDocument UIDocument
@@ -117,9 +120,26 @@ namespace RotContainers
             }
         }
         #endregion UITypeSelectionControls
-        
+
+        private void Awake()
+        {
+            if (InitializeOnAwake)
+            {
+                SelfInitialize();
+            }
+        }
+
+        public void Start()
+        {
+            if (InitializeOnStart)
+            {
+                SelfInitialize();
+            }
+        }
+
+        #region Initialization
         [ContextMenu("Init Rotation Container")]
-        public void SelfInitialize()
+        private void SelfInitialize()
         {
             if (uiDocument == null)
             {
@@ -175,7 +195,9 @@ namespace RotContainers
             _uiParent = newUIParent;
             uiParentName = newUIParent.name; 
         }
+        #endregion Initialization
 
+        #region ChangeRotationType
         public void GenerateNewRotation<RotParamsType>() where RotParamsType : RotParams.RotParams, new()
         {
             _rotParams = new RotParamsType();
@@ -200,7 +222,7 @@ namespace RotContainers
             
             typedRotationContainer.SpawnTypedRotation(ref _rotParams, prefab.visPrefab, this.transform, prefab.uiPrefab, uiRotSlot); 
         }
-
+        
         //accessor function for the templated version
         public void GenerateNewRotationGeneric(System.Type type)
         {
@@ -254,6 +276,7 @@ namespace RotContainers
         {
             GenerateNewRotation<RotParams_EulerAngles>();
         }
+        #endregion ChangeRotationType
 
         private void OnValidate()
         {

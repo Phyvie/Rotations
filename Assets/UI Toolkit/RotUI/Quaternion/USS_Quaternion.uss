@@ -1,16 +1,8 @@
-VisualElement {}
-
-#SinContainer
-{
-    width: 25%
+.wxyz > FloatField {
+    flex-grow: 1;
+    width: 20%; 
 }
 
-#CosContainer
-{
-    width: 75%
-}
-
-.SinCosText {
-    font-size: 24px;
-    align-self: center;
+.wxyz > FloatField > Label {
+    width: 10px
 }

@@ -16,6 +16,7 @@ namespace RotParams
         [SerializeField] private LockableFloat _z;
 
         #region XYZWValueAccessors
+        [CreateProperty]
         public float W
         {
             get => _w;
@@ -25,19 +26,21 @@ namespace RotParams
             }
         }
 
+        [CreateProperty]
         public float X
         {
             get => _x;
             set => SetWXYZValueChecked(ref _x, value);
         }
 
+        [CreateProperty]
         public float Y
         {
             get => _y;
             set => SetWXYZValueChecked(ref _y, value);
         }
 
-
+        [CreateProperty]
         public float Z
         {
             get => _z;
@@ -158,7 +161,7 @@ namespace RotParams
         [CreateProperty]
         public Vector4 Vector4
         {
-            get => new Vector4(W, X, Y, Z); 
+            get => new Vector4(X, Y, Z, W); //must change the order here, because otherwise unity shuffles those values in a circle 
             set
             {
                 if (_w.TypeValue != value.w)
