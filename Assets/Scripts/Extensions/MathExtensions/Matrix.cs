@@ -167,7 +167,7 @@ namespace MathExtensions
         {
             Debug.Assert(firstMatrix.Width == secondMatrix.Height, "firstMatrix.width != secondMatrix.height");
 
-            return new Matrix(Math.MatrixMultiply(
+            return new Matrix(MathFunctions.MatrixMultiply(
                 firstMatrix.InternalMatrix, firstMatrix.height, firstMatrix.width, 
                 secondMatrix.InternalMatrix, secondMatrix.width, secondMatrix.height), 
                 firstMatrix.height, secondMatrix.width, true); 

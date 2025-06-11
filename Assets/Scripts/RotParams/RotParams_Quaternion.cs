@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using MathExtensions;
 using Unity.Properties;
 using UnityEngine;
 
@@ -7,77 +9,99 @@ namespace RotParams
     [Serializable]
     public class RotParams_Quaternion : RotParams
     {
-        [SerializeField] private bool enforceNormalisation = false; //-ZyKa Quaternion enforceNormalisation
-        private float lastR;
-        [SerializeField] private LockableFloat _w; //-ZyKa figure out whether you need a LockableFloat here or not
-        private float lastI;
+        [SerializeField] private bool enforceNormalisation = true; //-ZyKa Quaternion enforceNormalisation
+        [SerializeField] private LockableFloat _w; 
         [SerializeField] private LockableFloat _x;
-        private float lastJ;
         [SerializeField] private LockableFloat _y;
-        private float lastK;
         [SerializeField] private LockableFloat _z;
 
-        #region DirectValueAccessors
+        #region XYZWValueAccessors
         public float W
         {
             get => _w;
-            set => SetValueChecked(ref _w, value);
+            set
+            {
+                SetWXYZValueChecked(ref _w, value); 
+            }
         }
 
         public float X
         {
             get => _x;
-            set => SetValueChecked(ref _x, value);
+            set => SetWXYZValueChecked(ref _x, value);
         }
 
         public float Y
         {
             get => _y;
-            set => SetValueChecked(ref _y, value);
+            set => SetWXYZValueChecked(ref _y, value);
         }
 
 
         public float Z
         {
             get => _z;
-            set => SetValueChecked(ref _z, value);
+            set => SetWXYZValueChecked(ref _z, value);
         }
-        #endregion //DirectValueAccessors
+        
+        private void SetWXYZValueChecked(ref LockableFloat _lockableValue, float newValue)
+        {
+            if (EnforceNormalisation)
+            {
+                SetValueInLockableFloatList(WXYZList, ref _lockableValue, newValue, 1);
+            }
+            else
+            {
+                _lockableValue.SetValue(newValue, true);
+            }
+        }
 
-        #region ControlledValueAccessors
+        private void SetXYZValueChecked(ref LockableFloat _lockableValue, float newValue)
+        {
+            if (EnforceNormalisation)
+            {
+                SetValueInLockableFloatList(XYZList, ref _lockableValue, newValue);
+            }
+            else
+            {
+                _lockableValue.SetValue(newValue, true);
+            }
+        }
+        
+        //-ZyKa this function should probably be in another class
+        private void SetValueInLockableFloatList(List<LockableFloat> list, ref LockableFloat _lockableValue, float newValue, float desiredVectorLength = -1)
+        {
+            GetLockedAndUnlockedLength(list, out float lockedLength, out float unlockedLength, out int lockedCount);
+            if (desiredVectorLength == -1)
+            {
+                desiredVectorLength = MathFunctions.AddLengthsPythagoreon(lockedLength, unlockedLength);
+            }
+            
+            if (_lockableValue.isLocked)
+            {
+                lockedLength = MathFunctions.SubtractLengthPythagoreon(lockedLength, _lockableValue.TypeValue); 
+                float maxAbsLength = Mathf.Sqrt(desiredVectorLength - lockedLength * lockedLength);
+                _lockableValue.SetValue(Mathf.Clamp(newValue, -maxAbsLength, maxAbsLength), true);
+                lockedLength = MathFunctions.AddLengthsPythagoreon(lockedLength, _lockableValue.TypeValue);
+            }
+            else
+            {
+                unlockedLength = MathFunctions.SubtractLengthPythagoreon(unlockedLength, _lockableValue.TypeValue); 
+                float maxAbsLength = Mathf.Sqrt(desiredVectorLength - lockedLength * lockedLength);
+                _lockableValue.SetValue(Mathf.Clamp(newValue, -maxAbsLength, maxAbsLength), true);
+                unlockedLength = MathFunctions.AddLengthsPythagoreon(unlockedLength, _lockableValue.TypeValue);
+            }
+            ScaleLockedVectorToLength(list, lockedLength, unlockedLength, 1);
+        }
 
+        private List<LockableFloat> WXYZList => new List<LockableFloat>(){_w, _x, _y, _z}; 
+        private List<LockableFloat> XYZList => new List<LockableFloat>(){_x, _y, _z};
+        
         public LockableFloat GetInternalLockableFloatByIndex(int index)
         {
-            switch (index)
-            {
-                case 0:
-                    return _w;
-                case 1:
-                    return _x;
-                case 2:
-                    return _y;
-                case 3:
-                    return _z;
-                default:
-                    throw new IndexOutOfRangeException();
-            }
+            return WXYZList[index]; 
         }
-
-        private void SetValueChecked(ref LockableFloat _value, float newValue)
-        {
-            _value.Value = newValue;
-            if (enforceNormalisation)
-            {
-                GetLockedAndUnlockedLength(out float lockedLength, out float unlockedLength, out int lockedCount);
-                Math.Clamp(_value.Value, lockedLength - 1, 1 - lockedLength);
-                bool isRLocked = _value.isLocked;
-                _value.isLocked = true;
-                NormalizeWithLocks();
-                _value.isLocked = isRLocked;
-            }
-        }
-
-        #endregion //ControlledValueAccessors
+        #endregion XYZWValueAccessors
 
         [CreateProperty]
         public Vector3 Axis
@@ -85,23 +109,49 @@ namespace RotParams
             get => new Vector3(X, Y, Z).normalized;
             set
             {
-                float sinAngle = Mathf.Sin(Angle/2); 
-                X = sinAngle * value.x;
-                Y = sinAngle * value.y;
-                Z = sinAngle * value.z;
+                bool isWLocked = _w.isLocked;
+                _w.isLocked = false;
+                float xyzLength = MathFunctions.SubtractLengthPythagoreon(1, _w.TypeValue); 
+                
+                Vector3 oldAxis = Axis;
+                if (oldAxis.x != value.x)
+                {
+                    SetValueInLockableFloatList(XYZList, ref _x, value.x, xyzLength);
+                }
+                if (oldAxis.y != value.y)
+                {
+                    SetValueInLockableFloatList(XYZList, ref _y, value.y, xyzLength);
+                }
+                if (oldAxis.z != value.z)
+                {
+                    SetValueInLockableFloatList(XYZList, ref _z, value.z, xyzLength);
+                }
+                _w.isLocked = isWLocked;
             }
         }
 
         [CreateProperty]
         public float Angle
         {
-            get
-            {
-                return 2 * Mathf.Acos(W); 
-            }
+            get => 2 * Mathf.Acos(W);
             set
             {
-                W = Mathf.Cos(value / 2); 
+                bool isXLocked = _x.isLocked;
+                bool isYLocked = _y.isLocked;
+                bool isZLocked = _z.isLocked;
+                bool isWLocked = _w.isLocked;
+                
+                _w.isLocked = false;
+                _x.isLocked = false;
+                _y.isLocked = false;
+                _z.isLocked = false;
+                
+                SetValueInLockableFloatList(WXYZList, ref _w, value, 1);
+                
+                _w.isLocked = isWLocked;
+                _x.isLocked = isXLocked;
+                _y.isLocked = isYLocked;
+                _z.isLocked = isZLocked;
             }
         }
 
@@ -111,19 +161,62 @@ namespace RotParams
             get => new Vector4(W, X, Y, Z); 
             set
             {
-                W = value.w; 
-                X = value.x;
-                Y = value.y;
-                Z = value.z;
+                if (_w.TypeValue != value.w)
+                {
+                    W = value.w; 
+                }
+                if (_x.TypeValue != value.x)
+                {
+                    X = value.x;
+                }
+                if (_y.TypeValue != value.y)
+                {
+                    Y = value.y;
+                }
+                if (_z.TypeValue != value.z)
+                {
+                    Z = value.z;
+                }
             }
         }
-        
+
+        public bool EnforceNormalisation
+        {
+            get => enforceNormalisation;
+            set
+            {
+                enforceNormalisation = value;
+                if (value)
+                {
+                    GetLockedAndUnlockedLength(WXYZList, out float originalLockedLength, out float unlockedLength, out int lockedCount);
+                    if (originalLockedLength > 1)
+                    {
+                        bool[] isLockedBuffer = new bool[4];
+                        for (int i = 0; i < WXYZList.Count; i++)
+                        {
+                            isLockedBuffer[i] = WXYZList[i].isLocked;
+                            WXYZList[i].isLocked = false;
+                        }
+                        ScaleLockedVectorToLength(WXYZList);
+                        for (int i = 0; i < WXYZList.Count; i++)
+                        {
+                            WXYZList[i].isLocked = isLockedBuffer[i];
+                        }
+                    }
+                    else
+                    {
+                        ScaleLockedVectorToLength(WXYZList);
+                    }
+                }
+            }
+        }
+
         public RotParams_Quaternion()
         {
-            _w = 1;
-            _x = 0;
-            _y = 0;
-            _z = 0;
+            _w = new LockableFloat(1, false);
+            _x = new LockableFloat(0, false);
+            _y = new LockableFloat(0, false);
+            _z = new LockableFloat(0, false);
         }
 
         public RotParams_Quaternion(RotParams_Quaternion rotParamsQuaternion) : this(rotParamsQuaternion.W,
@@ -131,12 +224,12 @@ namespace RotParams
         {
         }
 
-        public RotParams_Quaternion(float inReal, float inI, float inJ, float inK)
+        public RotParams_Quaternion(float w, float x, float y, float z)
         {
-            _w = inReal;
-            _x = inI;
-            _y = inJ;
-            _z = inK;
+            _w = new LockableFloat(w, false);
+            _x = new LockableFloat(x, false);
+            _y = new LockableFloat(y, false);
+            _z = new LockableFloat(z, false);
         }
 
         public RotParams_Quaternion(Vector3 inAxis, float inAngle)
@@ -147,10 +240,10 @@ namespace RotParams
             float cos = (float)Math.Cos(halfAngle);
             float sin = (float)Math.Sin(halfAngle);
 
-            _w = cos;
-            _x = inAxis.x * sin;
-            _y = inAxis.y * sin;
-            _z = inAxis.z * sin;
+            _w = new LockableFloat(cos, false);
+            _x = new LockableFloat(inAxis.x * sin, false);
+            _y = new LockableFloat(inAxis.y * sin, false);
+            _z = new LockableFloat(inAxis.z * sin, false);
         }
 
         private static readonly RotParams_Quaternion _xdentity = new RotParams_Quaternion(1, 0, 0, 0);
@@ -281,51 +374,58 @@ namespace RotParams
             return Mathf.Sqrt(W * W + X * X + Y * Y + Z * Z);
         }
 
-        public void NormalizeWithLocks()
+        private bool ScaleLockedVectorToLength(List<LockableFloat> partiallyLockedVector, float desiredLength = 1)
         {
-            GetLockedAndUnlockedLength(out float lockedLength, out float unlockedLength, out int lockedCount);
-            if (lockedCount == 4)
-            {
-                Debug.LogError("Can't normalise Quaternion if all 4 values are locked");
-                return;
-            }
-
-            if (lockedLength > 1)
-            {
-                Debug.LogError($"Can't normalise Quaternion if lockedLength = {lockedLength} > 1");
-                return;
-            }
-
-            float ratio = 1 - lockedLength / unlockedLength;
-            _w.value *= _w.isLocked ? 1 : ratio;
-            _x.value *= _x.isLocked ? 1 : ratio;
-            _y.value *= _y.isLocked ? 1 : ratio;
-            _z.value *= _z.isLocked ? 1 : ratio;
+            GetLockedAndUnlockedLength(partiallyLockedVector, out float lockedVectorLength, out float unlockedVectorLength, out int lockedCount);
+            return ScaleLockedVectorToLength(partiallyLockedVector, lockedVectorLength, unlockedVectorLength, desiredLength);
         }
 
-        private void GetLockedAndUnlockedLength(out float lockedLength, out float unlockedLength, out int lockedCount)
+        private bool ScaleLockedVectorToLength(List<LockableFloat> partiallyLockedVector, float lockedVectorLength, float unlockedVectorLength, float desiredLength = 1)
+        {
+            float ratio; 
+            if (lockedVectorLength > desiredLength)
+            {
+                Debug.LogError($"Can't normalize Quaternion when values are locked to be at a length > 1: {ToString()}");
+                return false; 
+            }
+            else
+            {
+                float UnlockedMaxLength = Mathf.Sqrt(desiredLength - lockedVectorLength * lockedVectorLength);//!ZyKa
+                ratio = unlockedVectorLength != 0 ? 
+                    UnlockedMaxLength / unlockedVectorLength : 
+                    0;
+            }
+            foreach (LockableFloat value in WXYZList)
+            {
+                value.SetValue(value.TypeValue * ratio); 
+            }
+
+            return true; 
+        }
+
+        private void GetLockedAndUnlockedLength(List<LockableFloat> partiallyLockedVector, out float lockedVectorLength, out float unlockedVectorLength, out int lockedCount)
         {
             int _lockedCount = 0;
             float lockedLengthSquared = 0;
             float unlockedLengthSquared = 0;
-            AddTo_Un_Locked_Value(ref _w.value, ref _w.isLocked);
-            AddTo_Un_Locked_Value(ref _x.value, ref _x.isLocked);
-            AddTo_Un_Locked_Value(ref _y.value, ref _y.isLocked);
-            AddTo_Un_Locked_Value(ref _z.value, ref _z.isLocked);
-            lockedCount = _lockedCount;
-            lockedLength = Mathf.Sqrt(lockedLengthSquared);
-            unlockedLength = Mathf.Sqrt(unlockedLengthSquared);
-
-            void AddTo_Un_Locked_Value(ref float value, ref bool locked)
+            foreach (LockableFloat lockableFloat in partiallyLockedVector)
             {
-                if (locked)
+                AddToLength(lockableFloat);
+            }
+            lockedCount = _lockedCount;
+            lockedVectorLength = Mathf.Sqrt(lockedLengthSquared);
+            unlockedVectorLength = Mathf.Sqrt(unlockedLengthSquared);
+
+            void AddToLength(LockableFloat lockableFloat)
+            {
+                if (lockableFloat.isLocked)
                 {
-                    lockedLengthSquared += value * value;
+                    lockedLengthSquared += lockableFloat * lockableFloat;
                     _lockedCount++;
                 }
                 else
                 {
-                    unlockedLengthSquared += value * value;
+                    unlockedLengthSquared += lockableFloat * lockableFloat;
                 }
             }
         }
@@ -333,10 +433,10 @@ namespace RotParams
         public void normalize()
         {
             float sizeSquared = SizeSquared();
-            _w.Value = _w.Value / sizeSquared;
-            _x.Value = _x.Value / sizeSquared;
-            _y.Value = _y.Value / sizeSquared;
-            _z.Value = _z.Value / sizeSquared;
+            _w.TypeValue = _w.TypeValue / sizeSquared;
+            _x.TypeValue = _x.TypeValue / sizeSquared;
+            _y.TypeValue = _y.TypeValue / sizeSquared;
+            _z.TypeValue = _z.TypeValue / sizeSquared;
         }
 
         public RotParams_Quaternion Normalize()
@@ -381,10 +481,10 @@ namespace RotParams
 
         public override void ResetToIdentity()
         {
-            _w = 1;
-            _x = 0;
-            _y = 0;
-            _z = 0; 
+            _w.SetValue(1, true);
+            _x.SetValue(0, true); 
+            _y.SetValue(0, true); 
+            _z.SetValue(0, true); 
         }
 
         public override Vector3 RotateVector(Vector3 inVector)

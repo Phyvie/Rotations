@@ -2,7 +2,6 @@ using System;
 using MathExtensions;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Math = MathExtensions.Math;
 
 namespace Visualisation
 {
@@ -169,7 +168,7 @@ namespace Visualisation
             weights[2] = LocalRotationAxis.z * LocalRotationAxis.z;
 
             transform.localRotation =
-                Math.QuaternionInterpolateAsRotationVectors(orientations, weights);
+                MathFunctions.QuaternionInterpolateAsRotationVectors(orientations, weights);
         }
 
         static readonly Quaternion OrientationNormalUp = new Quaternion(0, 0, 0, 1);

@@ -79,24 +79,24 @@ namespace Visualisation
 
         private void OnValidate()
         {
-            try
+            if (EditorApplication.isPlayingOrWillChangePlaymode && !EditorApplication.isPlaying)
             {
-                if (EditorApplication.isPlayingOrWillChangePlaymode && !EditorApplication.isPlaying)
-                {
-                    return; 
-                }
+                return; 
+            }
 #if UNITY_EDITOR
-                EditorApplication.delayCall += () =>
+            EditorApplication.delayCall += () =>
+            {
+                try
                 {
                     RotationAxis = rotationAxis;
                     ArcType = arcType;
-                };
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"This Object is causing the Gizmo_Rotation error whenever you save: {gameObject.name}"); 
+                }
+            };
 #endif
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"This Object is causing the Gizmo_Rotation error whenever you save: {gameObject.name}"); 
-            }
         }
     }
 }

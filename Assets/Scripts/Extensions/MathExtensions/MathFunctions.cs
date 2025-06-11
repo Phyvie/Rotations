@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MathExtensions
 {
-    public static class Math
+    public static class MathFunctions
     {
         public static Vector3 GetOrthogonalisedVector(this Vector3 reference, Vector3 toOrthogonalise)
         {
@@ -255,5 +255,15 @@ namespace MathExtensions
 
         #endregion
         #endregion Matrix
+
+        public static float SubtractLengthPythagoreon(float originalLength, float subtractValue)
+        {
+            return Mathf.Sqrt(originalLength * originalLength - subtractValue * subtractValue);
+        }
+
+        public static float AddLengthsPythagoreon(float originalLength, float addValue)
+        {
+            return Mathf.Sqrt(originalLength * originalLength + addValue * addValue);
+        }
     }
 }

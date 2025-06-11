@@ -1,73 +1,112 @@
+using System;
 using RotParams;
 using UnityEditor;
 using UnityEngine;
 
 namespace Editor
 {
-    [CustomPropertyDrawer(typeof(RotParams_Quaternion))]
-    public class QuaternionRotationInspector : NestedPropertyDrawer
-    {
-        private SerializedProperty SP_x; 
-        private SerializedProperty SP_y; 
-        private SerializedProperty SP_z; 
-        private SerializedProperty SP_w;
+    using UnityEngine;
+using UnityEditor;
 
-        private void Initialize(SerializedProperty property)
+[CustomPropertyDrawer(typeof(RotParams_Quaternion))]
+public class RotParamsQuaternionDrawer : PropertyDrawer
+{
+    private bool initialized = false;
+
+    private SerializedProperty enforceNormalizationProp;
+    private SerializedProperty wProp, xProp, yProp, zProp;
+    private SerializedProperty wLockedProp, xLockedProp, yLockedProp, zLockedProp;
+
+    private void Initialize(SerializedProperty property)
+    {
+        if (initialized) return;
+
+        enforceNormalizationProp = property.FindPropertyRelative("enforceNormalisation");
+
+        wProp = property.FindPropertyRelative("_w");
+        xProp = property.FindPropertyRelative("_x");
+        yProp = property.FindPropertyRelative("_y");
+        zProp = property.FindPropertyRelative("_z");
+
+        wLockedProp = wProp.FindPropertyRelative("isLocked");
+        xLockedProp = xProp.FindPropertyRelative("isLocked");
+        yLockedProp = yProp.FindPropertyRelative("isLocked");
+        zLockedProp = zProp.FindPropertyRelative("isLocked");
+
+        initialized = true;
+    }
+
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+        Initialize(property);
+        EditorGUI.BeginProperty(position, label, property);
+
+        var rotParams = fieldInfo.GetValue(property.serializedObject.targetObject) as RotParams_Quaternion;
+        if (rotParams == null)
         {
-            SP_x = property.FindPropertyRelative("_x"); 
-            SP_y = property.FindPropertyRelative("_y"); 
-            SP_z = property.FindPropertyRelative("_z"); 
-            SP_w = property.FindPropertyRelative("_w");
+            EditorGUI.LabelField(position, "Error: Cannot cast property to RotParams_Quaternion");
+            return;
+        }
+
+        float lineHeight = EditorGUIUtility.singleLineHeight;
+        float spacing = EditorGUIUtility.standardVerticalSpacing;
+        float lockWidth = 18f;
+        float labelWidth = 15f;
+        float floatFieldWidth = position.width - lockWidth - labelWidth - 10;
+
+        Rect currentRect = new Rect(position.x, position.y, position.width, lineHeight);
+
+        // Draw enforceNormalization
+        EditorGUI.BeginChangeCheck(); 
+        bool enforceNormalizationToggle = EditorGUI.Toggle(currentRect, new GUIContent("Enforce Normalization"), enforceNormalizationProp.boolValue);
+        currentRect.y += lineHeight + spacing;
+        if (EditorGUI.EndChangeCheck())
+        {
+            rotParams.EnforceNormalisation = enforceNormalizationToggle; 
         }
         
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
-            Initialize(property);
-            InitializePropertyNesting(property);
-            EditorGUI.BeginProperty(position, label, property);
-            position.height = EditorGUIUtility.singleLineHeight;
-            RotParams_Quaternion targetRotParamsQuaternion = GetObject<RotParams_Quaternion>(property);
+        DrawFloatWithLock(wLockedProp, ref currentRect, "W", rotParams.W, val => rotParams.W = val);
+        DrawFloatWithLock(xLockedProp, ref currentRect, "X", rotParams.X, val => rotParams.X = val);
+        DrawFloatWithLock(yLockedProp, ref currentRect, "Y", rotParams.Y, val => rotParams.Y = val);
+        DrawFloatWithLock(zLockedProp, ref currentRect, "Z", rotParams.Z, val => rotParams.Z = val);
 
-            if (position.width == 1)
-            {
-                EditorGUI.EndProperty();
-                return; 
-            }
-
-            // SP_EnforceNormalisation.boolValue = EditorGUI.Toggle(position, new GUIContent("Enforce Normalisation / Rotation"), SP_EnforceNormalisation.boolValue); //-ZyKa Inspector -ZyKa Quaternion EnforceNormalisation
-            // position.y += EditorGUIUtility.singleLineHeight; 
-            
-            float fieldWidth = position.width; 
-            float labelWidth = 10;
-            float valueWidth = (fieldWidth / 4) - labelWidth; 
-            float spacing = 10;
-            SerializedProperty[] valuesSP = new SerializedProperty[] { SP_w, SP_x, SP_y, SP_z};
-            for (int i = 0; i < 4; i++)
-            {
-                SerializedProperty SP = valuesSP[i]; 
-                Rect labelRect = new Rect(i*(labelWidth+valueWidth+spacing), position.y, labelWidth, position.height);
-                EditorGUI.LabelField(labelRect, new GUIContent(SP.name.Substring(1)));
-                Rect valueRect = new Rect(i*(labelWidth+valueWidth+spacing)+labelWidth, position.y, valueWidth, position.height);
-                float preValue = ((LockableFloat)SP.boxedValue).value; 
-                EditorGUI.PropertyField(valueRect, SP);
-                float postValue = ((LockableFloat)SP.boxedValue).value;
-
-                if (preValue != postValue)
-                {
-                    LockableFloat lockableFloat = targetRotParamsQuaternion.GetInternalLockableFloatByIndex(i); 
-                    bool isLocked = targetRotParamsQuaternion.GetInternalLockableFloatByIndex(i).isLocked;
-                    lockableFloat.isLocked = true; 
-                    targetRotParamsQuaternion.NormalizeWithLocks(); //TODO: this does not work as intended, because the stored value is not yet changed, only the SerializedField is changed
-                    lockableFloat.isLocked = isLocked; 
-                }
-            }
-            
-            EditorGUI.EndProperty(); 
-        }
-
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-            return EditorGUIUtility.singleLineHeight * 2 + EditorGUIUtility.standardVerticalSpacing;
-        }
+        EditorGUI.EndProperty();
     }
+
+    private void DrawFloatWithLock(SerializedProperty lockProp, ref Rect rect, string label, float currentValue, Action<float> onValueChanged)
+    {
+        EditorGUI.BeginChangeCheck();
+
+        float labelWidth = 13f;
+        float spacing = 2f;
+        float lockWidth = 18f;
+
+        Rect labelRect = new Rect(rect.x, rect.y, labelWidth, rect.height);
+        Rect floatRect = new Rect(labelRect.xMax + spacing, rect.y, rect.width - labelWidth - lockWidth - spacing * 2, rect.height);
+        Rect lockRect = new Rect(rect.xMax - lockWidth, rect.y, lockWidth, rect.height);
+
+        // Use draggable float field with label
+        EditorGUIUtility.labelWidth = labelWidth;
+        float newVal = EditorGUI.FloatField(floatRect, new GUIContent(label), currentValue);
+
+        // Lock toggle
+        lockProp.boolValue = EditorGUI.Toggle(lockRect, lockProp.boolValue);
+
+        if (EditorGUI.EndChangeCheck())
+        {
+            Undo.RecordObject(lockProp.serializedObject.targetObject, $"Edit {label}");
+            onValueChanged(newVal);
+            EditorUtility.SetDirty(lockProp.serializedObject.targetObject);
+        }
+
+        rect.y += rect.height + EditorGUIUtility.standardVerticalSpacing;
+    }
+
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    {
+        // 5 lines: 1 for normalization + 4 for WXYZ
+        return (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 5;
+    }
+}
+
 }

@@ -7,56 +7,58 @@ using UnityEngine;
 namespace Editor
 {
     [CustomPropertyDrawer(typeof(LockableFloat))]
-    public class lockableFloatInspector : PropertyDrawer
+    public class LockableFloatDrawer : PropertyDrawer
     {
-        private SerializedProperty SP_value;
-        private SerializedProperty SP_isLocked;
+        private SerializedProperty typeValueProp;
+        private SerializedProperty isLockedProp;
+        private bool initialized = false;
 
         private void Initialize(SerializedProperty property)
         {
-            SP_value = property.FindPropertyRelative("value");
-            SP_isLocked = property.FindPropertyRelative("isLocked"); 
+            if (initialized) return;
+
+            typeValueProp = property.FindPropertyRelative("typeValue");
+            isLockedProp = property.FindPropertyRelative("isLocked");
+
+            initialized = true;
         }
-        
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             Initialize(property);
             EditorGUI.BeginProperty(position, label, property);
-            position.height = EditorGUIUtility.singleLineHeight;
 
-            float fieldWidth = position.width;
-            if (fieldWidth == 1)
-            {
-                EditorGUI.EndProperty();
-                return; 
-            }
+            float lineHeight = EditorGUIUtility.singleLineHeight;
+            float lockWidth = 20f;
+            float spacing = 4f;
 
-            float lockWidth = 30; 
-            
-            Rect valueRect = new Rect(position);
-            valueRect.width = fieldWidth - lockWidth - 10;
-            valueRect.x = position.x; 
-            
-            Rect lockRect = new Rect(position);
-            lockRect.width = lockWidth;
-            lockRect.x = position.x + fieldWidth - lockWidth;
-            
-            if (!SP_isLocked.boolValue)
-            {
-                SP_value.floatValue = EditorGUI.FloatField(valueRect, new GUIContent(""), SP_value.floatValue); 
-            }
-            else
-            {
-                EditorGUI.LabelField(valueRect, new GUIContent(SP_value.floatValue.ToString(CultureInfo.InvariantCulture)));
-            }
-            SP_isLocked.boolValue = EditorGUI.Foldout(lockRect, SP_isLocked.boolValue, new GUIContent("")); 
-            
+            // Layout calculation
+            Rect labelRect = new Rect(position.x, position.y, EditorGUIUtility.labelWidth, lineHeight);
+            Rect fieldRect = new Rect(labelRect.xMax, position.y, position.width - labelRect.width - lockWidth - spacing, lineHeight);
+            Rect lockRect = new Rect(fieldRect.xMax + spacing, position.y, lockWidth, lineHeight);
+
+            // Draw label
+            EditorGUI.LabelField(labelRect, label);
+
+            // Draw value (disabled if locked)
+            EditorGUI.BeginDisabledGroup(isLockedProp.boolValue);
+            EditorGUI.PropertyField(fieldRect, typeValueProp, GUIContent.none);
+            EditorGUI.EndDisabledGroup();
+
+            // Draw lock toggle as icon
+            isLockedProp.boolValue = GUI.Toggle(
+                lockRect,
+                isLockedProp.boolValue,
+                EditorGUIUtility.IconContent("LockIcon-On", "Toggle Lock"),
+                GUIStyle.none
+            );
+
             EditorGUI.EndProperty();
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return EditorGUIUtility.singleLineHeight; 
+            return EditorGUIUtility.singleLineHeight;
         }
     }
 }
