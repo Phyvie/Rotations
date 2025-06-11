@@ -397,13 +397,37 @@ MonoBehaviour:
   rotParams:
     outer:
       eAxis: 0
-      angleInRadian: 0
+      typedAngle:
+        showAllAngleTypes: 0
+        showAngleTypeSelector: 1
+        angleType:
+          rid: 1000
+        _angleInRadian: 0
     middle:
       eAxis: 1
-      angleInRadian: 0
+      typedAngle:
+        showAllAngleTypes: 0
+        showAngleTypeSelector: 1
+        angleType:
+          rid: 1000
+        _angleInRadian: 0
     inner:
       eAxis: 2
-      angleInRadian: 0
+      typedAngle:
+        showAllAngleTypes: 0
+        showAngleTypeSelector: 1
+        angleType:
+          rid: 1000
+        _angleInRadian: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 1000
+      type: {class: AngleType, ns: RotParams, asm: MathExtensions}
+      data:
+        angleTypeName: Radian
+        unitMultiplier: 6.2831854820251465
+        unitLabel: 2PI
 --- !u!1 &4520340664653103367
 GameObject:
   m_ObjectHideFlags: 0

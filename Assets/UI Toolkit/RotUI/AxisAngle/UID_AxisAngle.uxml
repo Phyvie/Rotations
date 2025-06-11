@@ -10,9 +10,15 @@
                 <engine:VisualElement name="AngleContainer" style="flex-grow: 1;">
                     <engine:FloatField name="AngleField" class="floatField--pure">
                         <Bindings>
-                            <engine:DataBinding property="value" data-source-path="AngleInDegrees" binding-mode="TwoWay" />
+                            <engine:DataBinding property="value" data-source-path="typedAngle.AngleInCurrentUnit" binding-mode="TwoWay" />
                         </Bindings>
                     </engine:FloatField>
+                    <engine:DropdownField name="AngleTypeSelector">
+                        <Bindings>
+                            <engine:DataBinding property="choices" data-source-path="typedAngle.AngleTypeChoices" binding-mode="ToTarget" />
+                            <engine:DataBinding property="index" data-source-path="typedAngle.AngleTypeIndex" binding-mode="TwoWay" />
+                        </Bindings>
+                    </engine:DropdownField>
                 </engine:VisualElement>
                 <engine:Label text="x" name="Lbl__Multiply" class="centeredText" style="-unity-font-style: bold; width: 25px;" />
                 <engine:VisualElement name="AxisContainer" style="flex-grow: 1;">
@@ -31,7 +37,7 @@
                 <engine:VisualElement name="RotationVectorContainer" style="flex-grow: 1;">
                     <engine:Vector3Field name="RotationVector" class="vector--pure container--horizontalspacearound" style="margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px;">
                         <Bindings>
-                            <engine:DataBinding property="value" data-source-path="RotationVector" binding-mode="TwoWay" />
+                            <engine:DataBinding property="value" data-source-path="RotationVectorInCurrentUnit" binding-mode="TwoWay" />
                         </Bindings>
                     </engine:Vector3Field>
                 </engine:VisualElement>

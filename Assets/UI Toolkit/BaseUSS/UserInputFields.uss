@@ -61,10 +61,10 @@
     justify-content: space-around;
 }
 
-.enumWithFloat > EnumField > Label {
+.gimbalRing > EnumField > Label {
     display: none;
 }
 
-.enumWithFloat > FloatField > Label {
+.gimbalRing > FloatField > Label {
     display: none;
 }

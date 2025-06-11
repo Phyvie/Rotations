@@ -13,42 +13,59 @@
             </engine:Label>
             <engine:VisualElement style="width: 50%;" />
         </engine:VisualElement>
-        <engine:VisualElement name="FirstAxis" class="enumWithFloat container--horizontalspacearound">
+        <engine:VisualElement name="FirstAxis" class="container--horizontalspacearound gimbalRing">
             <engine:EnumField value="Center" type="RotParams.EGimbleAxis, RotParams">
                 <Bindings>
                     <engine:DataBinding property="value" data-source-path="outer.eAxis" binding-mode="TwoWay" />
                 </Bindings>
             </engine:EnumField>
-            <engine:FloatField label="Float Field">
+            <engine:FloatField>
                 <Bindings>
-                    <engine:DataBinding property="value" data-source-path="outer.AngleInDegrees" binding-mode="TwoWay" />
+                    <engine:DataBinding property="value" data-source-path="outer.typedAngle.AngleInCurrentUnit" binding-mode="TwoWay" />
                 </Bindings>
             </engine:FloatField>
+            <engine:DropdownField>
+                <Bindings>
+                    <engine:DataBinding property="index" data-source-path="outer.typedAngle.AngleTypeIndex" binding-mode="TwoWay" />
+                    <engine:DataBinding property="choices" data-source-path="outer.typedAngle.AngleTypeChoices" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:DropdownField>
         </engine:VisualElement>
-        <engine:VisualElement name="SecondAxis" class="enumWithFloat container--horizontalspacearound">
+        <engine:VisualElement name="SecondAxis" class="container--horizontalspacearound gimbalRing">
             <engine:EnumField value="Center" type="RotParams.EGimbleAxis, RotParams">
                 <Bindings>
                     <engine:DataBinding property="value" data-source-path="middle.eAxis" binding-mode="TwoWay" />
                 </Bindings>
             </engine:EnumField>
-            <engine:FloatField label="Float Field">
+            <engine:FloatField>
                 <Bindings>
-                    <engine:DataBinding property="value" data-source-path="middle.AngleInDegrees" binding-mode="TwoWay" />
+                    <engine:DataBinding property="value" data-source-path="middle.typedAngle.AngleInCurrentUnit" binding-mode="TwoWay" />
                 </Bindings>
             </engine:FloatField>
+            <engine:DropdownField>
+                <Bindings>
+                    <engine:DataBinding property="choices" data-source-path="outer.typedAngle.AngleTypeChoices" binding-mode="ToTarget" />
+                    <engine:DataBinding property="index" data-source-path="middle.typedAngle.AngleTypeIndex" binding-mode="TwoWay" />
+                </Bindings>
+            </engine:DropdownField>
         </engine:VisualElement>
-        <engine:VisualElement name="ThirdAxis" class="enumWithFloat container--horizontalspacearound">
+        <engine:VisualElement name="ThirdAxis" class="container--horizontalspacearound gimbalRing">
             <engine:EnumField value="Center" type="RotParams.EGimbleAxis, RotParams">
                 <Bindings>
                     <engine:DataBinding property="value" data-source-path="inner.eAxis" binding-mode="TwoWay" />
                 </Bindings>
             </engine:EnumField>
-            <engine:FloatField label="Float Field">
+            <engine:FloatField>
                 <Bindings>
-                    <engine:DataBinding property="label" data-source-path="inner.Angle" binding-mode="TwoWay" />
                     <engine:DataBinding property="value" data-source-path="inner.AngleInDegrees" binding-mode="ToTarget" />
                 </Bindings>
             </engine:FloatField>
+            <engine:DropdownField>
+                <Bindings>
+                    <engine:DataBinding property="choices" data-source-path="outer.typedAngle.AngleTypeChoices" binding-mode="ToTarget" />
+                    <engine:DataBinding property="index" data-source-path="inner.typedAngle.AngleTypeIndex" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:DropdownField>
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

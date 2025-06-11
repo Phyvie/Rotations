@@ -29,50 +29,34 @@ namespace RotParams
             _ => Vector3.zero
         };
 
-        [FormerlySerializedAs("_angle")] [SerializeField] private float angleInRadian; 
-        public static string NameOfAngle => nameof(angleInRadian); //for PropertyDrawer
-        
-        [CreateProperty]
+        [SerializeField] private AngleWithType typedAngle; 
+        public static string NameOfAngle => nameof(typedAngle); //for PropertyDrawer
+
         public float AngleInRadian
         {
-            get => angleInRadian;
-            set => angleInRadian = value;
+            get => typedAngle.AngleInRadian; 
+            set => typedAngle.AngleInRadian = value;
         }
-
-        [CreateProperty]
-        public float AngleInDegrees
-        {
-            get => angleInRadian * Mathf.Rad2Deg;
-            set => angleInRadian = value * Mathf.Deg2Rad;
-        }
-
-        [CreateProperty]
-        public float AngleInCircleParts
-        {
-            get => angleInRadian / (2.0f * Mathf.PI);
-            set => angleInRadian = value * (2.0f * Mathf.PI);
-        }
-            
-            
+        
         #endregion
         
         #region Constructors
         private _RotParams_EulerAngleGimbalRing()
         {
             eAxis = EGimbleAxis.Yaw;
-            AngleInRadian = 0;
+            typedAngle = new AngleWithType(AngleType.Radian, 0);
         }
         
-        public _RotParams_EulerAngleGimbalRing(EGimbleAxis inEAxis, float inAngleInRadian)
+        public _RotParams_EulerAngleGimbalRing(EGimbleAxis inEAxis, float angleInRadian)
         {
             eAxis = inEAxis; 
-            AngleInRadian = inAngleInRadian;
+            typedAngle = new AngleWithType(AngleType.Radian, angleInRadian);
         }
         
         public _RotParams_EulerAngleGimbalRing(_RotParams_EulerAngleGimbalRing rotParamsEulerAngleGimbalRing)
         {
             eAxis = rotParamsEulerAngleGimbalRing.eAxis;
-            AngleInRadian = rotParamsEulerAngleGimbalRing.AngleInRadian;
+            typedAngle = rotParamsEulerAngleGimbalRing.typedAngle;
         }
         
         public static _RotParams_EulerAngleGimbalRing Yaw()

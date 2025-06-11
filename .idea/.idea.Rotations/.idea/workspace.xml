@@ -8,15 +8,17 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleLit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleLit.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleUnlit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleUnlit.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_VectorColor.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_VectorColor.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_EulerGimbal.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_EulerGimbal.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/AngleType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/AngleType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/AngleWithType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/AngleWithType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/GimbleRingInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/GimbleRingInspector.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_AxisAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_AxisAngle.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ZyKaAngleWithType.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ZyKaAngleWithType.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ZyKaAngleWithType.uxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ZyKaAngleWithType.uxml.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_EulerAngles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_EulerAngles.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/_RotParams_EulerAngleGimbalRing.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/_RotParams_EulerAngleGimbalRing.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/BaseUSS/UnityColors.uss" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Toolkit/BaseUSS/UnityColors.uss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/BaseUSS/UserInputFields.uss" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Toolkit/BaseUSS/UserInputFields.uss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/AxisAngle/UID_AxisAngle.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/AxisAngle/UID_AxisAngle.uxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/EulerAngle/UID_EulerAngle.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/EulerAngle/UID_EulerAngle.uxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/EulerAngle/USS_EulerAngle.uss" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/EulerAngle/USS_EulerAngle.uss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -290,7 +292,7 @@
       <workItem from="1749388950992" duration="16828000" />
       <workItem from="1749554364356" duration="12133000" />
       <workItem from="1749566541559" duration="26290000" />
-      <workItem from="1749643186163" duration="5282000" />
+      <workItem from="1749643186163" duration="8785000" />
     </task>
     <servers />
   </component>

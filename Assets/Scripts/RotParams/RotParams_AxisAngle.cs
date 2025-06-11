@@ -9,7 +9,7 @@ namespace RotParams
     public class RotParams_AxisAngle : RotParams
     {
         [SerializeField] private Vector3 axis;
-        [SerializeField] private AngleWithType typedAngle; 
+        [SerializeField] private AngleWithType typedAngle = new AngleWithType(AngleType.Radian, 0); 
         
         [CreateProperty]
         public Vector3 NormalisedAxis
