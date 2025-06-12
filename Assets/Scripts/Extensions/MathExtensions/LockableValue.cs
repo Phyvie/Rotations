@@ -52,6 +52,10 @@ namespace RotParams
                 Debug.Log("Value is locked and cannot be changed.");
             }
         }
+        
+        #region UXMLSupport
+        
+        #endregion UXMLSupport
     }
 
     [System.Serializable]

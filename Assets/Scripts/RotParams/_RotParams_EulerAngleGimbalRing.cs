@@ -44,32 +44,40 @@ namespace RotParams
         private _RotParams_EulerAngleGimbalRing()
         {
             eAxis = EGimbleAxis.Yaw;
-            typedAngle = new AngleWithType(AngleType.Radian, 0);
+            typedAngle = new AngleWithType(AngleType.Degree, 0);
         }
         
-        public _RotParams_EulerAngleGimbalRing(EGimbleAxis inEAxis, float angleInRadian)
+        public _RotParams_EulerAngleGimbalRing(EGimbleAxis inEAxis, float angleInRadian) : this(inEAxis, AngleType.Radian, angleInRadian)
+        {
+        }
+
+        public _RotParams_EulerAngleGimbalRing(EGimbleAxis inEAxis, AngleType angleType, float angle) : this(inEAxis, new AngleWithType(angleType, angle))
+        {
+        }
+
+        public _RotParams_EulerAngleGimbalRing(EGimbleAxis inEAxis, AngleWithType typedAngle)
         {
             eAxis = inEAxis; 
-            typedAngle = new AngleWithType(AngleType.Radian, angleInRadian);
+            this.typedAngle = typedAngle;
         }
         
         public _RotParams_EulerAngleGimbalRing(_RotParams_EulerAngleGimbalRing rotParamsEulerAngleGimbalRing)
         {
             eAxis = rotParamsEulerAngleGimbalRing.eAxis;
-            typedAngle = rotParamsEulerAngleGimbalRing.typedAngle;
+            typedAngle = new AngleWithType(rotParamsEulerAngleGimbalRing.typedAngle.angleType, rotParamsEulerAngleGimbalRing.typedAngle.AngleInCurrentUnit);
         }
         
         public static _RotParams_EulerAngleGimbalRing Yaw()
         {
-            return new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Yaw, (float)Mathf.PI / 2); 
+            return new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Yaw, AngleType.Degree, 90); 
         }
         public static _RotParams_EulerAngleGimbalRing Pitch(RotParams_EulerAngles parent)
         {
-            return new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Pitch, (float)Mathf.PI / 2); 
+            return new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Pitch, AngleType.Degree, 90); 
         }
         public static _RotParams_EulerAngleGimbalRing Roll(RotParams_EulerAngles parent)
         {
-            return new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Roll, (float)Mathf.PI / 2); 
+            return new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Roll, AngleType.Degree, 90); 
         }
         #endregion //Constructors
         

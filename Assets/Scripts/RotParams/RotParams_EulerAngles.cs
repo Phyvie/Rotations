@@ -17,9 +17,9 @@ namespace RotParams
     [Serializable]
     public class RotParams_EulerAngles : RotParams
     {
-        public _RotParams_EulerAngleGimbalRing outer = new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Yaw, 0); 
-        public _RotParams_EulerAngleGimbalRing middle = new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Pitch, 0); 
-        public _RotParams_EulerAngleGimbalRing inner = new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Roll, 0); 
+        public _RotParams_EulerAngleGimbalRing outer = new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Yaw, AngleType.Degree, 0); 
+        public _RotParams_EulerAngleGimbalRing middle = new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Pitch, AngleType.Degree, 0); 
+        public _RotParams_EulerAngleGimbalRing inner = new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Roll, AngleType.Degree, 0); 
         private _RotParams_EulerAngleGimbalRing[] gimbal => new[] { outer, middle, inner }; 
         private _RotParams_EulerAngleGimbalRing Yaw => GetRingForAxis(EGimbleAxis.Yaw); 
         private _RotParams_EulerAngleGimbalRing Pitch => GetRingForAxis(EGimbleAxis.Pitch); 

@@ -5,59 +5,130 @@
     <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UnityColors.uss?fileID=7433441132597879392&amp;guid=05afd8f5bd01ac04682fabbc8e02db4f&amp;type=3#UnityColors" />
     <Style src="project://database/Assets/UI%20Toolkit/RotUI/Quaternion/USS_Quaternion.uss?fileID=7433441132597879392&amp;guid=e897557bb9c9e6a49ac065b7f20433c3&amp;type=3#USS_Quaternion" />
     <engine:VisualElement name="Background" data-source-type="RotParams.RotParams_Quaternion, RotParams" class="unityUIBackgroundColor unityUIFieldColor unityUITextColor" style="flex-grow: 1;">
-        <engine:VisualElement name="SinCosLabelContainer" style="flex-grow: 1; flex-direction: row;">
-            <engine:VisualElement style="flex-grow: 1; width: 60%;" />
-            <engine:Label text="Unit Vector" name="UnitVectorLabel" class="centeredText" style="width: 40%;" />
-        </engine:VisualElement>
-        <engine:VisualElement name="SinCosContainer" class="container--horizontalspacearound">
-            <engine:VisualElement name="SinContainer" class="container--horizontalspacearound" style="align-content: stretch; width: 30%;">
-                <engine:Label text="Sin(" name="SinLabel" class="centeredText" />
-                <engine:FloatField name="AlphaField" class="floatField--pure">
-                    <Bindings>
-                        <engine:DataBinding property="value" data-source-path="Angle" binding-mode="TwoWay" />
-                    </Bindings>
-                </engine:FloatField>
-                <engine:Label text=")" name="SinLabelClose" class="centeredText" />
-            </engine:VisualElement>
-            <engine:Label text="+" name="Plus" class="container--horizontalspacearound centeredText" style="width: 25px;" />
-            <engine:VisualElement name="CosContainer" class="container--horizontalspacearound" style="width: 30%;">
-                <engine:Label text="Cos(" name="CosOpen" class="centeredText" />
-                <engine:FloatField name="Alpha" class="floatField--pure">
-                    <Bindings>
-                        <engine:DataBinding property="value" data-source-path="Angle" binding-mode="TwoWay" />
-                    </Bindings>
-                </engine:FloatField>
-                <engine:Label text=")" name="CosClose" class="centeredText" />
-            </engine:VisualElement>
-            <engine:Label text="x" name="Multiply" class="centeredText" style="width: 25px;" />
-            <engine:VisualElement name="UnitVectorContainer" class="container--horizontalspacearound" style="width: 40%; flex-direction: column;">
-                <engine:Vector3Field class="vector--pure">
-                    <Bindings>
-                        <engine:DataBinding property="value" data-source-path="Axis" binding-mode="TwoWay" />
-                    </Bindings>
-                </engine:Vector3Field>
-            </engine:VisualElement>
-        </engine:VisualElement>
         <engine:VisualElement name="QuatContainer">
-            <engine:Label text="= Unit Vector" />
-            <engine:VisualElement name="ManualVector" class="container--horizontalspacearound wxyz centeredText" style="flex-grow: 1;">
-                <engine:FloatField value="42.2" name="W" />
+            <engine:Label text="Unit Quaternion" />
+            <engine:VisualElement name="ManualQuaternionVector" class="container--horizontalspacearound wxyz centeredText" style="flex-grow: 1;">
+                <engine:FloatField value="42.2" name="W">
+                    <UI_Toolkit.CustomControls.LockableValueToggle value="false" class="valueLocker">
+                        <Bindings>
+                            <engine:DataBinding property="value" data-source-path="_w.isLocked" binding-mode="TwoWay" />
+                        </Bindings>
+                    </UI_Toolkit.CustomControls.LockableValueToggle>
+                    <Bindings>
+                        <engine:DataBinding property="value" data-source-path="W" binding-mode="TwoWay" />
+                    </Bindings>
+                </engine:FloatField>
                 <engine:Label text="+" />
                 <engine:FloatField value="42.2" name="X">
+                    <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
+                        <Bindings>
+                            <engine:DataBinding property="value" data-source-path="_x.isLocked" binding-mode="TwoWay" />
+                        </Bindings>
+                    </UI_Toolkit.CustomControls.LockableValueToggle>
                     <Bindings>
                         <engine:DataBinding property="value" data-source-path="X" binding-mode="TwoWay" />
                     </Bindings>
                 </engine:FloatField>
                 <engine:Label text="i +" />
                 <engine:FloatField value="42.2" name="Y">
+                    <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
+                        <Bindings>
+                            <engine:DataBinding property="value" data-source-path="_y.isLocked" binding-mode="TwoWay" />
+                        </Bindings>
+                    </UI_Toolkit.CustomControls.LockableValueToggle>
                     <Bindings>
                         <engine:DataBinding property="value" data-source-path="Y" binding-mode="TwoWay" />
                     </Bindings>
                 </engine:FloatField>
                 <engine:Label text="j +" />
                 <engine:FloatField value="42.2" name="Z">
+                    <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
+                        <Bindings>
+                            <engine:DataBinding property="value" data-source-path="_z.isLocked" binding-mode="TwoWay" />
+                        </Bindings>
+                    </UI_Toolkit.CustomControls.LockableValueToggle>
                     <Bindings>
                         <engine:DataBinding property="value" data-source-path="Z" binding-mode="TwoWay" />
+                    </Bindings>
+                </engine:FloatField>
+                <engine:Label text="k" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:VisualElement name="EqualsLine">
+            <engine:Label text="=" name="MathFormula" class="centeredText" style="height: 10px;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="AxisAngleRepresentation" style="flex-grow: 1;">
+            <engine:VisualElement name="SinCosContainer" class="container--horizontalspacearound">
+                <engine:VisualElement name="SinContainer" class="container--horizontalspacearound" style="align-content: stretch; width: 20%;">
+                    <engine:Label text="Sin(" name="SinLabel" class="centeredText" />
+                    <engine:FloatField name="AlphaField" class="floatField--pure parentheticField">
+                        <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
+                            <Bindings>
+                                <engine:DataBinding property="value" data-source-path="_w.isLocked" binding-mode="TwoWay" />
+                            </Bindings>
+                        </UI_Toolkit.CustomControls.LockableValueToggle>
+                        <Bindings>
+                            <engine:DataBinding property="value" data-source-path="Angle" binding-mode="TwoWay" />
+                        </Bindings>
+                    </engine:FloatField>
+                    <engine:Label text=")" name="SinLabelClose" class="centeredText" />
+                </engine:VisualElement>
+                <engine:Label text="+" name="Plus" class="container--horizontalspacearound centeredText" style="width: 25px;" />
+                <engine:VisualElement name="CosContainer" class="container--horizontalspacearound" style="width: 75%;">
+                    <engine:Label text="Cos(" name="CosOpen" class="centeredText" />
+                    <engine:FloatField name="Alpha" class="floatField--pure parentheticField">
+                        <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
+                            <Bindings>
+                                <engine:DataBinding property="value" data-source-path="_w.isLocked" binding-mode="TwoWay" />
+                            </Bindings>
+                        </UI_Toolkit.CustomControls.LockableValueToggle>
+                        <Bindings>
+                            <engine:DataBinding property="value" data-source-path="Angle" binding-mode="TwoWay" />
+                        </Bindings>
+                    </engine:FloatField>
+                    <engine:Label text=")" name="CosClose" class="centeredText" />
+                    <engine:Label text="(in Radian)" name="RadianLabel" class="centeredText" />
+                </engine:VisualElement>
+                <engine:VisualElement name="CosTimesVectorContainer" class="container--horizontalspacearound" />
+            </engine:VisualElement>
+            <engine:VisualElement name="MultiplyLine" class="container--horizontalspacearound centeredText" style="height: 10px;">
+                <engine:Label text="x" style="width: 20%;" />
+                <engine:VisualElement style="flex-grow: 1;" />
+                <engine:Label text="x" style="width: 80%;" />
+            </engine:VisualElement>
+            <engine:VisualElement name="AxisContainer" class="container--horizontalspacearound centeredText wxyz" style="flex-grow: 1; flex-direction: row;">
+                <engine:FloatField value="1" name="W" enabled="false" />
+                <engine:Label text="+" />
+                <engine:FloatField value="42.2" name="X">
+                    <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
+                        <Bindings>
+                            <engine:DataBinding property="value" data-source-path="_x.isLocked" binding-mode="TwoWay" />
+                        </Bindings>
+                    </UI_Toolkit.CustomControls.LockableValueToggle>
+                    <Bindings>
+                        <engine:DataBinding property="value" data-source-path="AxisX" binding-mode="TwoWay" />
+                    </Bindings>
+                </engine:FloatField>
+                <engine:Label text="i +" />
+                <engine:FloatField value="42.2" name="Y">
+                    <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
+                        <Bindings>
+                            <engine:DataBinding property="value" data-source-path="_y.isLocked" binding-mode="TwoWay" />
+                        </Bindings>
+                    </UI_Toolkit.CustomControls.LockableValueToggle>
+                    <Bindings>
+                        <engine:DataBinding property="value" data-source-path="AxisY" binding-mode="TwoWay" />
+                    </Bindings>
+                </engine:FloatField>
+                <engine:Label text="j +" />
+                <engine:FloatField value="42.2" name="Z">
+                    <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
+                        <Bindings>
+                            <engine:DataBinding property="value" data-source-path="_z.isLocked" binding-mode="TwoWay" />
+                        </Bindings>
+                    </UI_Toolkit.CustomControls.LockableValueToggle>
+                    <Bindings>
+                        <engine:DataBinding property="value" data-source-path="AxisZ" binding-mode="TwoWay" />
                     </Bindings>
                 </engine:FloatField>
                 <engine:Label text="k" />

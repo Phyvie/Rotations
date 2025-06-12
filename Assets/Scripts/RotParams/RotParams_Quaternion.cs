@@ -20,10 +20,7 @@ namespace RotParams
         public float W
         {
             get => _w;
-            set
-            {
-                SetWXYZValueChecked(ref _w, value); 
-            }
+            set => SetWXYZValueChecked(ref _w, value); 
         }
 
         [CreateProperty]
@@ -49,9 +46,17 @@ namespace RotParams
         
         private void SetWXYZValueChecked(ref LockableFloat _lockableValue, float newValue)
         {
+            if (Mathf.Approximately(_lockableValue.TypeValue, newValue))
+            {
+                return; 
+            }
+            
             if (EnforceNormalisation)
             {
+                bool isLockedBuffer = _lockableValue.isLocked; 
+                _lockableValue.isLocked = true; 
                 SetValueInLockableFloatList(WXYZList, ref _lockableValue, newValue, 1);
+                _lockableValue.isLocked = isLockedBuffer; 
             }
             else
             {
@@ -74,6 +79,10 @@ namespace RotParams
         //-ZyKa this function should probably be in another class
         private void SetValueInLockableFloatList(List<LockableFloat> list, ref LockableFloat _lockableValue, float newValue, float desiredVectorLength = -1)
         {
+            if (Mathf.Approximately(_lockableValue.TypeValue, newValue))
+            {
+                return; 
+            }
             GetLockedAndUnlockedLength(list, out float lockedLength, out float unlockedLength, out int lockedCount);
             if (desiredVectorLength == -1)
             {
@@ -106,39 +115,67 @@ namespace RotParams
         }
         #endregion XYZWValueAccessors
 
+        private float SinHalfAngle => Mathf.Sqrt(1-W*W); 
         [CreateProperty]
         public Vector3 Axis
         {
             get => new Vector3(X, Y, Z).normalized;
             set
             {
-                bool isWLocked = _w.isLocked;
-                _w.isLocked = false;
-                float xyzLength = MathFunctions.SubtractLengthPythagoreon(1, _w.TypeValue); 
                 
-                Vector3 oldAxis = Axis;
-                if (oldAxis.x != value.x)
+                if (Mathf.Approximately((Axis - value.normalized).sqrMagnitude, 0))
                 {
-                    SetValueInLockableFloatList(XYZList, ref _x, value.x, xyzLength);
+                    return; 
                 }
-                if (oldAxis.y != value.y)
-                {
-                    SetValueInLockableFloatList(XYZList, ref _y, value.y, xyzLength);
-                }
-                if (oldAxis.z != value.z)
-                {
-                    SetValueInLockableFloatList(XYZList, ref _z, value.z, xyzLength);
-                }
-                _w.isLocked = isWLocked;
+
+                Vector3 scaledAxis = value * SinHalfAngle; 
+                _x.SetValue(scaledAxis.x, true);
+                _y.SetValue(scaledAxis.y, true);
+                _z.SetValue(scaledAxis.z, true);
             }
         }
 
+        [CreateProperty]
+        public float AxisX
+        {
+            get => new Vector3(X, Y, Z).normalized.x;
+            set
+            {
+                SetValueInLockableFloatList(WXYZList, ref _x, value * SinHalfAngle, 1);
+            }
+        }
+        
+        [CreateProperty]
+        public float AxisY
+        {
+            get => new Vector3(X, Y, Z).normalized.y;
+            set
+            {
+                SetValueInLockableFloatList(WXYZList, ref _y, value * SinHalfAngle, 1);
+            }
+        }
+
+        [CreateProperty]
+        public float AxisZ
+        {
+            get => new Vector3(X, Y, Z).normalized.z;
+            set
+            {
+                SetValueInLockableFloatList(WXYZList, ref _z, value * SinHalfAngle, 1);
+            }
+        }
+        
         [CreateProperty]
         public float Angle
         {
             get => 2 * Mathf.Acos(W);
             set
             {
+                if (Mathf.Approximately(Angle, value))
+                {
+                    return; 
+                }
+                
                 bool isXLocked = _x.isLocked;
                 bool isYLocked = _y.isLocked;
                 bool isZLocked = _z.isLocked;
@@ -149,7 +186,7 @@ namespace RotParams
                 _y.isLocked = false;
                 _z.isLocked = false;
                 
-                SetValueInLockableFloatList(WXYZList, ref _w, value, 1);
+                SetValueInLockableFloatList(WXYZList, ref _w, Mathf.Cos(value/2), 1);
                 
                 _w.isLocked = isWLocked;
                 _x.isLocked = isXLocked;

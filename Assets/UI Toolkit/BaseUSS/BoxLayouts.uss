@@ -11,3 +11,13 @@
     align-content: stretch;
     -unity-text-align: middle-center;
 }
+
+.valueLocker {
+    position: absolute;
+    top: 0;
+    right: -5px;
+    width: 15px;
+    height: 12px;
+    flex-grow: 1;
+    background-image: url("project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-2236324273849735119&guid=8e1dbca73a7e8f643b301ac970d693f5&type=3#arrow-left@2x");
+}

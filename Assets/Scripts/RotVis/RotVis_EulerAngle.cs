@@ -53,6 +53,7 @@ namespace RotationVisualisation
         
         public override void VisUpdate()
         {
+            Debug.LogWarning("ZyKaEulerRotVisUpdate");
             if (_previousRotParamAxes == null || !RotParams_EulerAngles.AreAxesMatching(rotParams, _previousRotParamAxes))
             {
                 VisReset(); 
