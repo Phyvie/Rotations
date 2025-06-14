@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Unity.Properties;
 using UnityEngine;
@@ -17,24 +18,83 @@ namespace RotParams
     [Serializable]
     public class RotParams_EulerAngles : RotParams
     {
-        public _RotParams_EulerAngleGimbalRing outer = new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Yaw, AngleType.Degree, 0); 
-        public _RotParams_EulerAngleGimbalRing middle = new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Pitch, AngleType.Degree, 0); 
-        public _RotParams_EulerAngleGimbalRing inner = new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Roll, AngleType.Degree, 0); 
-        private _RotParams_EulerAngleGimbalRing[] gimbal => new[] { outer, middle, inner }; 
-        private _RotParams_EulerAngleGimbalRing Yaw => GetRingForAxis(EGimbleAxis.Yaw); 
-        private _RotParams_EulerAngleGimbalRing Pitch => GetRingForAxis(EGimbleAxis.Pitch); 
-        private _RotParams_EulerAngleGimbalRing Roll => GetRingForAxis(EGimbleAxis.Roll);
+        [CreateProperty]
+        public EGimbalAxis ZyKaGimbalAxis; 
+        
+        [SerializeField] private _RotParams_EulerAngleGimbalRing outer; 
+        [SerializeField] private _RotParams_EulerAngleGimbalRing middle; 
+        [SerializeField] private _RotParams_EulerAngleGimbalRing inner;
+
+        #region GettersSetters
+        [CreateProperty]
+        public _RotParams_EulerAngleGimbalRing Outer
+        {
+            get => outer;
+            set
+            {
+                if (outer != null) { outer.PropertyChanged -= ForwardPropertyChanged; }
+                outer = value;
+                OnPropertyChanged(nameof(Outer));
+                outer.PropertyChanged += ForwardPropertyChanged; 
+
+                void ForwardPropertyChanged(object sender, PropertyChangedEventArgs e)
+                {
+                    OnPropertyChanged(nameof(Outer) + "." + e.PropertyName);
+                }
+            }
+        }
+
+        [CreateProperty]
+        public _RotParams_EulerAngleGimbalRing Middle
+        {
+            get => middle;
+            set
+            {
+                if (middle != null) {middle.PropertyChanged -= ForwardPropertyChanged; }
+                middle = value;
+                OnPropertyChanged(nameof(Middle));
+                middle.PropertyChanged += ForwardPropertyChanged; 
+
+                void ForwardPropertyChanged(object sender, PropertyChangedEventArgs e)
+                {
+                    OnPropertyChanged(nameof(Middle) + "." + e.PropertyName);
+                }
+            }
+        }
+
+        [CreateProperty]
+        public _RotParams_EulerAngleGimbalRing Inner
+        {
+            get => inner;
+            set
+            {
+                if(inner != null) {inner.PropertyChanged -= ForwardPropertyChanged;} 
+                inner = value;
+                OnPropertyChanged(nameof(Inner));
+                inner.PropertyChanged += ForwardPropertyChanged; 
+
+                void ForwardPropertyChanged(object sender, PropertyChangedEventArgs e)
+                {
+                    OnPropertyChanged(nameof(Inner) + "." + e.PropertyName);
+                }
+            }
+        }
+        
+        private _RotParams_EulerAngleGimbalRing[] gimbal => new[] { Outer, Middle, Inner }; 
+        private _RotParams_EulerAngleGimbalRing Yaw => GetRingForAxis(EGimbalAxis.Yaw); 
+        private _RotParams_EulerAngleGimbalRing Pitch => GetRingForAxis(EGimbalAxis.Pitch); 
+        private _RotParams_EulerAngleGimbalRing Roll => GetRingForAxis(EGimbalAxis.Roll);
         [CreateProperty]
         private string GimbalType => Enum.GetName(typeof(EGimbalType), GetGimbalType()); 
         
-        private _RotParams_EulerAngleGimbalRing GetRingForAxis(EGimbleAxis eAxis)
+        private _RotParams_EulerAngleGimbalRing GetRingForAxis(EGimbalAxis eAxis)
         {
             _RotParams_EulerAngleGimbalRing result = null;
-            if (outer.eAxis == eAxis)
+            if (outer.EAxis == eAxis)
             {
                 result = outer; 
             }
-            if (middle.eAxis == eAxis)
+            if (middle.EAxis == eAxis)
             {
                 if (result is not null)
                 {
@@ -45,7 +105,7 @@ namespace RotParams
                     result = middle; 
                 }
             }
-            if (inner.eAxis == eAxis)
+            if (inner.EAxis == eAxis)
             {
                 if (result is not null)
                 {
@@ -59,9 +119,80 @@ namespace RotParams
 
             return result; 
         }
+
+        [CreateProperty]
+        public float OuterAngle
+        {
+            get => outer.TypedAngle.AngleInCurrentUnit;
+            set
+            {
+                outer.TypedAngle.AngleInCurrentUnit = value;
+                OnPropertyChanged(nameof(OuterAngle));
+            }
+        }
+
+        [CreateProperty]
+        public EGimbalAxis OuterAxis
+        {
+            get => outer.EAxis;
+            set
+            {
+                outer.EAxis = value;
+                OnPropertyChanged(nameof(OuterAxis));
+            }
+        }
+
+        [CreateProperty]
+        public float MiddleAngle
+        {
+            get => middle.TypedAngle.AngleInCurrentUnit;
+            set
+            {
+                middle.TypedAngle.AngleInCurrentUnit = value;
+                OnPropertyChanged(nameof(MiddleAngle));
+            }
+        }
+
+        [CreateProperty]
+        public EGimbalAxis MiddleAxis
+        {
+            get => middle.EAxis;
+            set
+            {
+                middle.EAxis = value;
+                OnPropertyChanged(nameof(MiddleAxis));
+            }
+        }
+        
+        [CreateProperty]
+        public float InnerAngle
+        {
+            get => inner.TypedAngle.AngleInCurrentUnit;
+            set
+            {
+                inner.TypedAngle.AngleInCurrentUnit = value;
+                OnPropertyChanged(nameof(InnerAngle));
+            }
+        }
+
+        [CreateProperty]
+        public EGimbalAxis InnerAxis
+        {
+            get => inner.EAxis;
+            set
+            {
+                inner.EAxis = value;
+                OnPropertyChanged(nameof(InnerAxis));
+            }
+        }
+        
+        #endregion GettersSetters
         
         #region Constructors
-        public RotParams_EulerAngles()
+        public RotParams_EulerAngles() : this(
+            new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Yaw, AngleType.Degree, 0), 
+            new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Pitch, AngleType.Degree, 0), 
+            new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Roll, AngleType.Degree, 0))
         {
         }
 
@@ -71,21 +202,9 @@ namespace RotParams
         }
         
         public RotParams_EulerAngles(float inYaw, float inPitch, float inRoll) : 
-            this(new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Yaw, inYaw), 
-                new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Pitch, inPitch), 
-                new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Roll, inRoll))
-        {
-        }
-        
-        public RotParams_EulerAngles(
-            float firstAngle, EGimbleAxis firstAxis,  
-            float secondAngle, EGimbleAxis secondAxis,  
-            float thirdAngle, EGimbleAxis thirdAxis,  
-            bool bCopyRings = false) : 
-            this(new _RotParams_EulerAngleGimbalRing(firstAxis, firstAngle), 
-                new _RotParams_EulerAngleGimbalRing(secondAxis, secondAngle), 
-                new _RotParams_EulerAngleGimbalRing(thirdAxis, thirdAngle), 
-                bCopyRings)
+            this(new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Yaw, inYaw), 
+                new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Pitch, inPitch), 
+                new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Roll, inRoll))
         {
         }
 
@@ -93,55 +212,46 @@ namespace RotParams
         {
             if (bCopyRings)
             {
-                outer = new _RotParams_EulerAngleGimbalRing(firstRing); 
-                middle = new _RotParams_EulerAngleGimbalRing(secondRing); 
-                inner = new _RotParams_EulerAngleGimbalRing(thirdRing); 
+                Outer = new _RotParams_EulerAngleGimbalRing(firstRing); 
+                Middle = new _RotParams_EulerAngleGimbalRing(secondRing); 
+                Inner = new _RotParams_EulerAngleGimbalRing(thirdRing); 
             }
             else
             {
-                outer = firstRing;
-                middle = secondRing;
-                inner = thirdRing;
+                Outer = firstRing;
+                Middle = secondRing;
+                Inner = thirdRing;
             }
         }
         #endregion //Constructors
         
-        public void SwitchGimbleOrder(int firstIndex, int secondIndex)
-        {
-            (gimbal[firstIndex], gimbal[secondIndex]) = (gimbal[secondIndex], gimbal[firstIndex]); 
-        }
-        
-        public void SwitchGimbleOrder(_RotParams_EulerAngleGimbalRing firstRing, _RotParams_EulerAngleGimbalRing secondRing)
-        {
-            (firstRing, secondRing) = (secondRing, firstRing); //TODO: test this function
-        }
-
-        public bool IsGimbleValid()
+        #region GimbalProperties
+        public bool IsGimbalValid()
         {
             return GetGimbalType() != EGimbalType.InvalidGimbalOrder; 
         }
 
         public EGimbalType GetGimbalType()
         {
-            HashSet<EGimbleAxis> gimbalAxisSet = new HashSet<EGimbleAxis>();
-            gimbalAxisSet.Add(gimbal[0].eAxis); 
+            HashSet<EGimbalAxis> gimbalAxisSet = new HashSet<EGimbalAxis>();
+            gimbalAxisSet.Add(gimbal[0].EAxis); 
             
-            if (gimbalAxisSet.Contains(gimbal[1].eAxis))
+            if (gimbalAxisSet.Contains(gimbal[1].EAxis))
             {
                 return EGimbalType.InvalidGimbalOrder; 
             }
             else
             {
-                gimbalAxisSet.Add(gimbal[1].eAxis); 
+                gimbalAxisSet.Add(gimbal[1].EAxis); 
             }
 
-            if (gimbalAxisSet.Contains(gimbal[2].eAxis))
+            if (gimbalAxisSet.Contains(gimbal[2].EAxis))
             {
-                if (gimbal[2].eAxis == gimbal[0].eAxis)
+                if (gimbal[2].EAxis == gimbal[0].EAxis)
                 {
                     return EGimbalType.TrueEulerAngle; 
                 }
-                else //if (gimbal[2].eAxis == gimbal[1].eAxis)
+                else //if (gimbal[2].EAxis == gimbal[1].EAxis)
                 {
                     return EGimbalType.InvalidGimbalOrder; 
                 }
@@ -154,9 +264,23 @@ namespace RotParams
 
         public static bool AreAxesMatching(RotParams_EulerAngles a, RotParams_EulerAngles b)
         {
-            return a.outer.eAxis == b.outer.eAxis && a.middle.eAxis == b.middle.eAxis && a.inner.eAxis == b.inner.eAxis;
+            return a.outer.EAxis == b.outer.EAxis && a.middle.EAxis == b.middle.EAxis && a.inner.EAxis == b.inner.EAxis;
         }
+        #endregion GimbalProperties
+        
+        #region GimbalOperations
+        public void SwitchGimbalOrder(int firstIndex, int secondIndex)
+        {
+            (gimbal[firstIndex], gimbal[secondIndex]) = (gimbal[secondIndex], gimbal[firstIndex]); 
+        }
+        
+        public void SwitchGimbalOrder(_RotParams_EulerAngleGimbalRing firstRing, _RotParams_EulerAngleGimbalRing secondRing)
+        {
+            (firstRing, secondRing) = (secondRing, firstRing); //TODO: test this function
+        }
+        #endregion GimbalOperations
 
+        #region Converters
         public override RotParams_EulerAngles ToEulerAngleRotation()
         {
             return new RotParams_EulerAngles(this); 
@@ -177,7 +301,7 @@ namespace RotParams
         {
             if (GetGimbalType() == EGimbalType.InvalidGimbalOrder)
             {
-                Debug.LogError("EulerAngleRotation.GetValuesFromQuaternion() error: GimbleType is Invalid");
+                Debug.LogError("EulerAngleRotation.GetValuesFromQuaternion() error: GimbalType is Invalid");
                 return; 
             }
 
@@ -220,7 +344,7 @@ namespace RotParams
         {
             if (GetGimbalType() == EGimbalType.InvalidGimbalOrder)
             {
-                Debug.LogError("EulerAngleRotation.GetValuesFromMatrix() error: GimbleType is Invalid");
+                Debug.LogError("EulerAngleRotation.GetValuesFromMatrix() error: GimbalType is Invalid");
                 return; 
             }
 
@@ -250,6 +374,7 @@ namespace RotParams
         {
             return ToQuaternionRotation().ToAxisAngleRotation(); 
         }
+        #endregion Converters
 
         public override void ResetToIdentity()
         {

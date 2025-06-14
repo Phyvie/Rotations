@@ -20,30 +20,46 @@ namespace RotParams
         public float W
         {
             get => _w;
-            set => SetWXYZValueChecked(ref _w, value); 
+            set
+            {
+                SetWXYZValueChecked(ref _w, value);
+                OnPropertyChanged(nameof(W));
+            }
         }
 
         [CreateProperty]
         public float X
         {
             get => _x;
-            set => SetWXYZValueChecked(ref _x, value);
+            set
+            {
+                SetWXYZValueChecked(ref _x, value);
+                OnPropertyChanged(nameof(X));
+            }
         }
 
         [CreateProperty]
         public float Y
         {
             get => _y;
-            set => SetWXYZValueChecked(ref _y, value);
+            set
+            {
+                SetWXYZValueChecked(ref _y, value);
+                OnPropertyChanged(nameof(Y));
+            }
         }
 
         [CreateProperty]
         public float Z
         {
             get => _z;
-            set => SetWXYZValueChecked(ref _z, value);
+            set
+            {
+                SetWXYZValueChecked(ref _z, value);
+                OnPropertyChanged(nameof(Z));
+            }
         }
-        
+
         private void SetWXYZValueChecked(ref LockableFloat _lockableValue, float newValue)
         {
             if (Mathf.Approximately(_lockableValue.TypeValue, newValue))
@@ -57,6 +73,10 @@ namespace RotParams
                 _lockableValue.isLocked = true; 
                 SetValueInLockableFloatList(WXYZList, ref _lockableValue, newValue, 1);
                 _lockableValue.isLocked = isLockedBuffer; 
+                
+                //If i, j or k are changed, while all other values are 0, then the angle is reduced
+                float xyzMagnitude = (new Vector3(X, Y, Z)).magnitude; 
+                W = Mathf.Sign(W) * MathFunctions.SubtractLengthPythagoreon(1, xyzMagnitude); 
             }
             else
             {
@@ -132,6 +152,8 @@ namespace RotParams
                 _x.SetValue(scaledAxis.x, true);
                 _y.SetValue(scaledAxis.y, true);
                 _z.SetValue(scaledAxis.z, true);
+                
+                OnPropertyChanged();
             }
         }
 
@@ -142,6 +164,7 @@ namespace RotParams
             set
             {
                 SetValueInLockableFloatList(WXYZList, ref _x, value * SinHalfAngle, 1);
+                OnPropertyChanged();
             }
         }
         
@@ -152,6 +175,7 @@ namespace RotParams
             set
             {
                 SetValueInLockableFloatList(WXYZList, ref _y, value * SinHalfAngle, 1);
+                OnPropertyChanged();
             }
         }
 
@@ -162,6 +186,7 @@ namespace RotParams
             set
             {
                 SetValueInLockableFloatList(WXYZList, ref _z, value * SinHalfAngle, 1);
+                OnPropertyChanged();
             }
         }
         
@@ -192,31 +217,8 @@ namespace RotParams
                 _x.isLocked = isXLocked;
                 _y.isLocked = isYLocked;
                 _z.isLocked = isZLocked;
-            }
-        }
-
-        [CreateProperty]
-        public Vector4 Vector4
-        {
-            get => new Vector4(X, Y, Z, W); //must change the order here, because otherwise unity shuffles those values in a circle 
-            set
-            {
-                if (_w.TypeValue != value.w)
-                {
-                    W = value.w; 
-                }
-                if (_x.TypeValue != value.x)
-                {
-                    X = value.x;
-                }
-                if (_y.TypeValue != value.y)
-                {
-                    Y = value.y;
-                }
-                if (_z.TypeValue != value.z)
-                {
-                    Z = value.z;
-                }
+                
+                OnPropertyChanged();
             }
         }
 
@@ -248,6 +250,7 @@ namespace RotParams
                         ScaleLockedVectorToLength(WXYZList);
                     }
                 }
+                OnPropertyChanged();
             }
         }
 

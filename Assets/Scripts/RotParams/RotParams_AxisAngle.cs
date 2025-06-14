@@ -15,35 +15,55 @@ namespace RotParams
         public Vector3 NormalisedAxis
         {
             get => axis;
-            set => axis = value;
+            set
+            {
+                axis = value;
+                OnPropertyChanged();
+            }
         }
 
         [CreateProperty]
         public float AngleInRadian
         {
             get => typedAngle.AngleInRadian;
-            set => typedAngle.AngleInRadian = value; 
+            set
+            {
+                typedAngle.AngleInRadian = value;
+                OnPropertyChanged();
+            }
         }
 
         [CreateProperty]
         public float AngleInDegrees
         {
             get => typedAngle.AngleInDegree;
-            set => typedAngle.AngleInDegree = value;
+            set
+            {
+                typedAngle.AngleInDegree = value;
+                OnPropertyChanged();
+            }
         }
 
         [CreateProperty]
         public float AngleInCircleParts
         {
             get => typedAngle.AngleInCircleParts;
-            set => typedAngle.AngleInCircleParts = value;
+            set
+            {
+                typedAngle.AngleInCircleParts = value;
+                OnPropertyChanged();
+            }
         }
 
         [CreateProperty]
         public float AngleInCurrentUnit
         {
             get => typedAngle.AngleInCurrentUnit;
-            set => typedAngle.AngleInCurrentUnit = value;
+            set
+            {
+                typedAngle.AngleInCurrentUnit = value;
+                OnPropertyChanged();
+            }
         }
 
         [CreateProperty]
@@ -54,6 +74,7 @@ namespace RotParams
             {
                 axis = value.normalized;
                 AngleInRadian = value.magnitude; 
+                OnPropertyChanged();
             }
         }
 
@@ -65,6 +86,7 @@ namespace RotParams
             {
                 axis = value.normalized;
                 AngleInRadian = value.magnitude; 
+                OnPropertyChanged();
             }
         }
         
@@ -76,6 +98,7 @@ namespace RotParams
             {
                 axis = value.normalized;
                 AngleInCircleParts = value.magnitude; 
+                OnPropertyChanged();
             }
         }
 
@@ -87,6 +110,7 @@ namespace RotParams
             {
                 axis = value.normalized;
                 typedAngle.AngleInCurrentUnit = value.magnitude;
+                OnPropertyChanged();
             }
         }
         

@@ -150,7 +150,9 @@ namespace RotContainers
             
             if (_uiParent == null)
             {
-                _uiParent = uiDocument.rootVisualElement.Q<VisualElement>(uiParentName);
+                _uiParent = string.IsNullOrEmpty(uiParentName) ? 
+                    uiDocument.rootVisualElement :  
+                    uiDocument.rootVisualElement.Q<VisualElement>(uiParentName);
                 
                 if (_uiParent == null)
                 {

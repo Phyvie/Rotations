@@ -6,7 +6,7 @@ using UnityEngine;
 namespace RotationTypes
 {
     [CustomPropertyDrawer(typeof(_RotParams_EulerAngleGimbalRing))]
-    public class GimbleRingInspector : NestedPropertyDrawer
+    public class GimbalRingInspector : NestedPropertyDrawer
     {
         private SerializedProperty axisProp; 
         private SerializedProperty angleProp;
@@ -18,7 +18,7 @@ namespace RotationTypes
             {
                 return; 
             }
-            axisProp = property.FindPropertyRelative(nameof(_RotParams_EulerAngleGimbalRing.eAxis));
+            axisProp = property.FindPropertyRelative("eAxis");
             angleProp = property.FindPropertyRelative(_RotParams_EulerAngleGimbalRing.NameOfAngle);
 
             isInitialized = true; 

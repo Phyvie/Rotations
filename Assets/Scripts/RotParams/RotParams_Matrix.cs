@@ -44,29 +44,58 @@ namespace RotParams
         public Vector3 XVector
         {
             get => GetColumn(0);
-            set => SetColumn(0, value); 
+            set
+            {
+                if (Mathf.Approximately((XVector - value).sqrMagnitude, 0f))
+                {
+                    return; 
+                }
+                SetColumn(0, value);
+                OnPropertyChanged(nameof(XVector)); 
+            }
         }
-        
+
         [CreateProperty]
         public Vector3 YVector
         {
             get => GetColumn(1);
-            set => SetColumn(1, value); 
+            set
+            {
+                if (Mathf.Approximately((XVector - value).sqrMagnitude, 0f))
+                {
+                    return; 
+                }
+                SetColumn(1, value);
+                OnPropertyChanged(nameof(YVector));
+            }
         }
 
         [CreateProperty]
         public Vector3 ZVector
         {
             get => GetColumn(2);
-            set => SetColumn(2, value); 
+            set
+            {
+                if (Mathf.Approximately((XVector - value).sqrMagnitude, 0f))
+                {
+                    return; 
+                }
+                SetColumn(2, value); 
+                OnPropertyChanged(nameof(ZVector));
+            }
         }
-        
+
         public float this[int row, int column]
         {
             get => InternalMatrix[row, column];
             set
             {
+                if (Mathf.Approximately(this[row, column], value))
+                {
+                    return;
+                }
                 InternalMatrix[row, column] = value;
+                OnPropertyChanged($"{nameof(InternalMatrix)}[{row},{column}]");
             }
         }
         
@@ -85,6 +114,7 @@ namespace RotParams
             InternalMatrix[rowIndex, 0] = row.x;
             InternalMatrix[rowIndex, 1] = row.y;
             InternalMatrix[rowIndex, 2] = row.z;
+            OnPropertyChanged($"{nameof(InternalMatrix)}[{row}");
         }
 
         public void SetColumn(int columnIndex, Vector3 column)
@@ -92,6 +122,7 @@ namespace RotParams
             InternalMatrix[0, columnIndex] = column.x;
             InternalMatrix[1, columnIndex] = column.y;
             InternalMatrix[2, columnIndex] = column.z;
+            OnPropertyChanged($"{nameof(InternalMatrix)}[{column}");
         }
         #endregion
 

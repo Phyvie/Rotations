@@ -25,6 +25,7 @@ namespace RotationVisualisation
 
         public override void SetRotParamsByRef(ref RotParams.RotParams newRotParams)
         {
+            base.SetRotParamsByRef(ref newRotParams);
             if (newRotParams is RotParams_Quaternion rotParamsQuaternion)
             {
                 rotParams = rotParamsQuaternion;

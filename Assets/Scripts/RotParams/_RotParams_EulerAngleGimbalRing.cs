@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Unity.Properties;
 using UnityEditor;
 using UnityEngine;
@@ -9,7 +11,7 @@ using UnityEngine.UIElements;
 namespace RotParams
 {
     [Serializable]
-    public enum EGimbleAxis
+    public enum EGimbalAxis
     {
         Yaw, 
         Pitch, 
@@ -17,45 +19,74 @@ namespace RotParams
     }
 
     [Serializable]
-    public class _RotParams_EulerAngleGimbalRing
+    public class _RotParams_EulerAngleGimbalRing : INotifyPropertyChanged
     {
         #region Variables
-        public EGimbleAxis eAxis;
+        [SerializeField] private EGimbalAxis eAxis;
+
+        public EGimbalAxis EAxis
+        {
+            get => eAxis;
+            set
+            {
+                eAxis = value;
+                OnPropertyChanged(nameof(EAxis));
+            }
+        }
+        
         public Vector3 RotationAxis => eAxis switch
         {
-            EGimbleAxis.Yaw => Vector3.up,
-            EGimbleAxis.Pitch => Vector3.right,
-            EGimbleAxis.Roll => Vector3.forward,
+            EGimbalAxis.Yaw => Vector3.up,
+            EGimbalAxis.Pitch => Vector3.right,
+            EGimbalAxis.Roll => Vector3.forward,
             _ => Vector3.zero
         };
 
-        [SerializeField] private AngleWithType typedAngle; 
+        [SerializeField] private AngleWithType typedAngle;
+
+        [CreateProperty]
+        public AngleWithType TypedAngle
+        {
+            get => typedAngle;
+            set
+            {
+                typedAngle = value;
+                OnPropertyChanged(nameof(TypedAngle));
+                
+                
+            }
+        }
+        
         public static string NameOfAngle => nameof(typedAngle); //for PropertyDrawer
 
         public float AngleInRadian
         {
-            get => typedAngle.AngleInRadian; 
-            set => typedAngle.AngleInRadian = value;
+            get => typedAngle.AngleInRadian;
+            set
+            {
+                typedAngle.AngleInRadian = value;
+                OnPropertyChanged(nameof(AngleInRadian));
+            }
         }
-        
+
         #endregion
         
         #region Constructors
         private _RotParams_EulerAngleGimbalRing()
         {
-            eAxis = EGimbleAxis.Yaw;
+            eAxis = EGimbalAxis.Yaw;
             typedAngle = new AngleWithType(AngleType.Degree, 0);
         }
         
-        public _RotParams_EulerAngleGimbalRing(EGimbleAxis inEAxis, float angleInRadian) : this(inEAxis, AngleType.Radian, angleInRadian)
+        public _RotParams_EulerAngleGimbalRing(EGimbalAxis inEAxis, float angleInRadian) : this(inEAxis, AngleType.Radian, angleInRadian)
         {
         }
 
-        public _RotParams_EulerAngleGimbalRing(EGimbleAxis inEAxis, AngleType angleType, float angle) : this(inEAxis, new AngleWithType(angleType, angle))
+        public _RotParams_EulerAngleGimbalRing(EGimbalAxis inEAxis, AngleType angleType, float angle) : this(inEAxis, new AngleWithType(angleType, angle))
         {
         }
 
-        public _RotParams_EulerAngleGimbalRing(EGimbleAxis inEAxis, AngleWithType typedAngle)
+        public _RotParams_EulerAngleGimbalRing(EGimbalAxis inEAxis, AngleWithType typedAngle)
         {
             eAxis = inEAxis; 
             this.typedAngle = typedAngle;
@@ -69,15 +100,15 @@ namespace RotParams
         
         public static _RotParams_EulerAngleGimbalRing Yaw()
         {
-            return new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Yaw, AngleType.Degree, 90); 
+            return new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Yaw, AngleType.Degree, 90); 
         }
         public static _RotParams_EulerAngleGimbalRing Pitch(RotParams_EulerAngles parent)
         {
-            return new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Pitch, AngleType.Degree, 90); 
+            return new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Pitch, AngleType.Degree, 90); 
         }
         public static _RotParams_EulerAngleGimbalRing Roll(RotParams_EulerAngles parent)
         {
-            return new _RotParams_EulerAngleGimbalRing(EGimbleAxis.Roll, AngleType.Degree, 90); 
+            return new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Roll, AngleType.Degree, 90); 
         }
         #endregion //Constructors
         
@@ -86,19 +117,19 @@ namespace RotParams
         {
             return eAxis switch
             {
-                EGimbleAxis.Yaw => new RotParams_Matrix(new float[3,3]
+                EGimbalAxis.Yaw => new RotParams_Matrix(new float[3,3]
                 {
                     { Mathf.Cos(AngleInRadian),  0, Mathf.Sin(AngleInRadian) },
                     {          0,                1,              0           },
                     { -Mathf.Sin(AngleInRadian), 0, Mathf.Cos(AngleInRadian) }
                 }),
-                EGimbleAxis.Pitch => new RotParams_Matrix(new float[3,3]
+                EGimbalAxis.Pitch => new RotParams_Matrix(new float[3,3]
                 {
                     { Mathf.Cos(AngleInRadian), -Mathf.Sin(AngleInRadian),  0 },
                     { Mathf.Sin(AngleInRadian),  Mathf.Cos(AngleInRadian),  0 },
                     {           0,                          0,              1 }
                 }),
-                EGimbleAxis.Roll => new RotParams_Matrix(new float[3,3]
+                EGimbalAxis.Roll => new RotParams_Matrix(new float[3,3]
                 {
                     { 1,              0,                       0            },
                     { 0, Mathf.Cos(AngleInRadian), -Mathf.Sin(AngleInRadian) },
@@ -112,13 +143,13 @@ namespace RotParams
         {
             switch (eAxis)
             {
-                case EGimbleAxis.Yaw:
+                case EGimbalAxis.Yaw:
                     AngleInRadian = Mathf.Atan2(m[2, 0], m[0, 0]); 
                     break; 
-                case EGimbleAxis.Pitch:
+                case EGimbalAxis.Pitch:
                     AngleInRadian = Mathf.Atan2(m[0, 1], m[0, 0]); 
                     break; 
-                case EGimbleAxis.Roll:
+                case EGimbalAxis.Roll:
                     AngleInRadian = Mathf.Atan2(m[2, 1], m[1, 1]); 
                     break; 
             }
@@ -134,13 +165,13 @@ namespace RotParams
             //TODO: Understand this
             switch (eAxis)
             {
-                case EGimbleAxis.Yaw:
+                case EGimbalAxis.Yaw:
                     AngleInRadian = Mathf.Atan2(2.0f * (q.W * q.Z + q.X * q.Y), 1.0f - 2.0f * (q.Y * q.Y + q.Z * q.Z));
                     break; 
-                case EGimbleAxis.Pitch:
+                case EGimbalAxis.Pitch:
                     AngleInRadian = Mathf.Atan2(2.0f * (q.W * q.Y - q.Z * q.X), 1.0f - 2.0f * (q.Y * q.Y + q.Z * q.Z));
                     break; 
-                case EGimbleAxis.Roll:
+                case EGimbalAxis.Roll:
                     AngleInRadian = Mathf.Atan2(2.0f * (q.W * q.X + q.Y*q.Z), 1.0f - 2.0f*(q.X * q.X + q.Y * q.Y)); 
                     break; 
             }
@@ -152,15 +183,32 @@ namespace RotParams
             return GetRotationAxisName(eAxis); 
         }
 
-        public static string GetRotationAxisName(EGimbleAxis eAxis)
+        public static string GetRotationAxisName(EGimbalAxis eAxis)
         {
             return eAxis switch
             {
-                EGimbleAxis.Yaw => "Yaw",
-                EGimbleAxis.Pitch => "Pitch",
-                EGimbleAxis.Roll => "Roll",
+                EGimbalAxis.Yaw => "Yaw",
+                EGimbalAxis.Pitch => "Pitch",
+                EGimbalAxis.Roll => "Roll",
                 _ => throw new ArgumentOutOfRangeException()
             }; 
         }
+
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+        #endregion
     }
 }

@@ -44,6 +44,7 @@ namespace RotationVisualisation
 
         public override void SetRotParamsByRef(ref RotParams.RotParams newRotParams)
         {
+            base.SetRotParamsByRef(ref newRotParams);
             if (newRotParams is RotParams_EulerAngles rotParamsEulerAngles)
             {
                 rotParams = rotParamsEulerAngles;
@@ -53,7 +54,6 @@ namespace RotationVisualisation
         
         public override void VisUpdate()
         {
-            Debug.LogWarning("ZyKaEulerRotVisUpdate");
             if (_previousRotParamAxes == null || !RotParams_EulerAngles.AreAxesMatching(rotParams, _previousRotParamAxes))
             {
                 VisReset(); 
@@ -80,16 +80,16 @@ namespace RotationVisualisation
         
         private void VisUpdateRingRotations()
         {
-            outer.ring.transform.localRotation = new Quaternion(0, Mathf.Sin(rotParams.outer.AngleInRadian/2), 0, Mathf.Cos(rotParams.outer.AngleInRadian/2)); 
-            middle.ring.transform.localRotation = new Quaternion(0, Mathf.Sin(rotParams.middle.AngleInRadian/2), 0, Mathf.Cos(rotParams.middle.AngleInRadian/2)); 
-            inner.ring.transform.localRotation = new Quaternion(0, Mathf.Sin(rotParams.inner.AngleInRadian/2), 0, Mathf.Cos(rotParams.inner.AngleInRadian/2));
+            outer.ring.transform.localRotation = new Quaternion(0, Mathf.Sin(rotParams.Outer.AngleInRadian/2), 0, Mathf.Cos(rotParams.Outer.AngleInRadian/2)); 
+            middle.ring.transform.localRotation = new Quaternion(0, Mathf.Sin(rotParams.Middle.AngleInRadian/2), 0, Mathf.Cos(rotParams.Middle.AngleInRadian/2)); 
+            inner.ring.transform.localRotation = new Quaternion(0, Mathf.Sin(rotParams.Inner.AngleInRadian/2), 0, Mathf.Cos(rotParams.Inner.AngleInRadian/2));
         }
 
         private void VisUpdateRailsForUnrotatedGimbal()
         {
-            Vector3 outerUp = rotParams.outer.RotationAxis;
-            Vector3 middleUp = rotParams.middle.RotationAxis;
-            Vector3 innerUp = rotParams.inner.RotationAxis;
+            Vector3 outerUp = rotParams.Outer.RotationAxis;
+            Vector3 middleUp = rotParams.Middle.RotationAxis;
+            Vector3 innerUp = rotParams.Inner.RotationAxis;
             Vector3 outerForward = Vector3.Dot(outerUp, middleUp) == 0 ? middleUp : outerUp.CyclicAxisRotation();
             Vector3 middleForward = Vector3.Dot(outerUp, middleUp) == 0 ? Vector3.Cross(middleUp, outerUp) : middleUp.CyclicAxisRotation();
             Vector3 innerForward = Vector3.Dot(middleUp, innerUp) == 0 ? Vector3.Cross(innerUp, middleUp) : innerUp.CyclicAxisRotation();
@@ -101,45 +101,45 @@ namespace RotationVisualisation
 
         private void VisFullUpdateRotations()
         {
-            Quaternion outerRailRotation = Quaternion.LookRotation(rotParams.outer.RotationAxis, Vector3.Cross(rotParams.middle.RotationAxis, rotParams.outer.RotationAxis)); 
+            Quaternion outerRailRotation = Quaternion.LookRotation(rotParams.Outer.RotationAxis, Vector3.Cross(rotParams.Middle.RotationAxis, rotParams.Outer.RotationAxis)); 
             outer.rail.transform.rotation = outerRailRotation;
             
-            Quaternion outerRingRotation = Quaternion.AngleAxis(rotParams.outer.AngleInRadian * Mathf.Rad2Deg, rotParams.outer.RotationAxis);
+            Quaternion outerRingRotation = Quaternion.AngleAxis(rotParams.Outer.AngleInRadian * Mathf.Rad2Deg, rotParams.Outer.RotationAxis);
             outer.ring.transform.rotation = outerRingRotation * outerRailRotation;
             
-            Quaternion middleRailRotation = Quaternion.LookRotation(rotParams.middle.RotationAxis, Vector3.Cross(rotParams.outer.RotationAxis, rotParams.middle.RotationAxis)); 
+            Quaternion middleRailRotation = Quaternion.LookRotation(rotParams.Middle.RotationAxis, Vector3.Cross(rotParams.Outer.RotationAxis, rotParams.Middle.RotationAxis)); 
             middle.rail.transform.rotation = middleRailRotation * outerRingRotation;
             
-            Quaternion middleRingRotation = Quaternion.AngleAxis(rotParams.middle.AngleInRadian * Mathf.Rad2Deg, rotParams.middle.RotationAxis);
+            Quaternion middleRingRotation = Quaternion.AngleAxis(rotParams.Middle.AngleInRadian * Mathf.Rad2Deg, rotParams.Middle.RotationAxis);
             middle.ring.transform.rotation = outerRingRotation * middleRingRotation * middleRailRotation; 
             
-            Quaternion innerRailRotation = Quaternion.LookRotation(rotParams.inner.RotationAxis, Vector3.Cross(rotParams.middle.RotationAxis, rotParams.inner.RotationAxis)); 
+            Quaternion innerRailRotation = Quaternion.LookRotation(rotParams.Inner.RotationAxis, Vector3.Cross(rotParams.Middle.RotationAxis, rotParams.Inner.RotationAxis)); 
             inner.rail.transform.rotation = outerRingRotation * middleRingRotation * innerRailRotation;
             
-            Quaternion innerRingRotation = Quaternion.AngleAxis(rotParams.inner.AngleInRadian * Mathf.Rad2Deg, rotParams.inner.RotationAxis);
+            Quaternion innerRingRotation = Quaternion.AngleAxis(rotParams.Inner.AngleInRadian * Mathf.Rad2Deg, rotParams.Inner.RotationAxis);
             inner.ring.transform.rotation = outerRingRotation * middleRingRotation * innerRingRotation * innerRailRotation; 
         }
 
         private void VisUpdatePlaneArcShaderColors()
         {
-            VisUpdatePlaneArcShaderColourSingle(rotParams.outer, outer.vis_planeArc);
-            VisUpdatePlaneArcShaderColourSingle(rotParams.middle, middle.vis_planeArc);
-            VisUpdatePlaneArcShaderColourSingle(rotParams.inner, inner.vis_planeArc);
+            VisUpdatePlaneArcShaderColourSingle(rotParams.Outer, outer.vis_planeArc);
+            VisUpdatePlaneArcShaderColourSingle(rotParams.Middle, middle.vis_planeArc);
+            VisUpdatePlaneArcShaderColourSingle(rotParams.Inner, inner.vis_planeArc);
         }
 
         private void VisUpdatePlaneArcShaderColourSingle(_RotParams_EulerAngleGimbalRing gimbalRing, Vis_PlaneArc visPlaneArc)
         {
-            switch (gimbalRing.eAxis)
+            switch (gimbalRing.EAxis)
             {
-                case EGimbleAxis.Yaw:
+                case EGimbalAxis.Yaw:
                     visPlaneArc.PositiveAngleColor = PosYawColor; 
                     visPlaneArc.NegativeAngleColor = NegYawColor;
                     break;
-                case EGimbleAxis.Pitch:
+                case EGimbalAxis.Pitch:
                     visPlaneArc.PositiveAngleColor = PosPitchColor;
                     visPlaneArc.NegativeAngleColor = NegPitchColor;
                     break;
-                case EGimbleAxis.Roll:
+                case EGimbalAxis.Roll:
                     visPlaneArc.PositiveAngleColor = PosRollColor;
                     visPlaneArc.NegativeAngleColor = NegRollColor;
                     break;
@@ -152,17 +152,17 @@ namespace RotationVisualisation
         {
             if (outer.vis_planeArc != null)
             {
-                outer.vis_planeArc.StartingAngle = -rotParams.outer.AngleInRadian;
+                outer.vis_planeArc.StartingAngle = -rotParams.Outer.AngleInRadian;
             }
 
             if (middle.vis_planeArc != null)
             {
-                middle.vis_planeArc.StartingAngle = -rotParams.middle.AngleInRadian;
+                middle.vis_planeArc.StartingAngle = -rotParams.Middle.AngleInRadian;
             }
             
             if (inner.vis_planeArc != null)
             {
-                inner.vis_planeArc.StartingAngle = -rotParams.inner.AngleInRadian;
+                inner.vis_planeArc.StartingAngle = -rotParams.Inner.AngleInRadian;
             }
         }
         

@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: 33fdf24a949fe4b458d6eb6a85bb4e2e, type: 2}
-  _positiveAngleColor: {r: 1, g: 0.45, b: 0.45, a: 0}
-  _negativeAngleColor: {r: 0.55, g: 0.24803925, b: 0.24803925, a: 0}
+  _positiveAngleColor: {r: 0.45098042, g: 1, b: 0.45098042, a: 0}
+  _negativeAngleColor: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
   _beginAngle: -0
   _endAngle: 0
@@ -205,8 +205,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: 33fdf24a949fe4b458d6eb6a85bb4e2e, type: 2}
-  _positiveAngleColor: {r: 0.45, g: 1, b: 0.45, a: 0}
-  _negativeAngleColor: {r: 0.2475, g: 0.55, b: 0.2475, a: 0}
+  _positiveAngleColor: {r: 0.45098042, g: 0.45098042, b: 1, a: 0}
+  _negativeAngleColor: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
   _beginAngle: -0
   _endAngle: 0
@@ -388,13 +388,14 @@ MonoBehaviour:
     rail: {fileID: 4520340664653103367}
     ring: {fileID: 6446721322427425129}
     vis_planeArc: {fileID: 6308813285352157611}
-  PosYawColor: {r: 1, g: 0.45, b: 0.45, a: 0}
-  NegYawColor: {r: 0.55, g: 0.24803925, b: 0.24803925, a: 0}
-  PosPitchColor: {r: 0.45, g: 1, b: 0.45, a: 0}
-  NegPitchColor: {r: 0.2475, g: 0.55, b: 0.2475, a: 0}
-  PosRollColor: {r: 0.45, g: 0.45, b: 1, a: 0}
-  NegRollColor: {r: 0.2475, g: 0.2475, b: 0.55, a: 0}
+  PosYawColor: {r: 0.45098042, g: 1, b: 0.45098042, a: 0}
+  NegYawColor: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0}
+  PosPitchColor: {r: 0.45098042, g: 0.45098042, b: 1, a: 0}
+  NegPitchColor: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0}
+  PosRollColor: {r: 1, g: 0.45098042, b: 0.45098042, a: 0}
+  NegRollColor: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0}
   rotParams:
+    ZyKaGimbalAxis: 0
     outer:
       eAxis: 0
       typedAngle:
@@ -621,8 +622,8 @@ MonoBehaviour:
   localForwardVector: {x: 0, y: 0, z: 0}
   beginAngle: -0
   endingAngle: 0
-  _positiveAngleColorOverwrite: {r: 0.45, g: 1, b: 0.45, a: 0}
-  _negativeAngleColorOverwrite: {r: 0.2475, g: 0.55, b: 0.2475, a: 0}
+  _positiveAngleColorOverwrite: {r: 0.45098042, g: 0.45098042, b: 1, a: 0}
+  _negativeAngleColorOverwrite: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0}
   torusMaterial: {fileID: 4982370344158795608}
   circleMaterial: {fileID: 4837300017244231248}
 --- !u!114 &4982370344158795608
@@ -638,8 +639,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: c3ddc9ccf28e8d74b90bcb502dab5996, type: 2}
-  _positiveAngleColor: {r: 0.45, g: 1, b: 0.45, a: 0}
-  _negativeAngleColor: {r: 0.2475, g: 0.55, b: 0.2475, a: 0}
+  _positiveAngleColor: {r: 0.45098042, g: 0.45098042, b: 1, a: 0}
+  _negativeAngleColor: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
   _beginAngle: -0
   _endAngle: 0
@@ -748,8 +749,8 @@ MonoBehaviour:
   localForwardVector: {x: 0, y: 0, z: 0}
   beginAngle: -0
   endingAngle: 0
-  _positiveAngleColorOverwrite: {r: 1, g: 0.45, b: 0.45, a: 0}
-  _negativeAngleColorOverwrite: {r: 0.55, g: 0.24803925, b: 0.24803925, a: 0}
+  _positiveAngleColorOverwrite: {r: 0.45098042, g: 1, b: 0.45098042, a: 0}
+  _negativeAngleColorOverwrite: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0}
   torusMaterial: {fileID: 2333320410219279108}
   circleMaterial: {fileID: 665319245755013321}
 --- !u!114 &2333320410219279108
@@ -765,8 +766,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: c3ddc9ccf28e8d74b90bcb502dab5996, type: 2}
-  _positiveAngleColor: {r: 1, g: 0.45, b: 0.45, a: 0}
-  _negativeAngleColor: {r: 0.55, g: 0.24803925, b: 0.24803925, a: 0}
+  _positiveAngleColor: {r: 0.45098042, g: 1, b: 0.45098042, a: 0}
+  _negativeAngleColor: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
   _beginAngle: -0
   _endAngle: 0
@@ -875,8 +876,8 @@ MonoBehaviour:
   localForwardVector: {x: 0, y: 0, z: 0}
   beginAngle: -0
   endingAngle: 0
-  _positiveAngleColorOverwrite: {r: 0.45, g: 0.45, b: 1, a: 0}
-  _negativeAngleColorOverwrite: {r: 0.2475, g: 0.2475, b: 0.55, a: 0}
+  _positiveAngleColorOverwrite: {r: 1, g: 0.45098042, b: 0.45098042, a: 0}
+  _negativeAngleColorOverwrite: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0}
   torusMaterial: {fileID: 7110365489252294482}
   circleMaterial: {fileID: 2405914394118555245}
 --- !u!114 &7110365489252294482
@@ -892,8 +893,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: c3ddc9ccf28e8d74b90bcb502dab5996, type: 2}
-  _positiveAngleColor: {r: 0.45, g: 0.45, b: 1, a: 0}
-  _negativeAngleColor: {r: 0.2475, g: 0.2475, b: 0.55, a: 0}
+  _positiveAngleColor: {r: 1, g: 0.45098042, b: 0.45098042, a: 0}
+  _negativeAngleColor: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
   _beginAngle: -0
   _endAngle: 0
@@ -1085,8 +1086,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: 33fdf24a949fe4b458d6eb6a85bb4e2e, type: 2}
-  _positiveAngleColor: {r: 0.45, g: 0.45, b: 1, a: 0}
-  _negativeAngleColor: {r: 0.2475, g: 0.2475, b: 0.55, a: 0}
+  _positiveAngleColor: {r: 1, g: 0.45098042, b: 0.45098042, a: 0}
+  _negativeAngleColor: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
   _beginAngle: -0
   _endAngle: 0

@@ -1,17 +1,21 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Unity.Properties;
 using UnityEngine;
 
 namespace RotParams
 {
     [System.Serializable]
-    public class AngleWithType
+    public class AngleWithType : INotifyPropertyChanged
     {
+        public static double PI_d = 3.141592653589793238462643383279; 
+        
         [SerializeField] public bool showAllAngleTypes = false;
         [SerializeField] public bool showAngleTypeSelector = true;
         [SerializeReference] public AngleType angleType = AngleType.Radian;
-        [SerializeField] private float _angleInRadian = 0f;
+        [SerializeField] private double _angleInRadian = 0f;
 
         #region Constructors
         private AngleWithType() { }
@@ -27,35 +31,49 @@ namespace RotParams
         #endregion Constructors
 
         #region Properties
-
         [CreateProperty]
         public float AngleInRadian
         {
-            get => _angleInRadian;
-            set => _angleInRadian = value;
+            get => (float) _angleInRadian;
+            set
+            {
+                _angleInRadian = value;
+                OnPropertyChanged();
+            }
         }
 
         [CreateProperty]
         public float AngleInDegree
         {
-            get => _angleInRadian * Mathf.Rad2Deg;
-            set => _angleInRadian = value * Mathf.Deg2Rad;
+            get => (float) (_angleInRadian * Mathf.Rad2Deg);
+            set
+            {
+                _angleInRadian = value * Mathf.Deg2Rad;
+                OnPropertyChanged();
+            }
         }
 
         [CreateProperty]
         public float AngleInCircleParts
         {
-            get => _angleInRadian / (2 * Mathf.PI);
-            set => _angleInRadian = value * 2 * Mathf.PI;
+            get => (float) (_angleInRadian / (2 * PI_d));
+            set
+            {
+                _angleInRadian = value * 2 * PI_d;
+                OnPropertyChanged();
+            }
         }
 
         [CreateProperty]
         public float AngleInCurrentUnit
         {
-            get => (float)(_angleInRadian * (angleType?.UnitMultiplier ?? 1.0) / (2 * Mathf.PI));
-            set => _angleInRadian = (float)(value / (angleType?.UnitMultiplier ?? 1.0) * 2 * Mathf.PI);
+            get => (float) (_angleInRadian * (angleType?.UnitMultiplier ?? 1.0) / (2 * PI_d));
+            set
+            {
+                _angleInRadian = (float)(value / (angleType?.UnitMultiplier ?? 1.0) * 2 * PI_d);
+                OnPropertyChanged();
+            }
         }
-
         #endregion Properties
 
         #region Operator Overloads
@@ -86,7 +104,7 @@ namespace RotParams
         {
             if (ReferenceEquals(a, b)) return true;
             if (ReferenceEquals(a, null) || ReferenceEquals(b, null)) return false;
-            return Mathf.Approximately(a._angleInRadian, b._angleInRadian);
+            return Mathf.Approximately((float) a._angleInRadian, (float) b._angleInRadian);
         }
 
         public static bool operator !=(AngleWithType a, AngleWithType b) => !(a == b);
@@ -128,5 +146,22 @@ namespace RotParams
             }
         }
         #endregion
+
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+        #endregion INotifyPropertyChanged
     }
 }

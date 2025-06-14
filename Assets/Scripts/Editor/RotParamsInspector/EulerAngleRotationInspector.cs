@@ -21,9 +21,9 @@ namespace Editor
                 // return; 
             }
             
-            SP_outer = property.FindPropertyRelative(nameof(RotParams_EulerAngles.outer));
-            SP_middle = property.FindPropertyRelative(nameof(RotParams_EulerAngles.middle)); 
-            SP_inner = property.FindPropertyRelative(nameof(RotParams_EulerAngles.inner)); 
+            SP_outer = property.FindPropertyRelative("outer");
+            SP_middle = property.FindPropertyRelative("middle"); 
+            SP_inner = property.FindPropertyRelative("inner"); 
             
             isInitialised = true; 
         }
