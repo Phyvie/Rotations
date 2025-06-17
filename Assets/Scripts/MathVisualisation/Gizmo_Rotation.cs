@@ -83,20 +83,7 @@ namespace Visualisation
             {
                 return; 
             }
-#if UNITY_EDITOR
-            EditorApplication.delayCall += () =>
-            {
-                try
-                {
-                    RotationAxis = rotationAxis;
-                    ArcType = arcType;
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError($"This Object is causing the Gizmo_Rotation error whenever you save: {gameObject.name}"); 
-                }
-            };
-#endif
+            RotationAxis = rotationAxis;
         }
     }
 }

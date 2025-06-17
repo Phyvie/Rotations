@@ -259,8 +259,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: 33fdf24a949fe4b458d6eb6a85bb4e2e, type: 2}
-  _positiveAngleColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
-  _negativeAngleColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  _positiveAngleColor: {r: 0.9, g: 0.9, b: 0.9, a: 0.6}
+  _negativeAngleColor: {r: 0.2, g: 0.2, b: 0.2, a: 0.6}
   _outsideAngleColor: {r: 0.5, g: 0.5, b: 0.5, a: 0}
   _beginAngle: 0
   _endAngle: 0

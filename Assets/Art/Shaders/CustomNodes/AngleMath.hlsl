@@ -1,5 +1,5 @@
-#ifndef VALUE_IN_MODULO_RANGE_H
-#define VALUE_IN_MODULO_RANGE_H
+#ifndef ANGLE_MATH_H
+#define ANGLE_MATH_H
 
 #define PI 3.14159265
 #define TWO_PI 6.2831853
@@ -36,4 +36,4 @@ void IsValueInModRange_float(float val, float alpha, float beta,
     }
 }
 
-#endif // VALUE_IN_MODULO_RANGE_H
+#endif // ANGLE_MATH_H

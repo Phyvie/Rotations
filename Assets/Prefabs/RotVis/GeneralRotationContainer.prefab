@@ -45,11 +45,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66b46db4b5e29df42958e45840410e15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InitializeOnAwake: 0
+  InitializeOnStart: 1
   uiDocument: {fileID: 0}
   fullScreenUIAsset: {fileID: 9197481963319205126, guid: 80db4d1107146194db9e75f8b2de8937,
     type: 3}
   panelSettingsAsset: {fileID: 11400000, guid: 33cf23a3bef7eb84c89e07ed8ff5ee48, type: 2}
-  uiParentName: 
+  uiParentName: RotUIContainer
   uiFullContainerAsset: {fileID: 9197481963319205126, guid: ffaa3d0decbc86b4cbfeb90cccf81b0f,
     type: 3}
   uiMenuAsset: {fileID: 9197481963319205126, guid: 78e16fe7c76a899429952db85117e024,
@@ -58,9 +60,16 @@ MonoBehaviour:
   uiRotSlot:
     name: RotParamsSlot
   typedRotationContainer: {fileID: 5216331510417611326}
-  cameraPrefab: {fileID: 7734977780180537119, guid: 8c048f717056a364fb050534f0b344b8,
+  cameraPrefab: {fileID: 3772307241307734496, guid: 394edcfc98fae854f9e7187644570658,
     type: 3}
   visCamera: {fileID: 0}
+  cameraScreenRect:
+    serializedVersion: 2
+    x: 0
+    y: 0.33
+    width: 1
+    height: 0.67
+  cameraInputEnabled: 0
   eulerPrefab:
     visPrefab: {fileID: 4359447636591289229, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
       type: 3}

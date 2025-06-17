@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Reflection;
 using RotParams;
 using UI_Toolkit;
@@ -12,7 +14,7 @@ namespace RotContainers
 {
     public class GeneralRotationContainer : MonoBehaviour
     {
-        #region RuntimeVariables
+        #region Variables
         [SerializeField] private bool InitializeOnAwake = false;
         [SerializeField] private bool InitializeOnStart = true; 
         
@@ -49,10 +51,10 @@ namespace RotContainers
         
         private RotParams.RotParams _rotParams;
         [SerializeField] private TypedRotationContainer typedRotationContainer;
-
         
         [SerializeField] private GameObject cameraPrefab;
-        [SerializeField] private Camera visCamera; 
+        private GameObject cameraRotationPivot;  
+        [SerializeField] private Camera visCamera;
         public Camera VisCamera
         {
             get => visCamera;
@@ -65,8 +67,31 @@ namespace RotContainers
                 visCamera = value;
             }
         }
-        #endregion
         
+        [SerializeField] private Rect cameraScreenRect = new Rect(0, 0, 1, 1);
+        [FormerlySerializedAs("cameraMovementEnabled")] [SerializeField] private bool cameraInputEnabled = false;
+
+        public bool CameraMovementEnabled
+        {
+            get => cameraInputEnabled;
+            set => cameraInputEnabled = value;
+        }
+        
+        #endregion Variables
+        
+        public Rect CameraScreenRect
+        {
+            get => cameraScreenRect;
+            set
+            {
+                if (visCamera != null)
+                {
+                    visCamera.rect = value; 
+                }
+                cameraScreenRect = value;
+            }
+        }
+
         #region RotationTypeData
         [Serializable]
         public class TypedRotationContainerPrefab
@@ -120,7 +145,8 @@ namespace RotContainers
             }
         }
         #endregion UITypeSelectionControls
-
+        
+        #region Initialization
         private void Awake()
         {
             if (InitializeOnAwake)
@@ -136,8 +162,7 @@ namespace RotContainers
                 SelfInitialize();
             }
         }
-
-        #region Initialization
+        
         [ContextMenu("Init Rotation Container")]
         private void SelfInitialize()
         {
@@ -164,7 +189,9 @@ namespace RotContainers
             if (_uiRoot == null)
             {
                 _uiRoot = uiFullContainerAsset.CloneTree(); 
-                _uiParent.Add(_uiRoot); 
+                _uiParent.Add(_uiRoot);
+                _uiRoot.style.flexGrow = 1; 
+                _uiRoot.name = "RotationContainer"; 
             }
             
             _uiMenu = _uiParent.Q<VisualElement>(uiMenuName);
@@ -180,7 +207,13 @@ namespace RotContainers
             
             if (VisCamera ==null)
             {
-                VisCamera = Instantiate(cameraPrefab, this.transform).GetComponent<Camera>();
+                VisCamera = Instantiate(cameraPrefab, this.transform).transform.GetChild(0).GetComponent<Camera>();
+                VisCamera.rect = cameraScreenRect; 
+            }
+
+            if (cameraRotationPivot == null)
+            {
+                cameraRotationPivot = VisCamera.transform.parent.gameObject; 
             }
 
             SelectedTypeIndex = SelectedTypeIndex; //-ZyKa RotationContainer this line ensures that the RotUI is properly initiated
@@ -289,6 +322,73 @@ namespace RotContainers
             }
             Init();
             */ 
+        }
+
+        #region userInteraction
+        private void Update()
+        {
+            if (cameraInputEnabled)
+            {
+                if (Input.GetMouseButton(1))
+                {
+                    RotateCamera(Input.GetAxis("Mouse X") * 2.5f, Input.GetAxis("Mouse Y") * -2.5f); 
+                }
+                ZoomCamera(Input.GetAxis("Mouse ScrollWheel") * -1.5f);
+                
+                if (Input.GetKeyDown(KeyCode.F12))
+                {
+                    FullScreenshot();
+                }
+
+                if (Input.GetKeyDown(KeyCode.F11))
+                {
+                    CameraViewshot();
+                }
+            }
+        }
+
+        private void RotateCamera(float deltaX, float deltaY)
+        {
+            cameraRotationPivot.transform.localEulerAngles += new Vector3(deltaY, deltaX, 0); 
+        }
+
+        private void ZoomCamera(float deltaZoom)
+        {
+            visCamera.transform.localPosition += Vector3.back * deltaZoom; 
+        }
+        #endregion userInteraction
+
+        [ContextMenu("FullScreenshot")]
+        private void FullScreenshot()
+        {
+            string path = "D:/CGL/Bachelor-Thesis/RotationImages/"; 
+            string timestamp = DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss");
+            
+            ScreenCapture.CaptureScreenshot($"{path}{timestamp}.png", 4);
+        }
+
+        [ContextMenu("CameraViewshot")]
+        private void CameraViewshot()
+        {
+            string path = "D:/CGL/Bachelor-Thesis/RotationImages/"; 
+            string timestamp = DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss");
+
+            int imageWidth = 1000; 
+            int imageHeight = 1000;
+            
+            RenderTexture screenTexture = new RenderTexture(imageWidth, imageHeight, 16);
+            visCamera.targetTexture = screenTexture;
+            RenderTexture.active = screenTexture;
+            visCamera.Render();
+
+            Texture2D renderedTexture = new Texture2D(imageWidth, imageHeight, TextureFormat.RGBA32, false);
+            renderedTexture.ReadPixels(new Rect(0, 0, imageWidth, imageHeight), 0, 0);
+            RenderTexture.active = null;
+
+            byte[] byteArray = renderedTexture.EncodeToPNG();
+            System.IO.File.WriteAllBytes($"{path}{timestamp}.png", byteArray);
+            
+            visCamera.targetTexture = null;
         }
     }
 }

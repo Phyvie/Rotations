@@ -5,32 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b54c963-bad1-41cc-8b0e-252a0574fd2d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes/Grid.hlsl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes/Grid.hlsl.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/GridMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/GridMaterial.mat.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleLit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleLit.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleUnlit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleUnlit.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_VectorColor.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_VectorColor.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_VectorLit.shadergraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Shaders/SH_VectorLit.shadergraph" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes/AngleMath.hlsl" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes/AngleMath.hlsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/GridShader.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/GridShader.shader.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BaseMathVisualiser/Vis_PlaneArc.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BaseMathVisualiser/Vis_PlaneArc.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BaseMathVisualiser/Vis_Vector.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BaseMathVisualiser/Vis_Vector.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_EulerGimbal.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_EulerGimbal.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/GeneralRotationContainer.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/GeneralRotationContainer.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVisCamera.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVisCamera.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVisCamera.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVisCamera.prefab.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/EulerAngleRotationInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/EulerAngleRotationInspector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/GimbleRingInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/GimbalRingInspector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/GimbleRingInspector.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/GimbalRingInspector.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/AngleWithType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/AngleWithType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MathVisualisation/Gizmo_Rotation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MathVisualisation/Gizmo_Rotation.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/GeneralRotationContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/GeneralRotationContainer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_AxisAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_AxisAngle.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_EulerAngles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_EulerAngles.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Matrix.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Matrix.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Quaternion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Quaternion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/_RotParams_EulerAngleGimbalRing.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/_RotParams_EulerAngleGimbalRing.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_AxisAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_AxisAngle.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_EulerAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_EulerAngle.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Matrix.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Matrix.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Quaternion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Quaternion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/EulerAngle/UID_EulerAngle.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/EulerAngle/UID_EulerAngle.uxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Container/FullUIScreen_Rot.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Container/FullUIScreen_Rot.uxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Container/RotUI_GeneralRotationContainer.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Container/RotUI_GeneralRotationContainer.uxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Quaternion/UID_Quaternion.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Quaternion/UID_Quaternion.uxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +97,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e456ace1331244d1a8fa497ee9ee241821e00/f0/0bb7003a/ReflectedMemberProperty`2.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e6aa588f9882420485fca490ded58a721dee00/0b/eeb5ced1/Vector3.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e6aa588f9882420485fca490ded58a721dee00/0e/cd4166ab/Vector4.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e6aa588f9882420485fca490ded58a721dee00/10/d538426b/Quaternion.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e6aa588f9882420485fca490ded58a721dee00/10/d538426b/Quaternion.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e6aa588f9882420485fca490ded58a721dee00/45/7ef182d2/Component.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e6aa588f9882420485fca490ded58a721dee00/64/a4aaae1a/Ray.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e6aa588f9882420485fca490ded58a721dee00/89/58f43c9b/Mathf.cs" root0="FORCE_HIGHLIGHTING" />
@@ -213,10 +209,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="6744">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="3416">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="6744" />
+      <option name="pid" value="3416" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
         <list>
@@ -324,6 +320,10 @@
       <workItem from="1749643186163" duration="23680000" />
       <workItem from="1749679148358" duration="13526000" />
       <workItem from="1749742892063" duration="11448000" />
+      <workItem from="1750181341285" duration="1000" />
+      <workItem from="1750181661479" duration="5678000" />
+      <workItem from="1750190547086" duration="1000" />
+      <workItem from="1750190567680" duration="6615000" />
     </task>
     <servers />
   </component>
@@ -351,13 +351,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis.cs</url>
-          <line>56</line>
+          <line>54</line>
           <properties documentPath="D:\programming\Rotations\Assets\Scripts\RotVis\RotVis.cs" containingFunctionPresentation="Method 'ApplyObjectRotation'">
             <startOffsets>
-              <option value="1819" />
+              <option value="1772" />
             </startOffsets>
             <endOffsets>
-              <option value="1901" />
+              <option value="1854" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="77" />
