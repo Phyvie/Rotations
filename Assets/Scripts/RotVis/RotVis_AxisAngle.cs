@@ -33,7 +33,7 @@ namespace RotationVisualisation
             }
         }
         
-        public Vector3 RotationVector
+        public Vector3 RotationVectorInRadian
         {
             get => rotParams.RotationVectorInRadian;
             set
@@ -57,11 +57,20 @@ namespace RotationVisualisation
 
         public override void VisUpdate()
         {
-            vis_rotationVector.Value = RotationVector;
+            vis_rotationVector.Value = RotationVectorInRadian;
             vis_PlaneArc.LocalRotationAxis = NormalisedAxis; 
             vis_PlaneArc.StartingAngle = 0; 
-            vis_PlaneArc.EndingAngle = RotationVector.magnitude;
-            VisUpdateRotationObject(); 
+            vis_PlaneArc.EndingAngle = RotationVectorInRadian.magnitude;
+ 
+            vis_rotationVector.Color = 
+                ColorPalette.RotationPalette.InterpColorForAxisAndSign(RotationVectorInRadian,
+                rotParams.AngleInCurrentUnit > 0);
+            vis_PlaneArc.PositiveAngleColor = 
+                ColorPalette.RotationPalette.InterpColorForAxisAndSign(RotationVectorInRadian, true);
+            vis_PlaneArc.NegativeAngleColor = 
+                ColorPalette.RotationPalette.InterpColorForAxisAndSign(RotationVectorInRadian, false);
+            
+            VisUpdateRotationObject();
         }
 
         private void OnValidate()

@@ -8,7 +8,7 @@ namespace Visualisation
         [SerializeField] private Vector3 value; 
         [SerializeField] private GameObject vectorLength; 
         [SerializeField] private GameObject vectorHead;
-
+        
         public Vector3 Value
         {
             get => value;
@@ -19,7 +19,17 @@ namespace Visualisation
                 this.value = value;
             }
         }
-        
+
+        public Color Color
+        {
+            get => vectorHead.GetComponent<M_VectorColour>().Color;
+            set
+            {
+                vectorHead.GetComponent<M_VectorColour>().Color = value;
+                vectorLength.GetComponent<M_VectorColour>().Color = value;
+            }
+        }
+
         public void SetLength(float length)
         {
             vectorLength.transform.localScale = new Vector3(length, 1, 1); 

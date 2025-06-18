@@ -375,11 +375,14 @@ namespace RotContainers
 
             int imageWidth = 1000; 
             int imageHeight = 1000;
-            
+
+            Rect visCameraRectBuffer = visCamera.rect;
+            visCamera.rect = new Rect(0, 0, 1, 1); 
             RenderTexture screenTexture = new RenderTexture(imageWidth, imageHeight, 16);
             visCamera.targetTexture = screenTexture;
             RenderTexture.active = screenTexture;
             visCamera.Render();
+            visCamera.rect = visCameraRectBuffer;
 
             Texture2D renderedTexture = new Texture2D(imageWidth, imageHeight, TextureFormat.RGBA32, false);
             renderedTexture.ReadPixels(new Rect(0, 0, imageWidth, imageHeight), 0, 0);

@@ -4,9 +4,9 @@
 #define PI 3.14159265
 #define TWO_PI 6.2831853
 
-void SignedFraction_float(float input, out float output)
+void ModCenter_float(float input, float period, out float result)
 {
-    output = input - trunc(input); 
+    result = input - period * round(input / period);
 }
 
 void Line_float(float pos, float aim, float maxDist, out float result)
@@ -16,11 +16,13 @@ void Line_float(float pos, float aim, float maxDist, out float result)
 
 void MakeGridLines_float(float pos, float scale, float lineThickness, out float isGridLine)
 {
+    float period = 1.0;
     float posScaled = pos * scale;
-    float posFraction;
-    SignedFraction_float(posScaled, posFraction);
-    float adjustedThickness = scale * lineThickness;
-    Line_float(posFraction, 0, adjustedThickness, isGridLine);
+    float offset;
+    ModCenter_float(posScaled, period, offset);
+
+    float adjustedThickness = scale * lineThickness * 0.5; // Divide by 2 for symmetric range
+    Line_float(offset, 0.0, adjustedThickness, isGridLine);
 }
 
 void MakeGrid_float(float2 pos, float2 gridScale, float lineThickness, out float isGridLine)
