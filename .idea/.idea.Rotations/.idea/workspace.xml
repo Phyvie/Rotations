@@ -8,17 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleLit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleLit.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleUnlit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleUnlit.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_Grid.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_Grid.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes/AngleMath.hlsl" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes/AngleMath.hlsl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes/Grid.hlsl" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes/Grid.hlsl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_AngleLit.shadergraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Shaders/SH_AngleLit.shadergraph" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_AngleUnlit.shadergraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Shaders/SH_AngleUnlit.shadergraph" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BaseMathVisualiser/Vis_Vector.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BaseMathVisualiser/Vis_Vector.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MathVisualisation/Vis_Vector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MathVisualisation/Vis_Vector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/GeneralRotationContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/GeneralRotationContainer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_AxisAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_AxisAngle.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Quaternion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Quaternion.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,15 +194,13 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="3416">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="3416" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list>
-          <MonoRuntime />
-        </list>
+        <list />
       </option>
       <option name="selectedOptions">
         <list />
@@ -316,7 +306,8 @@
       <workItem from="1750181341285" duration="1000" />
       <workItem from="1750181661479" duration="5678000" />
       <workItem from="1750190547086" duration="1000" />
-      <workItem from="1750190567680" duration="17916000" />
+      <workItem from="1750190567680" duration="18052000" />
+      <workItem from="1750215814989" duration="1274000" />
     </task>
     <servers />
   </component>

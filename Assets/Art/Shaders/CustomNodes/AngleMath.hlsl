@@ -64,10 +64,15 @@ void MultiCircle_float(float distanceTo0, float angle, float circleCount, float 
     inCirclesCount = count;  
 }
 
-void ToPolarCoordinates_float(float2 pos, out float radius) //out float angle
+void ToPolarCoordinates_float(float2 pos, out float radius, out float angle)
 {
     radius = length(pos);          
-    // angle = atan2(pos.y, pos.x) / (2*PI); 
+    angle = atan2(pos.y, pos.x) / (2*PI); 
+}
+
+void Length_float(float2 pos, out float radius)
+{
+    radius = distance(pos, float2(0, 0)); 
 }
 
 #endif // ANGLE_MATH_H
