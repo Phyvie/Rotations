@@ -36,11 +36,6 @@ void IsValueInModRange_float(float val, float alpha, float beta,
     }
 }
 
-void FullSpiral_float(float distanceTo0, float angle, float innerRadius, float outerRadius, out float isInSpiral)
-{
-        
-}
-
 void FullCircle_float(float distanceTo0, float angle, float circleRadius, out float isInCircle)
 {
     isInCircle = distanceTo0 < circleRadius ? 1.0f : 0.0f;
@@ -67,12 +62,18 @@ void MultiCircle_float(float distanceTo0, float angle, float circleCount, float 
 void ToPolarCoordinates_float(float2 pos, out float radius, out float angle)
 {
     radius = length(pos);          
-    angle = atan2(pos.y, pos.x) / (2*PI); 
+    angle = atan2(pos.y, pos.x) / (TWO_PI); 
 }
 
 void Length_float(float2 pos, out float radius)
 {
     radius = distance(pos, float2(0, 0)); 
+}
+
+void MultiSpiral_float(float distanceTo0, float angle, float spiralCount, float outerRadius, float radiusRatio, out float isInSpiral)
+{
+    float firstRadius = lerp(outerRadius, outerRadius*radiusRatio, 1-(((angle+TWO_PI)%(TWO_PI))/(TWO_PI))); 
+    MultiCircle_float(distanceTo0, angle, spiralCount, firstRadius, radiusRatio, isInSpiral);  
 }
 
 #endif // ANGLE_MATH_H

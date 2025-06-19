@@ -56,6 +56,7 @@ namespace RotationVisualisation
         public override void VisUpdate()
         {
             vis_rotationVector.Value = Axis * Angle;
+            
             vis_PlaneArc.LocalRotationAxis = Axis; 
             vis_PlaneArc.StartingAngle = 0; 
             vis_PlaneArc.EndingAngle = Angle;

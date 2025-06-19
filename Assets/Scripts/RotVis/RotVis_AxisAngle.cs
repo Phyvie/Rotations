@@ -65,7 +65,7 @@ namespace RotationVisualisation
             vis_rotationVector.Color = 
                 ColorPalette.RotationPalette.InterpColorForAxisAndSign(RotationVectorInRadian,
                 rotParams.AngleInCurrentUnit > 0);
-            vis_PlaneArc.PositiveAngleColor = 
+             vis_PlaneArc.PositiveAngleColor = 
                 ColorPalette.RotationPalette.InterpColorForAxisAndSign(RotationVectorInRadian, true);
             vis_PlaneArc.NegativeAngleColor = 
                 ColorPalette.RotationPalette.InterpColorForAxisAndSign(RotationVectorInRadian, false);

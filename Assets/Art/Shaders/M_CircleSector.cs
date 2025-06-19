@@ -5,6 +5,7 @@ public class M_CircleSector : M_ShaderValueController
 {
     [SerializeField] private Color _positiveAngleColor;
     [SerializeField] private Color _negativeAngleColor;
+    [SerializeField] private Color _fullRotationColor; 
     [SerializeField] private Color _outsideAngleColor; 
     [SerializeField] private float _beginAngle;
     [SerializeField] private float _endAngle;
@@ -61,6 +62,16 @@ public class M_CircleSector : M_ShaderValueController
         }
     }
 
+    public Color FullRotationColor
+    {
+        get => _fullRotationColor;
+        set
+        {
+            _fullRotationColor = value;
+            material.SetColor("_FullRotationColour", FullRotationColor);
+        }
+    }
+
     void UpdateShader()
     {
         if (material == null) return;
@@ -68,13 +79,14 @@ public class M_CircleSector : M_ShaderValueController
         material.SetColor("_PositiveAngleColour", PositiveAngleColor);
         material.SetColor("_NegativeAngleColour", NegativeAngleColor);
         material.SetColor("_OutsideAngleColour", OutsideAngleColor);
+        material.SetColor("_FullRotationsColor", FullRotationColor);
         material.SetFloat("_BeginAngle", _beginAngle);
         material.SetFloat("_EndAngle", _endAngle);
         material.SetColor("_InsideAngleColour", 
             BeginAngle < EndAngle ? 
                 material.GetColor("_PositiveAngleColour") :
                 material.GetColor("_NegativeAngleColour"));
-        material.SetFloat("FullRotations", fullRotations);
+        material.SetFloat("_FullRotations", fullRotations);
     }
 
     private void OnValidate()

@@ -100,8 +100,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: 33fdf24a949fe4b458d6eb6a85bb4e2e, type: 2}
-  _positiveAngleColor: {r: 0.45098042, g: 1, b: 0.45098042, a: 0}
-  _negativeAngleColor: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0}
+  _positiveAngleColor: {r: 0.45098042, g: 1, b: 0.45098042, a: 0.25490198}
+  _negativeAngleColor: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0.25490198}
+  _fullRotationColor: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0.25490198}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
   _beginAngle: -0
   _endAngle: 0
@@ -205,43 +206,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: 33fdf24a949fe4b458d6eb6a85bb4e2e, type: 2}
-  _positiveAngleColor: {r: 0.45098042, g: 0.45098042, b: 1, a: 0}
-  _negativeAngleColor: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0}
+  _positiveAngleColor: {r: 0.45098042, g: 0.45098042, b: 1, a: 0.2509804}
+  _negativeAngleColor: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0.25490198}
+  _fullRotationColor: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0.25490198}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
   _beginAngle: -0
   _endAngle: 0
---- !u!1 &3905336753690019281
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4651312099454204475}
-  m_Layer: 0
-  m_Name: RotationObjectParent
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4651312099454204475
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3905336753690019281}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4941777458254952317}
-  m_Father: {fileID: 2442438066559996244}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4356467761502027135
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,7 +329,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7582306692137464973}
-  - {fileID: 4651312099454204475}
+  - {fileID: 857855374135894271}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6771795169128747818
@@ -374,8 +344,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc092fa2e1eb4593a2085b0aac8252d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationObjectParent: {fileID: 3905336753690019281}
-  rotationObject: {fileID: 5755434052658261447}
+  rotationObjectParent: {fileID: 2031319537749986345}
+  rotationObject: {fileID: 8589344537582138457}
   outer:
     rail: {fileID: 6957279353251134465}
     ring: {fileID: 4976681947260355434}
@@ -388,12 +358,12 @@ MonoBehaviour:
     rail: {fileID: 4520340664653103367}
     ring: {fileID: 6446721322427425129}
     vis_planeArc: {fileID: 6308813285352157611}
-  PosYawColor: {r: 0.45098042, g: 1, b: 0.45098042, a: 0}
-  NegYawColor: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0}
-  PosPitchColor: {r: 0.45098042, g: 0.45098042, b: 1, a: 0}
-  NegPitchColor: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0}
-  PosRollColor: {r: 1, g: 0.45098042, b: 0.45098042, a: 0}
-  NegRollColor: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0}
+  PosYawColor: {r: 0.45098042, g: 1, b: 0.45098042, a: 0.25490198}
+  NegYawColor: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0.25490198}
+  PosPitchColor: {r: 0.45098042, g: 0.45098042, b: 1, a: 0.2509804}
+  NegPitchColor: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0.25490198}
+  PosRollColor: {r: 1, g: 0.45098042, b: 0.45098042, a: 0.2509804}
+  NegRollColor: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0.2509804}
   rotParams:
     ZyKaGimbalAxis: 0
     outer:
@@ -622,8 +592,8 @@ MonoBehaviour:
   localForwardVector: {x: 0, y: 0, z: 0}
   beginAngle: -0
   endingAngle: 0
-  _positiveAngleColorOverwrite: {r: 0.45098042, g: 0.45098042, b: 1, a: 0}
-  _negativeAngleColorOverwrite: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0}
+  _positiveAngleColorOverwrite: {r: 0.45098042, g: 0.45098042, b: 1, a: 0.2509804}
+  _negativeAngleColorOverwrite: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0.25490198}
   torusMaterial: {fileID: 4982370344158795608}
   circleMaterial: {fileID: 4837300017244231248}
 --- !u!114 &4982370344158795608
@@ -639,8 +609,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: c3ddc9ccf28e8d74b90bcb502dab5996, type: 2}
-  _positiveAngleColor: {r: 0.45098042, g: 0.45098042, b: 1, a: 0}
-  _negativeAngleColor: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0}
+  _positiveAngleColor: {r: 0.45098042, g: 0.45098042, b: 1, a: 0.2509804}
+  _negativeAngleColor: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0.25490198}
+  _fullRotationColor: {r: 0, g: 0, b: 0, a: 0}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
   _beginAngle: -0
   _endAngle: 0
@@ -749,8 +720,8 @@ MonoBehaviour:
   localForwardVector: {x: 0, y: 0, z: 0}
   beginAngle: -0
   endingAngle: 0
-  _positiveAngleColorOverwrite: {r: 0.45098042, g: 1, b: 0.45098042, a: 0}
-  _negativeAngleColorOverwrite: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0}
+  _positiveAngleColorOverwrite: {r: 0.45098042, g: 1, b: 0.45098042, a: 0.25490198}
+  _negativeAngleColorOverwrite: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0.25490198}
   torusMaterial: {fileID: 2333320410219279108}
   circleMaterial: {fileID: 665319245755013321}
 --- !u!114 &2333320410219279108
@@ -766,8 +737,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: c3ddc9ccf28e8d74b90bcb502dab5996, type: 2}
-  _positiveAngleColor: {r: 0.45098042, g: 1, b: 0.45098042, a: 0}
-  _negativeAngleColor: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0}
+  _positiveAngleColor: {r: 0.45098042, g: 1, b: 0.45098042, a: 0.25490198}
+  _negativeAngleColor: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0.25490198}
+  _fullRotationColor: {r: 0, g: 0, b: 0, a: 0}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
   _beginAngle: -0
   _endAngle: 0
@@ -876,8 +848,8 @@ MonoBehaviour:
   localForwardVector: {x: 0, y: 0, z: 0}
   beginAngle: -0
   endingAngle: 0
-  _positiveAngleColorOverwrite: {r: 1, g: 0.45098042, b: 0.45098042, a: 0}
-  _negativeAngleColorOverwrite: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0}
+  _positiveAngleColorOverwrite: {r: 1, g: 0.45098042, b: 0.45098042, a: 0.2509804}
+  _negativeAngleColorOverwrite: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0.2509804}
   torusMaterial: {fileID: 7110365489252294482}
   circleMaterial: {fileID: 2405914394118555245}
 --- !u!114 &7110365489252294482
@@ -893,8 +865,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: c3ddc9ccf28e8d74b90bcb502dab5996, type: 2}
-  _positiveAngleColor: {r: 1, g: 0.45098042, b: 0.45098042, a: 0}
-  _negativeAngleColor: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0}
+  _positiveAngleColor: {r: 1, g: 0.45098042, b: 0.45098042, a: 0.2509804}
+  _negativeAngleColor: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0.2509804}
+  _fullRotationColor: {r: 0, g: 0, b: 0, a: 0}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
   _beginAngle: -0
   _endAngle: 0
@@ -1086,8 +1059,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editSharedMaterial: {fileID: 2100000, guid: 33fdf24a949fe4b458d6eb6a85bb4e2e, type: 2}
-  _positiveAngleColor: {r: 1, g: 0.45098042, b: 0.45098042, a: 0}
-  _negativeAngleColor: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0}
+  _positiveAngleColor: {r: 1, g: 0.45098042, b: 0.45098042, a: 0.2509804}
+  _negativeAngleColor: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0.2509804}
+  _fullRotationColor: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0.2509804}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
   _beginAngle: -0
   _endAngle: 0
@@ -1179,83 +1153,89 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1001 &4836304248556540054
+--- !u!1001 &8978344107968047430
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 4651312099454204475}
+    m_TransformParent: {fileID: 2442438066559996244}
     m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 8bae74f32b9eebe489084472581ea602,
+    - target: {fileID: 6965325068319466863, guid: b2956e319eb12f246b2e195c6c584b45,
+        type: 3}
+      propertyPath: m_Name
+      value: RotationObjectParent
+      objectReference: {fileID: 0}
+    - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8bae74f32b9eebe489084472581ea602,
+    - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8bae74f32b9eebe489084472581ea602,
+    - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8bae74f32b9eebe489084472581ea602,
+    - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8bae74f32b9eebe489084472581ea602,
+    - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8bae74f32b9eebe489084472581ea602,
+    - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8bae74f32b9eebe489084472581ea602,
+    - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8bae74f32b9eebe489084472581ea602,
+    - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8bae74f32b9eebe489084472581ea602,
+    - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 8bae74f32b9eebe489084472581ea602,
+    - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 8bae74f32b9eebe489084472581ea602,
-        type: 3}
-      propertyPath: m_Name
-      value: Airplane
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8bae74f32b9eebe489084472581ea602, type: 3}
---- !u!4 &4941777458254952317 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: b2956e319eb12f246b2e195c6c584b45, type: 3}
+--- !u!4 &857855374135894271 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8bae74f32b9eebe489084472581ea602,
+  m_CorrespondingSourceObject: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
     type: 3}
-  m_PrefabInstance: {fileID: 4836304248556540054}
+  m_PrefabInstance: {fileID: 8978344107968047430}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5755434052658261447 stripped
+--- !u!1 &2031319537749986345 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8bae74f32b9eebe489084472581ea602,
+  m_CorrespondingSourceObject: {fileID: 6965325068319466863, guid: b2956e319eb12f246b2e195c6c584b45,
     type: 3}
-  m_PrefabInstance: {fileID: 4836304248556540054}
+  m_PrefabInstance: {fileID: 8978344107968047430}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8589344537582138457 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 840492238406311199, guid: b2956e319eb12f246b2e195c6c584b45,
+    type: 3}
+  m_PrefabInstance: {fileID: 8978344107968047430}
   m_PrefabAsset: {fileID: 0}

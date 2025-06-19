@@ -8,9 +8,24 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleLit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleLit.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleUnlit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleUnlit.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_Grid.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_Grid.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_VectorColor.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_VectorColor.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes/AngleMath.hlsl" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes/AngleMath.hlsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/M_CircleSector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Shaders/M_CircleSector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_AngleLit.shadergraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Shaders/SH_AngleLit.shadergraph" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_AngleUnlit.shadergraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Shaders/SH_AngleUnlit.shadergraph" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BaseMathVisualiser/Vis_Vector.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BaseMathVisualiser/Vis_Vector.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Gizmo/Gizmo_Translate.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Gizmo/Gizmo_Translate.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_AxisAngle.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_AxisAngle.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_EulerGimbal.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_EulerGimbal.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_Matrix.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_Matrix.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_Quaternion.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_Quaternion.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MathVisualisation/Vis_PlaneArc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MathVisualisation/Vis_PlaneArc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MathVisualisation/Vis_Vector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MathVisualisation/Vis_Vector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_AxisAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_AxisAngle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Quaternion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Quaternion.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,6 +127,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.shadergraph@911117698220/Editor/Data/Util/PooledList.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.shadergraph@911117698220/Editor/Drawing/PreviewManager.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -194,13 +210,15 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="16824">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="16824" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list />
+        <list>
+          <MonoRuntime />
+        </list>
       </option>
       <option name="selectedOptions">
         <list />
@@ -307,13 +325,17 @@
       <workItem from="1750181661479" duration="5678000" />
       <workItem from="1750190547086" duration="1000" />
       <workItem from="1750190567680" duration="18052000" />
-      <workItem from="1750215814989" duration="1274000" />
+      <workItem from="1750215814778" duration="1143000" />
+      <workItem from="1750247754236" duration="784000" />
+      <workItem from="1750249113709" duration="2208000" />
+      <workItem from="1750352878639" duration="4183000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityProjectDiscoverer">
     <option name="hasUnityReference" value="true" />
@@ -338,10 +360,10 @@
           <line>54</line>
           <properties documentPath="D:\programming\Rotations\Assets\Scripts\RotVis\RotVis.cs" containingFunctionPresentation="Method 'ApplyObjectRotation'">
             <startOffsets>
-              <option value="1772" />
+              <option value="1773" />
             </startOffsets>
             <endOffsets>
-              <option value="1854" />
+              <option value="1855" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="77" />

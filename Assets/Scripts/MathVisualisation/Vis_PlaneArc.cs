@@ -112,6 +112,11 @@ namespace Visualisation
             }
         }
 
+        public Color FullRotationsColor
+        {
+            get => (endingAngle - beginAngle) > 0 ? PositiveAngleColor : NegativeAngleColor;
+        }
+
         public void VisUpdate()
         {
             VisUpdateRotation();
@@ -135,6 +140,7 @@ namespace Visualisation
             {
                 circleMaterial.BeginAngle = beginAngle;
                 circleMaterial.EndAngle = endingAngle;
+                circleMaterial.FullRotationColor = FullRotationsColor;
             }
         }
         

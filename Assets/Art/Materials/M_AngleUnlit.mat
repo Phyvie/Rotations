@@ -111,9 +111,9 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EndAngle: 0.17
+    - _EndAngle: 0
     - _EnvironmentReflections: 1
-    - _FullRotations: 10
+    - _FullRotations: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -136,11 +136,11 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _ExtraCirclesColor: {r: 1, g: 1, b: 1, a: 0.1019608}
-    - _FullRotationsColor: {r: 1, g: 1, b: 1, a: 0}
-    - _InsideAngleColour: {r: 0.9, g: 0.9, b: 0.9, a: 0.6}
-    - _NegativeAngleColour: {r: 0.2, g: 0.2, b: 0.2, a: 0.6}
-    - _OutsideAngleColour: {r: 0.5, g: 0.5, b: 0.5, a: 0}
-    - _PositiveAngleColour: {r: 0.9, g: 0.9, b: 0.9, a: 0.6}
+    - _FullRotationsColor: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0.2509804}
+    - _InsideAngleColour: {r: 0.5490196, g: 0.24705875, b: 0.24705875, a: 0.2509804}
+    - _NegativeAngleColour: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0.2509804}
+    - _OutsideAngleColour: {r: 0, g: 0, b: 0, a: 0}
+    - _PositiveAngleColour: {r: 1, g: 0.45098042, b: 0.45098042, a: 0.2509804}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
