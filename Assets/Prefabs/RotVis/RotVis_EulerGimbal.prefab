@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 469960093273004714}
-  m_Mesh: {fileID: -2124705421725058983, guid: d15715dd1400f61478c2d42cb069f453, type: 3}
+  m_Mesh: {fileID: -1443373176975192723, guid: d15715dd1400f61478c2d42cb069f453, type: 3}
 --- !u!23 &6820970637616877331
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -147,7 +147,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2460166654622229268}
-  m_Mesh: {fileID: -2124705421725058983, guid: d15715dd1400f61478c2d42cb069f453, type: 3}
+  m_Mesh: {fileID: -1443373176975192723, guid: d15715dd1400f61478c2d42cb069f453, type: 3}
 --- !u!23 &4855209527207076002
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -612,7 +612,7 @@ MonoBehaviour:
   _positiveAngleColor: {r: 0.45098042, g: 0.45098042, b: 1, a: 0.2509804}
   _negativeAngleColor: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0.25490198}
   _fullRotationColor: {r: 0, g: 0, b: 0, a: 0}
-  _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
+  _outsideAngleColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   _beginAngle: -0
   _endAngle: 0
 --- !u!1 &4976681947260355434
@@ -739,8 +739,8 @@ MonoBehaviour:
   editSharedMaterial: {fileID: 2100000, guid: c3ddc9ccf28e8d74b90bcb502dab5996, type: 2}
   _positiveAngleColor: {r: 0.45098042, g: 1, b: 0.45098042, a: 0.25490198}
   _negativeAngleColor: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0.25490198}
-  _fullRotationColor: {r: 0, g: 0, b: 0, a: 0}
-  _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
+  _fullRotationColor: {r: 0.36078432, g: 0.8000001, b: 0.36078432, a: 0}
+  _outsideAngleColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   _beginAngle: -0
   _endAngle: 0
 --- !u!1 &6446721322427425129
@@ -868,7 +868,7 @@ MonoBehaviour:
   _positiveAngleColor: {r: 1, g: 0.45098042, b: 0.45098042, a: 0.2509804}
   _negativeAngleColor: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0.2509804}
   _fullRotationColor: {r: 0, g: 0, b: 0, a: 0}
-  _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
+  _outsideAngleColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   _beginAngle: -0
   _endAngle: 0
 --- !u!1 &6957279353251134465
@@ -1000,7 +1000,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7547344057584787967}
-  m_Mesh: {fileID: -2124705421725058983, guid: d15715dd1400f61478c2d42cb069f453, type: 3}
+  m_Mesh: {fileID: -1443373176975192723, guid: d15715dd1400f61478c2d42cb069f453, type: 3}
 --- !u!23 &3802271908814065103
 MeshRenderer:
   m_ObjectHideFlags: 0
