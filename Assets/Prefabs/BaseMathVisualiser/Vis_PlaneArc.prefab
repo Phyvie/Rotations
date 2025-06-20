@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 66024414259742215}
-  m_Mesh: {fileID: -7262605851722276555, guid: d15715dd1400f61478c2d42cb069f453, type: 3}
+  m_Mesh: {fileID: -1077765914501896503, guid: d15715dd1400f61478c2d42cb069f453, type: 3}
 --- !u!23 &9140821770695997679
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -102,6 +102,7 @@ MonoBehaviour:
   editSharedMaterial: {fileID: 2100000, guid: c3ddc9ccf28e8d74b90bcb502dab5996, type: 2}
   _positiveAngleColor: {r: 0.9019608, g: 0.9019608, b: 0.9019608, a: 1}
   _negativeAngleColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  _fullRotationColor: {r: 0, g: 0, b: 0, a: 0}
   _outsideAngleColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   _beginAngle: 0
   _endAngle: 0
@@ -200,7 +201,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7746308340713269120}
-  m_Mesh: {fileID: -2124705421725058983, guid: d15715dd1400f61478c2d42cb069f453, type: 3}
+  m_Mesh: {fileID: -1443373176975192723, guid: d15715dd1400f61478c2d42cb069f453, type: 3}
 --- !u!23 &4110588104382066183
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -261,6 +262,7 @@ MonoBehaviour:
   editSharedMaterial: {fileID: 2100000, guid: 33fdf24a949fe4b458d6eb6a85bb4e2e, type: 2}
   _positiveAngleColor: {r: 0.9, g: 0.9, b: 0.9, a: 0.6}
   _negativeAngleColor: {r: 0.2, g: 0.2, b: 0.2, a: 0.6}
+  _fullRotationColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   _outsideAngleColor: {r: 0.5, g: 0.5, b: 0.5, a: 0}
   _beginAngle: 0
   _endAngle: 0

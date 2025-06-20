@@ -14,7 +14,7 @@ namespace RotParams
         [CreateProperty]
         public Vector3 NormalisedAxis
         {
-            get => axis;
+            get => axis.normalized;
             set
             {
                 axis = value;
@@ -69,10 +69,10 @@ namespace RotParams
         [CreateProperty]
         public Vector3 RotationVectorInRadian
         {
-            get => axis * AngleInRadian;
+            get => NormalisedAxis * AngleInRadian;
             set
             {
-                axis = value.normalized;
+                NormalisedAxis = value.normalized;
                 AngleInRadian = value.magnitude; 
                 OnPropertyChanged();
             }

@@ -10,7 +10,7 @@
                 <engine:VisualElement name="AngleContainer" style="flex-grow: 1;">
                     <engine:FloatField name="AngleField" class="floatField--pure">
                         <Bindings>
-                            <engine:DataBinding property="value" data-source-path="typedAngle.AngleInCurrentUnit" binding-mode="TwoWay" />
+                            <engine:DataBinding property="value" data-source-path="AngleInCurrentUnit" binding-mode="TwoWay" />
                         </Bindings>
                     </engine:FloatField>
                     <engine:DropdownField name="AngleTypeSelector">

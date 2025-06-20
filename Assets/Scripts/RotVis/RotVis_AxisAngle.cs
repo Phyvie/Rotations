@@ -1,5 +1,6 @@
 using System;
 using BaseClasses;
+using MathVisualisation;
 using RotParams;
 using UnityEngine;
 using Visualisation;
@@ -10,6 +11,7 @@ namespace RotationVisualisation
     public class RotVis_AxisAngle : RotVis
     {
         [SerializeField] private Vis_Vector vis_rotationVector;
+        [SerializeField] private Vis_Axis vis_axis;
         [SerializeField] private Vis_PlaneArc vis_PlaneArc;
 
         public RotVis_AxisAngle(RotParams_AxisAngle rotParams) : base(rotParams)
@@ -58,6 +60,9 @@ namespace RotationVisualisation
         public override void VisUpdate()
         {
             vis_rotationVector.Value = RotationVectorInRadian;
+            
+            vis_axis.Value = NormalisedAxis;
+            
             vis_PlaneArc.LocalRotationAxis = NormalisedAxis; 
             vis_PlaneArc.StartingAngle = 0; 
             vis_PlaneArc.EndingAngle = RotationVectorInRadian.magnitude;
@@ -65,7 +70,9 @@ namespace RotationVisualisation
             vis_rotationVector.Color = 
                 ColorPalette.RotationPalette.InterpColorForAxisAndSign(RotationVectorInRadian,
                 rotParams.AngleInCurrentUnit > 0);
-             vis_PlaneArc.PositiveAngleColor = 
+            vis_axis.Color = ColorPalette.RotationPalette.InterpColorForAxisAndSign(RotationVectorInRadian,
+                rotParams.AngleInCurrentUnit > 0);
+            vis_PlaneArc.PositiveAngleColor = 
                 ColorPalette.RotationPalette.InterpColorForAxisAndSign(RotationVectorInRadian, true);
             vis_PlaneArc.NegativeAngleColor = 
                 ColorPalette.RotationPalette.InterpColorForAxisAndSign(RotationVectorInRadian, false);

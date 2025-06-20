@@ -52,7 +52,7 @@ namespace BaseClasses
         [ContextMenu("ApplyObjectRotation")]
         public void ApplyObjectRotation()
         {
-            rotationObjectParent.transform.localRotation = GetRotParams().ToUnityQuaternion();
+            rotationObjectParent.transform.localRotation *= GetRotParams().ToUnityQuaternion();
             GetRotParams().ResetToIdentity(); 
         }
 

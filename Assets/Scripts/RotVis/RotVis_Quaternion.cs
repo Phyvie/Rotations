@@ -1,5 +1,6 @@
 using System;
 using BaseClasses;
+using MathVisualisation;
 using RotParams;
 using UnityEngine;
 using Visualisation;
@@ -10,6 +11,7 @@ namespace RotationVisualisation
     {
         //-ZyKa Quaternion -ZyKa RotVis update this to be able to take in non-unit quaternions
         [SerializeField] private Vis_Vector vis_rotationVector;
+        [SerializeField] private Vis_Axis vis_Axis; 
         [SerializeField] private Vis_PlaneArc vis_PlaneArc;
         
         public RotVis_Quaternion(RotParams_Quaternion rotParams_Quaternion) : base(rotParams_Quaternion)
@@ -56,6 +58,8 @@ namespace RotationVisualisation
         public override void VisUpdate()
         {
             vis_rotationVector.Value = Axis * Angle;
+
+            vis_Axis.Value = Axis; 
             
             vis_PlaneArc.LocalRotationAxis = Axis; 
             vis_PlaneArc.StartingAngle = 0; 
@@ -64,6 +68,8 @@ namespace RotationVisualisation
             vis_rotationVector.Color = 
                 ColorPalette.RotationPalette.InterpColorForAxisAndSign(Axis,
                     rotParams.Angle > 0);
+            vis_Axis.Color = ColorPalette.RotationPalette.InterpColorForAxisAndSign(Axis,
+                rotParams.Angle > 0);
             vis_PlaneArc.PositiveAngleColor = 
                 ColorPalette.RotationPalette.InterpColorForAxisAndSign(Axis, true);
             vis_PlaneArc.NegativeAngleColor = 
