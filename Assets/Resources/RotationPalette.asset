@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: RotationPalette
   m_EditorClassIdentifier: 
   PosYaw: {r: 0.4509804, g: 1, b: 0.4509804, a: 0.2}
-  NegYaw: {r: 0.24705882, g: 0.54901963, b: 0.24705882, a: 0.2}
+  NegYaw: {r: 0.45098042, g: 1, b: 0.45098042, a: 0.2}
   PosPitch: {r: 0.4509804, g: 0.4509804, b: 1, a: 0.2}
-  NegPitch: {r: 0.24705882, g: 0.24705882, b: 0.54901963, a: 0.2}
+  NegPitch: {r: 0.45098042, g: 0.45098042, b: 1, a: 0.2}
   PosRoll: {r: 1, g: 0.4509804, b: 0.4509804, a: 0.2}
-  NegRoll: {r: 0.54901963, g: 0.24705882, b: 0.24705882, a: 0.2}
+  NegRoll: {r: 1, g: 0.45098042, b: 0.45098042, a: 0.2}

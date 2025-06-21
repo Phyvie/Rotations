@@ -34,6 +34,8 @@ namespace Visualisation
         [System.Serializable]
         public class VectorScalingData
         {
+            public float lengthScale; 
+            
             public float scalingLowerClamp; 
             public float scalingUpperClamp;
             
@@ -62,8 +64,8 @@ namespace Visualisation
 
         public void SetLength(float length)
         {
-            vectorLength.transform.localScale = new Vector3(length, 1, 1); 
-            vectorHead.transform.localPosition = new Vector3(length, 0, 0);
+            vectorLength.transform.localScale = new Vector3(length * _scalingData.lengthScale, 1, 1); 
+            vectorHead.transform.localPosition = new Vector3(length * _scalingData.lengthScale, 0, 0);
         }
 
         public void SetDirectionFromQuaternion(Quaternion rotation)

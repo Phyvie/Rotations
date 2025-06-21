@@ -23,6 +23,7 @@ namespace Visualisation
             {
                 localRotationAxis = value;
                 VisUpdateRotationAxis();
+                VisUpdateShader();
             }
         }
 
@@ -34,6 +35,7 @@ namespace Visualisation
                 LocalRotationAxis = transform.parent != null ? 
                     Quaternion.Inverse(transform.parent.rotation) * value : 
                     value; 
+                VisUpdateShader();
             }
         }
         
@@ -44,6 +46,7 @@ namespace Visualisation
             {
                 localForwardVector = value;
                 VisUpdateRotationForward(); 
+                VisUpdateShader();
             }
         }
 
@@ -55,6 +58,7 @@ namespace Visualisation
                 LocalForwardVector = transform.parent != null ? 
                     Quaternion.Inverse(transform.parent.rotation) * value : 
                     value; 
+                VisUpdateShader();
             }
         }
         
@@ -64,7 +68,7 @@ namespace Visualisation
             set
             {
                 beginAngle = value;
-                VisUpdateShaderAngle();
+                VisUpdateShader();
             }
         }
 
@@ -74,7 +78,7 @@ namespace Visualisation
             set
             {
                 endingAngle = value;
-                VisUpdateShaderAngle();
+                VisUpdateShader();
             }
         }
         
@@ -92,6 +96,7 @@ namespace Visualisation
                 {
                     circleMaterial.PositiveAngleColor = value;
                 }
+                VisUpdateShader();
             }
         }
 
@@ -109,6 +114,7 @@ namespace Visualisation
                 {
                     circleMaterial.NegativeAngleColor = value;
                 }
+                VisUpdateShader();
             }
         }
 
@@ -120,7 +126,7 @@ namespace Visualisation
         public void VisUpdate()
         {
             VisUpdateRotation();
-            VisUpdateShaderAngle(); 
+            VisUpdateShader(); 
         }
 
         private void VisUpdateRotation()
@@ -128,7 +134,7 @@ namespace Visualisation
             VisUpdateRotationViaRotatingFromPreviousToCurrent(); 
         }
 
-        private void VisUpdateShaderAngle()
+        private void VisUpdateShader()
         {
             if (torusMaterial != null)
             {

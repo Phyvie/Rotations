@@ -48,19 +48,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd8182febb564dada676e5fd3d6595d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationObjectParent: {fileID: 2853996039599844885}
-  rotationObject: {fileID: 5519345257371145829}
+  appliedRotationObject: {fileID: 5519345257371145829}
+  rotationObject: {fileID: 2853996039599844885}
   vis_rotationVector: {fileID: 4664744952068152325}
   vis_axis: {fileID: 964289713925506116}
   vis_PlaneArc: {fileID: 2768336630294926975}
   rotParams:
-    axis: {x: 1, y: 0, z: 0}
     typedAngle:
       showAllAngleTypes: 0
       showAngleTypeSelector: 1
       angleType:
         rid: 4235530349500956798
       _angleInRadian: 0.0872664675116539
+    _x:
+      typeValue: 0
+      isLocked: 0
+    _y:
+      typeValue: 0
+      isLocked: 0
+    _z:
+      typeValue: 0
+      isLocked: 0
+    xyzLockableVector:
+      targetLength: 0
+      values: []
   references:
     version: 2
     RefIds:
@@ -81,7 +92,7 @@ PrefabInstance:
     - target: {fileID: 598110239919229898, guid: b7625e8eb2a34f243aed75a44ecebaf8,
         type: 3}
       propertyPath: value.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 598110239919229898, guid: b7625e8eb2a34f243aed75a44ecebaf8,
         type: 3}
@@ -91,12 +102,12 @@ PrefabInstance:
     - target: {fileID: 598110239919229898, guid: b7625e8eb2a34f243aed75a44ecebaf8,
         type: 3}
       propertyPath: _scalingData.maxThickness
-      value: 0.6
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 598110239919229898, guid: b7625e8eb2a34f243aed75a44ecebaf8,
         type: 3}
       propertyPath: _scalingData.minThickness
-      value: 0.1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 598110239919229898, guid: b7625e8eb2a34f243aed75a44ecebaf8,
         type: 3}
@@ -106,12 +117,12 @@ PrefabInstance:
     - target: {fileID: 621042780820577679, guid: b7625e8eb2a34f243aed75a44ecebaf8,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 621042780820577679, guid: b7625e8eb2a34f243aed75a44ecebaf8,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.6
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 621042780820577679, guid: b7625e8eb2a34f243aed75a44ecebaf8,
         type: 3}
@@ -166,22 +177,22 @@ PrefabInstance:
     - target: {fileID: 2012129778389092627, guid: b7625e8eb2a34f243aed75a44ecebaf8,
         type: 3}
       propertyPath: color.a
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2012129778389092627, guid: b7625e8eb2a34f243aed75a44ecebaf8,
         type: 3}
       propertyPath: color.b
-      value: 0.4509804
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2012129778389092627, guid: b7625e8eb2a34f243aed75a44ecebaf8,
         type: 3}
       propertyPath: color.g
-      value: 0.4509804
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2012129778389092627, guid: b7625e8eb2a34f243aed75a44ecebaf8,
         type: 3}
       propertyPath: color.r
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8015745137042997639, guid: b7625e8eb2a34f243aed75a44ecebaf8,
         type: 3}
@@ -222,57 +233,57 @@ PrefabInstance:
     - target: {fileID: 1214628504451077281, guid: 7933ef87928098949bf5926c8bc9f282,
         type: 3}
       propertyPath: color.a
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1214628504451077281, guid: 7933ef87928098949bf5926c8bc9f282,
         type: 3}
       propertyPath: color.b
-      value: 0.4509804
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1214628504451077281, guid: 7933ef87928098949bf5926c8bc9f282,
         type: 3}
       propertyPath: color.g
-      value: 0.4509804
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1214628504451077281, guid: 7933ef87928098949bf5926c8bc9f282,
         type: 3}
       propertyPath: color.r
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3029551689951896817, guid: 7933ef87928098949bf5926c8bc9f282,
         type: 3}
       propertyPath: color.a
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3029551689951896817, guid: 7933ef87928098949bf5926c8bc9f282,
         type: 3}
       propertyPath: color.b
-      value: 0.4509804
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3029551689951896817, guid: 7933ef87928098949bf5926c8bc9f282,
         type: 3}
       propertyPath: color.g
-      value: 0.4509804
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3029551689951896817, guid: 7933ef87928098949bf5926c8bc9f282,
         type: 3}
       propertyPath: color.r
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3223140373953802919, guid: 7933ef87928098949bf5926c8bc9f282,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.08726647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3223140373953802919, guid: 7933ef87928098949bf5926c8bc9f282,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.53543264
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 3223140373953802919, guid: 7933ef87928098949bf5926c8bc9f282,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.53543264
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 3871198916000655643, guid: 7933ef87928098949bf5926c8bc9f282,
         type: 3}
@@ -282,7 +293,7 @@ PrefabInstance:
     - target: {fileID: 5935852006331013845, guid: 7933ef87928098949bf5926c8bc9f282,
         type: 3}
       propertyPath: value.x
-      value: 0.08726647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5935852006331013845, guid: 7933ef87928098949bf5926c8bc9f282,
         type: 3}
@@ -397,22 +408,22 @@ PrefabInstance:
     - target: {fileID: 8859654645296917220, guid: 7933ef87928098949bf5926c8bc9f282,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.8017994
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 8859654645296917220, guid: 7933ef87928098949bf5926c8bc9f282,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.8017994
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 8859654645296917220, guid: 7933ef87928098949bf5926c8bc9f282,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.8017994
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 8859654645296917220, guid: 7933ef87928098949bf5926c8bc9f282,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.08726647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -448,12 +459,12 @@ PrefabInstance:
     - target: {fileID: 95160333519979097, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99904823
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 95160333519979097, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.04361939
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 95160333519979097, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
@@ -465,10 +476,15 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 840492238406311199, guid: b2956e319eb12f246b2e195c6c584b45,
+        type: 3}
+      propertyPath: m_Name
+      value: AppliedRotationObject
+      objectReference: {fileID: 0}
     - target: {fileID: 6965325068319466863, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_Name
-      value: RotationObjectParent
+      value: RotationObject
       objectReference: {fileID: 0}
     - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
@@ -493,17 +509,17 @@ PrefabInstance:
     - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
@@ -554,47 +570,47 @@ PrefabInstance:
     - target: {fileID: 3766871097072832070, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _endAngle
-      value: 0.08726647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3766871097072832070, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _negativeAngleColor.a
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3766871097072832070, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _negativeAngleColor.b
-      value: 0.24705882
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3766871097072832070, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _negativeAngleColor.g
-      value: 0.24705882
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3766871097072832070, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _negativeAngleColor.r
-      value: 0.54901963
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3766871097072832070, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _positiveAngleColor.a
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3766871097072832070, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _positiveAngleColor.b
-      value: 0.4509804
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3766871097072832070, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _positiveAngleColor.g
-      value: 0.4509804
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3766871097072832070, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _positiveAngleColor.r
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5343080644160579222, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
@@ -649,7 +665,7 @@ PrefabInstance:
     - target: {fileID: 6126514871875531357, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: endingAngle
-      value: 0.08726647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6126514871875531357, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
@@ -664,7 +680,7 @@ PrefabInstance:
     - target: {fileID: 6126514871875531357, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: localRotationAxis.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6126514871875531357, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
@@ -679,47 +695,47 @@ PrefabInstance:
     - target: {fileID: 6126514871875531357, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _negativeAngleColorOverwrite.a
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6126514871875531357, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _negativeAngleColorOverwrite.b
-      value: 0.24705882
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6126514871875531357, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _negativeAngleColorOverwrite.g
-      value: 0.24705882
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6126514871875531357, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _negativeAngleColorOverwrite.r
-      value: 0.54901963
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6126514871875531357, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _positiveAngleColorOverwrite.a
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6126514871875531357, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _positiveAngleColorOverwrite.b
-      value: 0.4509804
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6126514871875531357, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _positiveAngleColorOverwrite.g
-      value: 0.4509804
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6126514871875531357, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _positiveAngleColorOverwrite.r
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6443256106142866425, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _endAngle
-      value: 0.08726647
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6443256106142866425, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
@@ -729,62 +745,62 @@ PrefabInstance:
     - target: {fileID: 6443256106142866425, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _fullRotationColor.a
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6443256106142866425, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _fullRotationColor.b
-      value: 0.4509804
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6443256106142866425, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _fullRotationColor.g
-      value: 0.4509804
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6443256106142866425, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _fullRotationColor.r
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6443256106142866425, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _negativeAngleColor.a
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6443256106142866425, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _negativeAngleColor.b
-      value: 0.24705882
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6443256106142866425, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _negativeAngleColor.g
-      value: 0.24705882
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6443256106142866425, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _negativeAngleColor.r
-      value: 0.54901963
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6443256106142866425, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _positiveAngleColor.a
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6443256106142866425, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _positiveAngleColor.b
-      value: 0.4509804
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6443256106142866425, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _positiveAngleColor.g
-      value: 0.4509804
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6443256106142866425, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: _positiveAngleColor.r
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7239840537151496293, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}

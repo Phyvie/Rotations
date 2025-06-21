@@ -1,10 +1,17 @@
+using System;
 using System.Collections.Generic;
 using MathExtensions;
-using NUnit.Framework;
 using UnityEngine;
 
-namespace RotParams
+namespace Extensions.MathExtensions
 {
+    public enum ELockableValueForceSetBehaviour
+    {
+        Force, //Forces that a LockableValues value will be set by functions, even if it is locked; For LockableVectors.SetToScale this unlocks everything scales everything and relocks
+        BlockWithMessage, //Default behaviour: Blocks changes when the value is locked
+        BlockWithoutMessage //Same as BlockWithMessage, but doesn't print a warning
+    }
+    
     [System.Serializable] 
     public class LockableValue<Type> 
     { 
@@ -44,21 +51,20 @@ namespace RotParams
             return lockableValue; 
         }
         
-        public void SetValue(Type value, bool forceSet = false)
+        public void SetValue(Type value, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.BlockWithMessage)
         {
-            if (!isLocked || forceSet)
+            if (!isLocked || forceSetBehaviour == ELockableValueForceSetBehaviour.Force)
             {
                 typeValue = value;
             }
             else
             {
-                Debug.Log("Value is locked and cannot be changed.");
+                if (forceSetBehaviour == ELockableValueForceSetBehaviour.BlockWithMessage)
+                {
+                    Debug.Log("Value is locked and cannot be changed.");
+                }
             }
         }
-        
-        #region UXMLSupport
-        
-        #endregion UXMLSupport
     }
 
     [System.Serializable]
@@ -70,88 +76,71 @@ namespace RotParams
     }
 
     [System.Serializable]
-    public class LockableVector3
+    public class LockableVector
     {
-        public float targetLength;
+        #region Variables
+        public float targetLength = 1;
         public List<LockableFloat> values;
-        public bool enforceNormalisation; //0ZyKa implement
+        private bool enforceLength; //0ZyKa implement
+        #endregion Variables
         
-        public float this[int index]
+        #region GetSetProperties
+        public LockableFloat this[int index]
         {
             get => values[index];
-            set => SetValue(index, value); 
+            set
+            {
+                values.RemoveAt(index);
+                values.Insert(index, value);
+            }
         }
         
-        public LockableVector3(int dimensions)
+        public bool EnforceLength
+        {
+            get => enforceLength;
+            set
+            {
+                enforceLength = value;
+                if (value)
+                {
+                    ScaleLockedVectorToLength(targetLength, ELockableValueForceSetBehaviour.Force); 
+                }
+            }
+        }
+        #endregion GetSetProperties
+        
+        #region Constructors
+        public LockableVector(int dimensions)
         {
             values = new List<LockableFloat>();
+            for (int i = 0; i < dimensions; i++)
+            {
+                values.Add(new LockableFloat(0, false));
+            }
+            CheckMissingMagnitude(null);
         }
 
-        public void SetValue(int index, float newValue, bool forceSet = false)
+        public LockableVector(List<LockableFloat> values, float targetLength = 1, bool enforceLength = true)
         {
-            SetValue(values[index], newValue);
+            this.values = values; 
+            this.targetLength = targetLength;
+            this.enforceLength = enforceLength;
+            CheckMissingMagnitude(null);
         }
-        
-        public void SetValue(LockableFloat _lockableValue, float newValue, bool forceSet = false, float newTargetLength = -1)
-        {
-            if (!values.Contains(_lockableValue))
-            {
-                Debug.Log("Can't set value that is not in vector");
-                return; 
-            }
-            
-            if (_lockableValue.isLocked && !forceSet)
-            {
-                Debug.LogWarning("Can't set locked value");
-                return; 
-            }
-            
-            if (Mathf.Approximately(_lockableValue.TypeValue, newValue))
-            {
-                return; 
-            }
+        #endregion Constructors
 
-            if (newTargetLength != 0)
+        #region PropertyFunctions
+        public float Magnitude()
+        {
+            float MagnitudeSquared = 0; 
+            foreach (LockableFloat lockableFloat in values)
             {
-                targetLength = newTargetLength;
+                MagnitudeSquared += lockableFloat.TypeValue * lockableFloat.TypeValue;
             }
-            
-            if (enforceNormalisation)
-            {
-                bool isLockedBuffer = _lockableValue.isLocked; 
-                _lockableValue.isLocked = true; 
-                
-                GetLockedAndUnlockedLength(out float lockedLength, out float unlockedLength, out int lockedCount);
-                
-                if (_lockableValue.isLocked)
-                {
-                    lockedLength = MathFunctions.SubtractLengthPythagoreon(lockedLength, _lockableValue.TypeValue); 
-                    float maxAbsLength = Mathf.Sqrt(targetLength - lockedLength * lockedLength);
-                    _lockableValue.SetValue(Mathf.Clamp(newValue, -maxAbsLength, maxAbsLength), true);
-                    lockedLength = MathFunctions.AddLengthsPythagoreon(lockedLength, _lockableValue.TypeValue);
-                }
-                else
-                {
-                    unlockedLength = MathFunctions.SubtractLengthPythagoreon(unlockedLength, _lockableValue.TypeValue); 
-                    float maxAbsLength = Mathf.Sqrt(targetLength - lockedLength * lockedLength);
-                    _lockableValue.SetValue(Mathf.Clamp(newValue, -maxAbsLength, maxAbsLength), true);
-                    unlockedLength = MathFunctions.AddLengthsPythagoreon(unlockedLength, _lockableValue.TypeValue);
-                }
-                ScaleLockedVectorToLength(lockedLength, unlockedLength, 1);
-                
-                _lockableValue.isLocked = isLockedBuffer; 
-                
-                //!ZyKa ensure length is not smaller than targetLength
-                // float xyzMagnitude = (new Vector3(X, Y, Z)).magnitude; 
-                // values[0].TypeValue = Mathf.Sign(values[0]) * MathFunctions.SubtractLengthPythagoreon(1, xyzMagnitude); 
-            }
-            else
-            {
-                _lockableValue.SetValue(newValue, true);
-            }
+            return Mathf.Sqrt(MagnitudeSquared);
         }
         
-        private void GetLockedAndUnlockedLength(out float lockedVectorLength, out float unlockedVectorLength, out int lockedCount)
+        public void GetLockedAndUnlockedLength(out float lockedVectorLength, out float unlockedVectorLength)
         {
             int _lockedCount = 0;
             float lockedLengthSquared = 0;
@@ -160,7 +149,6 @@ namespace RotParams
             {
                 AddToLength(lockableFloat);
             }
-            lockedCount = _lockedCount;
             lockedVectorLength = Mathf.Sqrt(lockedLengthSquared);
             unlockedVectorLength = Mathf.Sqrt(unlockedLengthSquared);
 
@@ -177,28 +165,149 @@ namespace RotParams
                 }
             }
         }
+        #endregion PropertyFunctions
         
-        private bool ScaleLockedVectorToLength(float lockedVectorLength, float unlockedVectorLength, float desiredLength = 1)
+        #region GetSetFunctions
+        public void SetVector(List<float> newValues, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.Force)
         {
-            float ratio; 
-            if (lockedVectorLength > desiredLength)
+            for (int i = 0; i < newValues.Count; i++)
             {
-                Debug.LogError($"Can't normalize Quaternion when values are locked to be at a length > 1: {ToString()}");
-                return false; 
+                values[i].SetValue(newValues[i], forceSetBehaviour);
+            }
+
+            if (enforceLength)
+            {
+                ScaleLockedVectorToLength(targetLength, forceSetBehaviour); 
+            }
+        }
+        
+        public void SetFloatValue(int index, float newValue, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.BlockWithMessage , float newTargetLength = 0)
+        {
+            SetFloatValue(values[index], newValue, forceSetBehaviour, newTargetLength);
+        }
+        
+        public void SetFloatValue(LockableFloat _lockableValue, float newValue, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.BlockWithMessage, float newTargetLength = -1)
+        {
+            if (!values.Contains(_lockableValue))
+            {
+                Debug.Log("Can't set value that is not in vector");
+                return; 
+            }
+            
+            if (_lockableValue.isLocked && forceSetBehaviour != ELockableValueForceSetBehaviour.Force)
+            {
+                Debug.LogWarning("Can't set locked value");
+                return; 
+            }
+            
+            if (Mathf.Approximately(_lockableValue.TypeValue, newValue))
+            {
+                return; 
+            }
+
+            if (newTargetLength != -1)
+            {
+                targetLength = newTargetLength;
+            }
+            
+            if (enforceLength)
+            {
+                bool isLockedBuffer = _lockableValue.isLocked; 
+                _lockableValue.isLocked = true; 
+                
+                GetLockedAndUnlockedLength(out float lockedLength, out float unlockedLength);
+                
+                if (_lockableValue.isLocked)
+                {
+                    lockedLength = MathFunctions.SubtractLengthPythagoreon(lockedLength, _lockableValue.TypeValue); 
+                    float maxAbsLength = Mathf.Sqrt(targetLength - lockedLength * lockedLength);
+                    _lockableValue.SetValue(Mathf.Clamp(newValue, -maxAbsLength, maxAbsLength), ELockableValueForceSetBehaviour.Force);
+                    lockedLength = MathFunctions.AddLengthsPythagoreon(lockedLength, _lockableValue.TypeValue);
+                }
+                else
+                {
+                    unlockedLength = MathFunctions.SubtractLengthPythagoreon(unlockedLength, _lockableValue.TypeValue); 
+                    float maxAbsLength = Mathf.Sqrt(targetLength - lockedLength * lockedLength);
+                    _lockableValue.SetValue(Mathf.Clamp(newValue, -maxAbsLength, maxAbsLength), ELockableValueForceSetBehaviour.Force);
+                    unlockedLength = MathFunctions.AddLengthsPythagoreon(unlockedLength, _lockableValue.TypeValue);
+                }
+                ScaleLockedVectorToLength(lockedLength, unlockedLength);
+                
+                _lockableValue.isLocked = isLockedBuffer; 
+                
+                CheckMissingMagnitude(_lockableValue);
             }
             else
             {
-                float UnlockedMaxLength = Mathf.Sqrt(desiredLength - lockedVectorLength * lockedVectorLength);//!ZyKa
+                _lockableValue.SetValue(newValue, ELockableValueForceSetBehaviour.Force);
+            }
+        }
+        #endregion GetSetFunctions
+        
+        #region Functions
+        public bool ScaleLockedVectorToLength(float newTargetLength = 1, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.BlockWithMessage)
+        {
+            GetLockedAndUnlockedLength(out float lockedVectorLength, out float unlockedVectorLength);
+            return ScaleLockedVectorToLength(lockedVectorLength, unlockedVectorLength, newTargetLength, forceSetBehaviour);
+        }
+        
+        public bool ScaleLockedVectorToLength(float lockedVectorLength, float unlockedVectorLength, float newTargetLength = -1, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.BlockWithMessage)
+        {
+            if (newTargetLength != -1)
+            {
+                targetLength = newTargetLength;
+            }
+            
+            float ratio;
+            
+            if (forceSetBehaviour == ELockableValueForceSetBehaviour.Force)
+            {
+                float fullLength = Magnitude(); 
+                ratio = targetLength / fullLength;
+            }
+            else
+            {
+                if (lockedVectorLength > targetLength)
+                {
+                    Debug.LogError($"Can't normalize LockableVector when values are locked to be at a length > targetLength");
+                    return false; 
+                }
+                
+                float UnlockedMaxLength = MathFunctions.SubtractLengthPythagoreon(targetLength, lockedVectorLength);
+                    // Mathf.Sqrt(desiredLength - lockedVectorLength * lockedVectorLength);//!ZyKa
                 ratio = unlockedVectorLength != 0 ? 
                     UnlockedMaxLength / unlockedVectorLength : 
                     0;
             }
             foreach (LockableFloat value in values) //It's ok not to not create a new list for the unlocked floats, because each lockableFloat can only be changed if unlocked
             {
-                value.SetValue(value.TypeValue * ratio); 
+                value.SetValue(value.TypeValue * ratio, ELockableValueForceSetBehaviour.BlockWithoutMessage); 
             }
 
             return true; 
         }
+
+        private void CheckMissingMagnitude(LockableFloat _lockableFloat)
+        {
+            float missingMagnitude = MathFunctions.SubtractLengthPythagoreon(1, Magnitude());
+            foreach (LockableFloat lockableFloat in values)
+            {
+                if (missingMagnitude < 0.0001f)
+                {
+                    break; 
+                }
+                if (lockableFloat == _lockableFloat)
+                {
+                    continue; 
+                }
+                if (lockableFloat.isLocked)
+                {
+                    continue; 
+                }
+                lockableFloat.SetValue(lockableFloat.TypeValue + missingMagnitude, ELockableValueForceSetBehaviour.BlockWithoutMessage);
+                break; 
+            }
+        }
+        #endregion Functions
     }
 }

@@ -48,8 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e0648abca634fd586e2a5f0b35f9464, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationObjectParent: {fileID: 6090620767073095749}
-  rotationObject: {fileID: 4577331035727079477}
+  appliedRotationObject: {fileID: 4577331035727079477}
+  rotationObject: {fileID: 6090620767073095749}
   visVectorRight: {fileID: 1472637984532868321}
   visVectorUp: {fileID: 2668436742432614183}
   visVectorForward: {fileID: 7482049031737813889}
@@ -78,7 +78,7 @@ PrefabInstance:
     - target: {fileID: 6965325068319466863, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_Name
-      value: RotationObjectParent
+      value: RotationObject
       objectReference: {fileID: 0}
     - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
@@ -103,17 +103,17 @@ PrefabInstance:
     - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8610542255099316665, guid: b2956e319eb12f246b2e195c6c584b45,
         type: 3}

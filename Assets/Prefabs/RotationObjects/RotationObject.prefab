@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 95160333519979097}
   m_Layer: 0
-  m_Name: RotationObject
+  m_Name: AppliedRotationObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8610542255099316665}
   m_Layer: 0
-  m_Name: RotationObjectParent
+  m_Name: RotationObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,3 +1,4 @@
+using System;
 using Art.Shaders;
 using UnityEngine;
 
@@ -23,7 +24,15 @@ public class M_VectorColour : M_ShaderValueController
 
     private void VisUpdateColour()
     {
-        material.SetColor("_Color", color);
+        try
+        {
+            material.SetColor("_Color", color);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"{gameObject.name}.{e}");
+            throw;
+        }
     }
 
     private void OnValidate()

@@ -5,7 +5,7 @@ namespace BaseClasses
 {
     public abstract class RotVis : MonoBehaviour
     {
-        [SerializeField] private GameObject rotationObjectParent; //used in order to apply rotation (i.e. setting the parameters to 0 while keeping the objects orientation)
+        [SerializeField] private GameObject appliedRotationObject; //child of the actual rotationObject, whose child are the actual objects
         [SerializeField] protected GameObject rotationObject; 
         
         public abstract RotParams.RotParams GetRotParams();
@@ -52,14 +52,15 @@ namespace BaseClasses
         [ContextMenu("ApplyObjectRotation")]
         public void ApplyObjectRotation()
         {
-            rotationObjectParent.transform.localRotation *= GetRotParams().ToUnityQuaternion();
+            appliedRotationObject.transform.localRotation =
+                GetRotParams().ToUnityQuaternion() * appliedRotationObject.transform.localRotation; 
             GetRotParams().ResetToIdentity(); 
         }
 
         [ContextMenu("ResetAppliedObjectRotation")]
         public void ResetAppliedObjectRotation()
         {
-            rotationObjectParent.transform.rotation = Quaternion.identity; 
+            appliedRotationObject.transform.rotation = Quaternion.identity; 
         }
     }
 }

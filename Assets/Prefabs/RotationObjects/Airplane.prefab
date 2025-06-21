@@ -58,10 +58,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8391222552659086748, guid: 8bae74f32b9eebe489084472581ea602,
+        type: 3}
+      propertyPath: m_Name
+      value: Body
+      objectReference: {fileID: 0}
+    - target: {fileID: -7640558969779515294, guid: 8bae74f32b9eebe489084472581ea602,
+        type: 3}
+      propertyPath: m_Name
+      value: FrontRightWing
+      objectReference: {fileID: 0}
+    - target: {fileID: -7146521406498821007, guid: 8bae74f32b9eebe489084472581ea602,
+        type: 3}
+      propertyPath: m_Name
+      value: BackStabilizer
+      objectReference: {fileID: 0}
+    - target: {fileID: -516098083770646512, guid: 8bae74f32b9eebe489084472581ea602,
+        type: 3}
+      propertyPath: m_Name
+      value: BackRightWing
+      objectReference: {fileID: 0}
+    - target: {fileID: -466329591000292508, guid: 8bae74f32b9eebe489084472581ea602,
+        type: 3}
+      propertyPath: m_Name
+      value: BackLeftWing
+      objectReference: {fileID: 0}
+    - target: {fileID: 281855664364225751, guid: 8bae74f32b9eebe489084472581ea602,
+        type: 3}
+      propertyPath: m_Name
+      value: FrontLeftWing
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8bae74f32b9eebe489084472581ea602,
         type: 3}
       propertyPath: m_Name
       value: Airplane
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416272007918961125, guid: 8bae74f32b9eebe489084472581ea602,
+        type: 3}
+      propertyPath: m_Name
+      value: FrontStabilizer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

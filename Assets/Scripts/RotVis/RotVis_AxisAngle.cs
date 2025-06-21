@@ -59,7 +59,7 @@ namespace RotationVisualisation
 
         public override void VisUpdate()
         {
-            vis_rotationVector.Value = RotationVectorInRadian;
+            vis_rotationVector.Value = NormalisedAxis * Mathf.Abs(AngleInRadian);
             
             vis_axis.Value = NormalisedAxis;
             
@@ -68,14 +68,14 @@ namespace RotationVisualisation
             vis_PlaneArc.EndingAngle = RotationVectorInRadian.magnitude;
  
             vis_rotationVector.Color = 
-                ColorPalette.RotationPalette.InterpColorForAxisAndSign(RotationVectorInRadian,
+                ColorPalette.RotationPalette.InterpColorForAxisAndSign(NormalisedAxis,
                 rotParams.AngleInCurrentUnit > 0);
-            vis_axis.Color = ColorPalette.RotationPalette.InterpColorForAxisAndSign(RotationVectorInRadian,
+            vis_axis.Color = ColorPalette.RotationPalette.InterpColorForAxisAndSign(NormalisedAxis,
                 rotParams.AngleInCurrentUnit > 0);
             vis_PlaneArc.PositiveAngleColor = 
-                ColorPalette.RotationPalette.InterpColorForAxisAndSign(RotationVectorInRadian, true);
+                ColorPalette.RotationPalette.InterpColorForAxisAndSign(NormalisedAxis, true);
             vis_PlaneArc.NegativeAngleColor = 
-                ColorPalette.RotationPalette.InterpColorForAxisAndSign(RotationVectorInRadian, false);
+                ColorPalette.RotationPalette.InterpColorForAxisAndSign(NormalisedAxis, false);
             
             VisUpdateRotationObject();
         }
