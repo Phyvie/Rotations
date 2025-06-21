@@ -73,6 +73,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: BackStabilizer
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: 8bae74f32b9eebe489084472581ea602,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: abbeee6d0ae03d442a6aff9e93b616fd, type: 2}
+    - target: {fileID: -1461304994638716399, guid: 8bae74f32b9eebe489084472581ea602,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: abbeee6d0ae03d442a6aff9e93b616fd, type: 2}
+    - target: {fileID: -678588488315902003, guid: 8bae74f32b9eebe489084472581ea602,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: abbeee6d0ae03d442a6aff9e93b616fd, type: 2}
     - target: {fileID: -516098083770646512, guid: 8bae74f32b9eebe489084472581ea602,
         type: 3}
       propertyPath: m_Name
@@ -91,7 +106,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 8bae74f32b9eebe489084472581ea602,
         type: 3}
       propertyPath: m_Name
-      value: Airplane
+      value: Airplane_coloured
       objectReference: {fileID: 0}
     - target: {fileID: 8416272007918961125, guid: 8bae74f32b9eebe489084472581ea602,
         type: 3}
@@ -101,5 +116,77 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -8391222552659086748, guid: 8bae74f32b9eebe489084472581ea602,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8881969726424849565}
+    - targetCorrespondingSourceObject: {fileID: -516098083770646512, guid: 8bae74f32b9eebe489084472581ea602,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5959788385082460045}
+    - targetCorrespondingSourceObject: {fileID: 8416272007918961125, guid: 8bae74f32b9eebe489084472581ea602,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4255036226502079144}
   m_SourcePrefab: {fileID: 100100000, guid: 8bae74f32b9eebe489084472581ea602, type: 3}
+--- !u!1 &1642612698509381317 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -516098083770646512, guid: 8bae74f32b9eebe489084472581ea602,
+    type: 3}
+  m_PrefabInstance: {fileID: 7934718077355544277}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5959788385082460045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1642612698509381317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efbf818ffddfeb04ca5c081df75895e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  editSharedMaterial: {fileID: 0}
+  color: {r: 1, g: 0, b: 0, a: 1}
+--- !u!1 &1932416707972239152 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8416272007918961125, guid: 8bae74f32b9eebe489084472581ea602,
+    type: 3}
+  m_PrefabInstance: {fileID: 7934718077355544277}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4255036226502079144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932416707972239152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efbf818ffddfeb04ca5c081df75895e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  editSharedMaterial: {fileID: 0}
+  color: {r: 0, g: 1, b: 0, a: 0}
+--- !u!1 &7318819440733715633 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8391222552659086748, guid: 8bae74f32b9eebe489084472581ea602,
+    type: 3}
+  m_PrefabInstance: {fileID: 7934718077355544277}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8881969726424849565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7318819440733715633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efbf818ffddfeb04ca5c081df75895e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  editSharedMaterial: {fileID: 0}
+  color: {r: 0, g: 0, b: 1, a: 0}

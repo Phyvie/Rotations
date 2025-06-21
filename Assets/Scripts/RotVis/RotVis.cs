@@ -60,7 +60,7 @@ namespace BaseClasses
         [ContextMenu("ResetAppliedObjectRotation")]
         public void ResetAppliedObjectRotation()
         {
-            appliedRotationObject.transform.rotation = Quaternion.identity; 
+            appliedRotationObject.transform.localRotation = Quaternion.identity; 
         }
     }
 }

@@ -5,30 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b54c963-bad1-41cc-8b0e-252a0574fd2d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleLit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleLit.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_VectorColor.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_VectorColor.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/M_VectorColour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Shaders/M_VectorColour.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BaseMathVisualiser/Vis_Vector.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BaseMathVisualiser/Vis_Vector.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVisCamera.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVisCamera.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_AxisAngle.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_AxisAngle.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_EulerGimbal.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_EulerGimbal.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_Matrix.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_Matrix.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_Quaternion.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_Quaternion.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotationObjects/RotationObjectParent.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotationObjects/RotationObjectParent.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/RotationPalette.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/RotationPalette.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Meshes/Airplane.fbx" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Meshes/Airplane.fbx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotationObjects/Airplane.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotationObjects/Airplane.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotationObjects/RotationObject.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotationObjects/RotationObject.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/MathInspector/lockableFloatInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/MathInspector/lockableFloatInspector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/LockableValue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/LockableValue.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MathVisualisation/Vis_PlaneArc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MathVisualisation/Vis_PlaneArc.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MathVisualisation/Vis_Vector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MathVisualisation/Vis_Vector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_AxisAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_AxisAngle.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Quaternion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Quaternion.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_AxisAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_AxisAngle.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/BaseUSS/BoxLayouts.uss" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Toolkit/BaseUSS/BoxLayouts.uss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/AxisAngle/UID_AxisAngle.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/AxisAngle/UID_AxisAngle.uxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -334,7 +316,7 @@
       <workItem from="1750249113709" duration="2208000" />
       <workItem from="1750352878639" duration="8026000" />
       <workItem from="1750378045528" duration="600000" />
-      <workItem from="1750444049036" duration="15861000" />
+      <workItem from="1750444049036" duration="17127000" />
     </task>
     <servers />
   </component>
