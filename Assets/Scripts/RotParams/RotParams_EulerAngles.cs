@@ -17,15 +17,14 @@ namespace RotParams
     
     [Serializable]
     public class RotParams_EulerAngles : RotParams
-    {
-        [CreateProperty]
-        public EGimbalAxis ZyKaGimbalAxis; 
-        
+    { 
+        #region Variables   
         [SerializeField] private _RotParams_EulerAngleGimbalRing outer; 
         [SerializeField] private _RotParams_EulerAngleGimbalRing middle; 
         [SerializeField] private _RotParams_EulerAngleGimbalRing inner;
-
-        #region GettersSetters
+        #endregion Variables
+        
+        #region Properties
         [CreateProperty]
         public _RotParams_EulerAngleGimbalRing Outer
         {
@@ -185,8 +184,7 @@ namespace RotParams
                 OnPropertyChanged(nameof(InnerAxis));
             }
         }
-        
-        #endregion GettersSetters
+        #endregion Properties
         
         #region Constructors
         public RotParams_EulerAngles() : this(
@@ -201,12 +199,23 @@ namespace RotParams
         {
         }
         
-        public RotParams_EulerAngles(float inYaw, float inPitch, float inRoll) : 
-            this(new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Yaw, inYaw), 
-                new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Pitch, inPitch), 
-                new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Roll, inRoll))
+        public RotParams_EulerAngles(float inYawRadian, float inPitchRadian, float inRollRadian) : 
+            this(new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Yaw, inYawRadian), 
+                new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Pitch, inPitchRadian), 
+                new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Roll, inRollRadian))
         {
         }
+
+        public RotParams_EulerAngles(
+            EGimbalAxis outerAxis, float inOuterRadian,
+            EGimbalAxis middleAxis, float inMiddleRadian,
+            EGimbalAxis innerAxis, float inInnerRadian) :
+            this(new _RotParams_EulerAngleGimbalRing(outerAxis, inOuterRadian),
+                new _RotParams_EulerAngleGimbalRing(middleAxis, inMiddleRadian),
+                new _RotParams_EulerAngleGimbalRing(innerAxis, inInnerRadian))
+        {
+        }
+            
 
         public RotParams_EulerAngles(_RotParams_EulerAngleGimbalRing firstRing, _RotParams_EulerAngleGimbalRing secondRing, _RotParams_EulerAngleGimbalRing thirdRing, bool bCopyRings = false)
         {
@@ -269,14 +278,14 @@ namespace RotParams
         #endregion GimbalProperties
         
         #region GimbalOperations
-        public void SwitchGimbalOrder(int firstIndex, int secondIndex)
+        public void SwitchGimbalOrder(int firstIndex, int secondIndex) //-TODO: Test this function
         {
             (gimbal[firstIndex], gimbal[secondIndex]) = (gimbal[secondIndex], gimbal[firstIndex]); 
         }
         
-        public void SwitchGimbalOrder(_RotParams_EulerAngleGimbalRing firstRing, _RotParams_EulerAngleGimbalRing secondRing)
+        public void SwitchGimbalOrder(_RotParams_EulerAngleGimbalRing firstRing, _RotParams_EulerAngleGimbalRing secondRing) //-TODO: Test this function
         {
-            (firstRing, secondRing) = (secondRing, firstRing); //TODO: test this function
+            (firstRing, secondRing) = (secondRing, firstRing); 
         }
         #endregion GimbalOperations
 
@@ -376,6 +385,7 @@ namespace RotParams
         }
         #endregion Converters
 
+        #region functions
         public override void ResetToIdentity()
         {
             outer.AngleInRadian = 0; 
@@ -387,5 +397,60 @@ namespace RotParams
         {
             throw new Exception("Rotating by an EulerAngle is useless, because the mathematics is the same as applying multiple MatrixRotations");
         }
+
+        public static RotParams_EulerAngles operator+(RotParams_EulerAngles a, RotParams_EulerAngles b)
+        {
+            if (a.OuterAxis != b.OuterAxis)
+            {
+                throw new Exception($"RotParamsSum not possible, because OuterAxis differs: {a.OuterAxis} != {b.OuterAxis}"); 
+            }
+
+            if (a.MiddleAxis != b.MiddleAxis)
+            {
+                throw new Exception($"RotParamsSum not possible, because MiddleAxis differs: {a.MiddleAxis} != {b.MiddleAxis}"); 
+            }
+
+            if (a.InnerAxis != b.InnerAxis)
+            {
+                throw new Exception($"RotParamsSum not possible, because InnerAxis differs: {a.InnerAxis} != {b.InnerAxis}"); 
+            }
+            
+            return new RotParams_EulerAngles(
+                a.OuterAxis, a.Outer.AngleInRadian + b.Outer.AngleInRadian, 
+                a.MiddleAxis, a.Middle.AngleInRadian + b.Middle.AngleInRadian, 
+                a.InnerAxis, a.Inner.AngleInRadian + b.Inner.AngleInRadian);
+        }
+
+        public static RotParams_EulerAngles operator *(float alpha, RotParams_EulerAngles a)
+        {
+            return a * alpha; 
+        }
+        
+        public static RotParams_EulerAngles operator *(RotParams_EulerAngles a, float alpha)
+        {
+            return new RotParams_EulerAngles(
+                a.OuterAxis, a.Outer.AngleInRadian * alpha, 
+                a.MiddleAxis, a.Middle.AngleInRadian * alpha, 
+                a.InnerAxis, a.Inner.AngleInRadian * alpha);
+        }
+
+        public static RotParams_EulerAngles Lerp(RotParams_EulerAngles a, RotParams_EulerAngles b, float alpha)
+        {
+            return a*(1-alpha) + b*alpha;
+        }
+        
+        public static RotParams_EulerAngles BezierCurve(RotParams_EulerAngles rotParamsA, RotParams_EulerAngles rotParamsB,
+            RotParams_EulerAngles outA, RotParams_EulerAngles inB, float alpha)
+        {
+            float oneMinusAlpha = 1 - alpha;
+            
+            return 
+                1*oneMinusAlpha*oneMinusAlpha*oneMinusAlpha * rotParamsA + 
+                3*oneMinusAlpha*oneMinusAlpha*alpha * outA + 
+                3*oneMinusAlpha*alpha*alpha * inB + 
+                1*alpha*alpha*alpha * rotParamsB
+                ; 
+        }
+        #endregion functions
     }
 }

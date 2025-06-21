@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using Editor;
 using RotParams;
 using UI_Toolkit;
 using Unity.Properties;
@@ -393,5 +395,87 @@ namespace RotContainers
             
             visCamera.targetTexture = null;
         }
+
+        [ContextMenu("StartScreenShotInterpolation")]
+        private void StartScreenShotInterpolation()
+        {
+            StartCoroutine(ScreenShotInterpolation(screenshotInterpolationSettings));
+        }
+
+        [SerializeField] private ScreenshotInterpolationSettings screenshotInterpolationSettings; 
+        
+        private IEnumerator ScreenShotInterpolation(ScreenshotInterpolationSettings settings)
+        {
+            string path = settings.path;
+            string timestamp = System.DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss");
+
+            int imageWidth = settings.imageWidth;
+            int imageHeight = settings.imageHeight;
+            int imageWidthOffset = settings.imageWidthOffset;
+            int imageHeightOffset = settings.imageHeightOffset;
+
+            float[] interpolationAlphas = settings.interpolationAlphas;
+
+            int totalImages = interpolationAlphas.Length;
+            int columns = Mathf.CeilToInt(Mathf.Sqrt(totalImages));
+            int rows = Mathf.CeilToInt((float)totalImages / columns);
+
+            int totalWidth = columns * imageWidth + (columns - 1) * imageWidthOffset;
+            int totalHeight = rows * imageHeight + (rows - 1) * imageHeightOffset;
+
+            Texture2D renderedTexture = new Texture2D(totalWidth, totalHeight, TextureFormat.RGBA32, false);
+            RenderTexture screenTexture = new RenderTexture(imageWidth, imageHeight, 16);
+
+            visCamera.rect = new Rect(0, 0, 1, 1);
+            visCamera.targetTexture = screenTexture;
+            Rect visCameraRectBuffer = visCamera.rect;
+            RenderTexture.active = screenTexture;
+
+            for (int i = 0; i < totalImages; i++)
+            {
+                float t = interpolationAlphas[i];
+
+                // Call abstract interpolation method implemented by child class
+                settings.Interpolate(ref _rotParams, t);
+
+                yield return new WaitForEndOfFrame();
+
+                visCamera.Render();
+
+                Texture2D singleFrame = new Texture2D(imageWidth, imageHeight, TextureFormat.RGBA32, false);
+                singleFrame.ReadPixels(new Rect(0, 0, imageWidth, imageHeight), 0, 0);
+                singleFrame.Apply();
+
+                // Save individual frame
+                string singlePath = $"{path}{timestamp}_t{t:F2}.png";
+                System.IO.File.WriteAllBytes(singlePath, singleFrame.EncodeToPNG());
+
+                // Composite grid placement
+                int col = i % columns;
+                int row = i / columns;
+                int x = col * (imageWidth + imageWidthOffset);
+                int y = (rows - 1 - row) * (imageHeight + imageHeightOffset);
+
+                renderedTexture.SetPixels(x, y, imageWidth, imageHeight, singleFrame.GetPixels());
+
+                Destroy(singleFrame);
+            }
+
+            renderedTexture.Apply();
+
+            // Cleanup
+            visCamera.rect = visCameraRectBuffer;
+            visCamera.targetTexture = null;
+            RenderTexture.active = null;
+            screenTexture.Release();
+            Destroy(screenTexture);
+
+            // Save composite grid image
+            byte[] gridBytes = renderedTexture.EncodeToPNG();
+            System.IO.File.WriteAllBytes($"{path}{timestamp}_grid.png", gridBytes);
+
+            Debug.Log($"✅ Screenshot interpolation complete: saved {totalImages} frames and grid at:\n{path}{timestamp}_grid.png");
+        }
+
     }
 }

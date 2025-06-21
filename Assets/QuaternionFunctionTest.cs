@@ -25,12 +25,12 @@ public class QuaternionFunctionTest : MonoBehaviour
     [ContextMenu("Set Axis")]
     private void ZyKaSetAxis()
     {
-        quat.Axis = SetAxis;
+        quat.NormalizedAxis = SetAxis;
     }
 
     [ContextMenu("Get Axis")]
     private void ZyKaGetAxis()
     {
-        SetAxis = quat.Axis;
+        SetAxis = quat.NormalizedAxis;
     }
 }

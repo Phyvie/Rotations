@@ -9,37 +9,15 @@ namespace RotParams
     [Serializable]
     public class RotParams_Matrix : RotParams
     {
+        #region Variables
         public bool isRotationMatrix => InternalMatrix.IsSpecialOrthogonal();
         [SerializeField] public Matrix InternalMatrix;
 
-        #region Constructors
-        public RotParams_Matrix()
-        {
-            InternalMatrix = new Matrix(Matrix.Identity(3)); 
-        }
+        [SerializeField] private int primaryAxisIndex;
+        [SerializeField] private int secondaryAxisIndex;
+        #endregion
         
-        public RotParams_Matrix(RotParams_Matrix copiedRotParamsMatrix)
-        {
-            InternalMatrix = new Matrix(copiedRotParamsMatrix.InternalMatrix);
-        }
-
-        public RotParams_Matrix(Matrix matrix)
-        {
-            InternalMatrix = new Matrix(matrix);
-        }
-        
-        public static RotParams_Matrix RotationIdentity()
-        {
-            return new RotParams_Matrix(Matrix.Identity(3));
-        }
-
-        public static RotParams_Matrix TransformIdentity()
-        {
-            return new RotParams_Matrix(Matrix.Identity(4)); 
-        }
-        #endregion //Constructors
-        
-        #region GetSet
+        #region Properties
         [CreateProperty]
         public Vector3 XVector
         {
@@ -98,6 +76,28 @@ namespace RotParams
                 OnPropertyChanged($"{nameof(InternalMatrix)}[{row},{column}]");
             }
         }
+
+        [CreateProperty]
+        public int PrimaryAxisIndex
+        {
+            get => primaryAxisIndex;
+            set
+            {
+                primaryAxisIndex = value;
+                OnPropertyChanged(nameof(PrimaryAxisIndex));
+            }
+        }
+
+        [CreateProperty]
+        public int SecondaryAxisIndex
+        {
+            get => secondaryAxisIndex;
+            set
+            {
+                secondaryAxisIndex = value;
+                OnPropertyChanged(nameof(SecondaryAxisIndex));
+            }
+        }
         
         public Vector3 GetRow(int row)
         {
@@ -124,7 +124,34 @@ namespace RotParams
             InternalMatrix[2, columnIndex] = column.z;
             OnPropertyChanged($"{nameof(InternalMatrix)}[{column}");
         }
-        #endregion
+        #endregion Properties
+
+        #region Constructors
+        public RotParams_Matrix()
+        {
+            InternalMatrix = new Matrix(Matrix.Identity(3)); 
+        }
+        
+        public RotParams_Matrix(RotParams_Matrix copiedRotParamsMatrix)
+        {
+            InternalMatrix = new Matrix(copiedRotParamsMatrix.InternalMatrix);
+        }
+
+        public RotParams_Matrix(Matrix matrix)
+        {
+            InternalMatrix = new Matrix(matrix);
+        }
+        
+        public static RotParams_Matrix RotationIdentity()
+        {
+            return new RotParams_Matrix(Matrix.Identity(3));
+        }
+
+        public static RotParams_Matrix TransformIdentity()
+        {
+            return new RotParams_Matrix(Matrix.Identity(4)); 
+        }
+        #endregion //Constructors
 
         #region Comparison
         public static bool operator==(RotParams_Matrix first, RotParams_Matrix second)
@@ -168,24 +195,44 @@ namespace RotParams
 
             return false; 
         }
-        #endregion //Comparison
-        
-        #region Math
-        public RotParams_Matrix Inverse()
-        {
-            return new RotParams_Matrix(InternalMatrix.Inverse()); 
-        }
-        
-        public static RotParams_Matrix operator*(RotParams_Matrix first, RotParams_Matrix second)
-        {
-            return new RotParams_Matrix(first.InternalMatrix * second.InternalMatrix); 
-        }
-        #endregion //Math
         
         public override int GetHashCode()
         {
             return HashCode.Combine(InternalMatrix, isRotationMatrix);
         }
+        #endregion //Comparison
+        
+        #region operators&arithmetic
+        public RotParams_Matrix Inverse()
+        {
+            return new RotParams_Matrix(InternalMatrix.Inverse()); 
+        }
+        
+        public static RotParams_Matrix operator*(RotParams_Matrix matrix, RotParams_Matrix second)
+        {
+            return new RotParams_Matrix(matrix.InternalMatrix * second.InternalMatrix); 
+        }
+
+        public static RotParams_Matrix operator +(RotParams_Matrix first, RotParams_Matrix second)
+        {
+            return new RotParams_Matrix(first.InternalMatrix + second.InternalMatrix);
+        }
+        
+        public static RotParams_Matrix operator -(RotParams_Matrix first, RotParams_Matrix second)
+        {
+            return new RotParams_Matrix(first.InternalMatrix - second.InternalMatrix);
+        }
+
+        public static RotParams_Matrix operator *(float scalar, RotParams_Matrix matrix)
+        {
+            return matrix * scalar; 
+        }
+        
+        public static RotParams_Matrix operator *(RotParams_Matrix matrix, float scalar)
+        {
+            return new RotParams_Matrix(matrix.InternalMatrix * scalar);
+        }
+        #endregion operators&arithmetic
         
         #region Converters
         public override RotParams_EulerAngles ToEulerAngleRotation()
@@ -199,28 +246,8 @@ namespace RotParams
         {
             if (!isRotationMatrix)
             {
-                Debug.LogWarning($"{nameof(ToQuaternionRotation)} error: Matrix is not a RotationMatrix");
-                // return new RotParams_Quaternion(); //!ZyKa
-            
-                //-ZyKa MatrixToRotationMatrix, adjust so that the priority of directions can be chosen by user
-                Vector3 Forward = GetColumn(2).normalized;
-                Vector3 Up = GetColumn(1).normalized;
-                Vector3 Right = Vector3.Cross(Up,Forward).normalized;
-                Up = Vector3.Cross(Forward,Right);
-                
-                RotParams_Matrix AdjustedMatrix = new RotParams_Matrix(InternalMatrix);
-                
-                AdjustedMatrix.SetColumn(0, Right);
-                AdjustedMatrix.SetColumn(1, Up);
-                AdjustedMatrix.SetColumn(2, Forward);
-                
-                if (!AdjustedMatrix.isRotationMatrix)
-                {
-                    Debug.LogError($"{nameof(ToQuaternionRotation)}: error: Matrix column-vectors are parallel");
-                    return new RotParams_Quaternion(); 
-                }
-                
-                return AdjustedMatrix.ToQuaternionRotation(); 
+                Debug.LogWarning($"{nameof(ToQuaternionRotation)} error: Matrix is not a RotationMatrix, getting Quaternion for XYRotationMatrix");
+                return ToRotationMatrixFromTwoAxes(primaryAxisIndex, secondaryAxisIndex).ToQuaternionRotation(); //-ZyKa this should use GetClosestRotationMatrix
             }
 
             float trace = InternalMatrix.Trace();
@@ -280,11 +307,80 @@ namespace RotParams
             InternalMatrix = Matrix.Identity(3);
         }
 
+        public RotParams_Matrix ToRotationMatrixFromTwoAxes(int firstAxisIndex, int secondAxisIndex)
+        {
+            if (firstAxisIndex < 0 || firstAxisIndex > 2 || secondAxisIndex < 0 || secondAxisIndex > 2)
+            {
+                Debug.LogError("Axis indices must be between 0 and 2 (inclusive).");
+                return null;
+            }
+
+            if (firstAxisIndex == secondAxisIndex)
+            {
+                Debug.LogError("First and second axis indices must be different.");
+                return null;
+            }
+            int thirdAxisIndex = 3 - firstAxisIndex - secondAxisIndex;
+            
+            Vector3 firstAxis = GetColumn(firstAxisIndex).normalized;
+            Vector3 secondAxis = GetColumn(secondAxisIndex).normalized;
+
+            if (Mathf.Abs(Vector3.Dot(firstAxis, secondAxis)) > 0.999f)
+            {
+                Debug.LogError("Provided axes are nearly parallel; cannot construct rotation matrix.");
+                return null;
+            }
+            
+            bool crossProductForward = (firstAxisIndex + 1) % 3 == secondAxisIndex; 
+            Vector3 thirdAxis = crossProductForward ? 
+                Vector3.Cross(firstAxis, secondAxis).normalized : 
+                Vector3.Cross(secondAxis, firstAxis).normalized;
+            
+            secondAxis = crossProductForward ? 
+                Vector3.Cross(thirdAxis, firstAxis).normalized :
+                Vector3.Cross(firstAxis, thirdAxis).normalized;
+            
+            RotParams_Matrix adjustedMatrix = new RotParams_Matrix();
+            adjustedMatrix.SetColumn(firstAxisIndex, firstAxis);
+            adjustedMatrix.SetColumn(secondAxisIndex, secondAxis);
+            adjustedMatrix.SetColumn(thirdAxisIndex, thirdAxis);
+
+            if (!adjustedMatrix.isRotationMatrix)
+            {        
+                Debug.LogError("Constructed matrix is not a valid rotation matrix. Axes may be parallel or ill-defined.");
+                return null;
+            }
+            return adjustedMatrix;
+        }
+
+        public RotParams_Matrix GetClosestRotationMatrix()
+        {
+            throw new NotImplementedException("GetClosestRotationMatrix is not implemented.");
+        }
         #endregion //Converters
 
+        #region Functions
+        
         public override Vector3 RotateVector(Vector3 inVector)
         {
             return InternalMatrix * inVector; 
         }
+
+        public static RotParams_Matrix Lerp(RotParams_Matrix from, RotParams_Matrix to, float t)
+        {
+            return from + t * (to - from); 
+        }
+        
+        public static RotParams_Matrix LerpThenToRotationByAxes(RotParams_Matrix from, RotParams_Matrix to, float t, int primaryAxisIndex, int secondaryAxisIndex)
+        {
+            return Lerp(from, to, t).ToRotationMatrixFromTwoAxes(primaryAxisIndex, secondaryAxisIndex); 
+        }
+
+        public static RotParams_Matrix LerpThenGetClosestRotationMatrix(RotParams_Matrix from, RotParams_Matrix to,
+            float t)
+        {
+            return Lerp(from, to, t).GetClosestRotationMatrix();
+        }
+        #endregion Functions
     }
 }

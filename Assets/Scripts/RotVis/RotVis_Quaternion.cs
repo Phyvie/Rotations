@@ -37,10 +37,10 @@ namespace RotationVisualisation
         
         public Vector3 Axis
         {
-            get => rotParams.Axis;
+            get => rotParams.NormalizedAxis;
             set
             {
-                rotParams.Axis = value;
+                rotParams.NormalizedAxis = value;
                 VisUpdate();
             }
         }

@@ -22,7 +22,7 @@ namespace RotParams
             RotParams_Quaternion asQuat = ToQuaternionRotation();
             return new Quaternion(asQuat.X, asQuat.Y, asQuat.Z, asQuat.W);
         }
-
+        
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 

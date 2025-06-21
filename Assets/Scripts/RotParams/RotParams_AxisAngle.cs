@@ -10,14 +10,27 @@ namespace RotParams
     [Serializable]
     public class RotParams_AxisAngle : RotParams
     {
+        #region Variables
         [SerializeField] private AngleWithType typedAngle = new AngleWithType(AngleType.Radian, 0);
 
         [SerializeField] private LockableFloat _x = new LockableFloat(0, false); 
         [SerializeField] private LockableFloat _y = new LockableFloat(0, false); 
         [SerializeField] private LockableFloat _z = new LockableFloat(0, false);
         [FormerlySerializedAs("xyzVector")] [SerializeField] private LockableVector xyzLockableVector; 
+        #endregion Variables
         
+        #region Properties
         [CreateProperty]
+        public float AngleInCurrentUnit
+        {
+            get => typedAngle.AngleInCurrentUnit;
+            set
+            {
+                typedAngle.AngleInCurrentUnit = value;
+                OnPropertyChanged();
+            }
+        }
+        
         public float AngleInRadian
         {
             get => typedAngle.AngleInRadian;
@@ -28,7 +41,6 @@ namespace RotParams
             }
         }
 
-        [CreateProperty]
         public float AngleInDegrees
         {
             get => typedAngle.AngleInDegree;
@@ -39,24 +51,12 @@ namespace RotParams
             }
         }
 
-        [CreateProperty]
         public float AngleInCircleParts
         {
             get => typedAngle.AngleInCircleParts;
             set
             {
                 typedAngle.AngleInCircleParts = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [CreateProperty]
-        public float AngleInCurrentUnit
-        {
-            get => typedAngle.AngleInCurrentUnit;
-            set
-            {
-                typedAngle.AngleInCurrentUnit = value;
                 OnPropertyChanged();
             }
         }
@@ -157,7 +157,6 @@ namespace RotParams
             }
         }
 
-        [CreateProperty]
         public Vector3 RotationVectorInDegrees
         {
             get => NormalisedAxis * AngleInDegrees;
@@ -169,7 +168,6 @@ namespace RotParams
             }
         }
         
-        [CreateProperty]
         public Vector3 RotationVectorInCircleParts
         {
             get => NormalisedAxis * AngleInCircleParts;
@@ -181,7 +179,6 @@ namespace RotParams
             }
         }
 
-        [CreateProperty]
         public Vector3 RotationVectorInCurrentUnit
         {
             get => NormalisedAxis * typedAngle; 
@@ -192,13 +189,14 @@ namespace RotParams
                 OnPropertyChanged();
             }
         }
+        #endregion Properties
         
+        #region Constructors
         public RotParams_AxisAngle()
         {
             xyzLockableVector = new LockableVector(new List<LockableFloat>(){_x, _y, _z}); 
         }
         
-        #region Constructors
         public RotParams_AxisAngle(Vector3 inRotationVectorInRadian)
         {
             RotationVectorInRadian = inRotationVectorInRadian;
@@ -260,15 +258,15 @@ namespace RotParams
         {
             return new RotParams_AxisAngle(RotationVectorInRadian); 
         }
+        #endregion //Converters
 
+        #region Functions
         public override void ResetToIdentity()
         {
             NormalisedAxis = Vector3.up;
             AngleInRadian = 0;
         }
-
-        #endregion //Converters
-
+        
         public override Vector3 RotateVector(Vector3 inVector)
         {
             //Rodrigues' rotation formula (righthand-version) TODO: Try to understand it, visualise it and make it left-handed
@@ -279,5 +277,39 @@ namespace RotParams
 
             return rotatedVector; 
         }
+        
+        public static RotParams_AxisAngle operator+(RotParams_AxisAngle rotParamsA, RotParams_AxisAngle rotParamsB)
+        {
+            return new RotParams_AxisAngle(rotParamsA.RotationVectorInRadian + rotParamsB.RotationVectorInRadian); 
+        }
+
+        public static RotParams_AxisAngle operator *(RotParams_AxisAngle rotParamsA, float alpha)
+        {
+            return new RotParams_AxisAngle(rotParamsA.RotationVectorInRadian * alpha);
+        }
+
+        public static RotParams_AxisAngle operator *(float alpha, RotParams_AxisAngle rotParamsA)
+        {
+            return rotParamsA * alpha; 
+        }
+
+        public static RotParams_AxisAngle LerpAxisAngle(RotParams_AxisAngle rotParamsA, RotParams_AxisAngle rotParamsB, float alpha)
+        {
+            return rotParamsA * (1 - alpha) + rotParamsB * alpha; 
+        }
+
+        public static RotParams_AxisAngle BezierCurve(RotParams_AxisAngle rotParamsA, RotParams_AxisAngle rotParamsB,
+            RotParams_AxisAngle outA, RotParams_AxisAngle inB, float alpha)
+        {
+            float oneMinusAlpha = 1 - alpha;
+            
+            return 
+                1*oneMinusAlpha*oneMinusAlpha*oneMinusAlpha * rotParamsA + 
+                3*oneMinusAlpha*oneMinusAlpha*alpha * outA + 
+                3*oneMinusAlpha*alpha*alpha * inB + 
+                1*alpha*alpha*alpha * rotParamsB
+                ; 
+        }
+        #endregion
     }
 }

@@ -146,6 +146,24 @@ namespace MathExtensions
         #endregion Comparison
         
         #region MatrixArithmetic
+        public static Matrix operator *(float scalar, Matrix matrix)
+        {
+            return matrix * scalar; 
+        }
+        public static Matrix operator *(Matrix matrix, float scalar)
+        {
+            float[,] _newMatrix = new float[matrix.Height, matrix.Width];
+            for (int row = 0; row < matrix.Height; row++)
+            {
+                for (int column = 0; column < matrix.Width; column++)
+                {
+                    _newMatrix[row, column] = matrix[row, column] * scalar;
+                }
+            }
+            Matrix addedMatrix = new Matrix(_newMatrix);
+            return addedMatrix;
+        }
+        
         public static Matrix operator +(Matrix firstMatrix, Matrix secondMatrix)
         {
             Debug.Assert(firstMatrix.Height == secondMatrix.Height, "Matrices must have the same height.");
@@ -163,14 +181,31 @@ namespace MathExtensions
             return addedMatrix;
         }
         
-        public static Matrix operator*(Matrix firstMatrix, Matrix secondMatrix)
+        public static Matrix operator -(Matrix firstMatrix, Matrix secondMatrix)
         {
-            Debug.Assert(firstMatrix.Width == secondMatrix.Height, "firstMatrix.width != secondMatrix.height");
+            Debug.Assert(firstMatrix.Height == secondMatrix.Height, "Matrices must have the same height.");
+            Debug.Assert(firstMatrix.Width == secondMatrix.Width, "Matrices must have the same width.");
+
+            float[,] _newMatrix = new float[firstMatrix.Height, firstMatrix.Width];
+            for (int row = 0; row < firstMatrix.Height; row++)
+            {
+                for (int column = 0; column < firstMatrix.Width; column++)
+                {
+                    _newMatrix[row, column] = firstMatrix[row, column] - secondMatrix[row, column];
+                }
+            }
+            Matrix addedMatrix = new Matrix(_newMatrix);
+            return addedMatrix;
+        }
+        
+        public static Matrix operator*(Matrix matrix, Matrix secondMatrix)
+        {
+            Debug.Assert(matrix.Width == secondMatrix.Height, "firstMatrix.width != secondMatrix.height");
 
             return new Matrix(MathFunctions.MatrixMultiply(
-                firstMatrix.InternalMatrix, firstMatrix.height, firstMatrix.width, 
+                matrix.InternalMatrix, matrix.height, matrix.width, 
                 secondMatrix.InternalMatrix, secondMatrix.width, secondMatrix.height), 
-                firstMatrix.height, secondMatrix.width, true); 
+                matrix.height, secondMatrix.width, true); 
         }
         #endregion MatrixArithmetic
 

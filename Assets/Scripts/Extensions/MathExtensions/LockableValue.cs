@@ -79,7 +79,7 @@ namespace Extensions.MathExtensions
     public class LockableVector
     {
         #region Variables
-        public float targetLength = 1;
+        private float targetLength = 1;
         public List<LockableFloat> values;
         private bool enforceLength; //0ZyKa implement
         #endregion Variables
@@ -92,6 +92,19 @@ namespace Extensions.MathExtensions
             {
                 values.RemoveAt(index);
                 values.Insert(index, value);
+            }
+        }
+
+        public float TargetLength
+        {
+            get => targetLength;
+            set
+            {
+                targetLength = value;
+                if (enforceLength)
+                {
+                    ScaleLockedVectorToLength(targetLength, ELockableValueForceSetBehaviour.Force);
+                }
             }
         }
         

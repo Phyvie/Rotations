@@ -19,8 +19,8 @@ namespace RotParams
 
         [SerializeField] private LockableVector lockableWXYZ; 
         
-        
-        #region XYZWValueAccessors
+        #region Properties
+        #region WXYZValueAccessors
         [CreateProperty]
         public float W
         {
@@ -71,15 +71,22 @@ namespace RotParams
         }
         #endregion XYZWValueAccessors
 
-        private float SinHalfAngle => Mathf.Sqrt(1-W*W); 
+        #region otherProperties
+        private float SinHalfAngle => Mathf.Sqrt(1-W*W);
+
+        public Vector3 NonNormalizedAxis
+        {
+            get => new Vector3(X, Y, Z).normalized;
+        }
+        
         [CreateProperty]
-        public Vector3 Axis
+        public Vector3 NormalizedAxis
         {
             get => new Vector3(X, Y, Z).normalized;
             set
             {
                 
-                if (Mathf.Approximately((Axis - value.normalized).sqrMagnitude, 0))
+                if (Mathf.Approximately((NormalizedAxis - value.normalized).sqrMagnitude, 0))
                 {
                     return; 
                 }
@@ -167,7 +174,14 @@ namespace RotParams
                 OnPropertyChanged();
             }
         }
+        
+        public float SizeSquared => W * W + X * X + Y * Y + Z * Z;
 
+        public float Size => Mathf.Sqrt(W * W + X * X + Y * Y + Z * Z);
+        #endregion  otherProperties
+        #endregion Properties
+        
+        #region Constructors
         public RotParams_Quaternion()
         {
             _w = new LockableFloat(1, false);
@@ -207,15 +221,17 @@ namespace RotParams
             _z = new LockableFloat(inAxis.z * sin, false);
             InitSetupLockableVectors();
         }
-
-        private void InitSetupLockableVectors()
-        {
-            lockableWXYZ = new LockableVector(
-                new List<LockableFloat>(){_w, _x, _y, _z},
-                1, 
-                true); 
-        }
         
+        private void InitSetupLockableVectors()
+                {
+                    lockableWXYZ = new LockableVector(
+                        new List<LockableFloat>(){_w, _x, _y, _z},
+                        1, 
+                        true); 
+                }
+        #endregion Constructors
+
+        #region staticQuaternions
         private static readonly RotParams_Quaternion _xdentity = new RotParams_Quaternion(1, 0, 0, 0);
 
         public static RotParams_Quaternion GetIdentity()
@@ -229,7 +245,10 @@ namespace RotParams
         {
             return new RotParams_Quaternion(ZeroRotParamsQuaternion);
         }
+        #endregion staticQuaternions
 
+        #region operators
+        #region comparison
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
@@ -266,7 +285,9 @@ namespace RotParams
         {
             return Tuple.Create(_w, _x, _y, _z).GetHashCode();
         }
+        #endregion comparison
 
+        #region Arithmetic
         public static RotParams_Quaternion operator *(RotParams_Quaternion q1, RotParams_Quaternion q2)
         {
             return new RotParams_Quaternion(
@@ -277,6 +298,11 @@ namespace RotParams
             );
         }
 
+        public static RotParams_Quaternion operator *(float scalar, RotParams_Quaternion q1)
+        {
+            return q1 * scalar; 
+        }
+        
         public static RotParams_Quaternion operator *(RotParams_Quaternion q1, float scalar)
         {
             return new RotParams_Quaternion(
@@ -297,6 +323,11 @@ namespace RotParams
             );
         }
 
+        public static RotParams_Quaternion operator -(RotParams_Quaternion q)
+        {
+            return new RotParams_Quaternion(-q.W, -q.X, -q.Y, -q.Z);
+        }
+        
         public static RotParams_Quaternion operator +(RotParams_Quaternion q1, RotParams_Quaternion q2)
         {
             return new RotParams_Quaternion(
@@ -307,52 +338,78 @@ namespace RotParams
             );
         }
 
-        public override string ToString()
+        public static RotParams_Quaternion operator -(RotParams_Quaternion q1, RotParams_Quaternion q2)
         {
-            return $"({W}, {X}, {Y}, {Z})";
+            return new RotParams_Quaternion(
+                q1.W - q2.W,
+                q1.X - q2.X,
+                q1.Y - q2.Y,
+                q1.Z - q2.Z
+            ); 
+        }
+        
+        public RotParams_Quaternion Log()
+        {
+            float halfAngle = Angle * 0.5f;
+
+            if (halfAngle < 1e-6f)
+                return new RotParams_Quaternion(0f, 0f, 0f, 0f); 
+
+            Vector3 logVec = NormalizedAxis * halfAngle;
+            return new RotParams_Quaternion(0f, logVec.x, logVec.y, logVec.z);
         }
 
-        public RotParams_Quaternion Inverse()
+        public RotParams_Quaternion Exp()
         {
-            return new RotParams_Quaternion(W, -X, -Y, -Z) / Size();
-        }
-
-        public RotParams_Quaternion Conjugate()
-        {
-            return new RotParams_Quaternion(W, -X, -Y, -Z);
-        }
-
-        public static RotParams_Quaternion CombineFollowingRotation(
-            RotParams_Quaternion first, RotParams_Quaternion second)
-        {
-            return second * first;
-        }
-
-        public static RotParams_Quaternion CombineSimultaneousRotation(RotParams_Quaternion a,
-            RotParams_Quaternion b)
-        {
-            return (a + b).Normalize();
-        }
-
-        public float SizeSquared()
-        {
-            return W * W + X * X + Y * Y + Z * Z;
-        }
-
-        public float Size()
-        {
-            return Mathf.Sqrt(W * W + X * X + Y * Y + Z * Z);
-        }
-
-        public void normalize()
-        {
-            lockableWXYZ.targetLength = 1;
+            if (_w != 0)
+            {
+                Debug.LogWarning("Quaternion exponentiation is meant to be used on pure quaternions");
+            }
             
+            Vector3 v = NonNormalizedAxis;
+            float theta = v.magnitude;
+
+            if (theta < 1e-6f)
+            {
+                return new RotParams_Quaternion(1f, 0f, 0f, 0f); 
+            }
+
+            Vector3 axis = v / theta;
+            float w = Mathf.Cos(theta);
+            Vector3 xyz = axis * Mathf.Sin(theta);
+
+            return new RotParams_Quaternion(w, xyz.x, xyz.y, xyz.z);
         }
 
-        public RotParams_Quaternion Normalize()
+        public RotParams_Quaternion Pow(float t)
         {
-            float size = this.Size();
+            return Exp(t * Log()); 
+        }
+
+        public static RotParams_Quaternion Log(RotParams_Quaternion q)
+        {
+            return q.Log();
+        }
+
+        public static RotParams_Quaternion Exp(RotParams_Quaternion q)
+        {
+            return q.Exp();
+        }
+
+        public static RotParams_Quaternion Pow(RotParams_Quaternion q, float t)
+        {
+            return q.Pow(t);
+        }
+
+        
+        public void Normalize()
+        {
+            lockableWXYZ.TargetLength = 1;
+        }
+        
+        public RotParams_Quaternion GetNormalized()
+        {
+            float size = this.Size;
             return new RotParams_Quaternion(
                 W / size,
                 X / size,
@@ -360,7 +417,25 @@ namespace RotParams
                 Z / size
             );
         }
+        
+        public RotParams_Quaternion Inverse()
+        {
+            return new RotParams_Quaternion(W, -X, -Y, -Z) / Size;
+        }
 
+        public RotParams_Quaternion Conjugate()
+        {
+            return new RotParams_Quaternion(W, -X, -Y, -Z);
+        }
+
+        public static float Dot(RotParams_Quaternion q1, RotParams_Quaternion q2)
+        {
+            return q1.W * q2.W + q1.X + q2.X + q1.Y + q2.Y + q1.Z * q2.Z;
+        }
+        #endregion arithmetic
+        #endregion operators
+        
+        #region Converters
         public override RotParams_EulerAngles ToEulerAngleRotation()
         {
             RotParams_EulerAngles newRotParamsEulerAngles = new RotParams_EulerAngles(0, 0, 0);
@@ -389,7 +464,14 @@ namespace RotParams
         {
             return new RotParams_AxisAngle(new Vector3(X, Y, Z), (float)Math.Acos(W));
         }
+        #endregion Converters
 
+        #region Functions
+        public override string ToString()
+        {
+            return $"({W}, {X}, {Y}, {Z})";
+        }
+        
         public override void ResetToIdentity()
         {
             _w.SetValue(1, ELockableValueForceSetBehaviour.Force);
@@ -406,5 +488,89 @@ namespace RotParams
             return new Vector3(vectorAsRotParamsQuaternion.X, vectorAsRotParamsQuaternion.Y,
                 vectorAsRotParamsQuaternion.Y);
         }
+        
+        public static RotParams_Quaternion CombineSequentialRotation(
+            RotParams_Quaternion first, RotParams_Quaternion second)
+        {
+            return second * first;
+        }
+        
+        public static RotParams_Quaternion CombineViaSum(RotParams_Quaternion a,
+            RotParams_Quaternion b)
+        {
+            RotParams_Quaternion sum = a + b; 
+            sum.Normalize();
+            return sum;
+        }
+
+        public static RotParams_Quaternion Slerp(RotParams_Quaternion q0, RotParams_Quaternion q1, float alpha, bool shortestPathCorrection = false)
+        {
+            float dot = Dot(q0, q1);
+            if (dot < 0 && shortestPathCorrection)
+            {
+                q1 = -q1;
+                dot = -dot; 
+            }
+            
+            const float DOT_THRESHOLD = 0.9995f;
+            if (dot > DOT_THRESHOLD)
+            {
+                return LerpNormalised(q0, q1, alpha); 
+            }
+            
+            float theta = Mathf.Acos(dot);
+            float oneMinusAlpha = 1 - alpha;
+            
+            float sinTheta = Mathf.Sin(theta);
+
+            RotParams_Quaternion result = (Mathf.Sin((oneMinusAlpha * theta)) / sinTheta) * q0 +
+                     (Mathf.Sin(alpha * theta) / sinTheta) * q1; 
+            result.Normalize();
+            return result;
+        }
+
+        public static RotParams_Quaternion Squad(RotParams_Quaternion q0, RotParams_Quaternion q1, RotParams_Quaternion outQ1, RotParams_Quaternion inQ2, float alpha)
+        {
+            return Slerp(Slerp(q0, q1, alpha), Slerp(outQ1, inQ2, alpha), 2*alpha*(1-alpha));
+        }
+
+        public static RotParams_Quaternion LerpNormalised(RotParams_Quaternion q0, RotParams_Quaternion q1, float alpha, bool shortestPathCorrection = false)
+        {
+            if (shortestPathCorrection && Dot(q0, q1) < 0)
+            {
+                q1 = -q1;
+            }
+            
+            RotParams_Quaternion result = q0 + alpha * (q1 - q0); 
+            result.Normalize();
+            return result; 
+        }
+
+        public static RotParams_Quaternion BezierCurve(RotParams_Quaternion q0, RotParams_Quaternion q1,
+            RotParams_Quaternion outQ0, RotParams_Quaternion inQ1, float alpha)
+        {
+            float oneMinusAlpha = 1 - alpha;
+            RotParams_Quaternion result = 
+                    1*oneMinusAlpha*oneMinusAlpha*oneMinusAlpha * q0 + 
+                    3*oneMinusAlpha*oneMinusAlpha*alpha * outQ0 + 
+                    3*oneMinusAlpha*alpha*alpha * inQ1 + 
+                    1*alpha*alpha*alpha * q1
+                ; 
+            result.Normalize();
+            return result;
+        }
+
+        public static RotParams_Quaternion LogarithmicInterpolation(RotParams_Quaternion q0, RotParams_Quaternion q1, float alpha, bool shortestPathCorrection = false)
+        {
+            if (shortestPathCorrection && Dot(q0, q1) < 0)
+            {
+                q1 = -q1;
+            }
+ 
+            RotParams_Quaternion result = q0 * (q1 * q0.Inverse()).Pow(alpha); 
+            result.Normalize();
+            return result; 
+        }
+        #endregion Functions
     }
 }
