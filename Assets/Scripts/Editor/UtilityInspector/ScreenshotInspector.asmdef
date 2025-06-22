@@ -1,0 +1,16 @@
+{
+    "name": "ScreenshotInspector",
+    "rootNamespace": "",
+    "references": [
+        "GUID:98a8a11eef2149e45aabae3f7d584a23"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

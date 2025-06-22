@@ -1,4 +1,3 @@
-using System;
 using MathExtensions;
 using UnityEngine;
 using UnityEngine.Serialization;

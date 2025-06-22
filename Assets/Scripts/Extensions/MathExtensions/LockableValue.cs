@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using MathExtensions;
 using UnityEngine;
 
@@ -65,9 +67,14 @@ namespace Extensions.MathExtensions
                 }
             }
         }
+
+        public override string ToString()
+        {
+            return typeValue.ToString();
+        }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class LockableFloat : LockableValue<float>
     {
         public LockableFloat(float newTypeValue, bool isLocked) : base(newTypeValue, isLocked)
@@ -75,7 +82,7 @@ namespace Extensions.MathExtensions
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class LockableVector
     {
         #region Variables
@@ -324,6 +331,26 @@ namespace Extensions.MathExtensions
                 break; 
             }
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("(");
+    
+            foreach (LockableFloat lockable in values)
+            {
+                sb.Append(lockable.TypeValue.ToString());
+                sb.Append(", ");
+            }
+
+            if (values.Count > 0)
+                sb.Length -= 2; // Remove the last ", "
+    
+            sb.Append(")");
+            return sb.ToString();
+        }
+
+
         #endregion Functions
     }
 }

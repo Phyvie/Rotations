@@ -77,7 +77,7 @@ namespace RotContainers
         }
         
         [SerializeField] private Rect cameraScreenRect = new Rect(0, 0, 1, 1);
-        [FormerlySerializedAs("cameraMovementEnabled")] [SerializeField] private bool cameraInputEnabled = false;
+        [SerializeField] private bool cameraInputEnabled = false;
 
         public bool CameraMovementEnabled
         {

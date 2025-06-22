@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3873603891180399986}
   - component: {fileID: 5957229082670405382}
   - component: {fileID: 5216331510417611326}
+  - component: {fileID: 7488970611416958423}
   m_Layer: 0
   m_Name: GeneralRotationContainer
   m_TagString: Untagged
@@ -111,3 +112,21 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+--- !u!114 &7488970611416958423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8256178289964968889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18e7ea4615ac6f41a269e37ea4ce522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  generalRotationContainer: {fileID: 5957229082670405382}
+  screenshotSettings: {fileID: 11400000, guid: 71b97e8b082cf3a47a6adf72bd85f319, type: 2}
+  interpolationSettings: {fileID: 11400000, guid: cb3444208283cb64e98646a60791734c,
+    type: 2}
+  viewShots: []
+  interpolationStep: 0

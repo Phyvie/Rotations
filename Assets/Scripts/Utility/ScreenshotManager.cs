@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using RotContainers;
 using RotParams;
 using UnityEngine;
 
-namespace RotContainers
+namespace Utility
 {
     public class ScreenshotManager : MonoBehaviour
     {
