@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -713,17 +714,27 @@ namespace MathExtensions
         }
         #endregion MatrixProperties
         
-        public void PrintMatrix()
+        public override string ToString()
         {
+            List<string> rowStrings = new List<string>();
+
             for (int rowIndex = 0; rowIndex < InternalMatrix.GetLength(0); rowIndex++)
             {
                 string rowString = "";
                 for (int columnIndex = 0; columnIndex < InternalMatrix.GetLength(1); columnIndex++)
                 {
-                    rowString += InternalMatrix[rowIndex*Width+columnIndex].ToString("F2") + " ";
+                    rowString += InternalMatrix[rowIndex * Width + columnIndex].ToString("F2") + " ";
                 }
-                Debug.Log(rowString);
+                rowStrings.Add(rowString.TrimEnd()); // Remove trailing space
             }
+
+            return string.Join(";", rowStrings); // Join all rows with a semicolon
         }
+
+        public void PrintMatrix()
+        {
+            Debug.Log(this.ToString());
+        }
+
     }
 }

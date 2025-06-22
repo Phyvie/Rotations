@@ -7,14 +7,14 @@ using UnityEngine;
 namespace RotParams
 {
     [Serializable]
-    public class RotParams_Matrix : RotParams
+    public class RotParams_Matrix : RotParams_Base
     {
         #region Variables
         public bool isRotationMatrix => InternalMatrix.IsSpecialOrthogonal();
         [SerializeField] public Matrix InternalMatrix;
 
-        [SerializeField] private int primaryAxisIndex;
-        [SerializeField] private int secondaryAxisIndex;
+        [SerializeField] private int primaryAxisIndex = 2;
+        [SerializeField] private int secondaryAxisIndex = 1;
         #endregion
         
         #region Properties
@@ -364,6 +364,11 @@ namespace RotParams
         public override Vector3 RotateVector(Vector3 inVector)
         {
             return InternalMatrix * inVector; 
+        }
+
+        public override string ToString()
+        {
+            return $"{InternalMatrix.ToString()}"; 
         }
 
         public static RotParams_Matrix Lerp(RotParams_Matrix from, RotParams_Matrix to, float t)

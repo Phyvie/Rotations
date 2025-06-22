@@ -1,16 +1,16 @@
-using RotContainers.ScreenshotSettings;
+using RotContainers;
 using RotParams;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SIS_QuaternionBezier", menuName = "Scriptable Objects/ScreenshotInterpolationSettings/QuaternionBezier")]
-public class SIS_QuaternionBezier : ScreenshotInterpolationSettings
+[CreateAssetMenu(fileName = "IS_QuaternionBezier", menuName = "Scriptable Objects/InterpolationSettings/QuaternionBezier")]
+public class IS_QuaternionBezier : InterpolationSettings
 {
     [SerializeField] private RotParams_Quaternion q0;
     [SerializeField] private RotParams_Quaternion q1;
     [SerializeField] private RotParams_Quaternion outQ0;
     [SerializeField] private RotParams_Quaternion inQ1;
 
-    public override RotParams.RotParams Interpolate(float t)
+    public override RotParams_Base Interpolate(float t)
     {
         return RotParams_Quaternion.BezierCurve(q0, q1, outQ0, inQ1, t);
     }

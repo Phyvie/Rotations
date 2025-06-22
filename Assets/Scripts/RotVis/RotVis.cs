@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using RotParams;
 using UnityEngine;
 
 namespace BaseClasses
@@ -8,9 +9,9 @@ namespace BaseClasses
         [SerializeField] private GameObject appliedRotationObject; //child of the actual rotationObject, whose child are the actual objects
         [SerializeField] protected GameObject rotationObject; 
         
-        public abstract RotParams.RotParams GetRotParams();
+        public abstract RotParams_Base GetRotParams();
 
-        public virtual void SetRotParamsByRef(ref RotParams.RotParams newRotParams)
+        public virtual void SetRotParamsByRef(ref RotParams_Base newRotParams)
         {
             GetRotParams().PropertyChanged -= VisUpdateOnPropertyChanged; 
             newRotParams.PropertyChanged += VisUpdateOnPropertyChanged; 
@@ -21,7 +22,7 @@ namespace BaseClasses
             VisUpdate();
         }
 
-        public RotVis(RotParams.RotParams rotParams)
+        public RotVis(RotParams_Base rotParams)
         {
             SetRotParamsByRef(ref rotParams);
             VisUpdate();

@@ -20,12 +20,12 @@ namespace RotationVisualisation
         }
 
         [SerializeField] private RotParams_Quaternion rotParams;
-        public override RotParams.RotParams GetRotParams()
+        public override RotParams_Base GetRotParams()
         {
             return rotParams; 
         }
 
-        public override void SetRotParamsByRef(ref RotParams.RotParams newRotParams)
+        public override void SetRotParamsByRef(ref RotParams_Base newRotParams)
         {
             base.SetRotParamsByRef(ref newRotParams);
             if (newRotParams is RotParams_Quaternion rotParamsQuaternion)

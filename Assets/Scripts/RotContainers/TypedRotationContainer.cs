@@ -1,5 +1,5 @@
-using System;
 using BaseClasses;
+using RotParams;
 using UI_Toolkit;
 using UnityEditor;
 using UnityEngine;
@@ -9,14 +9,14 @@ namespace RotContainers
 {
     public class TypedRotationContainer : MonoBehaviour
     {
-        [SerializeReference] private RotParams.RotParams rotParams; //-ZyKa make a public property to change the RotParams, currently they can only be set via SpawnTypedRotation
+        [SerializeReference] private RotParams_Base rotParams; //-ZyKa make a public property to change the RotParams, currently they can only be set via SpawnTypedRotation
         [Tooltip("Do not set this reference manually, it will be spawned from the outside by GeneralRotationContainer")] //-ZyKa RotationContainers; enable setting this manually & ensure that the rotParams are updated accordingly
         [SerializeField] private GameObject rotVisGO;
         [Tooltip("Do not set this reference manually, it will be spawned from the outside by GeneralRotationContainer")]
         [SerializeField] private RotVis rotVis;
         private VisualElement rotUI;
         
-        public void SpawnTypedRotation(ref RotParams.RotParams newRotParams, GameObject rotVisPrefab, Transform rotVisParent, VisualTreeAsset visualTreeAsset, UISlotReference visualParent)
+        public void SpawnTypedRotation(ref RotParams_Base newRotParams, GameObject rotVisPrefab, Transform rotVisParent, VisualTreeAsset visualTreeAsset, UISlotReference visualParent)
         {
             rotParams = newRotParams;
             SpawnVis(rotVisPrefab, this.transform);

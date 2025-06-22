@@ -8,7 +8,7 @@ using UnityEngine;
 namespace RotParams
 {
     [Serializable]
-    public class RotParams_AxisAngle : RotParams
+    public class RotParams_AxisAngle : RotParams_Base
     {
         #region Variables
         [SerializeField] private AngleWithType typedAngle = new AngleWithType(AngleType.Radian, 0);
@@ -294,7 +294,29 @@ namespace RotParams
         }
         #endregion //Converters
 
+        #region operators
+        public static RotParams_AxisAngle operator+(RotParams_AxisAngle rotParamsA, RotParams_AxisAngle rotParamsB)
+        {
+            return new RotParams_AxisAngle(rotParamsA.RotationVectorInRadian + rotParamsB.RotationVectorInRadian); 
+        }
+
+        public static RotParams_AxisAngle operator *(RotParams_AxisAngle rotParamsA, float alpha)
+        {
+            return new RotParams_AxisAngle(rotParamsA.RotationVectorInRadian * alpha);
+        }
+
+        public static RotParams_AxisAngle operator *(float alpha, RotParams_AxisAngle rotParamsA)
+        {
+            return rotParamsA * alpha; 
+        }
+        #endregion operators
+        
         #region Functions
+        public override string ToString()
+        {
+            return $"({_axis}, {AngleInDegrees})";
+        }
+        
         public override void ResetToIdentity()
         {
             NormalisedAxis = Vector3.up;
@@ -312,21 +334,6 @@ namespace RotParams
             return rotatedVector; 
         }
         
-        public static RotParams_AxisAngle operator+(RotParams_AxisAngle rotParamsA, RotParams_AxisAngle rotParamsB)
-        {
-            return new RotParams_AxisAngle(rotParamsA.RotationVectorInRadian + rotParamsB.RotationVectorInRadian); 
-        }
-
-        public static RotParams_AxisAngle operator *(RotParams_AxisAngle rotParamsA, float alpha)
-        {
-            return new RotParams_AxisAngle(rotParamsA.RotationVectorInRadian * alpha);
-        }
-
-        public static RotParams_AxisAngle operator *(float alpha, RotParams_AxisAngle rotParamsA)
-        {
-            return rotParamsA * alpha; 
-        }
-
         public static RotParams_AxisAngle LerpAxisAngle(RotParams_AxisAngle rotParamsA, RotParams_AxisAngle rotParamsB, float alpha)
         {
             return rotParamsA * (1 - alpha) + rotParamsB * alpha; 

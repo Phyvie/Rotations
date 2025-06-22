@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 namespace RotParams
 {
     [Serializable]
-    public class RotParams_Quaternion : RotParams
+    public class RotParams_Quaternion : RotParams_Base
     {
         [SerializeField] private bool enforceNormalisation = true; //-ZyKa Quaternion enforceNormalisation
         [SerializeField] private LockableFloat _w; 

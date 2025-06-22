@@ -7,7 +7,7 @@ using UnityEngine;
 namespace RotParams
 {
     [Serializable]
-    public abstract class RotParams : INotifyPropertyChanged // -ZyKa check out Source Generators (e.g. CommunityToolkit.MVVM) for IDataSourceViewHashProvider Hash Generation in child classes
+    public abstract class RotParams_Base : INotifyPropertyChanged // -ZyKa check out Source Generators (e.g. CommunityToolkit.MVVM) for IDataSourceViewHashProvider Hash Generation in child classes
     {
         public abstract RotParams_EulerAngles ToEulerAngleRotation(); 
         public abstract RotParams_Quaternion ToQuaternionRotation(); 
@@ -22,6 +22,8 @@ namespace RotParams
             RotParams_Quaternion asQuat = ToQuaternionRotation();
             return new Quaternion(asQuat.X, asQuat.Y, asQuat.Z, asQuat.W);
         }
+
+        public override abstract string ToString(); 
         
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace RotParams
 {
     [Serializable]
-    public class RotParams_Complex : RotParams
+    public class RotParams_Complex : RotParams_Base
     {
         [SerializeField] private Vector2 _complexNumber = Vector2.zero; 
         [SerializeField] private float _rotationAngle;
@@ -81,6 +81,11 @@ namespace RotParams
         {
             Vector2 rotatedVector = RotateVector2_ViaComplex(new Vector2(inVector.x, inVector.y)); 
             return new Vector3(rotatedVector.x, rotatedVector.y, inVector.z); 
+        }
+
+        public override string ToString()
+        {
+            return $"{_complexNumber}"; 
         }
 
         public Vector2 RotateVector2_ViaComplex(Vector2 inVector)

@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using RotContainers.ScreenshotSettings;
 using RotParams;
 using UI_Toolkit;
 using Unity.Properties;
@@ -48,9 +46,9 @@ namespace RotContainers
         [SerializeField] private UISlotReference uiRotSlot;
         //Prefabs for UIRot are below in the #region UITypeSelectionControls
         
-        [SerializeField] private RotParams.RotParams _rotParams;
+        [SerializeField] private RotParams_Base _rotParams;
 
-        public RotParams.RotParams RotParams
+        public RotParams_Base RotParams
         {
             get => _rotParams;
             set
@@ -263,7 +261,7 @@ namespace RotContainers
                 };
         }
         
-        public void GenerateContainerForRotParams(RotParams.RotParams newRotParams)
+        public void GenerateContainerForRotParams(RotParams_Base newRotParams)
         {
             _rotParams = newRotParams;
             if (typedRotationContainer == null)
@@ -273,13 +271,13 @@ namespace RotContainers
             GenerateRotationContainer(_rotParams); 
         }
         
-        public void GenerateNewRotation<RotParamsType>() where RotParamsType : RotParams.RotParams, new()
+        public void GenerateNewRotation<RotParamsType>() where RotParamsType : RotParams_Base, new()
         {
             _rotParams = new RotParamsType();
             GenerateRotationContainer(_rotParams);
         }
 
-        private void GenerateRotationContainer(RotParams.RotParams rotParams)
+        private void GenerateRotationContainer(RotParams_Base rotParams)
         {
             if (typedRotationContainer == null)
             {
@@ -347,16 +345,6 @@ namespace RotContainers
                     RotateCamera(Input.GetAxis("Mouse X") * 2.5f, Input.GetAxis("Mouse Y") * -2.5f); 
                 }
                 ZoomCamera(Input.GetAxis("Mouse ScrollWheel") * -1.5f);
-                
-                if (Input.GetKeyDown(KeyCode.F12))
-                {
-                    FullScreenshot();
-                }
-
-                if (Input.GetKeyDown(KeyCode.F11))
-                {
-                    CameraViewshot();
-                }
             }
         }
 
@@ -370,129 +358,5 @@ namespace RotContainers
             visCamera.transform.localPosition += Vector3.back * deltaZoom; 
         }
         #endregion userInteraction
-
-        [ContextMenu("FullScreenshot")]
-        private void FullScreenshot()
-        {
-            string path = "D:/CGL/Bachelor-Thesis/RotationImages/"; 
-            string timestamp = DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss");
-            
-            ScreenCapture.CaptureScreenshot($"{path}{timestamp}.png", 4);
-        }
-
-        [ContextMenu("CameraViewshot")]
-        private void CameraViewshot()
-        {
-            string path = "D:/CGL/Bachelor-Thesis/RotationImages/"; 
-            string timestamp = DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss");
-
-            int imageWidth = 1000; 
-            int imageHeight = 1000;
-
-            Rect visCameraRectBuffer = visCamera.rect;
-            visCamera.rect = new Rect(0, 0, 1, 1); 
-            RenderTexture screenTexture = new RenderTexture(imageWidth, imageHeight, 16);
-            visCamera.targetTexture = screenTexture;
-            RenderTexture.active = screenTexture;
-            visCamera.Render();
-            visCamera.rect = visCameraRectBuffer;
-
-            Texture2D renderedTexture = new Texture2D(imageWidth, imageHeight, TextureFormat.RGBA32, false);
-            renderedTexture.ReadPixels(new Rect(0, 0, imageWidth, imageHeight), 0, 0);
-            RenderTexture.active = null;
-
-            byte[] byteArray = renderedTexture.EncodeToPNG();
-            System.IO.File.WriteAllBytes($"{path}{timestamp}.png", byteArray);
-            
-            visCamera.targetTexture = null;
-        }
-
-        [ContextMenu("StartScreenShotInterpolation")]
-        private void StartScreenShotInterpolation()
-        {
-            StartCoroutine(ScreenShotInterpolation(screenshotInterpolationSettings));
-        }
-
-        [SerializeField] private ScreenshotInterpolationSettings screenshotInterpolationSettings; 
-        
-        private IEnumerator ScreenShotInterpolation(ScreenshotInterpolationSettings settings)
-        {
-            string path = settings.path;
-            string timestamp = System.DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss");
-
-            int imageWidth = settings.imageWidth;
-            int imageHeight = settings.imageHeight;
-            int imageWidthOffset = settings.imageWidthOffset;
-            int imageHeightOffset = settings.imageHeightOffset;
-
-            float[] interpolationAlphas = settings.interpolationAlphas;
-
-            int totalImages = interpolationAlphas.Length;
-            int columns = settings.columns;
-            int rows = Mathf.CeilToInt((float)totalImages / columns);
-
-            int totalWidth = columns * imageWidth + (columns - 1) * imageWidthOffset;
-            int totalHeight = rows * imageHeight + (rows - 1) * imageHeightOffset;
-
-            Texture2D renderedTexture = new Texture2D(totalWidth, totalHeight, TextureFormat.RGBA32, false);
-            RenderTexture screenTexture = new RenderTexture(imageWidth, imageHeight, 16);
-
-            Rect visCameraRectBuffer = visCamera.rect;
-            visCamera.rect = new Rect(0, 0, 1, 1);
-            visCamera.targetTexture = screenTexture;
-
-            for (int i = 0; i < totalImages; i++)
-            {
-                float t = interpolationAlphas[i];
-
-                // Call abstract interpolation method implemented by child class
-                RotParams = settings.Interpolate(t);
-
-                yield return new WaitForEndOfFrame();
-
-                visCamera.Render();
-
-                yield return new WaitForEndOfFrame(); 
-                RenderTexture.active = screenTexture;
-                Texture2D singleFrame = new Texture2D(imageWidth, imageHeight, TextureFormat.RGBA32, false);
-                singleFrame.ReadPixels(new Rect(0, 0, imageWidth, imageHeight), 0, 0);
-                singleFrame.Apply();
-
-                // Composite grid placement
-                int col = i % columns;
-                int row = i / columns;
-                int x = col * (imageWidth + imageWidthOffset);
-                int y = (rows - 1 - row) * (imageHeight + imageHeightOffset);
-
-                renderedTexture.SetPixels(x, y, imageWidth, imageHeight, singleFrame.GetPixels());
-
-                yield return new WaitForEndOfFrame();
-                Destroy(singleFrame); 
-            }
-
-            renderedTexture.Apply();
-
-            // Cleanup
-            visCamera.rect = visCameraRectBuffer;
-            visCamera.targetTexture = null;
-            RenderTexture.active = null;
-            screenTexture.Release();
-            Destroy(screenTexture);
-
-            // Save composite grid image
-            byte[] gridBytes = renderedTexture.EncodeToPNG();
-            System.IO.File.WriteAllBytes($"{path}{timestamp}_grid.png", gridBytes);
-
-            Debug.Log($"✅ Screenshot interpolation complete: saved at:\n{path}{timestamp}.png");
-        }
-
-        //0ZyKa Debug
-        [SerializeField] private int interpolationStep; 
-        [ContextMenu("SetToNextInterpolationStep")]
-        private void SetToInterpolationStep()
-        {
-            float alpha = screenshotInterpolationSettings.interpolationAlphas[interpolationStep]; 
-            RotParams = screenshotInterpolationSettings.Interpolate(alpha);
-        }
     }
 }

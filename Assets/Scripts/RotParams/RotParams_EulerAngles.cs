@@ -16,7 +16,7 @@ namespace RotParams
     }
     
     [Serializable]
-    public class RotParams_EulerAngles : RotParams
+    public class RotParams_EulerAngles : RotParams_Base
     { 
         #region Variables   
         [SerializeField] private _RotParams_EulerAngleGimbalRing outer; 
@@ -385,19 +385,7 @@ namespace RotParams
         }
         #endregion Converters
 
-        #region functions
-        public override void ResetToIdentity()
-        {
-            outer.AngleInRadian = 0; 
-            middle.AngleInRadian = 0;
-            inner.AngleInRadian = 0;
-        }
-
-        public override Vector3 RotateVector(Vector3 inVector)
-        {
-            throw new Exception("Rotating by an EulerAngle is useless, because the mathematics is the same as applying multiple MatrixRotations");
-        }
-
+        #region operators
         public static RotParams_EulerAngles operator+(RotParams_EulerAngles a, RotParams_EulerAngles b)
         {
             if (a.OuterAxis != b.OuterAxis)
@@ -432,6 +420,27 @@ namespace RotParams
                 a.OuterAxis, a.Outer.AngleInRadian * alpha, 
                 a.MiddleAxis, a.Middle.AngleInRadian * alpha, 
                 a.InnerAxis, a.Inner.AngleInRadian * alpha);
+        }
+        #endregion operators
+        
+        #region functions
+        public override void ResetToIdentity()
+        {
+            outer.AngleInRadian = 0; 
+            middle.AngleInRadian = 0;
+            inner.AngleInRadian = 0;
+        }
+
+        public override Vector3 RotateVector(Vector3 inVector)
+        {
+            throw new Exception("Rotating by an EulerAngle is useless, because the mathematics is the same as applying multiple MatrixRotations");
+        }
+
+        public override string ToString()
+        {
+            return $"({Outer.GetRotationName()}, {Outer.TypedAngle.AngleInDegree}), " +
+                   $"({Middle.GetRotationName()}, {Middle.TypedAngle.AngleInDegree}), " +
+                   $"({Inner.GetRotationName()}, {Inner.TypedAngle.AngleInDegree})"; 
         }
 
         public static RotParams_EulerAngles Lerp(RotParams_EulerAngles a, RotParams_EulerAngles b, float alpha)
