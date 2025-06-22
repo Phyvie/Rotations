@@ -30,8 +30,7 @@ public class M_VectorColour : M_ShaderValueController
         }
         catch (Exception e)
         {
-            Console.WriteLine($"{gameObject.name}.{e}");
-            throw;
+            Debug.LogWarning($"{gameObject.name}.{e}");
         }
     }
 

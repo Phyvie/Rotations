@@ -1,3 +1,4 @@
+using System;
 using Art.Shaders;
 using UnityEngine;
 
@@ -9,8 +10,7 @@ public class M_CircleSector : M_ShaderValueController
     [SerializeField] private Color _outsideAngleColor; 
     [SerializeField] private float _beginAngle;
     [SerializeField] private float _endAngle;
-    private int _fullRotations;
-    private int fullRotations => (int) (Mathf.Abs(_endAngle - _beginAngle) / (2*Mathf.PI));
+    private int fullRotations => (int)(Mathf.Abs(_endAngle - _beginAngle) / (2 * Mathf.PI)); 
 
     public float BeginAngle
     {
@@ -87,6 +87,11 @@ public class M_CircleSector : M_ShaderValueController
                 material.GetColor("_PositiveAngleColour") :
                 material.GetColor("_NegativeAngleColour"));
         material.SetFloat("_FullRotations", fullRotations);
+        
+        if ((_endAngle - _beginAngle) - (fullRotations*2*Mathf.PI) <= 0.0001f && _endAngle > _beginAngle)
+        {
+            material.SetFloat("_EndAngle", _endAngle - 2*Mathf.PI);
+        }
     }
 
     private void OnValidate()

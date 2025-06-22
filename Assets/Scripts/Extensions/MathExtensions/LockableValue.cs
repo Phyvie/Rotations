@@ -133,12 +133,15 @@ namespace Extensions.MathExtensions
             CheckMissingMagnitude(null);
         }
 
-        public LockableVector(List<LockableFloat> values, float targetLength = 1, bool enforceLength = true)
+        public LockableVector(List<LockableFloat> values, float targetLength = 1, bool enforceLength = true, bool checkMissingMagnitude = true)
         {
             this.values = values; 
             this.targetLength = targetLength;
             this.enforceLength = enforceLength;
-            CheckMissingMagnitude(null);
+            if (checkMissingMagnitude)
+            {
+                CheckMissingMagnitude(null);
+            }
         }
         #endregion Constructors
 

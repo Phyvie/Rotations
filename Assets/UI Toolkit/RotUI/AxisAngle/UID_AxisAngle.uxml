@@ -25,7 +25,7 @@
                     <engine:FloatField value="42.2" name="X">
                         <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
                             <Bindings>
-                                <engine:DataBinding property="value" data-source-path="_x.isLocked" binding-mode="TwoWay" />
+                                <engine:DataBinding property="value" data-source-path="XLocked" binding-mode="TwoWay" />
                             </Bindings>
                         </UI_Toolkit.CustomControls.LockableValueToggle>
                         <Bindings>
@@ -35,7 +35,7 @@
                     <engine:FloatField value="42.2" name="Y">
                         <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
                             <Bindings>
-                                <engine:DataBinding property="value" data-source-path="_y.isLocked" binding-mode="TwoWay" />
+                                <engine:DataBinding property="value" data-source-path="YLocked" binding-mode="TwoWay" />
                             </Bindings>
                         </UI_Toolkit.CustomControls.LockableValueToggle>
                         <Bindings>
@@ -45,7 +45,7 @@
                     <engine:FloatField value="42.2" name="Z">
                         <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
                             <Bindings>
-                                <engine:DataBinding property="value" data-source-path="_z.isLocked" binding-mode="TwoWay" />
+                                <engine:DataBinding property="value" data-source-path="ZLocked" binding-mode="TwoWay" />
                             </Bindings>
                         </UI_Toolkit.CustomControls.LockableValueToggle>
                         <Bindings>

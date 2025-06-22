@@ -67,17 +67,6 @@ MonoBehaviour:
     _z:
       typeValue: 0
       isLocked: 0
-    lockableWXYZ:
-      targetLength: 1
-      values:
-      - typeValue: 1
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
 --- !u!1001 &2217645218068081865
 PrefabInstance:
   m_ObjectHideFlags: 0

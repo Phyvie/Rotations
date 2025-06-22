@@ -1,10 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Reflection;
-using Editor;
+using RotContainers.ScreenshotSettings;
 using RotParams;
 using UI_Toolkit;
 using Unity.Properties;
@@ -52,6 +49,17 @@ namespace RotContainers
         //Prefabs for UIRot are below in the #region UITypeSelectionControls
         
         private RotParams.RotParams _rotParams;
+
+        public RotParams.RotParams RotParams
+        {
+            get => _rotParams;
+            set
+            {
+                _rotParams = value; 
+                GenerateRotationContainer(_rotParams);
+            }
+        }
+
         [SerializeField] private TypedRotationContainer typedRotationContainer;
         
         [SerializeField] private GameObject cameraPrefab;
@@ -121,7 +129,7 @@ namespace RotContainers
         private int _selectedTypeIndex = 0;
 
         [CreateProperty]
-        private int SelectedTypeIndex
+        private int SelectedTypeIndex //+ZyKa update this so that it doesn't generate a new Parametrization but a conversion of the Parametrization
         {
             get => _selectedTypeIndex;
             set
@@ -233,17 +241,19 @@ namespace RotContainers
             uiParentName = newUIParent.name; 
         }
         #endregion Initialization
-
+        
         #region ChangeRotationType
-        public void GenerateNewRotation<RotParamsType>() where RotParamsType : RotParams.RotParams, new()
+
+        public TypedRotationContainerPrefab GetTypedRotationContainerPrefab(System.Type type)
         {
-            _rotParams = new RotParamsType();
-            if (typedRotationContainer == null)
-            {
-                typedRotationContainer = gameObject.AddComponent<TypedRotationContainer>();
-            }
-            TypedRotationContainerPrefab prefab =
-                typeof(RotParamsType) switch
+            var method = typeof(GeneralRotationContainer).GetMethod(nameof(GetTypedRotationContainerPrefab), Type.EmptyTypes);
+            var genericMethod = method.MakeGenericMethod(type);
+            return (TypedRotationContainerPrefab)genericMethod.Invoke(this, null);
+        }
+        
+        public TypedRotationContainerPrefab GetTypedRotationContainerPrefab<RotParamsType>()
+        {
+            return typeof(RotParamsType) switch
                 {
                     Type t when t == typeof(RotParams_EulerAngles) => eulerPrefab,
                     Type t when t == typeof(RotParams_Quaternion) => quaternionPrefab,
@@ -251,43 +261,44 @@ namespace RotContainers
                     { } t when t == typeof(RotParams_Matrix) => matrixPrefab,
                     _ => null
                 };
-            
+        }
+        
+        public void GenerateContainerForRotParams(RotParams.RotParams newRotParams)
+        {
+            _rotParams = newRotParams;
+            if (typedRotationContainer == null)
+            {
+                typedRotationContainer = gameObject.AddComponent<TypedRotationContainer>();
+            }
+            GenerateRotationContainer(_rotParams); 
+        }
+        
+        public void GenerateNewRotation<RotParamsType>() where RotParamsType : RotParams.RotParams, new()
+        {
+            _rotParams = new RotParamsType();
+            GenerateRotationContainer(_rotParams);
+        }
+
+        private void GenerateRotationContainer(RotParams.RotParams rotParams)
+        {
+            if (typedRotationContainer == null)
+            {
+                typedRotationContainer = gameObject.AddComponent<TypedRotationContainer>();
+            }
+            TypedRotationContainerPrefab prefab = GetTypedRotationContainerPrefab(rotParams.GetType());
             if (prefab == null)
             {
                 throw new NullReferenceException();
             }
-            
             typedRotationContainer.SpawnTypedRotation(ref _rotParams, prefab.visPrefab, this.transform, prefab.uiPrefab, uiRotSlot); 
         }
         
         //accessor function for the templated version
         public void GenerateNewRotationGeneric(System.Type type)
         {
-            if (!typeof(RotParams.RotParams).IsAssignableFrom(type))
-            {
-                Debug.LogError($"Type {type} is not a subclass of RotParams.RotParams.");
-                return;
-            }
-
-            if (type.GetConstructor(Type.EmptyTypes) == null)
-            {
-                Debug.LogError($"Type {type} does not have a parameterless constructor.");
-                return;
-            }
-
-            // Get a reference to the generic method definition
-            var method = GetType()
-                .GetMethod(nameof(GenerateNewRotation), BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-                ?.MakeGenericMethod(type);
-
-            if (method == null)
-            {
-                Debug.LogError($"Failed to resolve generic method for type {type}.");
-                return;
-            }
-
-            // Invoke the generic method
-            method.Invoke(this, null);
+            var method = typeof(GeneralRotationContainer).GetMethod(nameof(GenerateNewRotation), Type.EmptyTypes);
+            var genericMethod = method.MakeGenericMethod(type);
+            genericMethod.Invoke(this, null);
         }
         
         [ContextMenu("GenerateMatrix")]
@@ -417,7 +428,7 @@ namespace RotContainers
             float[] interpolationAlphas = settings.interpolationAlphas;
 
             int totalImages = interpolationAlphas.Length;
-            int columns = Mathf.CeilToInt(Mathf.Sqrt(totalImages));
+            int columns = settings.columns;
             int rows = Mathf.CeilToInt((float)totalImages / columns);
 
             int totalWidth = columns * imageWidth + (columns - 1) * imageWidthOffset;
@@ -426,29 +437,26 @@ namespace RotContainers
             Texture2D renderedTexture = new Texture2D(totalWidth, totalHeight, TextureFormat.RGBA32, false);
             RenderTexture screenTexture = new RenderTexture(imageWidth, imageHeight, 16);
 
+            Rect visCameraRectBuffer = visCamera.rect;
             visCamera.rect = new Rect(0, 0, 1, 1);
             visCamera.targetTexture = screenTexture;
-            Rect visCameraRectBuffer = visCamera.rect;
-            RenderTexture.active = screenTexture;
 
             for (int i = 0; i < totalImages; i++)
             {
                 float t = interpolationAlphas[i];
 
                 // Call abstract interpolation method implemented by child class
-                settings.Interpolate(ref _rotParams, t);
+                RotParams = settings.Interpolate(t);
 
                 yield return new WaitForEndOfFrame();
 
                 visCamera.Render();
 
+                yield return new WaitForEndOfFrame(); 
+                RenderTexture.active = screenTexture;
                 Texture2D singleFrame = new Texture2D(imageWidth, imageHeight, TextureFormat.RGBA32, false);
                 singleFrame.ReadPixels(new Rect(0, 0, imageWidth, imageHeight), 0, 0);
                 singleFrame.Apply();
-
-                // Save individual frame
-                string singlePath = $"{path}{timestamp}_t{t:F2}.png";
-                System.IO.File.WriteAllBytes(singlePath, singleFrame.EncodeToPNG());
 
                 // Composite grid placement
                 int col = i % columns;
@@ -458,7 +466,8 @@ namespace RotContainers
 
                 renderedTexture.SetPixels(x, y, imageWidth, imageHeight, singleFrame.GetPixels());
 
-                Destroy(singleFrame);
+                yield return new WaitForEndOfFrame();
+                Destroy(singleFrame); 
             }
 
             renderedTexture.Apply();
@@ -477,5 +486,11 @@ namespace RotContainers
             Debug.Log($"✅ Screenshot interpolation complete: saved {totalImages} frames and grid at:\n{path}{timestamp}_grid.png");
         }
 
+        [SerializeField] private RotParams_Quaternion ZyKaParams_Quaternion = new RotParams_Quaternion();
+        [ContextMenu("SetToZyKa")]
+        private void SetToZyKa()
+        {
+            RotParams = ZyKaParams_Quaternion;
+        }
     }
 }

@@ -365,7 +365,6 @@ MonoBehaviour:
   PosRollColor: {r: 1, g: 0.45098042, b: 0.45098042, a: 0.2509804}
   NegRollColor: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0.2509804}
   rotParams:
-    ZyKaGimbalAxis: 0
     outer:
       eAxis: 0
       typedAngle:

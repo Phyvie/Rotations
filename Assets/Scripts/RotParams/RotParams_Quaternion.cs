@@ -17,7 +17,7 @@ namespace RotParams
         [SerializeField] private LockableFloat _y;
         [SerializeField] private LockableFloat _z;
 
-        [SerializeField] private LockableVector lockableWXYZ; 
+        private LockableVector lockableWXYZ => new LockableVector(new List<LockableFloat>(){_w, _x, _y, _z}, 1.0f, true); 
         
         #region Properties
         #region WXYZValueAccessors
@@ -32,6 +32,12 @@ namespace RotParams
             }
         }
 
+        public bool WLocked
+        {
+            get => _w.isLocked; 
+            set => _w.isLocked = value;
+        }
+
         [CreateProperty]
         public float X
         {
@@ -43,6 +49,12 @@ namespace RotParams
             }
         }
 
+        public bool XLocked
+        {
+            get => _x.isLocked; 
+            set => _x.isLocked = value;
+        }
+        
         [CreateProperty]
         public float Y
         {
@@ -54,6 +66,12 @@ namespace RotParams
             }
         }
 
+        public bool YLocked
+        {
+            get => _y.isLocked; 
+            set => _y.isLocked = value;
+        }
+        
         [CreateProperty]
         public float Z
         {
@@ -63,6 +81,12 @@ namespace RotParams
                 lockableWXYZ.SetFloatValue(_z, value, ELockableValueForceSetBehaviour.Force);
                 OnPropertyChanged(nameof(Z));
             }
+        }
+        
+        public bool ZLocked
+        {
+            get => _z.isLocked; 
+            set => _z.isLocked = value;
         }
         
         public LockableFloat GetInternalLockableFloatByIndex(int index)
@@ -188,9 +212,6 @@ namespace RotParams
             _x = new LockableFloat(0, false);
             _y = new LockableFloat(0, false);
             _z = new LockableFloat(0, false);
-            InitSetupLockableVectors();
-
-
         }
 
         public RotParams_Quaternion(RotParams_Quaternion rotParamsQuaternion) : this(rotParamsQuaternion.W,
@@ -204,7 +225,6 @@ namespace RotParams
             _x = new LockableFloat(x, false);
             _y = new LockableFloat(y, false);
             _z = new LockableFloat(z, false);
-            InitSetupLockableVectors();
         }
 
         public RotParams_Quaternion(Vector3 inAxis, float inAngle)
@@ -219,16 +239,7 @@ namespace RotParams
             _x = new LockableFloat(inAxis.x * sin, false);
             _y = new LockableFloat(inAxis.y * sin, false);
             _z = new LockableFloat(inAxis.z * sin, false);
-            InitSetupLockableVectors();
         }
-        
-        private void InitSetupLockableVectors()
-                {
-                    lockableWXYZ = new LockableVector(
-                        new List<LockableFloat>(){_w, _x, _y, _z},
-                        1, 
-                        true); 
-                }
         #endregion Constructors
 
         #region staticQuaternions

@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43b773056c1e4f6488c85e8d64dee0fe, type: 3}
+  m_Name: SIS_QuaternionSlerp
+  m_EditorClassIdentifier: 
+  path: D:/CGL/Bachelor-Thesis/RotationImages/
+  imageWidth: 1000
+  imageHeight: 1000
+  imageWidthOffset: 20
+  imageHeightOffset: 20
+  interpolationAlphas:
+  - 0
+  - 0.2
+  - 0.4
+  - 0.6
+  - 0.8
+  - 1
+  q0:
+    enforceNormalisation: 1
+    _w:
+      typeValue: 1
+      isLocked: 0
+    _x:
+      typeValue: 0
+      isLocked: 0
+    _y:
+      typeValue: 0
+      isLocked: 0
+    _z:
+      typeValue: 0
+      isLocked: 0
+    lockableWXYZ:
+      values:
+      - typeValue: 1
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
+  q1:
+    enforceNormalisation: 1
+    _w:
+      typeValue: 1
+      isLocked: 0
+    _x:
+      typeValue: 0
+      isLocked: 0
+    _y:
+      typeValue: 0
+      isLocked: 0
+    _z:
+      typeValue: 0
+      isLocked: 0
+    lockableWXYZ:
+      values:
+      - typeValue: 1
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
+  shortestPathCorrection: 0

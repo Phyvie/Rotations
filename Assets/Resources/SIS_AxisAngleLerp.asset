@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b01f05609bc853a449ebe6596dc07558, type: 3}
+  m_Name: SIS_AxisAngleLerp
+  m_EditorClassIdentifier: 
+  path: D:/CGL/Bachelor-Thesis/RotationImages/
+  imageWidth: 1000
+  imageHeight: 1000
+  imageWidthOffset: 20
+  imageHeightOffset: 20
+  interpolationAlphas:
+  - 0
+  - 0.2
+  - 0.4
+  - 0.6
+  - 0.8
+  - 1
+  a:
+    typedAngle:
+      showAllAngleTypes: 0
+      showAngleTypeSelector: 1
+      angleType:
+        rid: 4235530392302780476
+      _angleInRadian: 0.5235987901687622
+    _x:
+      typeValue: 1
+      isLocked: 0
+    _y:
+      typeValue: 0
+      isLocked: 0
+    _z:
+      typeValue: 0
+      isLocked: 0
+    xyzLockableVector:
+      values:
+      - typeValue: 1
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
+  b:
+    typedAngle:
+      showAllAngleTypes: 0
+      showAngleTypeSelector: 1
+      angleType:
+        rid: 4235530392302780476
+      _angleInRadian: 6.806784152984619
+    _x:
+      typeValue: 1
+      isLocked: 0
+    _y:
+      typeValue: 0
+      isLocked: 0
+    _z:
+      typeValue: 0
+      isLocked: 0
+    xyzLockableVector:
+      values:
+      - typeValue: 1
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 4235530392302780476
+      type: {class: AngleType, ns: RotParams, asm: MathExtensions}
+      data:
+        angleTypeName: Degree
+        unitMultiplier: 360
+        unitLabel: "360\xB0"

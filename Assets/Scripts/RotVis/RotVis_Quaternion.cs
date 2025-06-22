@@ -89,5 +89,11 @@ namespace RotationVisualisation
                 Debug.Log($"{name} OnValidateError {e.Message}");
             }
         }
+
+        [ContextMenu("ResetToIdentity")]
+        private void ResetToIdentity()
+        {
+            rotParams = new RotParams_Quaternion();
+        }
     }
 }

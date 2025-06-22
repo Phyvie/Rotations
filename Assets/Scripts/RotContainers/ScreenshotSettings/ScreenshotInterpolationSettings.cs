@@ -1,11 +1,12 @@
 using UnityEngine;
 
-namespace Editor
+namespace RotContainers.ScreenshotSettings
 {
     public abstract class ScreenshotInterpolationSettings : ScriptableObject
     {
         [Header("Output Settings")]
         public string path = "D:/CGL/Bachelor-Thesis/RotationImages/";
+        public int columns = 4; 
         public int imageWidth = 1000;
         public int imageHeight = 1000;
         public int imageWidthOffset = 20;
@@ -16,6 +17,6 @@ namespace Editor
 
         // Abstract method to perform interpolation logic specific to subclass
         // 't' is the interpolation parameter between 0 and 1
-        public abstract void Interpolate(ref RotParams.RotParams rotParams, float t);
+        public abstract RotParams.RotParams Interpolate(float t);
     }
 }

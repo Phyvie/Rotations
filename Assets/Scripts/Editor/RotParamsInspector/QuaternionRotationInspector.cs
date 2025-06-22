@@ -1,112 +1,87 @@
-using System;
 using RotParams;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor
-{
-    using UnityEngine;
-using UnityEditor;
-
 [CustomPropertyDrawer(typeof(RotParams_Quaternion))]
-public class RotParamsQuaternionDrawer : PropertyDrawer
+public class QuaternionRotationInspector : PropertyDrawer
 {
-    private bool initialized = false;
-
-    private SerializedProperty enforceNormalizationProp;
-    private SerializedProperty wProp, xProp, yProp, zProp;
-    private SerializedProperty wLockedProp, xLockedProp, yLockedProp, zLockedProp;
-
-    private void Initialize(SerializedProperty property)
-    {
-        if (initialized) return;
-
-        enforceNormalizationProp = property.FindPropertyRelative("enforceNormalisation");
-
-        wProp = property.FindPropertyRelative("_w");
-        xProp = property.FindPropertyRelative("_x");
-        yProp = property.FindPropertyRelative("_y");
-        zProp = property.FindPropertyRelative("_z");
-
-        wLockedProp = wProp.FindPropertyRelative("isLocked");
-        xLockedProp = xProp.FindPropertyRelative("isLocked");
-        yLockedProp = yProp.FindPropertyRelative("isLocked");
-        zLockedProp = zProp.FindPropertyRelative("isLocked");
-
-        initialized = true;
-    }
+    private const float LockToggleWidth = 18f;
+    private const float LabelWidth = 20f;
+    private const float Spacing = 4f;
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-        Initialize(property);
         EditorGUI.BeginProperty(position, label, property);
+        Rect originalRect = position;
+        position.height = EditorGUIUtility.singleLineHeight;
 
-        var rotParams = fieldInfo.GetValue(property.serializedObject.targetObject) as RotParams_Quaternion;
-        if (rotParams == null)
+        // Get target object
+        var target = fieldInfo.GetValue(property.serializedObject.targetObject) as RotParams_Quaternion;
+
+        if (target == null)
         {
-            EditorGUI.LabelField(position, "Error: Cannot cast property to RotParams_Quaternion");
+            EditorGUI.LabelField(position, "RotParams_Quaternion is null");
             return;
         }
 
-        float lineHeight = EditorGUIUtility.singleLineHeight;
-        float spacing = EditorGUIUtility.standardVerticalSpacing;
-        float lockWidth = 18f;
-        float labelWidth = 15f;
-        float floatFieldWidth = position.width - lockWidth - labelWidth - 10;
+        DrawComponentWithLock(ref position, "W", target.W, target.WLocked, 
+            newVal => target.W = newVal, 
+            newLock => target.WLocked = newLock);
 
-        Rect currentRect = new Rect(position.x, position.y, position.width, lineHeight);
+        DrawComponentWithLock(ref position, "X", target.X, target.XLocked, 
+            newVal => target.X = newVal, 
+            newLock => target.XLocked = newLock);
 
-        // Draw enforceNormalization
-        EditorGUI.BeginChangeCheck(); 
-        bool enforceNormalizationToggle = EditorGUI.Toggle(currentRect, new GUIContent("Enforce Normalization"), enforceNormalizationProp.boolValue);
-        currentRect.y += lineHeight + spacing;
-        if (EditorGUI.EndChangeCheck())
-        {
-            rotParams.EnforceNormalisation = enforceNormalizationToggle; 
-        }
-        
-        DrawFloatWithLock(wLockedProp, ref currentRect, "W", rotParams.W, val => rotParams.W = val);
-        DrawFloatWithLock(xLockedProp, ref currentRect, "X", rotParams.X, val => rotParams.X = val);
-        DrawFloatWithLock(yLockedProp, ref currentRect, "Y", rotParams.Y, val => rotParams.Y = val);
-        DrawFloatWithLock(zLockedProp, ref currentRect, "Z", rotParams.Z, val => rotParams.Z = val);
+        DrawComponentWithLock(ref position, "Y", target.Y, target.YLocked, 
+            newVal => target.Y = newVal, 
+            newLock => target.YLocked = newLock);
+
+        DrawComponentWithLock(ref position, "Z", target.Z, target.ZLocked, 
+            newVal => target.Z = newVal, 
+            newLock => target.ZLocked = newLock);
+
+        // Enforce Normalisation toggle
+        position.y += EditorGUIUtility.singleLineHeight + Spacing;
+        target.EnforceNormalisation = EditorGUI.ToggleLeft(position, "Enforce Normalisation", target.EnforceNormalisation);
 
         EditorGUI.EndProperty();
     }
 
-    private void DrawFloatWithLock(SerializedProperty lockProp, ref Rect rect, string label, float currentValue, Action<float> onValueChanged)
+    private void DrawComponentWithLock(
+        ref Rect position,
+        string label,
+        float value,
+        bool isLocked,
+        System.Action<float> setValue,
+        System.Action<bool> setLock)
     {
-        EditorGUI.BeginChangeCheck();
+        float lineHeight = EditorGUIUtility.singleLineHeight;
 
-        float labelWidth = 13f;
-        float spacing = 2f;
-        float lockWidth = 18f;
+        Rect labelRect = new Rect(position.x, position.y, LabelWidth, lineHeight);
+        Rect floatFieldRect = new Rect(position.x + LabelWidth + Spacing, position.y,
+            position.width - LabelWidth - LockToggleWidth - 3 * Spacing, lineHeight);
+        Rect lockToggleRect = new Rect(position.x + position.width - LockToggleWidth, position.y,
+            LockToggleWidth, lineHeight);
 
-        Rect labelRect = new Rect(rect.x, rect.y, labelWidth, rect.height);
-        Rect floatRect = new Rect(labelRect.xMax + spacing, rect.y, rect.width - labelWidth - lockWidth - spacing * 2, rect.height);
-        Rect lockRect = new Rect(rect.xMax - lockWidth, rect.y, lockWidth, rect.height);
-
-        // Use draggable float field with label
-        EditorGUIUtility.labelWidth = labelWidth;
-        float newVal = EditorGUI.FloatField(floatRect, new GUIContent(label), currentValue);
-
-        // Lock toggle
-        lockProp.boolValue = EditorGUI.Toggle(lockRect, lockProp.boolValue);
-
-        if (EditorGUI.EndChangeCheck())
+        EditorGUI.LabelField(labelRect, label);
+        float newValue = EditorGUI.FloatField(floatFieldRect, value);
+        if (newValue != value)
         {
-            Undo.RecordObject(lockProp.serializedObject.targetObject, $"Edit {label}");
-            onValueChanged(newVal);
-            EditorUtility.SetDirty(lockProp.serializedObject.targetObject);
+            setValue(newValue);
         }
 
-        rect.y += rect.height + EditorGUIUtility.standardVerticalSpacing;
+        bool newLock = EditorGUI.Toggle(lockToggleRect, isLocked);
+        if (newLock != isLocked)
+        {
+            setLock(newLock);
+        }
+
+        position.y += lineHeight + Spacing;
     }
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        // 5 lines: 1 for normalization + 4 for WXYZ
-        return (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 5;
+        // 4 rows for W, X, Y, Z + 1 for EnforceNormalisation
+        return (EditorGUIUtility.singleLineHeight + Spacing) * 6;
     }
-}
-
 }

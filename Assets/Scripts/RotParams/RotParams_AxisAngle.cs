@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Extensions.MathExtensions;
 using Unity.Properties;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace RotParams
 {
@@ -13,10 +12,13 @@ namespace RotParams
         #region Variables
         [SerializeField] private AngleWithType typedAngle = new AngleWithType(AngleType.Radian, 0);
 
-        [SerializeField] private LockableFloat _x = new LockableFloat(0, false); 
-        [SerializeField] private LockableFloat _y = new LockableFloat(0, false); 
-        [SerializeField] private LockableFloat _z = new LockableFloat(0, false);
-        [FormerlySerializedAs("xyzVector")] [SerializeField] private LockableVector xyzLockableVector; 
+        [SerializeField] private LockableVector _axis = new LockableVector(new List<LockableFloat>()
+        {
+            new LockableFloat(0, false), 
+            new LockableFloat(0, false), 
+            new LockableFloat(0, false)
+        }); 
+        
         #endregion Variables
         
         #region Properties
@@ -64,11 +66,11 @@ namespace RotParams
         [CreateProperty]
         public Vector3 NormalisedAxis
         {
-            get => new Vector3(_x, _y, _z);
+            get => new Vector3(AxisX, AxisY, AxisZ);
             set
             {
                 value = value.normalized;
-                xyzLockableVector.SetVector(new List<float>(){value.x, value.y, value.z});
+                _axis.SetVector(new List<float>(){value.x, value.y, value.z});
                 OnPropertyChanged();
             }
         }
@@ -76,34 +78,55 @@ namespace RotParams
         [CreateProperty]
         public float AxisX
         {
-            get => _x;
+            get => _axis[0];
             set
             {
-                xyzLockableVector.SetFloatValue(_x, value, ELockableValueForceSetBehaviour.Force);
+                _axis.SetFloatValue(_axis[0], value, ELockableValueForceSetBehaviour.Force);
                 OnPropertyChanged();
             }
         }
 
         [CreateProperty]
+        public bool XLocked
+        {
+            get => _axis[0].isLocked; 
+            set => _axis[0].isLocked = value;
+        }
+
+        [CreateProperty]
         public float AxisY
         {
-            get => _y;
+            get => _axis[1];
             set
             {
-                xyzLockableVector.SetFloatValue(_y, value, ELockableValueForceSetBehaviour.Force);
+                _axis.SetFloatValue(_axis[1], value, ELockableValueForceSetBehaviour.Force);
                 OnPropertyChanged();
             }
         }
         
         [CreateProperty]
+        public bool YLocked
+        {
+            get => _axis[1].isLocked; 
+            set => _axis[1].isLocked = value;
+        }
+
+        [CreateProperty]
         public float AxisZ
         {
-            get => _z;
+            get => _axis[2];
             set
             {
-                xyzLockableVector.SetFloatValue(_z, value, ELockableValueForceSetBehaviour.Force);
+                _axis.SetFloatValue(_axis[2], value, ELockableValueForceSetBehaviour.Force);
                 OnPropertyChanged();
             }
+        }
+        
+        [CreateProperty]
+        public bool ZLocked
+        {
+            get => _axis[2].isLocked; 
+            set => _axis[2].isLocked = value;
         }
 
         [CreateProperty]
@@ -189,25 +212,28 @@ namespace RotParams
                 OnPropertyChanged();
             }
         }
+
+        public AngleType AngleType
+        {
+            get => typedAngle.angleType;
+            set => typedAngle.angleType = value;
+        }
         #endregion Properties
         
         #region Constructors
         public RotParams_AxisAngle()
         {
-            xyzLockableVector = new LockableVector(new List<LockableFloat>(){_x, _y, _z}); 
         }
         
         public RotParams_AxisAngle(Vector3 inRotationVectorInRadian)
         {
             RotationVectorInRadian = inRotationVectorInRadian;
-            xyzLockableVector = new LockableVector(new List<LockableFloat>(){_x, _y, _z}); 
         }
 
         public RotParams_AxisAngle(Vector3 inAxis, float inAngle)
         {
             inAxis = inAxis.normalized;
             RotationVectorInRadian = inAxis * inAngle;
-            xyzLockableVector = new LockableVector(new List<LockableFloat>(){_x, _y, _z}); 
         }
         #endregion //Constructors
         
