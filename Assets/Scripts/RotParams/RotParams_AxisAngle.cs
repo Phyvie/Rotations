@@ -4,6 +4,7 @@ using Extensions.MathExtensions;
 using Unity.Properties;
 using UnityEngine;
 
+//-ZyKa adjust the getters and setters for RotationVector so that they only have one access point
 namespace RotParams
 {
     [Serializable]
@@ -33,7 +34,7 @@ namespace RotParams
             }
         }
         
-        public float AngleInRadian
+        public float AngleRadianInRadian
         {
             get => typedAngle.AngleInRadian;
             set
@@ -171,33 +172,19 @@ namespace RotParams
         [CreateProperty]
         public Vector3 RotationVectorInRadian
         {
-            get => NormalisedAxis * AngleInRadian;
+            get => NormalisedAxis * AngleRadianInRadian;
             set
             {
-                NormalisedAxis = value.normalized;
-                AngleInRadian = value.magnitude; 
-                OnPropertyChanged();
-            }
-        }
-
-        public Vector3 RotationVectorInDegrees
-        {
-            get => NormalisedAxis * AngleInDegrees;
-            set
-            {
-                NormalisedAxis = value.normalized;
-                AngleInRadian = value.magnitude; 
-                OnPropertyChanged();
-            }
-        }
-        
-        public Vector3 RotationVectorInCircleParts
-        {
-            get => NormalisedAxis * AngleInCircleParts;
-            set
-            {
-                NormalisedAxis = value.normalized;
-                AngleInCircleParts = value.magnitude; 
+                if (value.sqrMagnitude > 0)
+                {
+                    NormalisedAxis = value.normalized;
+                    AngleRadianInRadian = value.magnitude; 
+                }
+                else
+                {
+                    NormalisedAxis = Vector3.zero;
+                    AngleRadianInRadian = 0; 
+                }
                 OnPropertyChanged();
             }
         }
@@ -207,8 +194,16 @@ namespace RotParams
             get => NormalisedAxis * typedAngle; 
             set 
             {
-                typedAngle.AngleInCurrentUnit = value.magnitude;
-                NormalisedAxis = value.normalized;
+                if (value.sqrMagnitude > 0)
+                {
+                    typedAngle.AngleInCurrentUnit = value.magnitude;
+                    NormalisedAxis = value.normalized;
+                }
+                else
+                {
+                    typedAngle.AngleInCurrentUnit = 0;
+                    NormalisedAxis = Vector3.zero;
+                }
                 OnPropertyChanged();
             }
         }
@@ -225,15 +220,28 @@ namespace RotParams
         {
         }
         
-        public RotParams_AxisAngle(Vector3 inRotationVectorInRadian)
+        public RotParams_AxisAngle(Vector3 inRotationVectorInRadian) : 
+            this(
+            inRotationVectorInRadian, 
+            inRotationVectorInRadian.magnitude
+            )
         {
-            RotationVectorInRadian = inRotationVectorInRadian;
         }
 
-        public RotParams_AxisAngle(Vector3 inAxis, float inAngle)
+        public RotParams_AxisAngle(Vector3 inAxis, float inAngleRadian)
         {
-            inAxis = inAxis.normalized;
-            RotationVectorInRadian = inAxis * inAngle;
+            List<float> axis;
+            if (inAxis.sqrMagnitude > 0.0001)
+            {
+                inAxis = inAxis.normalized;
+                axis = new List<float>(){ inAxis.x, inAxis.y, inAxis.z }; 
+            }
+            else
+            {
+                axis = new List<float>() { 1, 0, 0 }; 
+            }
+            _axis.SetVector(axis);
+            AngleRadianInRadian = inAngleRadian;
         }
         #endregion //Constructors
         
@@ -247,7 +255,7 @@ namespace RotParams
 
         public override RotParams_Quaternion ToQuaternionRotation()
         {
-            RotParams_Quaternion asQuat = new RotParams_Quaternion(NormalisedAxis, AngleInRadian); 
+            RotParams_Quaternion asQuat = new RotParams_Quaternion(NormalisedAxis, AngleRadianInRadian); 
             return asQuat; 
         }
 
@@ -259,8 +267,8 @@ namespace RotParams
             float y = NormalisedAxis.y;
             float z = NormalisedAxis.z;
         
-            float cosTheta = Mathf.Cos(AngleInRadian);
-            float sinTheta = Mathf.Sin(AngleInRadian);
+            float cosTheta = Mathf.Cos(AngleRadianInRadian);
+            float sinTheta = Mathf.Sin(AngleRadianInRadian);
             float oneMinusCosTheta = 1 - cosTheta;
 
             RotParams_Matrix rotParamsMatrix = new RotParams_Matrix(new float[3, 3]); 
@@ -290,16 +298,16 @@ namespace RotParams
         public override void ResetToIdentity()
         {
             NormalisedAxis = Vector3.up;
-            AngleInRadian = 0;
+            AngleRadianInRadian = 0;
         }
         
         public override Vector3 RotateVector(Vector3 inVector)
         {
             //Rodrigues' rotation formula (righthand-version) TODO: Try to understand it, visualise it and make it left-handed
             Vector3 rotatedVector = 
-                inVector * Mathf.Cos(AngleInRadian) + 
-                Vector3.Cross(NormalisedAxis, inVector) * Mathf.Sin(AngleInRadian) + 
-                NormalisedAxis * Vector3.Dot(NormalisedAxis, inVector) * (1 - Mathf.Cos(AngleInRadian));
+                inVector * Mathf.Cos(AngleRadianInRadian) + 
+                Vector3.Cross(NormalisedAxis, inVector) * Mathf.Sin(AngleRadianInRadian) + 
+                NormalisedAxis * Vector3.Dot(NormalisedAxis, inVector) * (1 - Mathf.Cos(AngleRadianInRadian));
 
             return rotatedVector; 
         }

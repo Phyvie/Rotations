@@ -13,24 +13,30 @@ MonoBehaviour:
   m_Name: SIS_QuaternionSlerp
   m_EditorClassIdentifier: 
   path: D:/CGL/Bachelor-Thesis/RotationImages/
+  columns: 4
   imageWidth: 1000
   imageHeight: 1000
   imageWidthOffset: 20
   imageHeightOffset: 20
   interpolationAlphas:
   - 0
+  - 0.1
   - 0.2
+  - 0.3
   - 0.4
+  - 0.5
   - 0.6
+  - 0.7
   - 0.8
+  - 0.9
   - 1
   q0:
     enforceNormalisation: 1
     _w:
-      typeValue: 1
+      typeValue: 0
       isLocked: 0
     _x:
-      typeValue: 0
+      typeValue: 1
       isLocked: 0
     _y:
       typeValue: 0
@@ -38,20 +44,10 @@ MonoBehaviour:
     _z:
       typeValue: 0
       isLocked: 0
-    lockableWXYZ:
-      values:
-      - typeValue: 1
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
   q1:
     enforceNormalisation: 1
     _w:
-      typeValue: 1
+      typeValue: 0
       isLocked: 0
     _x:
       typeValue: 0
@@ -60,16 +56,6 @@ MonoBehaviour:
       typeValue: 0
       isLocked: 0
     _z:
-      typeValue: 0
+      typeValue: 1
       isLocked: 0
-    lockableWXYZ:
-      values:
-      - typeValue: 1
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
   shortestPathCorrection: 0

@@ -13,34 +13,30 @@ MonoBehaviour:
   m_Name: SIS_AxisAngleLerp
   m_EditorClassIdentifier: 
   path: D:/CGL/Bachelor-Thesis/RotationImages/
+  columns: 5
   imageWidth: 1000
   imageHeight: 1000
   imageWidthOffset: 20
   imageHeightOffset: 20
   interpolationAlphas:
-  - 0
+  - 0.1
   - 0.2
+  - 0.3
   - 0.4
+  - 0.5
   - 0.6
+  - 0.7
   - 0.8
+  - 0.9
   - 1
   a:
     typedAngle:
       showAllAngleTypes: 0
       showAngleTypeSelector: 1
       angleType:
-        rid: 4235530392302780476
-      _angleInRadian: 0.5235987901687622
-    _x:
-      typeValue: 1
-      isLocked: 0
-    _y:
-      typeValue: 0
-      isLocked: 0
-    _z:
-      typeValue: 0
-      isLocked: 0
-    xyzLockableVector:
+        rid: 4235530394084573564
+      _angleInRadian: 3.1415927410125732
+    _axis:
       values:
       - typeValue: 1
         isLocked: 0
@@ -53,29 +49,20 @@ MonoBehaviour:
       showAllAngleTypes: 0
       showAngleTypeSelector: 1
       angleType:
-        rid: 4235530392302780476
-      _angleInRadian: 6.806784152984619
-    _x:
-      typeValue: 1
-      isLocked: 0
-    _y:
-      typeValue: 0
-      isLocked: 0
-    _z:
-      typeValue: 0
-      isLocked: 0
-    xyzLockableVector:
+        rid: 4235530394084573564
+      _angleInRadian: 3.1415927410125732
+    _axis:
       values:
-      - typeValue: 1
-        isLocked: 0
+      - typeValue: 0
+        isLocked: 1
       - typeValue: 0
         isLocked: 0
-      - typeValue: 0
+      - typeValue: -1
         isLocked: 0
   references:
     version: 2
     RefIds:
-    - rid: 4235530392302780476
+    - rid: 4235530394084573564
       type: {class: AngleType, ns: RotParams, asm: MathExtensions}
       data:
         angleTypeName: Degree

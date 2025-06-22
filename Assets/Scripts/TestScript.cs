@@ -1,8 +1,7 @@
-using Extensions.MathExtensions;
+using RotParams;
 using UnityEngine;
 
 public class TestScript : MonoBehaviour
 {
-    [SerializeField] private LockableFloat _lockableFloatA = new LockableFloat(1, false); 
-    [SerializeField] private LockableFloat _lockableFloatB = new LockableFloat(0, false);
+    [SerializeField] private RotParams_Quaternion rotParams;
 }

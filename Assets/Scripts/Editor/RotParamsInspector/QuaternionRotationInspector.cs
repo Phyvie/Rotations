@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RotParams;
 using UnityEditor;
 using UnityEngine;
@@ -9,40 +10,55 @@ public class QuaternionRotationInspector : PropertyDrawer
     private const float LabelWidth = 20f;
     private const float Spacing = 4f;
 
+    // Foldout state per-property
+    private static readonly Dictionary<string, bool> foldoutStates = new Dictionary<string, bool>();
+
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
+        string propertyKey = property.propertyPath;
+
+        if (!foldoutStates.ContainsKey(propertyKey))
+            foldoutStates[propertyKey] = false;
+
+        foldoutStates[propertyKey] = EditorGUI.Foldout(
+            new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight),
+            foldoutStates[propertyKey], label, true);
+
+        if (!foldoutStates[propertyKey])
+            return;
+
         EditorGUI.BeginProperty(position, label, property);
-        Rect originalRect = position;
-        position.height = EditorGUIUtility.singleLineHeight;
+
+        Rect fieldPosition = new Rect(position.x, position.y + EditorGUIUtility.singleLineHeight + Spacing, position.width, EditorGUIUtility.singleLineHeight);
 
         // Get target object
         var target = fieldInfo.GetValue(property.serializedObject.targetObject) as RotParams_Quaternion;
 
         if (target == null)
         {
-            EditorGUI.LabelField(position, "RotParams_Quaternion is null");
+            EditorGUI.LabelField(fieldPosition, "RotParams_Quaternion is null");
+            EditorGUI.EndProperty();
             return;
         }
 
-        DrawComponentWithLock(ref position, "W", target.W, target.WLocked, 
-            newVal => target.W = newVal, 
+        DrawComponentWithLock(ref fieldPosition, "W", target.W, target.WLocked,
+            newVal => target.W = newVal,
             newLock => target.WLocked = newLock);
 
-        DrawComponentWithLock(ref position, "X", target.X, target.XLocked, 
-            newVal => target.X = newVal, 
+        DrawComponentWithLock(ref fieldPosition, "X", target.X, target.XLocked,
+            newVal => target.X = newVal,
             newLock => target.XLocked = newLock);
 
-        DrawComponentWithLock(ref position, "Y", target.Y, target.YLocked, 
-            newVal => target.Y = newVal, 
+        DrawComponentWithLock(ref fieldPosition, "Y", target.Y, target.YLocked,
+            newVal => target.Y = newVal,
             newLock => target.YLocked = newLock);
 
-        DrawComponentWithLock(ref position, "Z", target.Z, target.ZLocked, 
-            newVal => target.Z = newVal, 
+        DrawComponentWithLock(ref fieldPosition, "Z", target.Z, target.ZLocked,
+            newVal => target.Z = newVal,
             newLock => target.ZLocked = newLock);
 
-        // Enforce Normalisation toggle
-        position.y += EditorGUIUtility.singleLineHeight + Spacing;
-        target.EnforceNormalisation = EditorGUI.ToggleLeft(position, "Enforce Normalisation", target.EnforceNormalisation);
+        fieldPosition.y += EditorGUIUtility.singleLineHeight + Spacing;
+        target.EnforceNormalisation = EditorGUI.ToggleLeft(fieldPosition, "Enforce Normalisation", target.EnforceNormalisation);
 
         EditorGUI.EndProperty();
     }
@@ -81,7 +97,11 @@ public class QuaternionRotationInspector : PropertyDrawer
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        // 4 rows for W, X, Y, Z + 1 for EnforceNormalisation
-        return (EditorGUIUtility.singleLineHeight + Spacing) * 6;
+        string propertyKey = property.propertyPath;
+        bool isExpanded = foldoutStates.TryGetValue(propertyKey, out bool expanded) && expanded;
+
+        return isExpanded
+            ? (EditorGUIUtility.singleLineHeight + Spacing) * 6 + EditorGUIUtility.singleLineHeight + Spacing
+            : EditorGUIUtility.singleLineHeight + Spacing;
     }
 }

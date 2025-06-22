@@ -48,7 +48,7 @@ namespace RotContainers
         [SerializeField] private UISlotReference uiRotSlot;
         //Prefabs for UIRot are below in the #region UITypeSelectionControls
         
-        private RotParams.RotParams _rotParams;
+        [SerializeField] private RotParams.RotParams _rotParams;
 
         public RotParams.RotParams RotParams
         {
@@ -483,14 +483,16 @@ namespace RotContainers
             byte[] gridBytes = renderedTexture.EncodeToPNG();
             System.IO.File.WriteAllBytes($"{path}{timestamp}_grid.png", gridBytes);
 
-            Debug.Log($"✅ Screenshot interpolation complete: saved {totalImages} frames and grid at:\n{path}{timestamp}_grid.png");
+            Debug.Log($"✅ Screenshot interpolation complete: saved at:\n{path}{timestamp}.png");
         }
 
-        [SerializeField] private RotParams_Quaternion ZyKaParams_Quaternion = new RotParams_Quaternion();
-        [ContextMenu("SetToZyKa")]
-        private void SetToZyKa()
+        //0ZyKa Debug
+        [SerializeField] private int interpolationStep; 
+        [ContextMenu("SetToNextInterpolationStep")]
+        private void SetToInterpolationStep()
         {
-            RotParams = ZyKaParams_Quaternion;
+            float alpha = screenshotInterpolationSettings.interpolationAlphas[interpolationStep]; 
+            RotParams = screenshotInterpolationSettings.Interpolate(alpha);
         }
     }
 }

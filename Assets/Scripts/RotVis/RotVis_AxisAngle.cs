@@ -53,8 +53,8 @@ namespace RotationVisualisation
 
         public float AngleInRadian
         {
-            get => rotParams.AngleInRadian; 
-            set => rotParams.AngleInRadian = value;
+            get => rotParams.AngleRadianInRadian; 
+            set => rotParams.AngleRadianInRadian = value;
         }
 
         public override void VisUpdate()
