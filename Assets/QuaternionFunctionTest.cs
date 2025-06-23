@@ -12,13 +12,13 @@ public class QuaternionFunctionTest : MonoBehaviour
     [ContextMenu("Set Angle")]
     private void ZyKaSetAngle()
     {
-        quat.Angle = SetAngle; 
+        quat.SignedAngle = SetAngle; 
     }
 
     [ContextMenu("Get Angle")]
     private void ZyKaGetAngle()
     {
-        SetAngle = quat.Angle;
+        SetAngle = quat.SignedAngle;
     }
     
     [SerializeField] private Vector3 SetAxis = Vector3.zero;

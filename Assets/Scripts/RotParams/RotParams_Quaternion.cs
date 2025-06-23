@@ -157,13 +157,12 @@ namespace RotParams
             }
         }
         
-        [CreateProperty]
-        public float Angle
+        public float SignedAngle
         {
-            get => 2 * Mathf.Acos(W);
+            get => 2 * Mathf.Acos(W) * Mathf.Sign(W);
             set
             {
-                if (Mathf.Approximately(Angle, value))
+                if (Mathf.Approximately(SignedAngle, value))
                 {
                     return; 
                 }
@@ -361,7 +360,7 @@ namespace RotParams
         
         public RotParams_Quaternion Log()
         {
-            float halfAngle = Angle * 0.5f;
+            float halfAngle = SignedAngle * 0.5f;
 
             if (halfAngle < 1e-6f)
                 return new RotParams_Quaternion(0f, 0f, 0f, 0f); 

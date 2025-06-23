@@ -3,31 +3,31 @@
 
 #define PI 3.14159265
 #define TWO_PI 6.2831853
+#define THREE_PI 9.424777961
 
-float WrapAngle(float angle)
+float WrapAngleToPlusMinusPI(float angle)
 {
-    angle = fmod(angle + PI, TWO_PI);
-    if (angle < 0.0)
-    {
-        angle += TWO_PI;
-    }
-    return angle-PI; 
+    return fmod(angle + THREE_PI, TWO_PI)-PI; 
 }
 
-void IsValueInModRange_float(float val, float alpha, float beta, 
-    out float result)
+void IsValueInModRange_float(float val, float alpha, float beta, bool excludeFullCircle, out float result)
 {
-    float wVal = WrapAngle(val);
-    float wAlpha = WrapAngle(alpha);
-    float wBeta = WrapAngle(beta);
-        
+    float wVal = WrapAngleToPlusMinusPI(val);
+    float wAlpha = WrapAngleToPlusMinusPI(alpha);
+    float wBeta = WrapAngleToPlusMinusPI(beta);
+
+    if (wAlpha == wBeta && excludeFullCircle)
+    {
+        result = 0.0f;
+        return; 
+    }
     if (wAlpha < wBeta)
     {
-        result = wAlpha < wVal && wVal < wBeta ? 1.0f : 0.0f;
+        result = (wAlpha < wVal && wVal < wBeta) ? 1.0f : 0.0f;
     } 
     else
     {
-        result = wBeta < wVal && wVal < wAlpha ? 1.0f : 0.0f; 
+        result = (wBeta < wVal && wVal < wAlpha) ? 1.0f : 0.0f; 
     }
     
     if (sign(alpha - beta) != sign(wAlpha - wBeta))
@@ -35,6 +35,7 @@ void IsValueInModRange_float(float val, float alpha, float beta,
         result = 1.0f - result;
     }
 }
+
 
 void FullCircle_float(float distanceTo0, float angle, float circleRadius, out float isInCircle)
 {
@@ -45,7 +46,7 @@ void MultiCircle_float(float distanceTo0, float angle, float circleCount, float 
 {
     float radius = firstRadius;
     int count = 0;
-
+    
     [loop]
     for (int i = 0; i < circleCount; i++)
     {
@@ -75,7 +76,7 @@ void MultiSpiral_float(float distanceTo0, float angle, float spiralCount, float 
     float remappedAngle = (angle+TWO_PI)%TWO_PI/TWO_PI;
     float lerpAlpha = spiralCount > 0 ? 1-remappedAngle : remappedAngle; 
     float firstRadius = lerp(outerRadius, outerRadius*radiusRatio, lerpAlpha); 
-    MultiCircle_float(distanceTo0, angle, min(spiralCount, 5), firstRadius, radiusRatio, isInSpiral);  
+    MultiCircle_float(distanceTo0, angle, min(abs(spiralCount), 5), firstRadius, radiusRatio, isInSpiral);  
 }
 
 #endif // ANGLE_MATH_H

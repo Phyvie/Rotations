@@ -16,6 +16,9 @@ namespace RotContainers
         [SerializeField] private RotVis rotVis;
         private VisualElement rotUI;
         
+        public RotVis RotVis => rotVis;
+        public VisualElement RotUI => rotUI;
+        
         public void SpawnTypedRotation(ref RotParams_Base newRotParams, GameObject rotVisPrefab, Transform rotVisParent, VisualTreeAsset visualTreeAsset, UISlotReference visualParent)
         {
             rotParams = newRotParams;

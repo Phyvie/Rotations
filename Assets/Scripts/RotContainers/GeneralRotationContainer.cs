@@ -4,7 +4,6 @@ using RotParams;
 using UI_Toolkit;
 using Unity.Properties;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 namespace RotContainers
@@ -85,8 +84,6 @@ namespace RotContainers
             set => cameraInputEnabled = value;
         }
         
-        #endregion Variables
-        
         public Rect CameraScreenRect
         {
             get => cameraScreenRect;
@@ -99,7 +96,8 @@ namespace RotContainers
                 cameraScreenRect = value;
             }
         }
-
+        #endregion Variables
+        
         #region RotationTypeData
         [Serializable]
         public class TypedRotationContainerPrefab
@@ -299,26 +297,22 @@ namespace RotContainers
             genericMethod.Invoke(this, null);
         }
         
-        [ContextMenu("GenerateMatrix")]
-        public void GenerateNewMatrix()
+        private void GenerateNewMatrix()
         {
             GenerateNewRotation<RotParams_Matrix>(); 
         }
         
-        [ContextMenu("GenerateAxisAngle")]
-        public void GenerateNewAxisAngle()
+        private void GenerateNewAxisAngle()
         {
             GenerateNewRotation<RotParams_AxisAngle>(); 
         }
         
-        [ContextMenu("GenerateQuaternion")]
-        public void GenerateNewQuaternion()
+        private void GenerateNewQuaternion()
         {
             GenerateNewRotation<RotParams_Quaternion>(); 
         }
         
-        [ContextMenu("GenerateEuler")]
-        public void GenerateNewEulerAngles()
+        private void GenerateNewEulerAngles()
         {
             GenerateNewRotation<RotParams_EulerAngles>();
         }
@@ -356,6 +350,18 @@ namespace RotContainers
         private void ZoomCamera(float deltaZoom)
         {
             visCamera.transform.localPosition += Vector3.back * deltaZoom; 
+        }
+
+        [ContextMenu("ApplyObjectRotation")]
+        private void ApplyRotation()
+        {
+            typedRotationContainer.RotVis.ApplyObjectRotation();
+        }
+
+        [ContextMenu("ResetAppliedObjectRotation")]
+        private void ResetAppliedObjectRotation()
+        {
+            typedRotationContainer.RotVis.ResetAppliedObjectRotation();
         }
         #endregion userInteraction
     }
