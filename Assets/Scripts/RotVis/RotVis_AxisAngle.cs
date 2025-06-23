@@ -63,9 +63,9 @@ namespace RotationVisualisation
             
             vis_axis.Value = NormalisedAxis;
             
-            vis_PlaneArc.LocalRotationAxis = NormalisedAxis; 
-            vis_PlaneArc.StartingAngle = 0; 
-            vis_PlaneArc.EndingAngle = RotationVectorInRadian.magnitude;
+            vis_PlaneArc.LocalUpAxis = NormalisedAxis; 
+            vis_PlaneArc.BeginAngle = 0; 
+            vis_PlaneArc.EndingAngle = AngleInRadian;
  
             vis_rotationVector.Color = 
                 ColorPalette.RotationPalette.InterpColorForAxisAndSign(NormalisedAxis,

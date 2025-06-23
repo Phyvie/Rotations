@@ -1,3 +1,4 @@
+using System;
 using MathExtensions;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -6,62 +7,57 @@ namespace Visualisation
 {
     public class Vis_PlaneArc : MonoBehaviour
     {
-        [SerializeField] private Vector3 localRotationAxis;
-        [SerializeField] private Vector3 localForwardVector;
+        #region Variables
         [SerializeField] private float beginAngle;
         [SerializeField] private float endingAngle;
         [FormerlySerializedAs("_positiveAngleColor")] [SerializeField] private Color _positiveAngleColorOverwrite;
         [FormerlySerializedAs("_negativeAngleColor")] [SerializeField] private Color _negativeAngleColorOverwrite;
         [SerializeField] private M_CircleSector torusMaterial;
         [SerializeField] private M_CircleSector circleMaterial;
+        #endregion Variables
         
-        public Vector3 LocalRotationAxis
+        #region Properties
+        public Vector3 LocalUpAxis
         {
-            get => localRotationAxis;
+            get => transform.parent is not null ? transform.parent.InverseTransformDirection(transform.up) : transform.up;
             set
             {
-                localRotationAxis = value;
-                VisUpdateRotationAxis();
-                VisUpdateShader();
+                GlobalUpAxis = transform.parent is not null ? transform.parent.TransformDirection(value) : value;
             }
         }
 
-        public Vector3 GlobalRotationAxis
+        public Vector3 GlobalUpAxis
         {
-            get => transform.parent != null ? transform.parent.rotation * localRotationAxis : localRotationAxis;
-            set
+            get => transform.up;
+            set 
             {
-                LocalRotationAxis = transform.parent != null ? 
-                    Quaternion.Inverse(transform.parent.rotation) * value : 
-                    value; 
+                Quaternion rotation = Quaternion.FromToRotation(GlobalUpAxis, value);
+                transform.rotation = rotation * transform.rotation;
                 VisUpdateShader();
             }
         }
         
-        public Vector3 LocalForwardVector
+        public Vector3 LocalForwardAxis
         {
-            get => localForwardVector;
-            set
-            {
-                localForwardVector = value;
-                VisUpdateRotationForward(); 
-                VisUpdateShader();
-            }
+            get => transform.parent != null ? transform.parent.InverseTransformDirection(transform.forward) : transform.forward;
+            set => GlobalForwardAxis = transform.parent != null ? transform.parent.TransformDirection(value) : value;
         }
 
-        public Vector3 GlobalForwardVector
+        public Vector3 GlobalForwardAxis
         {
-            get => transform.parent != null ? transform.parent.rotation * localForwardVector : localForwardVector;
+            get => transform.forward;
             set
             {
-                LocalForwardVector = transform.parent != null ? 
-                    Quaternion.Inverse(transform.parent.rotation) * value : 
-                    value; 
+                if (value == Vector3.zero) return;
+                if (Vector3.Angle(transform.forward, value) < 0.001f) return;
+
+                Quaternion rotation = Quaternion.FromToRotation(transform.forward, value);
+                transform.rotation = rotation * transform.rotation;
                 VisUpdateShader();
             }
         }
         
-        public float StartingAngle
+        public float BeginAngle
         {
             get => beginAngle;
             set
@@ -121,16 +117,48 @@ namespace Visualisation
         {
             get => (endingAngle - beginAngle) > 0 ? PositiveAngleColor : NegativeAngleColor;
         }
+        #endregion Properties
+
+        #region ScreenshotUtility & Update
+        [SerializeField] private float manualSelfRotationSpeed = 5.0f; 
+        public void Update()
+        {
+            if (Input.GetKey(KeyCode.Q))
+            {
+                RotateVisualisation(Time.deltaTime * manualSelfRotationSpeed);
+            }
+
+            if (Input.GetKey(KeyCode.E))
+            {
+                RotateVisualisation(Time.deltaTime * -manualSelfRotationSpeed);
+            }
+        }
+
+        private void RotateVisualisation(float amount)
+        {
+            GlobalForwardAxis = Quaternion.AngleAxis(amount, GlobalUpAxis) * GlobalForwardAxis;
+            /*Implemented but not tested
+            if (canSnap && isSnapped)
+            {
+                overSnapRotation += amount;
+                CheckForUnsnap();
+            }
+            else
+            {
+                GlobalForwardAxis = Quaternion.AngleAxis(amount, GlobalUpAxis) * GlobalForwardAxis;
+                if (canSnap)
+                {
+                    CheckForSnap();
+                }
+            }
+            */
+        }
+        
+        #endregion ScreenshotUtility
 
         public void VisUpdate()
         {
-            VisUpdateRotation();
             VisUpdateShader(); 
-        }
-
-        private void VisUpdateRotation()
-        {
-            VisUpdateRotationViaRotatingFromPreviousToCurrent(); 
         }
 
         private void VisUpdateShader()
@@ -154,6 +182,7 @@ namespace Visualisation
             VisUpdate();
         }
         
+        #region Deprecated
         #region VisUpdateRotationByOrientationInterpolation
         //-ZyKa Good example why Rotation Vector Interpolation does not work
         //This function does not work properly because the distance between the quaternion is too big; e.g. interpolating between (0.5, 0.5, 0.5, -0.5f) and (0.5, 0.5, 0.5, 0.5) results in 0
@@ -169,14 +198,14 @@ namespace Visualisation
             float[] weights = new float[3];
             Quaternion[] orientations = new Quaternion[3];
 
-            orientations[0] = LocalRotationAxis.x >= 0 ? OrientationNormalRight : OrientationNormalLeft;
-            weights[0] = LocalRotationAxis.x * LocalRotationAxis.x;
+            orientations[0] = LocalUpAxis.x >= 0 ? OrientationNormalRight : OrientationNormalLeft;
+            weights[0] = LocalUpAxis.x * LocalUpAxis.x;
 
-            orientations[1] = LocalRotationAxis.y >= 0 ? OrientationNormalUp : OrientationNormalDown;
-            weights[1] = LocalRotationAxis.y * LocalRotationAxis.y;
+            orientations[1] = LocalUpAxis.y >= 0 ? OrientationNormalUp : OrientationNormalDown;
+            weights[1] = LocalUpAxis.y * LocalUpAxis.y;
 
-            orientations[2] = LocalRotationAxis.z >= 0 ? OrientationNormalForward : OrientationNormalBackward;
-            weights[2] = LocalRotationAxis.z * LocalRotationAxis.z;
+            orientations[2] = LocalUpAxis.z >= 0 ? OrientationNormalForward : OrientationNormalBackward;
+            weights[2] = LocalUpAxis.z * LocalUpAxis.z;
 
             transform.localRotation =
                 MathFunctions.QuaternionInterpolateAsRotationVectors(orientations, weights);
@@ -199,7 +228,7 @@ namespace Visualisation
         public void VisUpdateRotationByForwardVectorInterpolation()
         {
             transform.rotation =
-                Quaternion.LookRotation(LerpInterpolationViaUpVector(LocalRotationAxis), LocalRotationAxis);
+                Quaternion.LookRotation(LerpInterpolationViaUpVector(LocalUpAxis), LocalUpAxis);
         }
 
         public Vector3 LerpInterpolationViaUpVector(Vector3 normalVector)
@@ -216,25 +245,65 @@ namespace Visualisation
         #endregion //VisUpdateRotationByForwardVectorInterpolation
         
         #region VisUpdateRotationViaRotatingFromPreviousToCurrent
-        //This requires the original setup to be perfect, which doesn't quite work out, because as soon as a little numerical error comes into play everything explodes
-        private void VisUpdateRotationViaRotatingFromPreviousToCurrent()
-        {
-            VisUpdateRotationAxis();
-            VisUpdateRotationForward(); 
-        }
-        
-        private void VisUpdateRotationAxis()
-        {
-            Quaternion rotation = Quaternion.FromToRotation(transform.up, GlobalRotationAxis);
-            transform.rotation = rotation * transform.rotation; 
-        }
-
         private void VisUpdateRotationForward()
         {
-            localForwardVector = localRotationAxis.GetOrthogonalisedVector(localForwardVector).normalized; 
-            Quaternion rotation = Quaternion.FromToRotation(transform.forward, localForwardVector);
+            LocalForwardAxis = LocalForwardAxis.GetOrthogonalisedVector(LocalForwardAxis).normalized; 
+            Quaternion rotation = Quaternion.FromToRotation(transform.forward, LocalForwardAxis);
             transform.rotation = rotation * transform.rotation;
         }
         #endregion VisUpdateRotationViaRotatingFromPreviousToCurrent
+        
+        #region SnapForwardVector
+        private bool isSnapped;
+        private float overSnapRotation; 
+        private void CheckForSnap(float tolerance = 0.1f)
+        {
+            throw new NotImplementedException("Implemented but not tested"); 
+            if (Mathf.Approximately(GlobalForwardAxis.x, 1))
+            {
+                GlobalForwardAxis = GlobalUpAxis.GetOrthogonalWithSpecifiedXValue(1);
+                isSnapped = true;
+            }
+            if (Mathf.Approximately(GlobalForwardAxis.x, -1))
+            {
+                GlobalForwardAxis = GlobalUpAxis.GetOrthogonalWithSpecifiedXValue(-1);
+                isSnapped = true;
+            }
+
+            if (Mathf.Approximately(GlobalForwardAxis.y, 1))
+            {
+                GlobalForwardAxis = GlobalUpAxis.GetOrthogonalWithSpecifiedYValue(1);
+                isSnapped = true;
+            }
+            if (Mathf.Approximately(GlobalForwardAxis.y, -1))
+            {
+                GlobalForwardAxis = GlobalUpAxis.GetOrthogonalWithSpecifiedYValue(-1);
+                isSnapped = true;
+            }
+
+            if (Mathf.Approximately(GlobalForwardAxis.z, 1))
+            {
+                GlobalForwardAxis = GlobalUpAxis.GetOrthogonalWithSpecifiedZValue(1);
+                isSnapped = true;
+            }
+            if (Mathf.Approximately(GlobalForwardAxis.z, -1))
+            {
+                GlobalForwardAxis = GlobalUpAxis.GetOrthogonalWithSpecifiedZValue(-1);
+                isSnapped = true;
+            }
+        }
+        
+        private void CheckForUnsnap(float tolerance = 0.1f)
+        {
+            throw new NotImplementedException("Implemented but not tested"); 
+            if (Mathf.Abs(overSnapRotation) > tolerance)
+            {
+                GlobalForwardAxis = Quaternion.AngleAxis(overSnapRotation, GlobalUpAxis) * GlobalForwardAxis;
+                overSnapRotation = 0; 
+                isSnapped = false; 
+            }
+        }
+        #endregion SnapForwardVector
+        #endregion Deprecated
     }
 }

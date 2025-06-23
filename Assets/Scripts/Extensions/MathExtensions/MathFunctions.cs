@@ -7,11 +7,6 @@ namespace MathExtensions
 {
     public static class MathFunctions
     {
-        public static Vector3 GetOrthogonalisedVector(this Vector3 reference, Vector3 toOrthogonalise)
-        {
-            return Vector3.Cross(Vector3.Cross(reference, toOrthogonalise), reference); 
-        }
-        
         public static float RangeModulo(float value, float2 range)
         {
             float min = Mathf.Min(range.x, range.y);
@@ -36,6 +31,110 @@ namespace MathExtensions
         {
             return Quaternion.AngleAxis(a.magnitude, a.normalized);
         }
+        
+        #region Vector3.GetOrthogonalWithSpecifiedValue
+        public static Vector3 GetOrthogonalisedVector(this Vector3 reference, Vector3 toOrthogonalise)
+        {
+            return Vector3.Cross(Vector3.Cross(reference, toOrthogonalise), reference); 
+        }
+        
+        public static Vector3 GetOrthogonalWithSpecifiedXValue(this Vector3 orthogonal, float xValue)
+        {
+            throw new NotImplementedException("Implemented but not tested"); 
+            if (Mathf.Abs(orthogonal.z) < 0.0001f && Mathf.Abs(orthogonal.y) < 0.0001f)
+            {
+                if (Mathf.Abs(xValue) > 0.0001f)
+                {
+                    Debug.LogWarning("No orthogonal vector exists with this xValue for orthogonal = (±1, 0, 0)");
+                    return Vector3.zero;
+                }
+                else return Vector3.right; 
+            }
+            else if (Mathf.Abs(orthogonal.z) < 0.0001f)
+            {
+                //0 = DotProduct = xValue * ort.x + y * ort.y + z * 0
+                //y = -xValue*ort.x/ort.y
+                return new Vector3(
+                    xValue, 
+                    -xValue*orthogonal.x/orthogonal.y, 
+                    0).normalized;
+            }
+            else
+            {
+                //0 = DotProduct = xValue * ort.x + 1 * ort.y + z * ort.z
+                //z = (- xValue*ort.x - ort.y)/ort.z
+                return new Vector3(
+                    xValue, 
+                    1, 
+                    -(xValue*orthogonal.x + orthogonal.y) / orthogonal.z
+                ).normalized;
+            }
+        }
+        
+        public static Vector3 GetOrthogonalWithSpecifiedYValue(this Vector3 orthogonal, float yValue)
+        {
+            throw new NotImplementedException("Implemented but not tested"); 
+            if (Mathf.Abs(orthogonal.x) < 0.0001f && Mathf.Abs(orthogonal.z) < 0.0001f)
+            {
+                if (Mathf.Abs(yValue) > 0.0001f)
+                {
+                    Debug.LogWarning("No orthogonal vector exists with this yValue for orthogonal = (0, ±1, 0)");
+                    return Vector3.zero;
+                }
+                else return Vector3.up;
+            }
+            else if (Mathf.Abs(orthogonal.z) < 0.0001f)
+            {
+                // 0 = x * ort.x + yValue * ort.y
+                return new Vector3(
+                    -yValue * orthogonal.y / orthogonal.x,
+                    yValue,
+                    0
+                ).normalized;
+            }
+            else
+            {
+                // 0 = x * ort.x + yValue * ort.y + z * ort.z
+                return new Vector3(
+                    1,
+                    yValue,
+                    -(orthogonal.x + yValue * orthogonal.y) / orthogonal.z
+                ).normalized;
+            }
+        }
+
+        public static Vector3 GetOrthogonalWithSpecifiedZValue(this Vector3 orthogonal, float zValue)
+        {
+            throw new NotImplementedException("Implemented but not tested"); 
+            if (Mathf.Abs(orthogonal.x) < 0.0001f && Mathf.Abs(orthogonal.y) < 0.0001f)
+            {
+                if (Mathf.Abs(zValue) > 0.0001f)
+                {
+                    Debug.LogWarning("No orthogonal vector exists with this zValue for orthogonal = (0, 0, ±1)");
+                    return Vector3.zero;
+                }
+                else return Vector3.forward;
+            }
+            else if (Mathf.Abs(orthogonal.y) < 0.0001f)
+            {
+                // 0 = x * ort.x + zValue * ort.z
+                return new Vector3(
+                    -zValue * orthogonal.z / orthogonal.x,
+                    0,
+                    zValue
+                ).normalized;
+            }
+            else
+            {
+                // 0 = x * ort.x + y * ort.y + zValue * ort.z
+                return new Vector3(
+                    1,
+                    -(orthogonal.x + zValue * orthogonal.z) / orthogonal.y,
+                    zValue
+                ).normalized;
+            }
+        }
+        #endregion Vector3.GetOrthogonalWithSpecifiedValue
         
         public static Quaternion InterpolateAsRotationVectors(Quaternion a, Quaternion b, float weightA, float weightB, bool normaliseWeights = true)
         {

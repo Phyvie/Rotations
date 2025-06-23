@@ -72,8 +72,10 @@ void Length_float(float2 pos, out float radius)
 
 void MultiSpiral_float(float distanceTo0, float angle, float spiralCount, float outerRadius, float radiusRatio, out float isInSpiral)
 {
-    float firstRadius = lerp(outerRadius, outerRadius*radiusRatio, 1-(((angle+TWO_PI)%(TWO_PI))/(TWO_PI))); 
-    MultiCircle_float(distanceTo0, angle, spiralCount, firstRadius, radiusRatio, isInSpiral);  
+    float remappedAngle = (angle+TWO_PI)%TWO_PI/TWO_PI;
+    float lerpAlpha = spiralCount > 0 ? 1-remappedAngle : remappedAngle; 
+    float firstRadius = lerp(outerRadius, outerRadius*radiusRatio, lerpAlpha); 
+    MultiCircle_float(distanceTo0, angle, min(spiralCount, 5), firstRadius, radiusRatio, isInSpiral);  
 }
 
 #endif // ANGLE_MATH_H

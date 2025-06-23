@@ -152,17 +152,17 @@ namespace RotationVisualisation
         {
             if (outer.vis_planeArc != null)
             {
-                outer.vis_planeArc.StartingAngle = -rotParams.Outer.AngleInRadian;
+                outer.vis_planeArc.BeginAngle = -rotParams.Outer.AngleInRadian;
             }
 
             if (middle.vis_planeArc != null)
             {
-                middle.vis_planeArc.StartingAngle = -rotParams.Middle.AngleInRadian;
+                middle.vis_planeArc.BeginAngle = -rotParams.Middle.AngleInRadian;
             }
             
             if (inner.vis_planeArc != null)
             {
-                inner.vis_planeArc.StartingAngle = -rotParams.Inner.AngleInRadian;
+                inner.vis_planeArc.BeginAngle = -rotParams.Inner.AngleInRadian;
             }
         }
         

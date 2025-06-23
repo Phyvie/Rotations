@@ -61,8 +61,8 @@ namespace RotationVisualisation
 
             vis_Axis.Value = Axis; 
             
-            vis_PlaneArc.LocalRotationAxis = Axis; 
-            vis_PlaneArc.StartingAngle = 0; 
+            vis_PlaneArc.LocalUpAxis = Axis; 
+            vis_PlaneArc.BeginAngle = 0; 
             vis_PlaneArc.EndingAngle = Angle;
             
             vis_rotationVector.Color = 

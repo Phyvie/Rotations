@@ -10,7 +10,7 @@ public class M_CircleSector : M_ShaderValueController
     [SerializeField] private Color _outsideAngleColor; 
     [SerializeField] private float _beginAngle;
     [SerializeField] private float _endAngle;
-    private int fullRotations => (int)(Mathf.Abs(_endAngle - _beginAngle) / (2 * Mathf.PI)); 
+    private int fullRotations => (int)((_endAngle - _beginAngle) / (2 * Mathf.PI)); 
 
     public float BeginAngle
     {

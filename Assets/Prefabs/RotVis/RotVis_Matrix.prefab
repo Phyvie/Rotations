@@ -67,6 +67,8 @@ MonoBehaviour:
       - 1
       height: 3
       width: 3
+    primaryAxisIndex: 2
+    secondaryAxisIndex: 1
 --- !u!1001 &3760494073539753258
 PrefabInstance:
   m_ObjectHideFlags: 0

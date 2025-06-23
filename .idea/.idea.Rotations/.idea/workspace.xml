@@ -6,54 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="8b54c963-bad1-41cc-8b0e-252a0574fd2d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleLit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleLit.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleUnlit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleUnlit.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/GeneralRotationContainer.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/GeneralRotationContainer.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/SIS_AxisAngleLerp.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/SIS_AxisAngleLerp.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Utility.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Utility/E_LocalReparent.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Utility/E_LocalReparent.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Utility/E_MeshAssetGenerator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Utility/E_MeshAssetGenerator.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Utility/E_QuaternionMultiplier.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Utility/E_QuaternionMultiplier.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Utility/E_ReparentManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Utility/E_ReparentManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Utility/E_SelectionBase.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Utility/E_SelectionBase.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Utility/E_SetOrientationFromVectors.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Utility/E_SetOrientationFromVectors.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Utility/EditorUtility.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Utility/EditorUtility.asmdef.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/LockableValue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/LockableValue.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/GeneralRotationContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/GeneralRotationContainer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/InterpolationSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/InterpolationSettings.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_AxisAngleBezier.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_AxisAngleBezier.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_AxisAngleLerp.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_AxisAngleLerp.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_EulerBezier.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_EulerBezier.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_EulerLerp.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_EulerLerp.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_MatrixLerpThenToRotationByAxes.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_MatrixLerpThenToRotationByAxes.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_QuaternionBezier.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_QuaternionBezier.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_QuaternionLerpNormalized.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_QuaternionLerpNormalized.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_QuaternionLogarithmicInterpolation.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_QuaternionLogarithmicInterpolation.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_QuaternionSlerp.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_QuaternionSlerp.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_QuaternionSquad.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotInterpolationSettings/SIS_QuaternionSquad.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ScreenshotSettings.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes/AngleMath.hlsl" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes/AngleMath.hlsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/M_CircleSector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Shaders/M_CircleSector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_AngleLit.shadergraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Shaders/SH_AngleLit.shadergraph" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_AngleUnlit.shadergraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Shaders/SH_AngleUnlit.shadergraph" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/BaseMathVisualiser/Vis_PlaneArc.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/BaseMathVisualiser/Vis_PlaneArc.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_Matrix.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_Matrix.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/MatrixRotationInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/MatrixRotationInspector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/MathFunctions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/MathFunctions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MathVisualisation/Vis_PlaneArc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MathVisualisation/Vis_PlaneArc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_AxisAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_AxisAngle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_EulerAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_EulerAngle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Quaternion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Quaternion.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -373,7 +337,7 @@
       <workItem from="1750541422810" duration="24000" />
       <workItem from="1750544105114" duration="15967000" />
       <workItem from="1750610627070" duration="8463000" />
-      <workItem from="1750621952904" duration="3436000" />
+      <workItem from="1750621952904" duration="15285000" />
     </task>
     <servers />
   </component>

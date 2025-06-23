@@ -152,14 +152,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7466f4bac16547c7a774699302670536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localRotationAxis: {x: 0, y: 0, z: 0}
-  localForwardVector: {x: 0, y: 0, z: 0}
   beginAngle: 0
   endingAngle: 0
   _positiveAngleColorOverwrite: {r: 0.9019608, g: 0.9019608, b: 0.9019608, a: 1}
   _negativeAngleColorOverwrite: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   torusMaterial: {fileID: 3766871097072832070}
   circleMaterial: {fileID: 6443256106142866425}
+  manualSelfRotationSpeed: 50
 --- !u!1 &7746308340713269120
 GameObject:
   m_ObjectHideFlags: 0
