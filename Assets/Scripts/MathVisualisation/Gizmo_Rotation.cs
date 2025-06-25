@@ -77,6 +77,7 @@ namespace Visualisation
             }
         }
 
+        #if UNITY_EDITOR
         private void OnValidate()
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode && !EditorApplication.isPlaying)
@@ -85,5 +86,6 @@ namespace Visualisation
             }
             RotationAxis = rotationAxis;
         }
+        #endif
     }
 }

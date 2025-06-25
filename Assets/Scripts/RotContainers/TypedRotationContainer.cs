@@ -1,3 +1,4 @@
+using System.Linq;
 using BaseClasses;
 using RotParams;
 using UI_Toolkit;
@@ -59,6 +60,7 @@ namespace RotContainers
             rotUI.dataSource = rotParams; 
         }
 
+        #if UNITY_EDITOR
         private void OnValidate()
         {
             /* !ZyKa OnValidate
@@ -69,5 +71,6 @@ namespace RotContainers
             rotVis.VisUpdate();
             */   
         }
+        #endif
     }
 }

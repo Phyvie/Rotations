@@ -74,9 +74,11 @@ namespace MathVisualisation
             }
         }
 
+        #if UNITY_EDITOR
         private void OnValidate()
         {
             Value = value; 
         }
+        #endif
     }
 }

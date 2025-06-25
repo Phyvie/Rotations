@@ -318,6 +318,7 @@ namespace RotContainers
         }
         #endregion ChangeRotationType
 
+        #if UNITY_EDITOR
         private void OnValidate()
         {
             /* !ZyKa OnValidate
@@ -328,6 +329,7 @@ namespace RotContainers
             Init();
             */ 
         }
+        #endif
 
         #region userInteraction
         private void Update()

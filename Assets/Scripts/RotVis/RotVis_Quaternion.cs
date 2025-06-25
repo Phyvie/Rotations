@@ -78,6 +78,7 @@ namespace RotationVisualisation
             VisUpdateRotationObject();
         }
 
+        #if UNITY_EDITOR
         private void OnValidate()
         {
             try
@@ -89,6 +90,7 @@ namespace RotationVisualisation
                 Debug.Log($"{name} OnValidateError {e.Message}");
             }
         }
+        #endif
 
         [ContextMenu("ResetToIdentity")]
         private void ResetToIdentity()

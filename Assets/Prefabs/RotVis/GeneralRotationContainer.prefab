@@ -70,7 +70,7 @@ MonoBehaviour:
     y: 0.33
     width: 1
     height: 0.67
-  cameraInputEnabled: 0
+  cameraInputEnabled: 1
   eulerPrefab:
     visPrefab: {fileID: 4359447636591289229, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
       type: 3}

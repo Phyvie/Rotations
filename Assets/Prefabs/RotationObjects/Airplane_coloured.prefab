@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efbf818ffddfeb04ca5c081df75895e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  editSharedMaterial: {fileID: 0}
+  editSharedMaterial: {fileID: 2100000, guid: abbeee6d0ae03d442a6aff9e93b616fd, type: 2}
   color: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1932416707972239152 stripped
 GameObject:
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efbf818ffddfeb04ca5c081df75895e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  editSharedMaterial: {fileID: 0}
+  editSharedMaterial: {fileID: 2100000, guid: abbeee6d0ae03d442a6aff9e93b616fd, type: 2}
   color: {r: 0, g: 1, b: 0, a: 0}
 --- !u!1 &7318819440733715633 stripped
 GameObject:
@@ -188,5 +188,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efbf818ffddfeb04ca5c081df75895e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  editSharedMaterial: {fileID: 0}
+  editSharedMaterial: {fileID: 2100000, guid: abbeee6d0ae03d442a6aff9e93b616fd, type: 2}
   color: {r: 0, g: 0, b: 1, a: 0}

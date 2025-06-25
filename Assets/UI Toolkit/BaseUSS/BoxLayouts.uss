@@ -7,11 +7,11 @@
 }
 
 .container--verticalspacearound {
-    flex-direction: column; 
-    justify-content: space-around; 
-    border-color: rgb(0, 0, 0); 
-    border-width: 0; 
-    flex-grow: 1; 
+    flex-direction: column;
+    justify-content: space-around;
+    border-color: rgb(0, 0, 0);
+    border-width: 0;
+    flex-grow: 1;
 }
 
 .centeredText {
@@ -28,4 +28,8 @@
     height: 12px;
     flex-grow: 1;
     background-image: url("project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-2236324273849735119&guid=8e1dbca73a7e8f643b301ac970d693f5&type=3#arrow-left@2x");
+}
+
+TemplateContainer {
+    flex-grow: 1;
 }

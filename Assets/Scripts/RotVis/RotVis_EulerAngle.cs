@@ -166,6 +166,7 @@ namespace RotationVisualisation
             }
         }
         
+        #if UNITY_EDITOR
         private void OnValidate()
         {
             if (rotParams.GetGimbalType() == EGimbalType.InvalidGimbalOrder)
@@ -182,5 +183,6 @@ namespace RotationVisualisation
                 Debug.Log($"{name} OnValidateError {e.Message}");
             }
         }
+        #endif
     }
 }
