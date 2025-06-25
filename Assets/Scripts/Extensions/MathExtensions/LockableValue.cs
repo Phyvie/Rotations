@@ -91,17 +91,14 @@ namespace Extensions.MathExtensions
         private bool enforceLength; //0ZyKa implement
         #endregion Variables
         
-        #region GetSetProperties
-        public LockableFloat this[int index]
+        #region GetSet
+        #region Properties
+        public float this[int index]
         {
-            get => values[index];
-            set
-            {
-                values.RemoveAt(index);
-                values.Insert(index, value);
-            }
+            get => values[index].TypeValue;
+            set => SetFloatValue(index, value); 
         }
-
+       
         public float TargetLength
         {
             get => targetLength;
@@ -127,7 +124,32 @@ namespace Extensions.MathExtensions
                 }
             }
         }
-        #endregion GetSetProperties
+        #endregion
+        
+        #region GetSetFunctions
+
+        public bool GetLock(int index)
+        {
+            return values[index].isLocked;
+        }
+
+        public void SetLock(int index, bool value)
+        {
+            values[index].isLocked = value; 
+        }
+        
+        public LockableFloat GetLockableFloatAtIndex(int index)
+        {
+            return values[index]; 
+        }
+
+        public void ReplaceLockableFloatAtIndex(int index, LockableFloat newValue)
+        {
+            values.RemoveAt(index);
+            values.Insert(index, newValue);
+        }
+        #endregion GetSetFunctions
+        #endregion GetSet
         
         #region Constructors
         public LockableVector(int dimensions)
@@ -204,7 +226,7 @@ namespace Extensions.MathExtensions
             }
         }
         
-        public void SetFloatValue(int index, float newValue, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.BlockWithMessage , float newTargetLength = 0)
+        public void SetFloatValue(int index, float newValue, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.BlockWithMessage , float newTargetLength = -1)
         {
             SetFloatValue(values[index], newValue, forceSetBehaviour, newTargetLength);
         }

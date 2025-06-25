@@ -91,7 +91,7 @@ namespace RotParams
         
         public LockableFloat GetInternalLockableFloatByIndex(int index)
         {
-            return lockableWXYZ[index]; 
+            return lockableWXYZ.GetLockableFloatAtIndex(index); 
         }
         #endregion XYZWValueAccessors
 

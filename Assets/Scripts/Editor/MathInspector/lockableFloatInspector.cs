@@ -12,21 +12,12 @@ namespace Editor
     {
         private SerializedProperty typeValueProp;
         private SerializedProperty isLockedProp;
-        private bool initialized = false;
-
-        private void Initialize(SerializedProperty property)
-        {
-            if (initialized) return;
-
-            typeValueProp = property.FindPropertyRelative("typeValue");
-            isLockedProp = property.FindPropertyRelative("isLocked");
-
-            initialized = true;
-        }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            Initialize(property);
+            typeValueProp = property.FindPropertyRelative("typeValue");
+            isLockedProp = property.FindPropertyRelative("isLocked");
+         
             EditorGUI.BeginProperty(position, label, property);
 
             float lineHeight = EditorGUIUtility.singleLineHeight;

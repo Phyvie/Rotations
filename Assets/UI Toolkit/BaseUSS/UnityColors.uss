@@ -77,3 +77,7 @@ EnumField .unity-enum-field__input {
 .vector--horizontal > VisualElement {
     flex-direction: row;
 }
+
+.unityUIFieldColor VisualElement {
+    background-color: rgba(42, 42, 42, 0);
+}

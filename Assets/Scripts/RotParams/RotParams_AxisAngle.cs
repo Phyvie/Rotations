@@ -82,7 +82,7 @@ namespace RotParams
             get => _axis[0];
             set
             {
-                _axis.SetFloatValue(_axis[0], value, ELockableValueForceSetBehaviour.Force);
+                _axis.SetFloatValue(0, value, ELockableValueForceSetBehaviour.Force);
                 OnPropertyChanged();
             }
         }
@@ -90,8 +90,8 @@ namespace RotParams
         [CreateProperty]
         public bool XLocked
         {
-            get => _axis[0].isLocked; 
-            set => _axis[0].isLocked = value;
+            get => _axis.GetLock(0); 
+            set => _axis.SetLock(0, value);
         }
 
         [CreateProperty]
@@ -100,7 +100,7 @@ namespace RotParams
             get => _axis[1];
             set
             {
-                _axis.SetFloatValue(_axis[1], value, ELockableValueForceSetBehaviour.Force);
+                _axis.SetFloatValue(1, value, ELockableValueForceSetBehaviour.Force);
                 OnPropertyChanged();
             }
         }
@@ -108,8 +108,9 @@ namespace RotParams
         [CreateProperty]
         public bool YLocked
         {
-            get => _axis[1].isLocked; 
-            set => _axis[1].isLocked = value;
+            
+            get => _axis.GetLock(1); 
+            set => _axis.SetLock(1, value);
         }
 
         [CreateProperty]
@@ -118,7 +119,7 @@ namespace RotParams
             get => _axis[2];
             set
             {
-                _axis.SetFloatValue(_axis[2], value, ELockableValueForceSetBehaviour.Force);
+                _axis.SetFloatValue(2, value, ELockableValueForceSetBehaviour.Force);
                 OnPropertyChanged();
             }
         }
@@ -126,8 +127,9 @@ namespace RotParams
         [CreateProperty]
         public bool ZLocked
         {
-            get => _axis[2].isLocked; 
-            set => _axis[2].isLocked = value;
+            
+            get => _axis.GetLock(2); 
+            set => _axis.SetLock(2, value);
         }
 
         [CreateProperty]

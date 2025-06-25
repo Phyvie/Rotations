@@ -1,0 +1,15 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UnityColors.uss?fileID=7433441132597879392&amp;guid=05afd8f5bd01ac04682fabbc8e02db4f&amp;type=3#UnityColors" />
+    <engine:VisualElement name="Root" data-source-type="ZyKaMB, Assembly-CSharp" class="unityUIBackgroundColor unityUIFieldColor unityUITextColor" style="flex-grow: 1;">
+        <engine:FloatField label="Float Field" value="42.2" name="FloatX">
+            <Bindings>
+                <engine:DataBinding property="value" data-source-path="ZyKaFloatX" binding-mode="TwoWay" />
+            </Bindings>
+        </engine:FloatField>
+        <engine:FloatField label="Float Field" value="42.2" name="FloatY">
+            <Bindings>
+                <engine:DataBinding property="value" data-source-path="ZyKaFloatY" binding-mode="TwoWay" />
+            </Bindings>
+        </engine:FloatField>
+    </engine:VisualElement>
+</engine:UXML>

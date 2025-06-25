@@ -5,18 +5,15 @@
     align-items: stretch;
     align-self: stretch;
     align-content: stretch;
+    flex-direction: row;
     flex-grow: 1;
-    margin-top: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    margin-left: 10px;
 }
 
 .floatField--pure > Label {
     font-size: 12px;
     min-height: auto;
     min-width: auto;
-    margin: 0;
+    margin-right: 5px;
     padding: 0;
     border-width: 0;
     border-radius: 0;
