@@ -2501,7 +2501,7 @@ PrefabInstance:
     - target: {fileID: 2405914394118555245, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
         type: 3}
       propertyPath: _fullRotationColor.b
-      value: 0.45098042
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2405914394118555245, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
         type: 3}
@@ -2511,7 +2511,7 @@ PrefabInstance:
     - target: {fileID: 2405914394118555245, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
         type: 3}
       propertyPath: _fullRotationColor.r
-      value: 1
+      value: 0.45098042
       objectReference: {fileID: 0}
     - target: {fileID: 2405914394118555245, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
         type: 3}
@@ -2681,7 +2681,7 @@ PrefabInstance:
     - target: {fileID: 4837300017244231248, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
         type: 3}
       propertyPath: _fullRotationColor.b
-      value: 1
+      value: 0.45098042
       objectReference: {fileID: 0}
     - target: {fileID: 4837300017244231248, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
         type: 3}
@@ -2691,7 +2691,7 @@ PrefabInstance:
     - target: {fileID: 4837300017244231248, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
         type: 3}
       propertyPath: _fullRotationColor.r
-      value: 0.45098042
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4837300017244231248, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
         type: 3}
@@ -2786,36 +2786,6 @@ PrefabInstance:
     - target: {fileID: 6308813285352157611, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
         type: 3}
       propertyPath: _positiveAngleColorOverwrite.a
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6771795169128747818, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
-        type: 3}
-      propertyPath: NegYawColor.a
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6771795169128747818, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
-        type: 3}
-      propertyPath: PosYawColor.a
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6771795169128747818, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
-        type: 3}
-      propertyPath: NegRollColor.a
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6771795169128747818, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
-        type: 3}
-      propertyPath: PosRollColor.a
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6771795169128747818, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
-        type: 3}
-      propertyPath: NegPitchColor.a
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6771795169128747818, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
-        type: 3}
-      propertyPath: PosPitchColor.a
       value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6771795169128747818, guid: 45ab3c960b7a1ed498ce8665f9351e5b,

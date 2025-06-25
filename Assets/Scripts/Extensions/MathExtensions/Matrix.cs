@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 namespace MathExtensions
@@ -716,20 +717,28 @@ namespace MathExtensions
         
         public override string ToString()
         {
-            List<string> rowStrings = new List<string>();
+            var result = new StringBuilder();
 
             for (int rowIndex = 0; rowIndex < InternalMatrix.GetLength(0); rowIndex++)
             {
-                string rowString = "";
+                var rowBuilder = new StringBuilder();
+
                 for (int columnIndex = 0; columnIndex < InternalMatrix.GetLength(1); columnIndex++)
                 {
-                    rowString += InternalMatrix[rowIndex * Width + columnIndex].ToString("F2") + " ";
+                    rowBuilder.Append(InternalMatrix[rowIndex * Width + columnIndex].ToString("F2"));
+                    rowBuilder.Append(' ');
                 }
-                rowStrings.Add(rowString.TrimEnd()); // Remove trailing space
+
+                result.Append(rowBuilder.ToString().TrimEnd());
+                result.Append(';');
             }
 
-            return string.Join(";", rowStrings); // Join all rows with a semicolon
+            if (result.Length > 0)
+                result.Length--; 
+
+            return result.ToString();
         }
+
 
         public void PrintMatrix()
         {

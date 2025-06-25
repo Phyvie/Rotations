@@ -9,12 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a90892ced5294caa804de70c710b07d4, type: 3}
-  m_Name: ScreenshotSettings
+  m_Script: {fileID: 11500000, guid: 65cfee1e4503407c8e44ffbe70378235, type: 3}
+  m_Name: '!ZyKaSO'
   m_EditorClassIdentifier: 
-  path: D:/CGL/Bachelor-Thesis/RotationImages/
-  columns: 2
-  imageWidth: 1000
-  imageHeight: 1000
-  imageWidthOffset: 20
-  imageHeightOffset: 20
