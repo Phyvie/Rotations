@@ -57,7 +57,7 @@ namespace RotationVisualisation
 
         public override void VisUpdate()
         {
-            vis_rotationVector.Value = Axis * Angle;
+            vis_rotationVector.Value = Axis * Mathf.Abs(Angle);
 
             vis_Axis.Value = Axis; 
             

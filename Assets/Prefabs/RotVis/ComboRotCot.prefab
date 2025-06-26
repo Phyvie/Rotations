@@ -59,7 +59,7 @@ MonoBehaviour:
         isLocked: 0
       - typeValue: 0
         isLocked: 0
-  rotVisPrefab: {fileID: 0}
+  rotVisPrefab: {fileID: 1391600418665694703}
   rotVisCS: {fileID: 0}
   rotUIAsset: {fileID: 9197481963319205126, guid: 959c3fa76db3fac43a696054de3b72aa,
     type: 3}
@@ -141,7 +141,7 @@ MonoBehaviour:
         angleType:
           rid: 4235530488959467578
         _angleInRadian: 0
-  rotVisPrefab: {fileID: 0}
+  rotVisPrefab: {fileID: 4648638835793684334}
   rotVisCS: {fileID: 0}
   rotUIAsset: {fileID: 9197481963319205126, guid: edd2d061bb270cd4c93b0c281f09e666,
     type: 3}
@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 4786956400860770464}
   - component: {fileID: 8427126499508128760}
   - component: {fileID: 4563528484986964992}
+  - component: {fileID: 2064549772126246778}
   m_Layer: 0
   m_Name: ComboRotCot
   m_TagString: Untagged
@@ -250,6 +251,24 @@ MonoBehaviour:
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
   m_WorldSpaceHeight: 1080
+--- !u!114 &2064549772126246778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5109546756149866199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18e7ea4615ac6f41a269e37ea4ce522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comboRotCot: {fileID: 8427126499508128760}
+  screenshotSettings: {fileID: 11400000, guid: 71b97e8b082cf3a47a6adf72bd85f319, type: 2}
+  interpolationSettings: {fileID: 11400000, guid: cdd862209e357e4418fd67b8a4fa57ad,
+    type: 2}
+  viewShots: []
+  interpolationStep: 0
 --- !u!1 &6217835879439662439
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,7 +327,7 @@ MonoBehaviour:
     _z:
       typeValue: 0
       isLocked: 0
-  rotVisPrefab: {fileID: 0}
+  rotVisPrefab: {fileID: 6217835879439662439}
   rotVisCS: {fileID: 0}
   rotUIAsset: {fileID: 9197481963319205126, guid: e8e275ab96cc4f54eba1128f991b32e0,
     type: 3}
@@ -372,7 +391,7 @@ MonoBehaviour:
       width: 3
     primaryAxisIndex: 2
     secondaryAxisIndex: 1
-  rotVisPrefab: {fileID: 0}
+  rotVisPrefab: {fileID: 9010870622720340778}
   rotVisCS: {fileID: 0}
   rotUIAsset: {fileID: 9197481963319205126, guid: 5eda4fd53ba890f47ad74cadbeff7e24,
     type: 3}

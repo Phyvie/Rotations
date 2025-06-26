@@ -100,6 +100,12 @@ namespace RotContainers
         
         private List<RotCot_GenericBase> rotCotsList => new List<RotCot_GenericBase>(){rotCot_AxisAngle, rotCot_Quaternion, rotCot_Euler, rotCot_Matrix};
         #endregion TypedRotationContainers
+
+        public RotParams_Base RotParams_Generic
+        {
+            get => activeRotCot.GetRotParams_Generic(); 
+            set => activeRotCot.SetRotParams_Generic(value);
+        }
         #endregion Variables
         
         #region Initialization
@@ -186,7 +192,6 @@ namespace RotContainers
             _selectedTypeIndex = 1; 
             ActivateRotCot(rotCot_Quaternion);
         }
-        #endregion Initialization
         
         private void InitializeRotCots()
         {
@@ -196,6 +201,7 @@ namespace RotContainers
                 rotCot.enabled = false; 
             }
         }
+        #endregion Initialization
         
         #region UITypeSelectionControls
         [CreateProperty]

@@ -13,7 +13,7 @@ namespace RotParams
         public abstract RotParams_Quaternion ToQuaternionRotation(); 
         public abstract RotParams_Matrix ToMatrixRotation(); 
         public abstract RotParams_AxisAngle ToAxisAngleRotation();
-        public abstract void ResetToIdentity(); 
+        public abstract void ResetToIdentity();
         
         public abstract Vector3 RotateVector(Vector3 inVector);
 

@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3296387abe53154bad6852951c4ecfd, type: 3}
-  m_Name: SIS_QuaternionBezier
+  m_Script: {fileID: 11500000, guid: 0e1147c635d708141a769097f714d948, type: 3}
+  m_Name: IS_QuaternionLogInterpolation
   m_EditorClassIdentifier: 
   path: D:/CGL/Bachelor-Thesis/RotationImages/
   imageWidth: 1000
@@ -72,51 +72,4 @@ MonoBehaviour:
         isLocked: 0
       - typeValue: 0
         isLocked: 0
-  outQ0:
-    enforceNormalisation: 1
-    _w:
-      typeValue: 1
-      isLocked: 0
-    _x:
-      typeValue: 0
-      isLocked: 0
-    _y:
-      typeValue: 0
-      isLocked: 0
-    _z:
-      typeValue: 0
-      isLocked: 0
-    lockableWXYZ:
-      values:
-      - typeValue: 1
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-  inQ1:
-    enforceNormalisation: 1
-    _w:
-      typeValue: 1
-      isLocked: 0
-    _x:
-      typeValue: 0
-      isLocked: 0
-    _y:
-      typeValue: 0
-      isLocked: 0
-    _z:
-      typeValue: 0
-      isLocked: 0
-    lockableWXYZ:
-      values:
-      - typeValue: 1
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
+  shortestPathCorrection: 0

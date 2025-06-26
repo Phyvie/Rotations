@@ -54,6 +54,11 @@ namespace RotContainers
 
         public override void SetRotParams_Generic(RotParams_Base rotParams)
         {
+            if (rotParams.GetType() == typeof(TRotParams))
+            {
+                RotParams = rotParams as TRotParams; 
+            }
+            
             RotParams = typeof(TRotParams) switch
             {
                 Type t when t == typeof(RotParams_EulerAngles)

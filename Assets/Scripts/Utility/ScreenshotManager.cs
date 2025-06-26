@@ -5,15 +5,16 @@ using System.IO;
 using RotContainers;
 using RotParams;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Utility
 {
     public class ScreenshotManager : MonoBehaviour
     {
-        [SerializeField] private GeneralRotationContainer generalRotationContainer;
+        [SerializeField] private ComboRotCot comboRotCot;
         [SerializeField] private ScreenshotSettings screenshotSettings;
         [SerializeField] private InterpolationSettings interpolationSettings; 
-        public Camera screenshotCamera => generalRotationContainer.VisCamera;
+        public Camera screenshotCamera => comboRotCot.VisCamera;
 
         [Serializable]
         public class ViewShot
@@ -70,7 +71,7 @@ namespace Utility
             RenderTexture.active = screenTexture;
             screenshotCamera.Render();
             
-            viewShots.Add(new ViewShot(screenTexture, generalRotationContainer.RotParams));
+            viewShots.Add(new ViewShot(screenTexture, comboRotCot.RotParams_Generic));
             
             screenshotCamera.rect = screenshotCameraRectBuffer;
             screenshotCamera.targetTexture = null;
@@ -149,7 +150,7 @@ namespace Utility
             RenderTexture.active = null;
 
             byte[] byteArray = renderedTexture.EncodeToPNG();
-            File.WriteAllBytes($"{Path.Combine(screenshotSettings.path, generalRotationContainer.RotParams.ToString())}.png", byteArray);
+            File.WriteAllBytes($"{Path.Combine(screenshotSettings.path, comboRotCot.RotParams_Generic.ToString())}.png", byteArray);
         
             Destroy(screenTexture);
             Destroy(renderedTexture);
@@ -172,7 +173,7 @@ namespace Utility
             ResetViewshots(); 
             for (int i = 0; i < interpolationSettings.InterpolationCount; i++)
             {
-                generalRotationContainer.RotParams = interpolationSettings.Interpolate(interpolationSettings.getInterpolationAlpha(i));
+                comboRotCot.RotParams_Generic = interpolationSettings.Interpolate(interpolationSettings.getInterpolationAlpha(i));
                 yield return new WaitForEndOfFrame();
                 
                 TakeViewshot();
@@ -187,7 +188,7 @@ namespace Utility
         private void SetToInterpolationStep()
         {
             float alpha = interpolationSettings.getInterpolationAlpha(interpolationStep); 
-            generalRotationContainer.RotParams = interpolationSettings.Interpolate(alpha);
+            comboRotCot.RotParams_Generic = interpolationSettings.Interpolate(alpha);
         }
     }
 }

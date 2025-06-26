@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Extensions.MathExtensions;
 using Unity.Properties;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 //-ZyKa adjust the getters and setters for RotationVector so that they only have one access point
 namespace RotParams

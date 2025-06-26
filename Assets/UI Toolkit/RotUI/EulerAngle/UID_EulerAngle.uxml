@@ -14,12 +14,12 @@
             <engine:VisualElement style="width: 50%;" />
         </engine:VisualElement>
         <engine:VisualElement name="FirstAxis" class="container--horizontalspacearound gimbalRing">
-            <engine:EnumField label="Enum" value="Yaw" type="RotParams.EGimbalAxis, RotParams">
+            <engine:EnumField value="Yaw" type="RotParams.EGimbalAxis, RotParams">
                 <Bindings>
                     <engine:DataBinding property="value" data-source-path="OuterAxis" binding-mode="TwoWay" />
                 </Bindings>
             </engine:EnumField>
-            <engine:FloatField>
+            <engine:FloatField label="x" class="myFloatField">
                 <Bindings>
                     <engine:DataBinding property="value" data-source-path="OuterAngle" binding-mode="TwoWay" />
                 </Bindings>
@@ -32,12 +32,12 @@
             </engine:DropdownField>
         </engine:VisualElement>
         <engine:VisualElement name="SecondAxis" class="container--horizontalspacearound gimbalRing">
-            <engine:EnumField label="Enum" value="Pitch" type="RotParams.EGimbalAxis, RotParams">
+            <engine:EnumField value="Pitch" type="RotParams.EGimbalAxis, RotParams">
                 <Bindings>
                     <engine:DataBinding property="value" data-source-path="MiddleAxis" binding-mode="TwoWay" />
                 </Bindings>
             </engine:EnumField>
-            <engine:FloatField>
+            <engine:FloatField label="y" class="myFloatField">
                 <Bindings>
                     <engine:DataBinding property="value" data-source-path="MiddleAngle" binding-mode="TwoWay" />
                 </Bindings>
@@ -50,12 +50,12 @@
             </engine:DropdownField>
         </engine:VisualElement>
         <engine:VisualElement name="ThirdAxis" class="container--horizontalspacearound gimbalRing">
-            <engine:EnumField label="Enum" value="Roll" type="RotParams.EGimbalAxis, RotParams">
+            <engine:EnumField value="Roll" type="RotParams.EGimbalAxis, RotParams">
                 <Bindings>
                     <engine:DataBinding property="value" data-source-path="InnerAxis" binding-mode="TwoWay" />
                 </Bindings>
             </engine:EnumField>
-            <engine:FloatField>
+            <engine:FloatField label="z" class="myFloatField">
                 <Bindings>
                     <engine:DataBinding property="value" data-source-path="InnerAngle" binding-mode="TwoWay" />
                 </Bindings>

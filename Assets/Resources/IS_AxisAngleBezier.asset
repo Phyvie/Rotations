@@ -10,13 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 404a1691847da2a4ca8b8254e477e797, type: 3}
-  m_Name: SIS_AxisAngleBezier
+  m_Name: IS_AxisAngleBezier
   m_EditorClassIdentifier: 
-  path: D:/CGL/Bachelor-Thesis/RotationImages/
-  imageWidth: 1000
-  imageHeight: 1000
-  imageWidthOffset: 20
-  imageHeightOffset: 20
+  useLinearAlphaDistance: 0
   interpolationAlphas:
   - 0
   - 0.2
@@ -29,18 +25,9 @@ MonoBehaviour:
       showAllAngleTypes: 0
       showAngleTypeSelector: 1
       angleType:
-        rid: 4235530392302780473
+        rid: 4235530490807582776
       _angleInRadian: 0
-    _x:
-      typeValue: 1
-      isLocked: 0
-    _y:
-      typeValue: 0
-      isLocked: 0
-    _z:
-      typeValue: 0
-      isLocked: 0
-    xyzLockableVector:
+    _axis:
       values:
       - typeValue: 1
         isLocked: 0
@@ -53,18 +40,9 @@ MonoBehaviour:
       showAllAngleTypes: 0
       showAngleTypeSelector: 1
       angleType:
-        rid: 4235530392302780473
+        rid: 4235530490807582776
       _angleInRadian: 0
-    _x:
-      typeValue: 1
-      isLocked: 0
-    _y:
-      typeValue: 0
-      isLocked: 0
-    _z:
-      typeValue: 0
-      isLocked: 0
-    xyzLockableVector:
+    _axis:
       values:
       - typeValue: 1
         isLocked: 0
@@ -77,18 +55,9 @@ MonoBehaviour:
       showAllAngleTypes: 0
       showAngleTypeSelector: 1
       angleType:
-        rid: 4235530392302780473
+        rid: 4235530490807582776
       _angleInRadian: 0
-    _x:
-      typeValue: 1
-      isLocked: 0
-    _y:
-      typeValue: 0
-      isLocked: 0
-    _z:
-      typeValue: 0
-      isLocked: 0
-    xyzLockableVector:
+    _axis:
       values:
       - typeValue: 1
         isLocked: 0
@@ -101,18 +70,9 @@ MonoBehaviour:
       showAllAngleTypes: 0
       showAngleTypeSelector: 1
       angleType:
-        rid: 4235530392302780473
+        rid: 4235530490807582776
       _angleInRadian: 0
-    _x:
-      typeValue: 1
-      isLocked: 0
-    _y:
-      typeValue: 0
-      isLocked: 0
-    _z:
-      typeValue: 0
-      isLocked: 0
-    xyzLockableVector:
+    _axis:
       values:
       - typeValue: 1
         isLocked: 0
@@ -123,9 +83,9 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 4235530392302780473
+    - rid: 4235530490807582776
       type: {class: AngleType, ns: RotParams, asm: MathExtensions}
       data:
-        angleTypeName: Radian
-        unitMultiplier: 6.2831854820251465
-        unitLabel: 2PI
+        angleTypeName: Degree
+        unitMultiplier: 360
+        unitLabel: "360\xB0"
