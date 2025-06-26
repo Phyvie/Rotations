@@ -15,6 +15,7 @@ namespace BaseClasses
         {
             GetRotParams().PropertyChanged -= VisUpdateOnPropertyChanged; 
             newRotParams.PropertyChanged += VisUpdateOnPropertyChanged; 
+            VisUpdate();
         }
 
         private void VisUpdateOnPropertyChanged(object sender, PropertyChangedEventArgs e)

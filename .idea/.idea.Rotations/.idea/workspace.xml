@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8b54c963-bad1-41cc-8b0e-252a0574fd2d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleLit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleLit.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleUnlit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleUnlit.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ComboRotCot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ComboRotCot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_Base.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_Base.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Container/RotUI_GeneralRotationContainer.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Container/RotUI_GeneralRotationContainer.uxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Container/RotUI_MenuLine.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Container/RotUI_MenuLine.uxml" afterDir="false" />
-    </list>
+    <list default="true" id="8b54c963-bad1-41cc-8b0e-252a0574fd2d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -394,19 +385,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/RotContainers/ComboRotCot.cs</url>
-          <line>271</line>
-          <properties documentPath="D:\programming\Rotations\Assets\Scripts\RotContainers\ComboRotCot.cs" containingFunctionPresentation="Method 'SwitchRotParamType'">
-            <startOffsets>
-              <option value="9354" />
-            </startOffsets>
-            <endOffsets>
-              <option value="9417" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
