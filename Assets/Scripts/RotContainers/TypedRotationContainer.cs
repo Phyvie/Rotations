@@ -14,10 +14,10 @@ namespace RotContainers
         [Tooltip("Do not set this reference manually, it will be spawned from the outside by GeneralRotationContainer")] //-ZyKa RotationContainers; enable setting this manually & ensure that the rotParams are updated accordingly
         [SerializeField] private GameObject rotVisGO;
         [Tooltip("Do not set this reference manually, it will be spawned from the outside by GeneralRotationContainer")]
-        [SerializeField] private RotVis rotVis;
+        [SerializeField] private RotVis_Base rotVis;
         private VisualElement rotUI;
         
-        public RotVis RotVis => rotVis;
+        public RotVis_Base RotVis => rotVis;
         public VisualElement RotUI => rotUI;
         
         public void SpawnTypedRotation(ref RotParams_Base newRotParams, GameObject rotVisPrefab, Transform rotVisParent, VisualTreeAsset visualTreeAsset, UISlotReference visualParent)
@@ -45,8 +45,8 @@ namespace RotContainers
                 #endif
             }
             rotVisGO = Instantiate(prefab, parent); 
-            rotVis = rotVisGO.GetComponent<RotVis>();
-            rotVis.SetRotParamsByRef(ref rotParams); 
+            rotVis = rotVisGO.GetComponent<RotVis_Base>();
+            rotVis.SetRotParamsByRef(rotParams); 
         }
 
         public void SpawnUI(VisualTreeAsset visualTreeAsset, UISlotReference parent)
