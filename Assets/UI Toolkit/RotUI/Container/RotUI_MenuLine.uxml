@@ -10,9 +10,6 @@
                 <engine:DataBinding property="index" data-source-path="SelectedTypeIndex" binding-mode="TwoWay" />
             </Bindings>
         </engine:DropdownField>
-        <engine:Toggle name="VisualisationToggle" />
-        <engine:VisualElement name="ContextMenu" style="flex-grow: 1;">
-            <engine:Label text="WIP: ContextMenu" />
-        </engine:VisualElement>
+        <engine:VisualElement name="ContextMenu" style="flex-grow: 1;" />
     </engine:VisualElement>
 </engine:UXML>

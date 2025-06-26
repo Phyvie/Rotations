@@ -121,7 +121,7 @@ namespace RotContainers
                     DestroyImmediate(rotVisCS.gameObject);
                 }
                 #else
-                Destroy(rotVisGO); 
+                Destroy(rotVisCS.gameObject); 
                 #endif
             }
             GameObject newGO = Instantiate(rotVisPrefab, this.transform); 

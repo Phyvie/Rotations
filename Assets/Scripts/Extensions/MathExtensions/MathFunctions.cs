@@ -357,10 +357,18 @@ namespace MathExtensions
 
         public static float SubtractLengthPythagoreon(float originalLength, float subtractValue)
         {
-            if (originalLength < subtractValue)
+            float estimate = originalLength - subtractValue;
+            if (estimate < 0)
             {
-                Debug.LogWarning("ZyKa can't take negative squareRoot");
-                return -1.0f; 
+                if (estimate > -0.001)
+                {
+                    return 0; 
+                }
+                else
+                {
+                    Debug.LogWarning("ZyKa can't take negative squareRoot");
+                    return -1.0f; 
+                }
             }
             return Mathf.Sqrt(originalLength * originalLength - subtractValue * subtractValue);
         }

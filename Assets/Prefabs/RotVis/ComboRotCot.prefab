@@ -39,7 +39,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1391600418665694703}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a617efbda077d8d44aaa441a2808e3ff, type: 3}
   m_Name: 
@@ -59,7 +59,8 @@ MonoBehaviour:
         isLocked: 0
       - typeValue: 0
         isLocked: 0
-  rotVisPrefab: {fileID: 1391600418665694703}
+  rotVisPrefab: {fileID: 3664387646587197461, guid: 23b4b06e4b3015443997a6dce80be81d,
+    type: 3}
   rotVisCS: {fileID: 0}
   rotUIAsset: {fileID: 9197481963319205126, guid: 959c3fa76db3fac43a696054de3b72aa,
     type: 3}
@@ -111,7 +112,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4648638835793684334}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2cd8126a80b4aa196c3a2cabf92a309, type: 3}
   m_Name: 
@@ -141,7 +142,8 @@ MonoBehaviour:
         angleType:
           rid: 4235530488959467578
         _angleInRadian: 0
-  rotVisPrefab: {fileID: 4648638835793684334}
+  rotVisPrefab: {fileID: 4359447636591289229, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
+    type: 3}
   rotVisCS: {fileID: 0}
   rotUIAsset: {fileID: 9197481963319205126, guid: edd2d061bb270cd4c93b0c281f09e666,
     type: 3}
@@ -308,7 +310,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6217835879439662439}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f267a9abeb23d74468aab51627e332ad, type: 3}
   m_Name: 
@@ -327,7 +329,8 @@ MonoBehaviour:
     _z:
       typeValue: 0
       isLocked: 0
-  rotVisPrefab: {fileID: 6217835879439662439}
+  rotVisPrefab: {fileID: 2531459553012755455, guid: 14448fb5827a4b0439791001db04710e,
+    type: 3}
   rotVisCS: {fileID: 0}
   rotUIAsset: {fileID: 9197481963319205126, guid: e8e275ab96cc4f54eba1128f991b32e0,
     type: 3}
@@ -370,7 +373,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9010870622720340778}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff7a4e4f95a43f349ac2bb6d05b797c3, type: 3}
   m_Name: 
@@ -391,7 +394,8 @@ MonoBehaviour:
       width: 3
     primaryAxisIndex: 2
     secondaryAxisIndex: 1
-  rotVisPrefab: {fileID: 9010870622720340778}
+  rotVisPrefab: {fileID: 5477126826957242323, guid: 7a20fc4e7b9f5fd48b27c7347765b099,
+    type: 3}
   rotVisCS: {fileID: 0}
   rotUIAsset: {fileID: 9197481963319205126, guid: 5eda4fd53ba890f47ad74cadbeff7e24,
     type: 3}
