@@ -9,20 +9,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3296387abe53154bad6852951c4ecfd, type: 3}
-  m_Name: IS_QuaternionBezier
+  m_Script: {fileID: 11500000, guid: bb4981031f79f904b97529faabcd1e99, type: 3}
+  m_Name: IS_QLerp_ShortPath
   m_EditorClassIdentifier: 
-  useLinearAlphaDistance: 0
+  path: D:/CGL/Bachelor-Thesis/RotationImages/
+  imageWidth: 1000
+  imageHeight: 1000
+  imageWidthOffset: 20
+  imageHeightOffset: 20
   interpolationAlphas:
   - 0
-  - 0.14285715
-  - 0.2857143
-  - 0.42857143
-  - 0.5714286
-  - 0.71428573
-  - 0.85714287
+  - 0.2
+  - 0.4
+  - 0.6
+  - 0.8
   - 1
   q0:
+    enforceNormalisation: 1
+    _w:
+      typeValue: 1
+      isLocked: 0
+    _x:
+      typeValue: 0
+      isLocked: 0
+    _y:
+      typeValue: 0
+      isLocked: 0
+    _z:
+      typeValue: 0
+      isLocked: 0
     lockableWXYZ:
       values:
       - typeValue: 1
@@ -34,35 +49,27 @@ MonoBehaviour:
       - typeValue: 0
         isLocked: 0
   q1:
+    enforceNormalisation: 1
+    _w:
+      typeValue: 1
+      isLocked: 0
+    _x:
+      typeValue: 0
+      isLocked: 0
+    _y:
+      typeValue: 0
+      isLocked: 0
+    _z:
+      typeValue: 0
+      isLocked: 0
     lockableWXYZ:
       values:
-      - typeValue: -0.6
-        isLocked: 1
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0.8
-        isLocked: 0
-  outQ0:
-    lockableWXYZ:
-      values:
-      - typeValue: 0
-        isLocked: 0
       - typeValue: 1
         isLocked: 0
       - typeValue: 0
         isLocked: 0
       - typeValue: 0
         isLocked: 0
-  inQ1:
-    lockableWXYZ:
-      values:
       - typeValue: 0
         isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 1
-        isLocked: 0
+  shortestPathCorrection: 0

@@ -33,6 +33,7 @@ namespace Visualisation
             {
                 Quaternion rotation = Quaternion.FromToRotation(GlobalUpAxis, value);
                 transform.rotation = rotation * transform.rotation;
+                AutoAdjustForwardAxisForUpAxis();
                 VisUpdateShader();
             }
         }
@@ -176,6 +177,15 @@ namespace Visualisation
                 circleMaterial.FullRotationColor = FullRotationsColor;
             }
         }
+
+        private void AutoAdjustForwardAxisForUpAxis()
+        {
+            if (Mathf.Abs(GlobalUpAxis.x) < 0.1 || Mathf.Abs(GlobalUpAxis.y) < 0.1 || Mathf.Abs(GlobalUpAxis.z) < 0.1)
+            {
+                Vector3 rightCross = Vector3.Cross(GlobalUpAxis, GlobalUpAxis.CyclicAxisRotation());
+                GlobalForwardAxis = Vector3.Cross(rightCross, GlobalUpAxis); 
+            }
+        }
         
         public void OnValidate()
         {
@@ -183,8 +193,9 @@ namespace Visualisation
         }
         
         #region Deprecated
+        /*
         #region VisUpdateRotationByOrientationInterpolation
-        //-ZyKa Good example why Rotation Vector Interpolation does not work
+        //Good example why Rotation Vector Lerp is not ideal
         //This function does not work properly because the distance between the quaternion is too big; e.g. interpolating between (0.5, 0.5, 0.5, -0.5f) and (0.5, 0.5, 0.5, 0.5) results in 0
         private void VisUpdateRotationByOrientationInterpolation()
         {
@@ -224,7 +235,7 @@ namespace Visualisation
         public static readonly Vector3 ForwardForNormalLeftRight = Vector3.up;
         public static readonly Vector3 ForwardForNormalForwardBackward = Vector3.right;
 
-        //-ZyKa Interpolating this with UpVector = (1, 1, 1) is a good example why Linear Matrix Interpolation doesn't work for rotations
+        //Interpolating this with UpVector = (1, 1, 1) is a good example why Linear Matrix Interpolation doesn't work for rotations
         public void VisUpdateRotationByForwardVectorInterpolation()
         {
             transform.rotation =
@@ -304,6 +315,7 @@ namespace Visualisation
             }
         }
         #endregion SnapForwardVector
+        */
         #endregion Deprecated
     }
 }

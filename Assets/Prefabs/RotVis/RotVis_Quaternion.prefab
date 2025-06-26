@@ -54,19 +54,16 @@ MonoBehaviour:
   vis_Axis: {fileID: 1624183783175644931}
   vis_PlaneArc: {fileID: 4037794868827199380}
   rotParams:
-    enforceNormalisation: 0
-    _w:
-      typeValue: 1
-      isLocked: 0
-    _x:
-      typeValue: 0
-      isLocked: 0
-    _y:
-      typeValue: 0
-      isLocked: 0
-    _z:
-      typeValue: 0
-      isLocked: 0
+    lockableWXYZ:
+      values:
+      - typeValue: 1
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
 --- !u!1001 &2217645218068081865
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -355,7 +352,7 @@ PrefabInstance:
     - target: {fileID: 5343080644160579222, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5343080644160579222, guid: c9f18accb4746784f8f0c2397300fc8b,
         type: 3}

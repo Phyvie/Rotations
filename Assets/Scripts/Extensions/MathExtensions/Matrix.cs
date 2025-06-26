@@ -719,11 +719,11 @@ namespace MathExtensions
         {
             var result = new StringBuilder();
 
-            for (int rowIndex = 0; rowIndex < InternalMatrix.GetLength(0); rowIndex++)
+            for (int rowIndex = 0; rowIndex < height; rowIndex++)
             {
                 var rowBuilder = new StringBuilder();
 
-                for (int columnIndex = 0; columnIndex < InternalMatrix.GetLength(1); columnIndex++)
+                for (int columnIndex = 0; columnIndex < width; columnIndex++)
                 {
                     rowBuilder.Append(InternalMatrix[rowIndex * Width + columnIndex].ToString("F2"));
                     rowBuilder.Append(' ');

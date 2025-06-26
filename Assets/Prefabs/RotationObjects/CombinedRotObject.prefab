@@ -182,7 +182,7 @@ PrefabInstance:
     - target: {fileID: 7123746680308560772, guid: 92ee59be1be559a4cafc3b0c5b34f162,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7608674822777252158, guid: 92ee59be1be559a4cafc3b0c5b34f162,
         type: 3}
@@ -336,6 +336,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Airplane
+      objectReference: {fileID: 0}
+    - target: {fileID: 7123746680308560772, guid: 3755ee4ed67face4f82cf563ae01b856,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7608674822777252158, guid: 3755ee4ed67face4f82cf563ae01b856,
         type: 3}

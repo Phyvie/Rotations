@@ -18,6 +18,11 @@ namespace MathExtensions
 
         public static Vector3 CyclicAxisRotation(this Vector3 v)
         {
+            return new Vector3(v.z, v.x, v.y); 
+        }
+        
+        public static Vector3 CounterCyclicAxisRotation(this Vector3 v)
+        {
             return new Vector3(v.y, v.z, v.x); 
         }
 
@@ -147,7 +152,6 @@ namespace MathExtensions
             return lerpedRotationVector.RotationVectorToQuaternion();
         }
 
-        //-ZyKa should I really have this in here instead of my own RotParams_Quaternion class?
         public static Quaternion QuaternionInterpolateAsRotationVectors(Quaternion[] quats, float[] weights, bool normaliseWeights = true)
         {
             Vector3 lerpedRotationVector = Vector3.zero;
@@ -366,7 +370,7 @@ namespace MathExtensions
                 }
                 else
                 {
-                    Debug.LogWarning("ZyKa can't take negative squareRoot");
+                    Debug.LogWarning("Can't take squareRoot of negative number");
                     return -1.0f; 
                 }
             }

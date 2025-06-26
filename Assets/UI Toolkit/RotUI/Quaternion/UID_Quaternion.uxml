@@ -59,8 +59,7 @@
         <engine:VisualElement name="AxisAngleRepresentation" style="flex-grow: 1; height: 50%;">
             <engine:VisualElement name="SinCosContainer" class="container--horizontalspacearound" style="height: 45%;">
                 <engine:VisualElement name="SinContainer" class="container--horizontalspacearound" style="align-content: stretch; width: 20%;">
-                    <engine:Label text="Sin(" name="SinLabel" class="centeredText" />
-                    <engine:FloatField name="AlphaField" class="floatField--pure parentheticField myFloatField">
+                    <engine:FloatField name="AlphaField" label="Sin(" enabled="false" class="floatField--pure parentheticField myFloatField">
                         <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
                             <Bindings>
                                 <engine:DataBinding property="value" data-source-path="_w.isLocked" binding-mode="TwoWay" />
@@ -74,8 +73,7 @@
                 </engine:VisualElement>
                 <engine:Label text="+" name="Plus" class="container--horizontalspacearound centeredText" style="width: 25px;" />
                 <engine:VisualElement name="CosContainer" class="container--horizontalspacearound" style="width: 75%;">
-                    <engine:Label text="Cos(" name="CosOpen" class="centeredText" />
-                    <engine:FloatField name="Alpha" class="floatField--pure parentheticField myFloatField">
+                    <engine:FloatField name="Alpha" label="Cos(" enabled="false" class="floatField--pure parentheticField myFloatField">
                         <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
                             <Bindings>
                                 <engine:DataBinding property="value" data-source-path="_w.isLocked" binding-mode="TwoWay" />
@@ -98,7 +96,7 @@
             <engine:VisualElement name="AxisContainer" class="container--horizontalspacearound centeredText wxyz" style="flex-grow: 1; flex-direction: row; height: 55%;">
                 <engine:FloatField value="1" name="W" enabled="false" class="myFloatField" />
                 <engine:Label text="+" />
-                <engine:FloatField value="42.2" name="X" label="x" class="myFloatField">
+                <engine:FloatField value="42.2" name="X" label="x" enabled="false" class="myFloatField">
                     <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
                         <Bindings>
                             <engine:DataBinding property="value" data-source-path="_x.isLocked" binding-mode="TwoWay" />
@@ -106,10 +104,11 @@
                     </UI_Toolkit.CustomControls.LockableValueToggle>
                     <Bindings>
                         <engine:DataBinding property="value" data-source-path="AxisX" binding-mode="TwoWay" />
+                        <engine:DataBinding property="label" data-source-path="AxisX" binding-mode="TwoWay" />
                     </Bindings>
                 </engine:FloatField>
                 <engine:Label text="+" name="plus" />
-                <engine:FloatField value="42.2" name="Y" label="y" class="myFloatField">
+                <engine:FloatField value="42.2" name="Y" label="y" enabled="false" class="myFloatField">
                     <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
                         <Bindings>
                             <engine:DataBinding property="value" data-source-path="_y.isLocked" binding-mode="TwoWay" />
@@ -120,7 +119,7 @@
                     </Bindings>
                 </engine:FloatField>
                 <engine:Label text="+" name="plus" />
-                <engine:FloatField value="42.2" name="Z" label="z" class="myFloatField">
+                <engine:FloatField value="42.2" name="Z" label="z" enabled="false" class="myFloatField">
                     <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
                         <Bindings>
                             <engine:DataBinding property="value" data-source-path="_z.isLocked" binding-mode="TwoWay" />

@@ -219,19 +219,23 @@ namespace RotParams
         #endregion Properties
         
         #region Constructors
-        public RotParams_AxisAngle()
+        public RotParams_AxisAngle(bool enforceNormalisation = true, float targetLength = 1)
         {
+            _axis.EnforceLength = enforceNormalisation;
+            _axis.TargetLength = targetLength;
         }
         
-        public RotParams_AxisAngle(Vector3 inRotationVectorInRadian) : 
+        public RotParams_AxisAngle(Vector3 inRotationVectorInRadian, bool enforceNormalisation = true, float targetLength = 1) : 
             this(
             inRotationVectorInRadian, 
-            inRotationVectorInRadian.magnitude
+            inRotationVectorInRadian.magnitude, 
+            enforceNormalisation, 
+            targetLength
             )
         {
         }
 
-        public RotParams_AxisAngle(Vector3 inAxis, float inAngleRadian)
+        public RotParams_AxisAngle(Vector3 inAxis, float inAngleRadian, bool enforceNormalisation = true, float targetLength = 1)
         {
             List<float> axis;
             if (inAxis.sqrMagnitude > 0.0001)
@@ -245,6 +249,9 @@ namespace RotParams
             }
             _axis.SetVector(axis);
             AngleRadianInRadian = inAngleRadian;
+            
+            _axis.EnforceLength = enforceNormalisation;
+            _axis.TargetLength = targetLength;
         }
         #endregion //Constructors
         
@@ -300,12 +307,12 @@ namespace RotParams
         #region operators
         public static RotParams_AxisAngle operator+(RotParams_AxisAngle rotParamsA, RotParams_AxisAngle rotParamsB)
         {
-            return new RotParams_AxisAngle(rotParamsA.RotationVectorInRadian + rotParamsB.RotationVectorInRadian); 
+            return new RotParams_AxisAngle(rotParamsA.RotationVectorInRadian + rotParamsB.RotationVectorInRadian, false); 
         }
 
         public static RotParams_AxisAngle operator *(RotParams_AxisAngle rotParamsA, float alpha)
         {
-            return new RotParams_AxisAngle(rotParamsA.RotationVectorInRadian * alpha);
+            return new RotParams_AxisAngle(rotParamsA.RotationVectorInRadian * alpha, false);
         }
 
         public static RotParams_AxisAngle operator *(float alpha, RotParams_AxisAngle rotParamsA)

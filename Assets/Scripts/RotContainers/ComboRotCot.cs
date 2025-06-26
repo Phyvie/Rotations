@@ -106,7 +106,6 @@ namespace RotContainers
             get => activeRotCot.GetRotParams_Generic(); 
             set => activeRotCot.SetRotParams_Generic(value);
         }
-        #endregion Variables
         
         #region Initialization
         private void Awake()
@@ -325,6 +324,20 @@ namespace RotContainers
         {
             activeRotCot.GetRotVis_Generic().ResetAppliedObjectRotation();
         }
+        
+        
+        [CreateProperty]
+        public bool ParamsResetFunction
+        {
+            get => false;
+            set
+            {
+                activeRotCot.GetRotParams_Generic().ResetToIdentity();
+                activeRotCot.GetRotVis_Generic().VisUpdate();
+            }
+        }
+
+        #endregion Variables
         #endregion userInteraction
     }
 }

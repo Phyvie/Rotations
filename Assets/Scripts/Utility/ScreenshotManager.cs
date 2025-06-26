@@ -170,7 +170,8 @@ namespace Utility
     
         private IEnumerator ScreenShotInterpolation(InterpolationSettings interpolationSettings)
         {
-            ResetViewshots(); 
+            //+ZyKa there probably is a memory leak somewhere in this function, so only use it in playInEditor (because that can easily be stopped and thus memory cleaned)
+            // ResetViewshots(); 
             for (int i = 0; i < interpolationSettings.InterpolationCount; i++)
             {
                 comboRotCot.RotParams_Generic = interpolationSettings.Interpolate(interpolationSettings.getInterpolationAlpha(i));
@@ -179,7 +180,7 @@ namespace Utility
                 TakeViewshot();
                 yield return new WaitForEndOfFrame();
             }
-            SaveViewshots();
+            // SaveViewshots();
             cor_Interpolation = null; 
         }
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ScreenshotSettings
   m_EditorClassIdentifier: 
   path: D:/CGL/Bachelor-Thesis/RotationImages/
-  columns: 2
+  columns: 4
   imageWidth: 1000
   imageHeight: 1000
   imageWidthOffset: 20

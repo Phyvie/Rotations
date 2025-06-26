@@ -12,17 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77182c7ccd2ad6440b11a86eeb7ceb83, type: 3}
   m_Name: IS_EulerBezier
   m_EditorClassIdentifier: 
-  path: D:/CGL/Bachelor-Thesis/RotationImages/
-  imageWidth: 1000
-  imageHeight: 1000
-  imageWidthOffset: 20
-  imageHeightOffset: 20
+  useLinearAlphaDistance: 0
   interpolationAlphas:
   - 0
-  - 0.2
-  - 0.4
-  - 0.6
-  - 0.8
+  - 0.14285715
+  - 0.2857143
+  - 0.42857143
+  - 0.5714286
+  - 0.71428573
+  - 0.85714287
   - 1
   a:
     outer:

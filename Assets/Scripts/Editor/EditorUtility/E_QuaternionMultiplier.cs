@@ -24,15 +24,8 @@ public class E_QuaternionMultiplier : MonoBehaviour
         Quaternion ABRotateTowards = Quaternion.RotateTowards(A, B, 0.3f);
     }
 
-    [ContextMenu("ZyKa")]
-    private void ZyKa()
-    {
-        Vector3 interpolatedDirection = Vector3.Slerp(directionA, directionB, slerpT);
-        Debug.Log(interpolatedDirection); 
-    }
-
     private void OnValidate()
     {
-        ZyKa(); 
+
     }
 }

@@ -7,15 +7,61 @@
     <list default="true" id="8b54c963-bad1-41cc-8b0e-252a0574fd2d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleLit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleLit.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleUnlit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_AngleUnlit.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_VectorColor.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Materials/M_VectorColor.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/ComboRotCot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/ComboRotCot.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_AxisAngle.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_AxisAngle.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_Quaternion.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_Quaternion.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotationObjects/CombinedRotObject.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotationObjects/CombinedRotObject.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/QuaternionFunctionTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/QuaternionFunctionTest.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/!ZyKaSO 1.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/!ZyKaSO 1.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/!ZyKaSO.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/!ZyKaSO.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/IS_AxisAngleBezier.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/IS_AxisAngleBezier.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/IS_AxisAngleLerp.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/IS_AxisAngleLerp.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/IS_EulerBezier.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/IS_EulerBezier.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/IS_EulerLerp.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/IS_EulerLerp.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/IS_QuaternionBezier.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/IS_QuaternionBezier.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/IS_QuaternionLerpNormalized.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/IS_QuaternionLerpNormalized.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/IS_QuaternionSlerp.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/IS_QuaternionSlerp.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/IS_QuaternionSquad.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/IS_QuaternionSquad.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/ScreenshotSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/ScreenshotSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Final Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Final Scene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/EulerAngleRotationInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/EulerAngleRotationInspector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/MatrixRotationInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/MatrixRotationInspector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/EditorInspector/NestedPropertyDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/EditorInspector/NestedPropertyDrawer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/EditorUtility/E_QuaternionMultiplier.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/EditorUtility/E_QuaternionMultiplier.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/RotParamsInspector.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/RotParamsInspector.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/LockableValue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/LockableValue.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/MathFunctions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/MathFunctions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/Matrix.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/Matrix.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MathVisualisation/Vis_PlaneArc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MathVisualisation/Vis_PlaneArc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ComboRotCot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ComboRotCot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_AxisAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_AxisAngle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_EulerAngles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_EulerAngles.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Matrix.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Matrix.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Quaternion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Quaternion.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/_RotParams_EulerAngleGimbalRing.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/_RotParams_EulerAngleGimbalRing.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotUI.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotUI/RotUI.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotUI/RotUI.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotUI/RotUI.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotUI/RotUI.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotUI/RotUI_AxisAngle.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotUI/RotUI_AxisAngle.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_EulerAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_EulerAngle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Quaternion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Quaternion.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utility/ScreenshotManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utility/ScreenshotManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ZyKaMB.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ZyKaMB.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Container/RotUI_MenuLine.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Container/RotUI_MenuLine.uxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Quaternion/UID_Quaternion.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Quaternion/UID_Quaternion.uxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/ZyKa.uxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/ZyKa.uxml.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UniversalRenderPipelineGlobalSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UniversalRenderPipelineGlobalSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +75,12 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1a34d7ee85f44ff2a9df5d0ea5a6ee325735b0/1f/d77be55f/PropertyInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1adcb970be0847609d15f8a671c3af281f9200/04/918b97ce/EventCallbackRegistry.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1adcb970be0847609d15f8a671c3af281f9200/08/a483ae47/ConverterGroup.cs" root0="FORCE_HIGHLIGHTING" />
@@ -112,7 +164,6 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Extensions/MathExtensions/Matrix.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MathVisualisation/Vis_Axis.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/RotContainers/ComboRotCot.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/RotContainers/GeneralRotationContainer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_Base.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Quaternion.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/RotVis/ColorPalette.cs" root0="FORCE_HIGHLIGHTING" />
@@ -217,15 +268,13 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="37264">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="37264" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list>
-          <MonoRuntime />
-        </list>
+        <list />
       </option>
       <option name="selectedOptions">
         <list />
@@ -353,6 +402,9 @@
       <workItem from="1750856135563" duration="1106000" />
       <workItem from="1750857908472" duration="4735000" />
       <workItem from="1750915604745" duration="1644000" />
+      <workItem from="1750923678074" duration="8267000" />
+      <workItem from="1750954253021" duration="4966000" />
+      <workItem from="1750960734669" duration="473000" />
     </task>
     <servers />
   </component>
@@ -374,30 +426,44 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/ZyKaMB.cs</url>
-          <line>22</line>
-          <properties documentPath="D:\programming\Rotations\Assets\Scripts\ZyKaMB.cs" containingFunctionPresentation="Property 'ZyKaFloatX'">
+          <condition expression="Mathf.Approximately(t, 0.8f)" language="C#" />
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Utility/InterpolationSetting/SIS_QuaternionLerpNormalized.cs</url>
+          <line>13</line>
+          <properties documentPath="D:\programming\Rotations\Assets\Scripts\Utility\InterpolationSetting\SIS_QuaternionLerpNormalized.cs" containingFunctionPresentation="Method 'Interpolate'">
             <startOffsets>
-              <option value="576" />
+              <option value="511" />
             </startOffsets>
             <endOffsets>
-              <option value="618" />
+              <option value="589" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="8" />
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/ZyKaMB.cs</url>
-          <line>29</line>
-          <properties documentPath="D:\programming\Rotations\Assets\Scripts\ZyKaMB.cs" containingFunctionPresentation="Property 'ZyKaFloatY'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/MathVisualisation/Vis_Vector.cs</url>
+          <line>66</line>
+          <properties documentPath="D:\programming\Rotations\Assets\Scripts\MathVisualisation\Vis_Vector.cs" containingFunctionPresentation="Method 'SetLength'">
             <startOffsets>
-              <option value="736" />
+              <option value="1885" />
             </startOffsets>
             <endOffsets>
-              <option value="778" />
+              <option value="1974" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="9" />
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Quaternion.cs</url>
+          <line>134</line>
+          <properties documentPath="D:\programming\Rotations\Assets\Scripts\RotParams\RotParams_Quaternion.cs" containingFunctionPresentation="Property 'AxisX'">
+            <startOffsets>
+              <option value="4025" />
+            </startOffsets>
+            <endOffsets>
+              <option value="4116" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

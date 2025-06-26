@@ -10,7 +10,6 @@ namespace Editor
 {
     public class NestedPropertyDrawer : PropertyDrawer
     {
-        private bool initialized = false;
         static readonly Regex arrayRegex = new Regex(@"^data\[(\d+)\]$");
         
         protected object propertyAsObject = null;
@@ -35,11 +34,6 @@ namespace Editor
 
         protected virtual void InitializePropertyNesting(SerializedProperty prop)
         {
-            if (initialized)
-            {
-	            // return; //ZyKa!
-            }
-            
             ClearHierarchies();
             SerializedObject serializedObject = prop.serializedObject;
             propertyAsObject = serializedObject?.targetObject;
@@ -73,7 +67,6 @@ namespace Editor
                 }
                 AddToHierarchies(cObject, cFieldInfo);
             }
-            initialized = true;
 		}
 
         protected void GetSubField(object source, string fieldName, out object obj, out FieldInfo fI)

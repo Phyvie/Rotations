@@ -10,13 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb4981031f79f904b97529faabcd1e99, type: 3}
-  m_Name: IS_QuaternionLerpNormalized
+  m_Name: IS_QLerp_LongPath
   m_EditorClassIdentifier: 
-  path: D:/CGL/Bachelor-Thesis/RotationImages/
-  imageWidth: 1000
-  imageHeight: 1000
-  imageWidthOffset: 20
-  imageHeightOffset: 20
+  useLinearAlphaDistance: 0
   interpolationAlphas:
   - 0
   - 0.2
@@ -38,16 +34,6 @@ MonoBehaviour:
     _z:
       typeValue: 0
       isLocked: 0
-    lockableWXYZ:
-      values:
-      - typeValue: 1
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
   q1:
     enforceNormalisation: 1
     _w:
@@ -62,14 +48,4 @@ MonoBehaviour:
     _z:
       typeValue: 0
       isLocked: 0
-    lockableWXYZ:
-      values:
-      - typeValue: 1
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
   shortestPathCorrection: 0

@@ -10,52 +10,48 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b01f05609bc853a449ebe6596dc07558, type: 3}
-  m_Name: IS_AxisAngleLerp
+  m_Name: IS_AAL_RotVelSum
   m_EditorClassIdentifier: 
   useLinearAlphaDistance: 0
   interpolationAlphas:
   - 0
-  - 0.1
-  - 0.2
-  - 0.4
-  - 0.5
-  - 0.8
-  - 0.9
+  - 0.33
+  - 0.66
   - 1
   a:
     typedAngle:
       showAllAngleTypes: 0
       showAngleTypeSelector: 1
       angleType:
-        rid: 4235530394084573564
-      _angleInRadian: 3.1415927410125732
+        rid: 4235530492485304390
+      _angleInRadian: 0
     _axis:
       values:
+      - typeValue: -0.7074518
+        isLocked: 0
+      - typeValue: -0.7067616
+        isLocked: 0
       - typeValue: 0
-        isLocked: 0
-      - typeValue: 0.6
-        isLocked: 0
-      - typeValue: -0.8
         isLocked: 0
   b:
     typedAngle:
       showAllAngleTypes: 0
       showAngleTypeSelector: 1
       angleType:
-        rid: 4235530394084573564
-      _angleInRadian: 3.1415927410125732
+        rid: 4235530492485304390
+      _angleInRadian: 2.2165682315826416
     _axis:
       values:
+      - typeValue: -0.7074518
+        isLocked: 0
+      - typeValue: -0.7067616
+        isLocked: 0
       - typeValue: 0
-        isLocked: 0
-      - typeValue: 0.6
-        isLocked: 0
-      - typeValue: -0.8
         isLocked: 0
   references:
     version: 2
     RefIds:
-    - rid: 4235530394084573564
+    - rid: 4235530492485304390
       type: {class: AngleType, ns: RotParams, asm: MathExtensions}
       data:
         angleTypeName: Degree

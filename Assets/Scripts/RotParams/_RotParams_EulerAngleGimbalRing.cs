@@ -139,7 +139,8 @@ namespace RotParams
             }; 
         }
 
-        public void ExtractValueFromMatrix(RotParams_Matrix m)
+        /*
+        public void ExtractValueFromMatrix(RotParams_Matrix m) 
         {
             switch (eAxis)
             {
@@ -154,12 +155,14 @@ namespace RotParams
                     break; 
             }
         }
+        */
 
         public RotParams_Quaternion toQuaternionRotation() 
         {
             return new RotParams_Quaternion(RotationAxis, AngleInRadian);
         }
         
+        /*
         public void ExtractValueFromQuaternion(RotParams_Quaternion q)
         {
             //TODO: Understand this
@@ -176,6 +179,7 @@ namespace RotParams
                     break; 
             }
         }
+        */
         #endregion //Converters
 
         public string GetRotationName()

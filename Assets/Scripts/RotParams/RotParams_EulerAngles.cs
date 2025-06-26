@@ -306,7 +306,8 @@ namespace RotParams
             return result; 
         }
 
-        public void GetValuesFromQuaternion(RotParams_Quaternion rotParamsQuaternion) //TODO: test
+        /*
+        public void GetValuesFromQuaternion(RotParams_Quaternion rotParamsQuaternion) //TODO: Test
         {
             if (GetGimbalType() == EGimbalType.InvalidGimbalOrder)
             {
@@ -337,6 +338,7 @@ namespace RotParams
                 }
             }
         }
+        */
         
         //ToQuaternionRotation.ToMatrixRotation is cheaper, because converting from EulerAngles to another RotationParent requires combining and inversing multiple rotation, which is cheaper in Quaternions
         public override RotParams_Matrix ToMatrixRotation() //TODO: test this function
@@ -349,6 +351,7 @@ namespace RotParams
             return result; 
         }
 
+        /*
         public void GetValuesFromMatrix(RotParams_Matrix rotParamsMatrix) //TODO: test this function
         {
             if (GetGimbalType() == EGimbalType.InvalidGimbalOrder)
@@ -378,6 +381,7 @@ namespace RotParams
                 }
             }
         }
+        */
         
         public override RotParams_AxisAngle ToAxisAngleRotation()
         {

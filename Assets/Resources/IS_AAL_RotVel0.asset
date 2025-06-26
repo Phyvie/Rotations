@@ -9,23 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 404a1691847da2a4ca8b8254e477e797, type: 3}
-  m_Name: IS_AxisAngleBezier
+  m_Script: {fileID: 11500000, guid: b01f05609bc853a449ebe6596dc07558, type: 3}
+  m_Name: IS_AAL_RotVel0
   m_EditorClassIdentifier: 
   useLinearAlphaDistance: 0
   interpolationAlphas:
   - 0
-  - 0.2
-  - 0.4
-  - 0.6
-  - 0.8
+  - 0.33
+  - 0.66
   - 1
   a:
     typedAngle:
       showAllAngleTypes: 0
       showAngleTypeSelector: 1
       angleType:
-        rid: 4235530490807582776
+        rid: 4235530492485304388
       _angleInRadian: 0
     _axis:
       values:
@@ -40,38 +38,8 @@ MonoBehaviour:
       showAllAngleTypes: 0
       showAngleTypeSelector: 1
       angleType:
-        rid: 4235530490807582776
-      _angleInRadian: 0
-    _axis:
-      values:
-      - typeValue: 1
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-  outA:
-    typedAngle:
-      showAllAngleTypes: 0
-      showAngleTypeSelector: 1
-      angleType:
-        rid: 4235530490807582776
-      _angleInRadian: 0
-    _axis:
-      values:
-      - typeValue: 1
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-      - typeValue: 0
-        isLocked: 0
-  inB:
-    typedAngle:
-      showAllAngleTypes: 0
-      showAngleTypeSelector: 1
-      angleType:
-        rid: 4235530490807582776
-      _angleInRadian: 0
+        rid: 4235530492485304388
+      _angleInRadian: -1.5707963705062866
     _axis:
       values:
       - typeValue: 1
@@ -83,7 +51,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 4235530490807582776
+    - rid: 4235530492485304388
       type: {class: AngleType, ns: RotParams, asm: MathExtensions}
       data:
         angleTypeName: Degree

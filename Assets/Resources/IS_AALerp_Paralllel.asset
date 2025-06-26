@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b01f05609bc853a449ebe6596dc07558, type: 3}
+  m_Name: IS_AALerp_Paralllel
+  m_EditorClassIdentifier: 
+  useLinearAlphaDistance: 0
+  interpolationAlphas:
+  - 0
+  - 0.33
+  - 0.66
+  - 1
+  a:
+    typedAngle:
+      showAllAngleTypes: 0
+      showAngleTypeSelector: 1
+      angleType:
+        rid: 4235530492485304392
+      _angleInRadian: -0.6981317400932312
+    _axis:
+      values:
+      - typeValue: 0.7843096
+        isLocked: 0
+      - typeValue: 0.5877073
+        isLocked: 0
+      - typeValue: 0.2
+        isLocked: 0
+  b:
+    typedAngle:
+      showAllAngleTypes: 0
+      showAngleTypeSelector: 1
+      angleType:
+        rid: 4235530492485304392
+      _angleInRadian: 0.6981317400932312
+    _axis:
+      values:
+      - typeValue: 0.7838367
+        isLocked: 0
+      - typeValue: 0.5878775
+        isLocked: 0
+      - typeValue: 0.2
+        isLocked: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 4235530492485304392
+      type: {class: AngleType, ns: RotParams, asm: MathExtensions}
+      data:
+        angleTypeName: Degree
+        unitMultiplier: 360
+        unitLabel: "360\xB0"

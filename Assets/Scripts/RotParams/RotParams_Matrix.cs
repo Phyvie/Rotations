@@ -237,8 +237,10 @@ namespace RotParams
         #region Converters
         public override RotParams_EulerAngles ToEulerAngleRotation()
         {
-            RotParams_EulerAngles newRotParamsEulerAngles = new RotParams_EulerAngles(0, 0, 0); 
-            newRotParamsEulerAngles.GetValuesFromMatrix(this);
+            RotParams_EulerAngles newRotParamsEulerAngles = new RotParams_EulerAngles(0, 0, 0);
+            newRotParamsEulerAngles.OuterAngle = Mathf.Atan2(this[0, 1], this[1, 1]);
+            newRotParamsEulerAngles.MiddleAngle = Mathf.Asin(this[2, 1]);  
+            newRotParamsEulerAngles.InnerAngle = Mathf.Atan2(this[2, 0], this[2, 2]); 
             return newRotParamsEulerAngles; 
         }
 
@@ -324,15 +326,31 @@ namespace RotParams
             
             Vector3 firstAxis = GetColumn(firstAxisIndex).normalized;
             Vector3 secondAxis = GetColumn(secondAxisIndex).normalized;
+            Vector3 thirdAxis; 
 
             if (Mathf.Abs(Vector3.Dot(firstAxis, secondAxis)) > 0.999f)
             {
-                Debug.LogError("Provided axes are nearly parallel; cannot construct rotation matrix.");
+                Debug.LogWarning("Provided axes are nearly parallel; trying to construct rotation matrix from other axes.");
+
+                thirdAxis = GetColumn(thirdAxisIndex).normalized;
+                if (Mathf.Abs(Vector3.Dot(firstAxis, thirdAxis)) < 0.995f)
+                {
+                    return ToRotationMatrixFromTwoAxes(firstAxisIndex, thirdAxisIndex);
+                }
+                else if (Mathf.Abs(Vector3.Dot(secondAxis, thirdAxis)) < 0.995f)
+                {
+                    return ToRotationMatrixFromTwoAxes(secondAxisIndex, thirdAxisIndex);
+                }
+                else
+                {
+                    Debug.LogError("Matrix axes are all parallel, returning IdentityMatrix");
+                    return RotationIdentity(); 
+                }
                 return null;
             }
             
             bool crossProductForward = (firstAxisIndex + 1) % 3 == secondAxisIndex; 
-            Vector3 thirdAxis = crossProductForward ? 
+            thirdAxis = crossProductForward ? 
                 Vector3.Cross(firstAxis, secondAxis).normalized : 
                 Vector3.Cross(secondAxis, firstAxis).normalized;
             

@@ -88,7 +88,7 @@ namespace Extensions.MathExtensions
         #region Variables
         private float targetLength = 1;
         public List<LockableFloat> values;
-        private bool enforceLength; //0ZyKa implement
+        private bool enforceLength; 
         #endregion Variables
         
         #region GetSet
@@ -219,11 +219,6 @@ namespace Extensions.MathExtensions
             {
                 values[i].SetValue(newValues[i], forceSetBehaviour);
             }
-
-            if (enforceLength)
-            {
-                ScaleLockedVectorToLength(targetLength, forceSetBehaviour); 
-            }
         }
         
         public void SetFloatValue(int index, float newValue, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.BlockWithMessage , float newTargetLength = -1)
@@ -319,7 +314,6 @@ namespace Extensions.MathExtensions
                 }
                 
                 float UnlockedMaxLength = MathFunctions.SubtractLengthPythagoreon(targetLength, lockedVectorLength);
-                    // Mathf.Sqrt(desiredLength - lockedVectorLength * lockedVectorLength);//!ZyKa
                 ratio = unlockedVectorLength != 0 ? 
                     UnlockedMaxLength / unlockedVectorLength : 
                     0;

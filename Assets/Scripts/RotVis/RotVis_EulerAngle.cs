@@ -90,9 +90,9 @@ namespace RotationVisualisation
             Vector3 outerUp = rotParams.Outer.RotationAxis;
             Vector3 middleUp = rotParams.Middle.RotationAxis;
             Vector3 innerUp = rotParams.Inner.RotationAxis;
-            Vector3 outerForward = outerUp.CyclicAxisRotation().CyclicAxisRotation(); 
-            Vector3 middleForward = middleUp.CyclicAxisRotation().CyclicAxisRotation();
-            Vector3 innerForward = innerUp.CyclicAxisRotation().CyclicAxisRotation();
+            Vector3 outerForward = outerUp.CyclicAxisRotation(); 
+            Vector3 middleForward = middleUp.CyclicAxisRotation();
+            Vector3 innerForward = innerUp.CyclicAxisRotation();
             
             outer.rail.transform.rotation = Quaternion.LookRotation(outerForward, outerUp); 
             middle.rail.transform.rotation = Quaternion.LookRotation(middleForward, middleUp); 

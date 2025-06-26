@@ -10,6 +10,12 @@
                 <engine:DataBinding property="index" data-source-path="SelectedTypeIndex" binding-mode="TwoWay" />
             </Bindings>
         </engine:DropdownField>
-        <engine:VisualElement name="ContextMenu" style="flex-grow: 1;" />
+        <engine:VisualElement name="ContextMenu" style="flex-grow: 1;">
+            <engine:Toggle label="Reset Rotation">
+                <Bindings>
+                    <engine:DataBinding property="value" data-source-path="ParamsResetFunction" binding-mode="TwoWay" />
+                </Bindings>
+            </engine:Toggle>
+        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>
