@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using RotParams;
 using Unity.Properties;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 namespace RotContainers
@@ -29,20 +31,22 @@ namespace RotContainers
         [SerializeField] private VisualTreeAsset fullScreenUIAsset;
         [SerializeField] private PanelSettings panelSettingsAsset;
 
+        [FormerlySerializedAs("uiParentName")]
         [Tooltip("This is not the object which contains uiMenu & UIRotSlot; it is the visualElement into which the uiRoot will be spawned")]
-        [SerializeField] private string uiParentName; 
-        private VisualElement _uiParent; //the slot into which the _uiRoot will be spawned
+        [SerializeField] private string uiComboContainerParentName; 
+        private VisualElement _comboContainerUIParent; //the slot into which the _uiRoot will be spawned
 
+        [FormerlySerializedAs("uiFullContainerAsset")]
         [Tooltip("This is the VisualElement which actually contains uiMenuLine & RotParamsSlot")]
-        [SerializeField] private VisualTreeAsset uiFullContainerAsset;
-        private VisualElement _uiRoot; //the actual root containing the menuLine + UIRotSlot
+        [SerializeField] private VisualTreeAsset uiComboContainerRootAsset;
+        private VisualElement _comboContainerRoot; //the actual root containing the menuLine + UIRotSlot
         
-        [SerializeField] private VisualTreeAsset uiMenuAsset;
-        [SerializeField] private string uiMenuName = "uiMenuLine"; 
-        private VisualElement _uiMenu;
+        [FormerlySerializedAs("uiMenuAsset")] [SerializeField] private VisualTreeAsset uiMenuLineAsset;
+        [FormerlySerializedAs("uiMenuName")] [SerializeField] private string uiMenuLineName = "uiMenuLine"; 
+        private VisualElement _uiMenuLine;
 
-        [SerializeField] private string uiRotSlotName = "RotParamsSlot"; 
-        private VisualElement _uiRotSlot;
+        [FormerlySerializedAs("uiRotSlotName")] [SerializeField] private string uiRotParamsSlot = "RotParamsSlot"; 
+        private VisualElement _uiRotParamsSlot;
         #endregion UISetup
         
         #region Cam
@@ -128,45 +132,44 @@ namespace RotContainers
                 }
             }
             
-            if (_uiParent == null)
+            if (_comboContainerUIParent == null)
             {
-                _uiParent = string.IsNullOrEmpty(uiParentName) ? 
+                _comboContainerUIParent = string.IsNullOrEmpty(uiComboContainerParentName) ? 
                     uiDocument.rootVisualElement :  
-                    uiDocument.rootVisualElement.Q<VisualElement>(uiParentName);
+                    uiDocument.rootVisualElement.Q<VisualElement>(uiComboContainerParentName);
                 
-                if (_uiParent == null)
+                if (_comboContainerUIParent == null)
                 {
-                    Debug.LogWarning($"{name} could not find uiRotationRoot");
-                    _uiParent = uiDocument.rootVisualElement;
+                    Debug.LogError($"{name} could not find uiRotationRoot");
+                    _comboContainerUIParent = uiDocument.rootVisualElement;
                 }
             }
             
-            if (_uiRoot == null)
+            if (_comboContainerRoot == null)
             {
-                _uiRoot = uiFullContainerAsset.CloneTree(); 
-                _uiParent.Add(_uiRoot);
-                _uiRoot.style.flexGrow = 1; 
-                _uiRoot.name = "RotationContainer"; 
+                _comboContainerRoot = uiComboContainerRootAsset.CloneTree(); 
+                _comboContainerUIParent.Add(_comboContainerRoot);
+                _comboContainerRoot.style.flexGrow = 1; 
+                _comboContainerRoot.name = "RotationContainer"; 
             }
             
-            _uiMenu = _uiParent.Q<VisualElement>(uiMenuName);
-            if (_uiMenu == null)
+            _uiMenuLine = _comboContainerUIParent.Q<VisualElement>(uiMenuLineName);
+            if (_uiMenuLine == null)
             {
                 Debug.LogError($"{name} could not find uiMenu");
                 return; 
             }
-            _uiMenu.dataSource = this;
+            _uiMenuLine.dataSource = this;
 
-            if (_uiRotSlot == null)
+            if (_uiRotParamsSlot == null)
             {
-                _uiRotSlot = _uiParent.Q<VisualElement>(uiRotSlotName);
-                if (_uiRotSlot == null)
+                _uiRotParamsSlot = _comboContainerRoot.Q<VisualElement>(uiRotParamsSlot);
+                if (_uiRotParamsSlot == null)
                 {
                     Debug.LogError($"{name} could not find _uiRotSlot");
                     return; 
                 }
             }
-            _uiRotSlot.Add(_uiRoot);
             
             if (VisCamera ==null)
             {
@@ -179,20 +182,28 @@ namespace RotContainers
                 cameraRotationPivot = VisCamera.transform.parent.gameObject; 
             }
 
-            // InitializeRotCots();
-            // _selectedTypeIndex = 0; 
-            // activeRotCotType = typeof(RotCot_Euler); 
-            // rotCot_Euler.enabled = true; 
+            InitializeRotCots(); 
+            _selectedTypeIndex = 1; 
+            ActivateRotCot(rotCot_Quaternion);
         }
         #endregion Initialization
+        
+        private void InitializeRotCots()
+        {
+            foreach (RotCot_GenericBase rotCot in rotCotsList)
+            {
+                rotCot.Initialize(this.transform, _uiRotParamsSlot);
+                rotCot.enabled = false; 
+            }
+        }
         
         #region UITypeSelectionControls
         [CreateProperty]
         public List<string> SelectableRotationTypes => new List<string>
         {
-            "EulerAngles", 
-            "Quaternion", 
             "AxisAngle", 
+            "Quaternion", 
+            "EulerAngles", 
             "Matrix"
         };
 
@@ -207,16 +218,16 @@ namespace RotContainers
                 switch (value)
                 {
                     case 0: 
-                        //+ZyKa set other RotCot enabled
+                        SwitchRotParamType(typeof(RotCot_AxisAngle));
                         break;
                     case 1:
-                        //+ZyKa set other RotCot enabled
+                        SwitchRotParamType(typeof(RotCot_Quaternion));
                         break;
                     case 2: 
-                        //+ZyKa set other RotCot enabled
+                        SwitchRotParamType(typeof(RotCot_Euler));
                         break;
                     case 3:
-                        //+ZyKa set other RotCot enabled
+                        SwitchRotParamType(typeof(RotCot_Matrix));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -258,15 +269,33 @@ namespace RotContainers
 
             if (foundRotCot != null)
             {
-                activeRotCot.enabled = false;
-                activeRotCot = foundRotCot;
-                foundRotCot.enabled = true;
-                activeRotCotType = newType; 
+                RotParams_Base rotParams = activeRotCot.GetRotParams_Generic(); 
+                DeactiveRotCot();
+                ActivateRotCot(foundRotCot);
+                activeRotCot.SetRotParams_Generic(rotParams);
             }
             else
             {
                 Debug.LogError($"{name} cannot switch to RotCot of Type {newType}; no object of such type exists in this {nameof(ComboRotCot)}"); 
             }
+        }
+
+        private void DeactiveRotCot()
+        {
+            if (activeRotCot == null)
+            {
+                return; 
+            }
+
+            activeRotCot.enabled = false; 
+            activeRotCotType = null; 
+        }
+
+        private void ActivateRotCot(RotCot_GenericBase rotCot)
+        {
+            activeRotCot = rotCot;
+            rotCot.enabled = true;
+            activeRotCotType = rotCot.GetType(); 
         }
         
         private void RotateCamera(float deltaX, float deltaY)

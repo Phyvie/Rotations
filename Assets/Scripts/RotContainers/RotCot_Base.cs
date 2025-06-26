@@ -1,3 +1,4 @@
+using System;
 using BaseClasses;
 using RotParams;
 using UnityEditor;
@@ -53,7 +54,22 @@ namespace RotContainers
 
         public override void SetRotParams_Generic(RotParams_Base rotParams)
         {
-            RotParams = rotParams as TRotParams; 
+            RotParams = typeof(TRotParams) switch
+            {
+                Type t when t == typeof(RotParams_EulerAngles)
+                    => (TRotParams)(object)rotParams.ToEulerAngleRotation(),
+
+                Type t when t == typeof(RotParams_Quaternion)
+                    => (TRotParams)(object)rotParams.ToQuaternionRotation(),
+
+                Type t when t == typeof(RotParams_AxisAngle)
+                    => (TRotParams)(object)rotParams.ToAxisAngleRotation(),
+
+                Type t when t == typeof(RotParams_Matrix)
+                    => (TRotParams)(object)rotParams.ToMatrixRotation(),
+
+                _ => throw new InvalidOperationException($"Unsupported TRotParams type: {typeof(TRotParams).Name}")
+            };
         }
 
         public override RotVis_Base GetRotVis_Generic()
@@ -68,26 +84,20 @@ namespace RotContainers
 
         private void OnEnable()
         {
-            rotVisCS.gameObject.SetActive(true);
-            rotUIroot.style.display = DisplayStyle.Flex; 
+            rotVisCS?.gameObject.SetActive(true);
+            if (rotUIroot is not null) { rotUIroot.style.display = DisplayStyle.Flex; }
         }
 
         private void OnDisable()
         {
-            rotVisCS.gameObject.SetActive(false);
-            rotUIroot.style.display = DisplayStyle.None;
+            rotVisCS?.gameObject.SetActive(false);
+            if (rotUIroot is not null) { rotUIroot.style.display = DisplayStyle.None; }
         }
 
-        private void Initialize(TRotParams newRotParams, Transform parent, VisualElement UIParent)
-        {
-            Initialize(parent, UIParent);
-            RotParams = newRotParams;
-        }
-        
         public override void Initialize(Transform parent, VisualElement UIParent)
         {
             SpawnVis(parent);
-            SpawnUI(UIParent); 
+            SpawnUI(UIParent);
         }
         
         public void SpawnVis(Transform parent)
@@ -109,8 +119,9 @@ namespace RotContainers
                 Destroy(rotVisGO); 
                 #endif
             }
-            GameObject newGO = Instantiate(rotVisPrefab, parent); 
+            GameObject newGO = Instantiate(rotVisPrefab, this.transform); 
             rotVisCS = newGO.GetComponent<TRotVis>();
+            rotVisCS.SetRotParamsByRef(rotParams);
         }
 
         public void SpawnUI(VisualElement parent)
