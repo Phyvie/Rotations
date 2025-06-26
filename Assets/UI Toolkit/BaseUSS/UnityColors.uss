@@ -30,6 +30,17 @@
     border-bottom-left-radius: 4px;
 }
 
+.myVectorField {
+    margin: 0;
+    padding: 0;
+    justify-content: space-around;
+    align-items: stretch;
+    align-self: stretch;
+    align-content: stretch;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
 .unityUIFieldColor EnumField > VisualElement {
     background-color: rgba(42, 42, 42, 0);
     border-top-width: 2px;

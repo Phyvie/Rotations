@@ -13,21 +13,18 @@ public class ZyKaMB : MonoBehaviour
         new LockableVector(new List<LockableFloat>()
         {
             new LockableFloat(0, false), 
-            new LockableFloat(1, true),
-        }); 
-    
-    [CreateProperty]
-    public float ZyKaFloatX
-    {
-        get => zyKaLockableVector[0];
-        set => zyKaLockableVector.SetFloatValue(0, value); 
-    }
+            new LockableFloat(1, false),
+            new LockableFloat(0, false)
+        });
 
     [CreateProperty]
-    public float ZyKaFloatY
+    public Vector3 ZyKaVector3
     {
-        get => zyKaLockableVector[1];
-        set => zyKaLockableVector.SetFloatValue(1, value); 
+        get => new Vector3(zyKaLockableVector[0], zyKaLockableVector[1], zyKaLockableVector[2]);
+        set
+        {
+            zyKaLockableVector.SetVector3(value);
+        }
     }
 
     private void Start()

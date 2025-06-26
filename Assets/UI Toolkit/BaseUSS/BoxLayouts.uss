@@ -14,6 +14,17 @@
     flex-grow: 1;
 }
 
+.myFloatField {
+    margin: 0;
+    padding: 0;
+    justify-content: space-around;
+    align-items: stretch;
+    align-self: stretch;
+    align-content: stretch;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
 .centeredText {
     align-self: stretch;
     align-content: stretch;

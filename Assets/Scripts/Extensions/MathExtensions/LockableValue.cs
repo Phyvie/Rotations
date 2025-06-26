@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MathExtensions;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Extensions.MathExtensions
 {
@@ -71,6 +73,16 @@ namespace Extensions.MathExtensions
         public override string ToString()
         {
             return typeValue.ToString();
+        }
+
+        [InitializeOnLoadMethod]
+        public static void RegisterConverters()
+        {
+            ConverterGroup boolGroup = new ConverterGroup("bool");
+
+            boolGroup.AddConverter((ref bool v) => !v);
+            
+            ConverterGroups.RegisterConverterGroup(boolGroup);
         }
     }
 
@@ -224,6 +236,29 @@ namespace Extensions.MathExtensions
             {
                 ScaleLockedVectorToLength(targetLength, forceSetBehaviour); 
             }
+        }
+
+        public void SetVector3(Vector3 newValue, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.Force)
+        {
+            if ((newValue - GetVector3()).sqrMagnitude < 0.0001)
+            {
+                return; 
+            }
+            if (values.Count != 3)
+            {
+                throw new Exception("LockableVector.SetVector3(...) can only be used if LockableVector.values.Count == 3"); 
+            }
+            SetVector(new List<float>(){newValue.x, newValue.y, newValue.z}); 
+        }
+
+        public Vector3 GetVector3()
+        {
+            if (values.Count != 3)
+            {
+                throw new Exception("LockableVector.GetVector3() can only be used if LockableVector.values.Count == 3"); 
+            }
+
+            return new Vector3(values[0], values[1], values[2]); 
         }
         
         public void SetFloatValue(int index, float newValue, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.BlockWithMessage , float newTargetLength = -1)

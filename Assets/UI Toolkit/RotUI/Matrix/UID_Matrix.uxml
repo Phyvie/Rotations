@@ -4,17 +4,17 @@
     <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UserInputFields.uss?fileID=7433441132597879392&amp;guid=6dd3f635675e8f246b205a73e8f7b1dd&amp;type=3#UserInputFields" />
     <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UnityColors.uss?fileID=7433441132597879392&amp;guid=05afd8f5bd01ac04682fabbc8e02db4f&amp;type=3#UnityColors" />
     <engine:VisualElement name="MatrixRoot" data-source-type="RotParams.RotParams_Matrix, RotParams" class="container--horizontalspacearound unityUIBackgroundColor unityUIFieldColor unityUITextColor">
-        <engine:Vector3Field label="Right (X-Vector)" name="XVector" class="vector--pure" style="flex-direction: column; width: 33%;">
+        <engine:Vector3Field label="Right (X-Vector)" name="XVector" class="myVectorField" style="flex-direction: column; width: 33%;">
             <Bindings>
                 <engine:DataBinding property="value" data-source-path="XVector" binding-mode="TwoWay" />
             </Bindings>
         </engine:Vector3Field>
-        <engine:Vector3Field label="Up (Y-Vector)" name="YVector" class="vector--pure" style="flex-direction: column; width: 33%;">
+        <engine:Vector3Field label="Up (Y-Vector)" name="YVector" class="myVectorField" style="flex-direction: column; width: 33%;">
             <Bindings>
                 <engine:DataBinding property="value" data-source-path="YVector" binding-mode="TwoWay" />
             </Bindings>
         </engine:Vector3Field>
-        <engine:Vector3Field label="Forward (Z-Vector)" name="ZVector" class="vector--pure" style="flex-direction: column; width: 33%;">
+        <engine:Vector3Field label="Forward (Z-Vector)" name="ZVector" class="myVectorField" style="flex-direction: column; width: 33%;">
             <Bindings>
                 <engine:DataBinding property="value" data-source-path="ZVector" binding-mode="TwoWay" />
             </Bindings>

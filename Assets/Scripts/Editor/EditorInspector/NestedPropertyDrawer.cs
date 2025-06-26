@@ -37,7 +37,7 @@ namespace Editor
         {
             if (initialized)
             {
-	            // return; //ZyKa!
+	            // return; 
             }
             
             ClearHierarchies();

@@ -1,9 +1,9 @@
-using System.Linq;
 using BaseClasses;
 using RotParams;
 using UI_Toolkit;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 namespace RotContainers
@@ -11,13 +11,16 @@ namespace RotContainers
     public class TypedRotationContainer : MonoBehaviour
     {
         [SerializeReference] private RotParams_Base rotParams; //-ZyKa make a public property to change the RotParams, currently they can only be set via SpawnTypedRotation
+        
         [Tooltip("Do not set this reference manually, it will be spawned from the outside by GeneralRotationContainer")] //-ZyKa RotationContainers; enable setting this manually & ensure that the rotParams are updated accordingly
         [SerializeField] private GameObject rotVisGO;
+        
+        [FormerlySerializedAs("rotVis")]
         [Tooltip("Do not set this reference manually, it will be spawned from the outside by GeneralRotationContainer")]
-        [SerializeField] private RotVis rotVis;
+        [SerializeField] private RotVis_Base rotVisBase;
         private VisualElement rotUI;
         
-        public RotVis RotVis => rotVis;
+        public RotVis_Base RotVisBase => rotVisBase;
         public VisualElement RotUI => rotUI;
         
         public void SpawnTypedRotation(ref RotParams_Base newRotParams, GameObject rotVisPrefab, Transform rotVisParent, VisualTreeAsset visualTreeAsset, UISlotReference visualParent)
@@ -45,8 +48,8 @@ namespace RotContainers
                 #endif
             }
             rotVisGO = Instantiate(prefab, parent); 
-            rotVis = rotVisGO.GetComponent<RotVis>();
-            rotVis.SetRotParamsByRef(ref rotParams); 
+            rotVisBase = rotVisGO.GetComponent<RotVis_Base>();
+            rotVisBase.SetRotParamsByRef(rotParams); 
         }
 
         public void SpawnUI(VisualTreeAsset visualTreeAsset, UISlotReference parent)

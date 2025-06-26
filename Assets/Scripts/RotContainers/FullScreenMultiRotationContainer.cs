@@ -12,7 +12,7 @@ namespace RotContainers
         [SerializeField] private GameObject RotationContainerPrefab; 
         
         [SerializeField] 
-        private List<GeneralRotationContainer> rotationContainer;
+        private List<CombinedRotationContainer> rotationContainer;
 
         private void Awake()
         {
@@ -29,7 +29,7 @@ namespace RotContainers
             }
         }
 
-        private void InitialiseRotationContainer(GeneralRotationContainer rotationContainer)
+        private void InitialiseRotationContainer(CombinedRotationContainer rotationContainer)
         {
             
         }

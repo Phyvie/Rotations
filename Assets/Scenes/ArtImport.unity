@@ -412,6 +412,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1217091287}
+  - {fileID: 3873603890318506843}
   - {fileID: 1438331525}
   m_Father: {fileID: 2115466904}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -538,6 +539,69 @@ Transform:
   - {fileID: 1274492}
   m_Father: {fileID: 1808237821}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &737680952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 737680953}
+  - component: {fileID: 737680954}
+  m_Layer: 0
+  m_Name: RotCot_Matrix
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &737680953
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737680952}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3873603890318506843}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &737680954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737680952}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff7a4e4f95a43f349ac2bb6d05b797c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotParams:
+    InternalMatrix:
+      InternalMatrix:
+      - 1
+      - 0
+      - 0
+      - 0
+      - 1
+      - 0
+      - 0
+      - 0
+      - 1
+      height: 3
+      width: 3
+    primaryAxisIndex: 2
+    secondaryAxisIndex: 1
+  rotVisPrefab: {fileID: 0}
+  rotVisCS: {fileID: 0}
+  rotUIAsset: {fileID: 0}
 --- !u!1 &773977309
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,6 +636,67 @@ Transform:
   - {fileID: 1236571136}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &866055528
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 866055529}
+  - component: {fileID: 866055530}
+  m_Layer: 0
+  m_Name: RotCot_Quaternion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &866055529
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866055528}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3873603890318506843}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &866055530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866055528}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f267a9abeb23d74468aab51627e332ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotParams:
+    enforceNormalisation: 1
+    _w:
+      typeValue: 1
+      isLocked: 0
+    _x:
+      typeValue: 0
+      isLocked: 0
+    _y:
+      typeValue: 0
+      isLocked: 0
+    _z:
+      typeValue: 0
+      isLocked: 0
+  rotVisPrefab: {fileID: 0}
+  rotVisCS: {fileID: 0}
+  rotUIAsset: {fileID: 0}
 --- !u!1001 &999776070
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1061,6 +1186,77 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6144809607470595411}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1605025703
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1605025704}
+  - component: {fileID: 1605025705}
+  m_Layer: 0
+  m_Name: RotCot_AxisAngle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1605025704
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605025703}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3873603890318506843}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1605025705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605025703}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a617efbda077d8d44aaa441a2808e3ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotParams:
+    typedAngle:
+      showAllAngleTypes: 0
+      showAngleTypeSelector: 1
+      angleType:
+        rid: 4235530478195049049
+      _angleInRadian: 0
+    _axis:
+      values:
+      - typeValue: 1
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
+  rotVisPrefab: {fileID: 0}
+  rotVisCS: {fileID: 0}
+  rotUIAsset: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 4235530478195049049
+      type: {class: AngleType, ns: RotParams, asm: MathExtensions}
+      data:
+        angleTypeName: Degree
+        unitMultiplier: 360
+        unitLabel: "360\xB0"
 --- !u!1 &1635201039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1205,7 +1401,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1675138848
 Transform:
   m_ObjectHideFlags: 0
@@ -1259,6 +1455,8 @@ MonoBehaviour:
     - typeValue: 0
       isLocked: 0
     - typeValue: 1
+      isLocked: 0
+    - typeValue: 0
       isLocked: 0
 --- !u!4 &1781615809 stripped
 Transform:
@@ -1342,6 +1540,87 @@ Transform:
   - {fileID: 371105083}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2144085801
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2144085802}
+  - component: {fileID: 2144085803}
+  m_Layer: 0
+  m_Name: RotCot_EulerAngles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2144085802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144085801}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3873603890318506843}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2144085803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144085801}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2cd8126a80b4aa196c3a2cabf92a309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotParams:
+    outer:
+      eAxis: 0
+      typedAngle:
+        showAllAngleTypes: 0
+        showAngleTypeSelector: 1
+        angleType:
+          rid: 4235530478195049047
+        _angleInRadian: 0
+    middle:
+      eAxis: 1
+      typedAngle:
+        showAllAngleTypes: 0
+        showAngleTypeSelector: 1
+        angleType:
+          rid: 4235530478195049047
+        _angleInRadian: 0
+    inner:
+      eAxis: 2
+      typedAngle:
+        showAllAngleTypes: 0
+        showAngleTypeSelector: 1
+        angleType:
+          rid: 4235530478195049047
+        _angleInRadian: 0
+  rotVisPrefab: {fileID: 0}
+  rotVisCS: {fileID: 0}
+  rotUIAsset: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 4235530478195049047
+      type: {class: AngleType, ns: RotParams, asm: MathExtensions}
+      data:
+        angleTypeName: Degree
+        unitMultiplier: 360
+        unitLabel: "360\xB0"
 --- !u!1001 &694956612594793714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2876,6 +3155,25 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1247632210560013686}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &3873603890318506843
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8256178290151587216}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1605025704}
+  - {fileID: 866055529}
+  - {fileID: 2144085802}
+  - {fileID: 737680953}
+  m_Father: {fileID: 371105083}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4199206460687932374
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3318,6 +3616,100 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25acbba2d0822b9418960ef4f3b562a4, type: 3}
+--- !u!1 &8256178290151587216
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3873603890318506843}
+  - component: {fileID: 8256178290151587219}
+  - component: {fileID: 8256178290151587218}
+  - component: {fileID: 8256178290151587217}
+  m_Layer: 0
+  m_Name: ComboRotCot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &8256178290151587217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8256178290151587216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18e7ea4615ac6f41a269e37ea4ce522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combinedRotationContainer: {fileID: 0}
+  screenshotSettings: {fileID: 0}
+  interpolationSettings: {fileID: 0}
+  viewShots: []
+  interpolationStep: 0
+--- !u!114 &8256178290151587218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8256178290151587216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 0}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 0}
+  m_SortingOrder: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+--- !u!114 &8256178290151587219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8256178290151587216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e33dc5cae44fcca39a22a4df046401, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InitializeOnAwake: 0
+  InitializeOnStart: 1
+  uiDocument: {fileID: 0}
+  fullScreenUIAsset: {fileID: 9197481963319205126, guid: 80db4d1107146194db9e75f8b2de8937,
+    type: 3}
+  panelSettingsAsset: {fileID: 11400000, guid: 33cf23a3bef7eb84c89e07ed8ff5ee48, type: 2}
+  uiParentName: RotUIContainer
+  uiFullContainerAsset: {fileID: 9197481963319205126, guid: ffaa3d0decbc86b4cbfeb90cccf81b0f,
+    type: 3}
+  uiMenuAsset: {fileID: 9197481963319205126, guid: 78e16fe7c76a899429952db85117e024,
+    type: 3}
+  uiMenuName: uiMenuLine
+  uiRotSlotName: RotParamsSlot
+  cameraPrefab: {fileID: 3772307241307734496, guid: 394edcfc98fae854f9e7187644570658,
+    type: 3}
+  visCamera: {fileID: 0}
+  cameraScreenRect:
+    serializedVersion: 2
+    x: 0
+    y: 0.33
+    width: 1
+    height: 0.67
+  cameraInputEnabled: 0
+  rotCot_AxisAngle: {fileID: 1605025705}
+  rotCot_Quaternion: {fileID: 866055530}
+  rotCot_Euler: {fileID: 2144085803}
+  rotCot_Matrix: {fileID: 737680954}
 --- !u!1001 &8613011922227792339
 PrefabInstance:
   m_ObjectHideFlags: 0

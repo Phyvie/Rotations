@@ -7,8 +7,9 @@
         <engine:VisualElement name="AxisAngleContainer" style="flex-grow: 1; width: 60%;">
             <engine:Label text="AxisAngle" name="AxisAngleLabel" class="centeredText" style="-unity-font-style: bold;" />
             <engine:VisualElement name="AxisAngleValueContainer" class="container--horizontalspacearound">
-                <engine:VisualElement name="AngleContainer" style="flex-grow: 1;">
-                    <engine:FloatField name="AngleField" class="floatField--pure">
+                <engine:VisualElement name="AngleContainer" style="flex-grow: 1; width: 45%;">
+                    <engine:VisualElement style="flex-grow: 1;" />
+                    <engine:FloatField name="AngleField" label="φ" class="floatField--pure myFloatField">
                         <Bindings>
                             <engine:DataBinding property="value" data-source-path="AngleInCurrentUnit" binding-mode="TwoWay" />
                         </Bindings>
@@ -19,10 +20,11 @@
                             <engine:DataBinding property="index" data-source-path="typedAngle.AngleTypeIndex" binding-mode="TwoWay" />
                         </Bindings>
                     </engine:DropdownField>
+                    <engine:VisualElement style="flex-grow: 1;" />
                 </engine:VisualElement>
-                <engine:Label text="x" name="Lbl__Multiply" class="centeredText" style="-unity-font-style: bold; width: 25px;" />
-                <engine:VisualElement name="AxisContainer" class="container--verticalspacearound" style="flex-grow: 1;">
-                    <engine:FloatField value="42.2" name="X">
+                <engine:Label text="x" name="Lbl__Multiply" class="centeredText" style="-unity-font-style: bold; width: 20px;" />
+                <engine:VisualElement name="AxisContainer" class="container--verticalspacearound" style="flex-grow: 1; width: 45%;">
+                    <engine:FloatField value="42.2" name="X" label="x" class="myFloatField">
                         <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
                             <Bindings>
                                 <engine:DataBinding property="value" data-source-path="XLocked" binding-mode="TwoWay" />
@@ -32,7 +34,7 @@
                             <engine:DataBinding property="value" data-source-path="AxisX" binding-mode="TwoWay" />
                         </Bindings>
                     </engine:FloatField>
-                    <engine:FloatField value="42.2" name="Y">
+                    <engine:FloatField value="42.2" name="Y" label="y" class="myFloatField">
                         <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
                             <Bindings>
                                 <engine:DataBinding property="value" data-source-path="YLocked" binding-mode="TwoWay" />
@@ -42,7 +44,7 @@
                             <engine:DataBinding property="value" data-source-path="AxisY" binding-mode="TwoWay" />
                         </Bindings>
                     </engine:FloatField>
-                    <engine:FloatField value="42.2" name="Z">
+                    <engine:FloatField value="42.2" name="Z" label="z" class="myFloatField">
                         <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
                             <Bindings>
                                 <engine:DataBinding property="value" data-source-path="ZLocked" binding-mode="TwoWay" />
@@ -55,27 +57,27 @@
                 </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:Label text="=" name="EqualSign" class="centeredText" style="font-size: 28px; margin-left: 20px; margin-right: 20px; -unity-font-style: bold;" />
+        <engine:VisualElement name="EqualContainer" style="flex-grow: 1; align-content: center;">
+            <engine:Label text="=" name="EqualSign" class="centeredText" style="font-size: 28px; -unity-font-style: bold; width: 35px; min-width: 35px; flex-grow: 1;" />
+        </engine:VisualElement>
         <engine:VisualElement name="RotationVectorContainer" style="width: 40%;">
             <engine:Label text="RotationVector" name="RotationVectorLabel" class="centeredText" style="background-color: rgba(42, 42, 42, 0); -unity-font-style: bold;" />
-            <engine:VisualElement name="RotationVectorValueContainer" class="container--horizontalspacearound" style="flex-grow: 1;">
-                <engine:VisualElement name="RotationVectorContainer" class="container--verticalspacearound" style="flex-grow: 1;">
-                    <engine:FloatField value="42.2" name="X" label="x" class="floatField--pure">
-                        <Bindings>
-                            <engine:DataBinding property="value" data-source-path="RotVecX" binding-mode="TwoWay" />
-                        </Bindings>
-                    </engine:FloatField>
-                    <engine:FloatField value="42.2" name="Y" label="y" class="floatField--pure">
-                        <Bindings>
-                            <engine:DataBinding property="value" data-source-path="RotVecY" binding-mode="TwoWay" />
-                        </Bindings>
-                    </engine:FloatField>
-                    <engine:FloatField value="42.2" name="Z" label="z" class="floatField--pure">
-                        <Bindings>
-                            <engine:DataBinding property="value" data-source-path="RotVecZ" binding-mode="TwoWay" />
-                        </Bindings>
-                    </engine:FloatField>
-                </engine:VisualElement>
+            <engine:VisualElement name="RotationVectorContainer" class="container--verticalspacearound" style="flex-grow: 1;">
+                <engine:FloatField value="42.2" name="X" label="x" class="myFloatField">
+                    <Bindings>
+                        <engine:DataBinding property="value" data-source-path="RotVecX" binding-mode="TwoWay" />
+                    </Bindings>
+                </engine:FloatField>
+                <engine:FloatField value="42.2" name="Y" label="y" class="myFloatField">
+                    <Bindings>
+                        <engine:DataBinding property="value" data-source-path="RotVecY" binding-mode="TwoWay" />
+                    </Bindings>
+                </engine:FloatField>
+                <engine:FloatField value="42.2" name="Z" label="z" class="myFloatField">
+                    <Bindings>
+                        <engine:DataBinding property="value" data-source-path="RotVecZ" binding-mode="TwoWay" />
+                    </Bindings>
+                </engine:FloatField>
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
