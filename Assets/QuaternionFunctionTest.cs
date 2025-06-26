@@ -1,12 +1,11 @@
 using RotationVisualisation;
 using RotParams;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class QuaternionFunctionTest : MonoBehaviour
 {
-    [FormerlySerializedAs("rotVisBaseQuaternion")] [FormerlySerializedAs("rotVis_Quaternion")] [SerializeField] private RotVis_Quaternion rotVisQuaternion;
-    RotParams_Quaternion quat => (RotParams_Quaternion)rotVisQuaternion.GetRotParams();
+    [SerializeField] private RotVis_Quaternion rotVis_Quaternion;
+    RotParams_Quaternion quat => (RotParams_Quaternion)rotVis_Quaternion.GetRotParams();
     
     //!ZyKa Debug
     [SerializeField] private float SetAngle = 0;

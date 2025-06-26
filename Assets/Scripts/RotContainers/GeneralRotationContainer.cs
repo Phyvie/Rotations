@@ -8,13 +8,12 @@ using UnityEngine.UIElements;
 
 namespace RotContainers
 {
-    public class CombinedRotationContainer : MonoBehaviour
+    public class GeneralRotationContainer : MonoBehaviour
     {
         #region Variables
         [SerializeField] private bool InitializeOnAwake = false;
         [SerializeField] private bool InitializeOnStart = true; 
         
-        #region ContainerSetup
         [SerializeField] private UIDocument uiDocument;
 
         public UIDocument UIDocument
@@ -31,7 +30,7 @@ namespace RotContainers
         [SerializeField] private VisualTreeAsset fullScreenUIAsset;
         [SerializeField] private PanelSettings panelSettingsAsset;
 
-        [Tooltip("This is not the object which contains uiMenu & UIRotSlot; it is the visualElement into which the uiRoot will be spawned")]
+        [Tooltip("This is not the object which contains uiMenu & UIRotSlot, rather it is the visualElement into which the uiRoot will be spawned")]
         [SerializeField] private string uiParentName; 
         private VisualElement _uiParent; //the slot into which the _uiRoot will be spawned
 
@@ -44,7 +43,7 @@ namespace RotContainers
         private VisualElement _uiMenu; 
         
         [SerializeField] private UISlotReference uiRotSlot;
-        #endregion ContainerSetup
+        //Prefabs for UIRot are below in the #region UITypeSelectionControls
         
         [SerializeField] private RotParams_Base _rotParams;
 
@@ -210,6 +209,7 @@ namespace RotContainers
             _uiMenu.dataSource = this;
             
             uiRotSlot.Initialize(_uiRoot);
+            uiRotSlot.UISlot.dataSource = _rotParams; 
             
             if (VisCamera ==null)
             {
@@ -242,7 +242,7 @@ namespace RotContainers
 
         public TypedRotationContainerPrefab GetTypedRotationContainerPrefab(System.Type type)
         {
-            var method = typeof(CombinedRotationContainer).GetMethod(nameof(GetTypedRotationContainerPrefab), Type.EmptyTypes);
+            var method = typeof(GeneralRotationContainer).GetMethod(nameof(GetTypedRotationContainerPrefab), Type.EmptyTypes);
             var genericMethod = method.MakeGenericMethod(type);
             return (TypedRotationContainerPrefab)genericMethod.Invoke(this, null);
         }
@@ -292,7 +292,7 @@ namespace RotContainers
         //accessor function for the templated version
         public void GenerateNewRotationGeneric(System.Type type)
         {
-            var method = typeof(CombinedRotationContainer).GetMethod(nameof(GenerateNewRotation), Type.EmptyTypes);
+            var method = typeof(GeneralRotationContainer).GetMethod(nameof(GenerateNewRotation), Type.EmptyTypes);
             var genericMethod = method.MakeGenericMethod(type);
             genericMethod.Invoke(this, null);
         }
@@ -357,13 +357,13 @@ namespace RotContainers
         [ContextMenu("ApplyObjectRotation")]
         private void ApplyRotation()
         {
-            typedRotationContainer.RotVisBase.ApplyObjectRotation();
+            typedRotationContainer.RotVis.ApplyObjectRotation();
         }
 
         [ContextMenu("ResetAppliedObjectRotation")]
         private void ResetAppliedObjectRotation()
         {
-            typedRotationContainer.RotVisBase.ResetAppliedObjectRotation();
+            typedRotationContainer.RotVis.ResetAppliedObjectRotation();
         }
         #endregion userInteraction
     }

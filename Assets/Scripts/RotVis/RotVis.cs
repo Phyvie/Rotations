@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace BaseClasses
 {
-    public abstract class RotVis_Base : MonoBehaviour
+    public abstract class RotVis : MonoBehaviour
     {
         [SerializeField] private GameObject appliedRotationObject; //child of the actual rotationObject, whose child are the actual objects
         [SerializeField] protected GameObject rotationObject; 
         
         public abstract RotParams_Base GetRotParams();
 
-        public virtual void SetRotParamsByRef(RotParams_Base newRotParams)
+        public virtual void SetRotParamsByRef(ref RotParams_Base newRotParams)
         {
             GetRotParams().PropertyChanged -= VisUpdateOnPropertyChanged; 
             newRotParams.PropertyChanged += VisUpdateOnPropertyChanged; 
@@ -22,9 +22,9 @@ namespace BaseClasses
             VisUpdate();
         }
 
-        public RotVis_Base(RotParams_Base rotParams)
+        public RotVis(RotParams_Base rotParams)
         {
-            SetRotParamsByRef(rotParams);
+            SetRotParamsByRef(ref rotParams);
             VisUpdate();
         }
         

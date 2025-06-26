@@ -12,61 +12,43 @@ public class RotParamsAxisAngleInspector : PropertyDrawer
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         EditorGUI.BeginProperty(position, label, property);
+        Rect originalRect = position;
+        position.height = EditorGUIUtility.singleLineHeight;
 
-        // Draw the foldout
-        property.isExpanded = EditorGUI.Foldout(
-            new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight),
-            property.isExpanded,
-            label,
-            true // toggle when label is clicked
-        );
+        // Retrieve the actual object instance
+        var target = fieldInfo.GetValue(property.serializedObject.targetObject) as RotParams_AxisAngle;
 
-        // Start drawing below the foldout line
-        position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-
-        if (property.isExpanded)
+        if (target == null)
         {
-            EditorGUI.indentLevel++;
-
-            var target = fieldInfo.GetValue(property.serializedObject.targetObject) as RotParams_AxisAngle;
-
-            if (target == null)
-            {
-                EditorGUI.LabelField(position, "RotParams_AxisAngle is null");
-                EditorGUI.indentLevel--;
-                EditorGUI.EndProperty();
-                return;
-            }
-
-            // Draw serialized 'typedAngle' field
-            SerializedProperty angleProperty = property.FindPropertyRelative("typedAngle");
-            if (angleProperty != null)
-            {
-                EditorGUI.PropertyField(position, angleProperty, true);
-                position.y += EditorGUI.GetPropertyHeight(angleProperty, true) + Spacing;
-            }
-
-            // AxisX + lock
-            DrawComponentWithLock(ref position, "X", target.AxisX, target.XLocked,
-                newVal => target.AxisX = newVal,
-                newLock => target.XLocked = newLock);
-
-            // AxisY + lock
-            DrawComponentWithLock(ref position, "Y", target.AxisY, target.YLocked,
-                newVal => target.AxisY = newVal,
-                newLock => target.YLocked = newLock);
-
-            // AxisZ + lock
-            DrawComponentWithLock(ref position, "Z", target.AxisZ, target.ZLocked,
-                newVal => target.AxisZ = newVal,
-                newLock => target.ZLocked = newLock);
-
-            EditorGUI.indentLevel--;
+            EditorGUI.LabelField(position, "RotParams_AxisAngle is null");
+            return;
         }
+
+        // Draw serialized 'typedAngle' field at the top
+        SerializedProperty angleProperty = property.FindPropertyRelative("typedAngle");
+        if (angleProperty != null)
+        {
+            EditorGUI.PropertyField(position, angleProperty, true);
+            position.y += EditorGUI.GetPropertyHeight(angleProperty, true) + Spacing;
+        }
+
+        // AxisX + lock
+        DrawComponentWithLock(ref position, "X", target.AxisX, target.XLocked,
+            newVal => target.AxisX = newVal,
+            newLock => target.XLocked = newLock);
+
+        // AxisY + lock
+        DrawComponentWithLock(ref position, "Y", target.AxisY, target.YLocked,
+            newVal => target.AxisY = newVal,
+            newLock => target.YLocked = newLock);
+
+        // AxisZ + lock
+        DrawComponentWithLock(ref position, "Z", target.AxisZ, target.ZLocked,
+            newVal => target.AxisZ = newVal,
+            newLock => target.ZLocked = newLock);
 
         EditorGUI.EndProperty();
     }
-
 
     private void DrawComponentWithLock(
         ref Rect position,
@@ -98,19 +80,12 @@ public class RotParamsAxisAngleInspector : PropertyDrawer
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        float height = EditorGUIUtility.singleLineHeight; // Always show foldout line
+        SerializedProperty angleProperty = property.FindPropertyRelative("typedAngle");
+        float angleHeight = angleProperty != null ? EditorGUI.GetPropertyHeight(angleProperty, true) + Spacing : 0f;
 
-        if (property.isExpanded)
-        {
-            SerializedProperty angleProperty = property.FindPropertyRelative("typedAngle");
-            float angleHeight = angleProperty != null ? EditorGUI.GetPropertyHeight(angleProperty, true) + Spacing : 0f;
+        // 3 lines for AxisX/Y/Z
+        float linesHeight = 3 * (EditorGUIUtility.singleLineHeight + Spacing);
 
-            float linesHeight = 3 * (EditorGUIUtility.singleLineHeight + Spacing); // For X, Y, Z
-
-            height += angleHeight + linesHeight;
-        }
-
-        return height;
+        return angleHeight + linesHeight;
     }
-
 }

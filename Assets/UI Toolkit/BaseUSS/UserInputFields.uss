@@ -1,31 +1,4 @@
-.myFloatField > Label {
-    font-size: 12px;
-    min-height: auto;
-    min-width: auto;
-    margin-right: 5px;
-    padding: 0;
-    border-width: 0;
-    border-radius: 0;
-    -unity-text-align: middle-center;
-}
-
-.myFloatField > #unity-text-input {
-    flex-grow: 1;
-    margin: 5px;
-    padding: 0;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    margin-left: 4px;
-    margin-right: 4px;
-}
-
-.myFloatField > #unity-text-input > .unity-text-element {
-    margin: 5px;
-    padding: 1px;
-    padding-left: 5px;
-}
-
-.myVectorField .unity-base-field {
+.floatField--pure {
     margin: 0;
     padding: 0;
     justify-content: space-around;
@@ -34,12 +7,9 @@
     align-content: stretch;
     flex-direction: row;
     flex-grow: 1;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-right: 5px;
 }
 
-.myVectorField .unity-base-field > Label {
+.floatField--pure > Label {
     font-size: 12px;
     min-height: auto;
     min-width: auto;
@@ -50,17 +20,48 @@
     -unity-text-align: middle-center;
 }
 
-.myVectorField .unity-base-field > #unity-text-input {
+.floatField--pure > #unity-text-input {
     flex-grow: 1;
-    margin: 5px;
+    margin: 0;
     padding: 0;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    margin-left: 4px;
-    margin-right: 4px;
 }
 
-.myVectorField .unity-base-field > #unity-text-input > .unity-text-element {
-    margin: 5px;
-    padding: 1px;
+.vector--pure {
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: space-around;
+    align-self: stretch;
+    align-content: stretch;
+    margin: 0;
+    padding: 0;
+}
+
+.vector--pure Label {
+    min-height: auto;
+    min-width: auto;
+}
+
+.vector--pure #unity-text-input {
+    padding: 5px;
+}
+
+.vector--pure #unity-text-input > TextElement {
+    padding: 0;
+}
+
+.vector--pure FloatField > Label {
+    display: none;
+    -unity-text-align: middle-center;
+}
+
+.vector--pure VisualElement {
+    justify-content: space-around;
+}
+
+.gimbalRing > EnumField > Label {
+    display: none;
+}
+
+.gimbalRing > FloatField > Label {
+    display: none;
 }

@@ -19,7 +19,7 @@ public class ScreenshotManagerEditor : UnityEditor.Editor
 
     private void OnEnable()
     {
-        generalRotationContainer = serializedObject.FindProperty("combinedRotationContainer");
+        generalRotationContainer = serializedObject.FindProperty("generalRotationContainer");
         screenshotSettings = serializedObject.FindProperty("screenshotSettings");
         interpolationSettings = serializedObject.FindProperty("interpolationSettings");
         viewShots = serializedObject.FindProperty("viewShots");

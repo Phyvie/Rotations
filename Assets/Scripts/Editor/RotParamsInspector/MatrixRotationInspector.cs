@@ -1,4 +1,3 @@
-using System.Reflection;
 using RotParams;
 using UnityEditor;
 using UnityEngine;
@@ -6,7 +5,7 @@ using UnityEngine;
 namespace Editor
 {
     [CustomPropertyDrawer(typeof(RotParams_Matrix))]
-    public class MatrixRotationInspector : PropertyDrawer
+    public class MatrixRotationInspector : NestedPropertyDrawer
     {
         private SerializedProperty internalMatrixProp;
         private readonly string primaryAxisIndexName = "primaryAxisIndex";
@@ -16,9 +15,10 @@ namespace Editor
         
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
+            InitializePropertyNesting(property);
             EditorGUI.BeginProperty(position, label, property);
             position.height = EditorGUIUtility.singleLineHeight;
-            RotParams_Matrix rotParamsMatrix = fieldInfo.GetValue(property.serializedObject.targetObject) as RotParams_Matrix;
+            RotParams_Matrix rotParamsMatrix = GetObject<RotParams_Matrix>(property);
 
             property.isExpanded = EditorGUI.BeginFoldoutHeaderGroup(position, property.isExpanded, new GUIContent("Matrix" + (rotParamsMatrix.isRotationMatrix ? " (Rotation)" : " (NotRotation)")));
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing; 

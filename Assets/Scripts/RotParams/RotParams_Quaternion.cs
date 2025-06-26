@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using Extensions.MathExtensions;
 using MathExtensions;
 using Unity.Properties;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
-using UnityEngine.UIElements;
 
 namespace RotParams
 {
@@ -584,17 +582,5 @@ namespace RotParams
             return result; 
         }
         #endregion Functions
-        
-        #region UISupport
-        [InitializeOnLoadMethod]
-        public static void RegisterConverters()
-        {
-            ConverterGroup boolGroup = new ConverterGroup("bool");
-
-            boolGroup.AddConverter((ref bool v) => !v);
-            
-            ConverterGroups.RegisterConverterGroup(boolGroup);
-        }
-        #endregion UISupport
     }
 }

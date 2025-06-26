@@ -7,7 +7,7 @@ using Visualisation;
 
 namespace RotationVisualisation
 {
-    public class RotVis_Quaternion : RotVis_Base
+    public class RotVis_Quaternion : RotVis
     {
         //-ZyKa Quaternion -ZyKa RotVis update this to be able to take in non-unit quaternions
         [SerializeField] private Vis_Vector vis_rotationVector;
@@ -25,9 +25,9 @@ namespace RotationVisualisation
             return rotParams; 
         }
 
-        public override void SetRotParamsByRef(RotParams_Base newRotParams)
+        public override void SetRotParamsByRef(ref RotParams_Base newRotParams)
         {
-            base.SetRotParamsByRef(newRotParams);
+            base.SetRotParamsByRef(ref newRotParams);
             if (newRotParams is RotParams_Quaternion rotParamsQuaternion)
             {
                 rotParams = rotParamsQuaternion;

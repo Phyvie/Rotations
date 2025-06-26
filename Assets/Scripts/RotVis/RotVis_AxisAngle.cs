@@ -8,7 +8,7 @@ using Visualisation;
 namespace RotationVisualisation
 {
     //-ZyKa check which MonoBehaviours can be reduced to Behaviour or Component
-    public class RotVis_AxisAngle : RotVis_Base
+    public class RotVis_AxisAngle : RotVis
     {
         [SerializeField] private Vis_Vector vis_rotationVector;
         [SerializeField] private Vis_Axis vis_axis;
@@ -25,9 +25,9 @@ namespace RotationVisualisation
             return rotParams; 
         }
 
-        public override void SetRotParamsByRef(RotParams_Base newRotParams)
+        public override void SetRotParamsByRef(ref RotParams_Base newRotParams)
         {
-            base.SetRotParamsByRef(newRotParams);
+            base.SetRotParamsByRef(ref newRotParams);
             if (newRotParams is RotParams_AxisAngle rotParamsAxisAngle)
             {
                 rotParams = rotParamsAxisAngle;

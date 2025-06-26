@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Editor
 {
     [CustomPropertyDrawer(typeof(RotParams_EulerAngles))]
-    public class EulerAngleRotationInspector : PropertyDrawer
+    public class EulerAngleRotationInspector : NestedPropertyDrawer
     {
         private SerializedProperty SP_outer;
         private SerializedProperty SP_middle;
@@ -31,9 +31,10 @@ namespace Editor
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             Initialize(property);
+            InitializePropertyNesting(property);
             EditorGUI.BeginProperty(position, label, property);
             position.height = EditorGUIUtility.singleLineHeight;
-            RotParams_EulerAngles targetRotParamsEulerAngles = fieldInfo.GetValue(property.serializedObject.targetObject) as RotParams_EulerAngles;
+            RotParams_EulerAngles targetRotParamsEulerAngles = GetObject<RotParams_EulerAngles>(property);
             
             EGimbalType targetGimbalType = targetRotParamsEulerAngles!.GetGimbalType();
             property.isExpanded = EditorGUI.BeginFoldoutHeaderGroup(position, property.isExpanded, new GUIContent($"eulerAngle({Enum.GetNames(typeof(EGimbalType))[(int) targetGimbalType]})"));
@@ -61,6 +62,7 @@ namespace Editor
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             Initialize(property);
+            InitializePropertyNesting(property);
             
             float unfoldedHeight =
                 (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 2
