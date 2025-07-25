@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using RotObj;
 using RotParams;
 using Unity.Properties;
 using UnityEngine;
@@ -13,6 +14,12 @@ namespace RotContainers
         #region Variables
         [SerializeField] private bool InitializeOnAwake = false;
         [SerializeField] private bool InitializeOnStart = true; 
+        #endregion Variables
+        
+        #region RotObjCot
+        [SerializeField] private GameObject rotObjCotPrefab; 
+        [SerializeField] private RotObjCot rotObjCot; 
+        #endregion RotObjCot
         
         #region UISetup
         [SerializeField] private UIDocument uiDocument;
@@ -89,7 +96,7 @@ namespace RotContainers
         }
         #endregion Cam
         
-        #region TypedRotationContainers
+        #region TypedRotCots
         private RotCot_GenericBase activeRotCot;
         private System.Type activeRotCotType; 
         
@@ -99,9 +106,9 @@ namespace RotContainers
         [SerializeField] private RotCot_Matrix rotCot_Matrix;
         
         private List<RotCot_GenericBase> rotCotsList => new List<RotCot_GenericBase>(){rotCot_AxisAngle, rotCot_Quaternion, rotCot_Euler, rotCot_Matrix};
-        #endregion TypedRotationContainers
+        #endregion TypedRotCots
 
-        public RotParams_Base RotParams_Generic
+        public RotParams_Base ActiveRotParams_Generic
         {
             get => activeRotCot.GetRotParams_Generic(); 
             set => activeRotCot.SetRotParams_Generic(value);
@@ -126,6 +133,17 @@ namespace RotContainers
         
         [ContextMenu("Init Rotation Container")]
         private void SelfInitialize()
+        {
+            InitUI();
+            InitVisCam(); 
+            InitRotObjCot();
+            
+            InitializeRotCots(); 
+            _selectedTypeIndex = 1; 
+            ActivateRotCot(rotCot_Quaternion);
+        }
+
+        private void InitUI()
         {
             if (uiDocument == null)
             {
@@ -175,7 +193,10 @@ namespace RotContainers
                     return; 
                 }
             }
-            
+        }
+
+        private void InitVisCam()
+        {
             if (VisCamera ==null)
             {
                 VisCamera = Instantiate(cameraPrefab, this.transform).transform.GetChild(0).GetComponent<Camera>();
@@ -186,17 +207,21 @@ namespace RotContainers
             {
                 cameraRotationPivot = VisCamera.transform.parent.gameObject; 
             }
+        }
 
-            InitializeRotCots(); 
-            _selectedTypeIndex = 1; 
-            ActivateRotCot(rotCot_Quaternion);
+        private void InitRotObjCot()
+        {
+            if (rotObjCot == null)
+            {
+                rotObjCot = Instantiate(rotObjCotPrefab, this.transform).GetComponent<RotObjCot>(); //!ZyKa this where the bug happens
+            }
         }
         
         private void InitializeRotCots()
         {
             foreach (RotCot_GenericBase rotCot in rotCotsList)
             {
-                rotCot.Initialize(this.transform, _uiRotParamsSlot);
+                rotCot.Initialize(this.transform, _uiRotParamsSlot, rotObjCot);
                 rotCot.enabled = false; 
             }
         }
@@ -206,9 +231,9 @@ namespace RotContainers
         [CreateProperty]
         public List<string> SelectableRotationTypes => new List<string>
         {
-            "AxisAngle", 
-            "Quaternion", 
-            "EulerAngles", 
+            "AxisAngle",
+            "Quaternion",
+            "EulerAngles",
             "Matrix"
         };
 
@@ -255,6 +280,7 @@ namespace RotContainers
             }
         }
 
+        #region SwitchRotParamType
         private void SwitchRotParamType(System.Type newType)
         {
             if (activeRotCotType == newType)
@@ -302,7 +328,9 @@ namespace RotContainers
             rotCot.enabled = true;
             activeRotCotType = rotCot.GetType(); 
         }
+        #endregion SwitchRotParamType
         
+        #region CameraInteraction
         private void RotateCamera(float deltaX, float deltaY)
         {
             cameraRotationPivot.transform.localEulerAngles += new Vector3(deltaY, deltaX, 0); 
@@ -312,19 +340,27 @@ namespace RotContainers
         {
             visCamera.transform.localPosition += Vector3.back * deltaZoom; 
         }
-
+        #endregion CameraInteraction
+        
+        #region ApplyRotation
         [ContextMenu("ApplyObjectRotation")]
-        private void ApplyRotation()
+        public void ApplyRotation()
         {
-            activeRotCot.GetRotVis_Generic().ApplyObjectRotation();
+            rotObjCot.ApplyObjectRotation();
         }
 
-        [ContextMenu("ResetAppliedObjectRotation")]
-        private void ResetAppliedObjectRotation()
+        public RotParams_Base GetAppliedRotation()
         {
-            activeRotCot.GetRotVis_Generic().ResetAppliedObjectRotation();
+            //!ZyKa fix this to use the actual class of the current RotParams
+            return new RotParams_Quaternion(rotObjCot.GetAppliedRotation()); //!ZyKa proper conversion functions 
         }
         
+        [ContextMenu("ResetAppliedObjectRotation")]
+        public void ResetAppliedObjectRotation()
+        {
+            rotObjCot.ResetAppliedObjectRotation(); 
+        }
+        #endregion ApplyRotation
         
         [CreateProperty]
         public bool ParamsResetFunction
@@ -336,8 +372,6 @@ namespace RotContainers
                 activeRotCot.GetRotVis_Generic().VisUpdate();
             }
         }
-
-        #endregion Variables
         #endregion userInteraction
     }
 }

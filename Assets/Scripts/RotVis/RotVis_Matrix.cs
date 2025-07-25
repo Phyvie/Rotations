@@ -47,7 +47,6 @@ namespace RotationVisualisation
             {
                 visVectorForward.Value = rotParams.ZVector;
             }
-            VisUpdateRotationObject();
         }
 
         #if UNITY_EDITOR

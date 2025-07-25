@@ -25,7 +25,7 @@
                 <engine:Label text="x" name="Lbl__Multiply" class="centeredText" style="-unity-font-style: bold; width: 20px;" />
                 <engine:VisualElement name="AxisContainer" class="container--verticalspacearound" style="flex-grow: 1; width: 45%;">
                     <engine:FloatField value="42.2" name="X" label="x" class="myFloatField">
-                        <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
+                        <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-3753015318093942961&amp;guid=8e1dbca73a7e8f643b301ac970d693f5&amp;type=3#arrow-left&quot;);">
                             <Bindings>
                                 <engine:DataBinding property="value" data-source-path="XLocked" binding-mode="TwoWay" />
                             </Bindings>
@@ -35,7 +35,7 @@
                         </Bindings>
                     </engine:FloatField>
                     <engine:FloatField value="42.2" name="Y" label="y" class="myFloatField">
-                        <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
+                        <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-3753015318093942961&amp;guid=8e1dbca73a7e8f643b301ac970d693f5&amp;type=3#arrow-left&quot;);">
                             <Bindings>
                                 <engine:DataBinding property="value" data-source-path="YLocked" binding-mode="TwoWay" />
                             </Bindings>
@@ -45,7 +45,7 @@
                         </Bindings>
                     </engine:FloatField>
                     <engine:FloatField value="42.2" name="Z" label="z" class="myFloatField">
-                        <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
+                        <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-3753015318093942961&amp;guid=8e1dbca73a7e8f643b301ac970d693f5&amp;type=3#arrow-left&quot;);">
                             <Bindings>
                                 <engine:DataBinding property="value" data-source-path="ZLocked" binding-mode="TwoWay" />
                             </Bindings>

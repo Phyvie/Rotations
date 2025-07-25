@@ -14,6 +14,8 @@ namespace Visualisation
         [FormerlySerializedAs("_negativeAngleColor")] [SerializeField] private Color _negativeAngleColorOverwrite;
         [SerializeField] private M_CircleSector torusMaterial;
         [SerializeField] private M_CircleSector circleMaterial;
+
+        [SerializeField] private bool autoAdjustForwardForUp = true; 
         #endregion Variables
         
         #region Properties
@@ -180,7 +182,11 @@ namespace Visualisation
 
         private void AutoAdjustForwardAxisForUpAxis()
         {
-            if (Mathf.Abs(GlobalUpAxis.x) < 0.1 || Mathf.Abs(GlobalUpAxis.y) < 0.1 || Mathf.Abs(GlobalUpAxis.z) < 0.1)
+            if (!autoAdjustForwardForUp)
+            {
+                return; 
+            }
+            if (Vector3.Dot(GlobalUpAxis, Vector3.forward) > 0.9 || Vector3.Dot(GlobalUpAxis, Vector3.up) > 0.9 || Vector3.Dot(GlobalUpAxis, Vector3.right) > 0.9)
             {
                 Vector3 rightCross = Vector3.Cross(GlobalUpAxis, GlobalUpAxis.CyclicAxisRotation());
                 GlobalForwardAxis = Vector3.Cross(rightCross, GlobalUpAxis); 

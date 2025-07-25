@@ -127,14 +127,26 @@ namespace RotParams
         #endregion Properties
 
         #region Constructors
+        public override void CopyValues(RotParams_Base toCopy)
+        {
+            if (toCopy is RotParams_Matrix rotParams)
+            {
+                this.InternalMatrix = new Matrix(rotParams.InternalMatrix);
+            }
+            else
+            {
+                CopyValues(toCopy.ToAxisAngleParams());
+            }
+        }
+
         public RotParams_Matrix()
         {
             InternalMatrix = new Matrix(Matrix.Identity(3)); 
         }
         
-        public RotParams_Matrix(RotParams_Matrix copiedRotParamsMatrix)
+        public RotParams_Matrix(RotParams_Matrix toCopy)
         {
-            InternalMatrix = new Matrix(copiedRotParamsMatrix.InternalMatrix);
+            InternalMatrix = new Matrix(toCopy.InternalMatrix);
         }
 
         public RotParams_Matrix(Matrix matrix)
@@ -150,6 +162,11 @@ namespace RotParams
         public static RotParams_Matrix TransformIdentity()
         {
             return new RotParams_Matrix(Matrix.Identity(4)); 
+        }
+        
+        public override RotParams_Base GetIdentity()
+        {
+            return RotationIdentity();
         }
         #endregion //Constructors
 
@@ -203,11 +220,6 @@ namespace RotParams
         #endregion //Comparison
         
         #region operators&arithmetic
-        public RotParams_Matrix Inverse()
-        {
-            return new RotParams_Matrix(InternalMatrix.Inverse()); 
-        }
-        
         public static RotParams_Matrix operator*(RotParams_Matrix matrix, RotParams_Matrix second)
         {
             return new RotParams_Matrix(matrix.InternalMatrix * second.InternalMatrix); 
@@ -232,10 +244,26 @@ namespace RotParams
         {
             return new RotParams_Matrix(matrix.InternalMatrix * scalar);
         }
+        
+        public RotParams_Matrix Inverse()
+        {
+            return new RotParams_Matrix(InternalMatrix.Inverse()); 
+        }
+
+        public RotParams_Matrix Transpose()
+        {
+            return new RotParams_Matrix(InternalMatrix.Transpose());
+        }
         #endregion operators&arithmetic
         
         #region Converters
-        public override RotParams_EulerAngles ToEulerAngleRotation()
+
+        public override RotParams_Base ToSelfType(RotParams_Base toConvert)
+        {
+            return toConvert.ToMatrixParams(); 
+        }
+
+        public override RotParams_EulerAngles ToEulerParams()
         {
             RotParams_EulerAngles newRotParamsEulerAngles = new RotParams_EulerAngles(0, 0, 0);
             newRotParamsEulerAngles.OuterAngle = Mathf.Atan2(this[0, 1], this[1, 1]);
@@ -244,12 +272,12 @@ namespace RotParams
             return newRotParamsEulerAngles; 
         }
 
-        public override RotParams_Quaternion ToQuaternionRotation()
+        public override RotParams_Quaternion ToQuaternionParams()
         {
             if (!isRotationMatrix)
             {
-                Debug.LogWarning($"{nameof(ToQuaternionRotation)} error: Matrix is not a RotationMatrix, getting Quaternion for XYRotationMatrix");
-                return ToRotationMatrixFromTwoAxes(primaryAxisIndex, secondaryAxisIndex).ToQuaternionRotation(); //-ZyKa this should use GetClosestRotationMatrix
+                Debug.LogWarning($"{nameof(ToQuaternionParams)} error: Matrix is not a RotationMatrix, getting Quaternion for XYRotationMatrix");
+                return ToRotationMatrixFromTwoAxes(primaryAxisIndex, secondaryAxisIndex).ToQuaternionParams(); //-ZyKa this should use GetClosestRotationMatrix
             }
 
             float trace = InternalMatrix.Trace();
@@ -294,16 +322,16 @@ namespace RotParams
             return new RotParams_Quaternion(w, x, y, z);
         }
 
-        public override RotParams_Matrix ToMatrixRotation()
+        public override RotParams_Matrix ToMatrixParams()
         {
             return new RotParams_Matrix(InternalMatrix); 
         }
 
-        public override RotParams_AxisAngle ToAxisAngleRotation()
+        public override RotParams_AxisAngle ToAxisAngleParams()
         {
-            return ToQuaternionRotation().ToAxisAngleRotation(); 
+            return ToQuaternionParams().ToAxisAngleParams(); 
         }
-
+        
         public override void ResetToIdentity()
         {
             InternalMatrix = Matrix.Identity(3);
@@ -378,6 +406,17 @@ namespace RotParams
         #endregion //Converters
 
         #region Functions
+        public override RotParams_Base GetInverse()
+        {
+            return Inverse(); 
+        }
+
+        protected override RotParams_Base Concatenate_Implementation(RotParams_Base otherRotation, bool otherFirst = false)
+        {
+            return otherFirst ? 
+                this * (otherRotation as RotParams_Matrix) : 
+                (otherRotation as RotParams_Matrix) * this; 
+        }
         
         public override Vector3 RotateVector(Vector3 inVector)
         {

@@ -187,15 +187,34 @@ namespace RotParams
         #endregion Properties
         
         #region Constructors
+        public override RotParams_Base GetIdentity()
+        {
+            return new RotParams_EulerAngles(); 
+        }
+        
+        public override void CopyValues(RotParams_Base toCopy)
+        {
+            if (toCopy is RotParams_EulerAngles rotParams)
+            {
+                this.Outer = new _RotParams_EulerAngleGimbalRing(rotParams.Outer); 
+                this.Middle = new _RotParams_EulerAngleGimbalRing(rotParams.Middle); 
+                this.Inner = new _RotParams_EulerAngleGimbalRing(rotParams.Inner); 
+            }
+            else
+            {
+                CopyValues(toCopy.ToEulerParams());
+            }
+        }
+        
+        public RotParams_EulerAngles(RotParams_EulerAngles toCopy) : 
+            this(toCopy.outer, toCopy.middle, toCopy.inner, bCopyRings: true)
+        {
+        }
+        
         public RotParams_EulerAngles() : this(
             new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Yaw, AngleType.Degree, 0), 
             new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Pitch, AngleType.Degree, 0), 
             new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Roll, AngleType.Degree, 0))
-        {
-        }
-
-        public RotParams_EulerAngles(RotParams_EulerAngles toCopy) : 
-            this(toCopy.outer, toCopy.middle, toCopy.inner, bCopyRings: true)
         {
         }
         
@@ -290,12 +309,18 @@ namespace RotParams
         #endregion GimbalOperations
 
         #region Converters
-        public override RotParams_EulerAngles ToEulerAngleRotation()
+
+        public override RotParams_Base ToSelfType(RotParams_Base toConvert)
+        {
+            return toConvert.ToEulerParams(); 
+        }
+
+        public override RotParams_EulerAngles ToEulerParams()
         {
             return new RotParams_EulerAngles(this); 
         }
 
-        public override RotParams_Quaternion ToQuaternionRotation()
+        public override RotParams_Quaternion ToQuaternionParams()
         {
             RotParams_Quaternion result = new RotParams_Quaternion();
             foreach (_RotParams_EulerAngleGimbalRing rotation in gimbal.Reverse())
@@ -341,7 +366,7 @@ namespace RotParams
         */
         
         //ToQuaternionRotation.ToMatrixRotation is cheaper, because converting from EulerAngles to another RotationParent requires combining and inversing multiple rotation, which is cheaper in Quaternions
-        public override RotParams_Matrix ToMatrixRotation() //TODO: test this function
+        public override RotParams_Matrix ToMatrixParams() //TODO: test this function
         {
             RotParams_Matrix result = new RotParams_Matrix(RotParams_Matrix.RotationIdentity());
             foreach (_RotParams_EulerAngleGimbalRing rotation in gimbal)
@@ -383,10 +408,20 @@ namespace RotParams
         }
         */
         
-        public override RotParams_AxisAngle ToAxisAngleRotation()
+        public override RotParams_AxisAngle ToAxisAngleParams()
         {
-            return ToQuaternionRotation().ToAxisAngleRotation(); 
+            return ToQuaternionParams().ToAxisAngleParams(); 
         }
+        
+        public override RotParams_Base GetInverse()
+        {
+            Debug.LogWarning("Cannot get inverse of RotParams_EulerAngles, need to convert to RotParams_Matrix");
+            
+            RotParams_Matrix asMatrix = ToMatrixParams();
+
+            return asMatrix.Transpose().ToEulerParams(); 
+        }
+
         #endregion Converters
 
         #region operators
@@ -428,6 +463,17 @@ namespace RotParams
         #endregion operators
         
         #region functions
+
+        protected override RotParams_Base Concatenate_Implementation(RotParams_Base otherRotation, bool otherFirst = false)
+        {
+            Debug.LogWarning("Cannot concatenate RotParams_EulerAngles, converting to RotationMatrix");
+            
+            RotParams_Matrix thisAsMatrix = ToMatrixParams();
+            RotParams_Matrix otherAsMatrix = otherRotation.ToMatrixParams();
+            
+            return thisAsMatrix.Concatenate(otherAsMatrix, otherFirst).ToEulerParams();
+        }
+
         public override void ResetToIdentity()
         {
             outer.AngleInRadian = 0; 

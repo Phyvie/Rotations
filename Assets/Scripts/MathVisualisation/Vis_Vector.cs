@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Visualisation
@@ -5,10 +6,13 @@ namespace Visualisation
     [SelectionBase]
     public class Vis_Vector : MonoBehaviour
     {
+        #region Variables
         [SerializeField] private Vector3 value; 
-        [SerializeField] private GameObject vectorLength; 
-        [SerializeField] private GameObject vectorHead;
+        [SerializeField] private GameObject vectorLength;
+        [SerializeField] private GameObject vectorHead; 
+        #endregion Variables
         
+        #region Properties
         public Vector3 Value
         {
             get => value;
@@ -30,38 +34,9 @@ namespace Visualisation
                 vectorLength.GetComponent<M_VectorColour>().Color = value;
             }
         }
-
-        [System.Serializable]
-        public class VectorScalingData
-        {
-            public float lengthScale; 
-            
-            public float scalingLowerClamp; 
-            public float scalingUpperClamp;
-            
-            public float minThickness;
-            public float maxThickness;
-
-            public Vector3 minHeadSize; 
-            public Vector3 maxHeadSize;
-        }
-        [SerializeField] private VectorScalingData _scalingData;
+        #endregion Properties
         
-        public Vector3 HeadSize
-        {
-            get => vectorHead.transform.localScale;
-            set => vectorHead.transform.localScale = value;
-        }
-        
-        public float LengthThickness
-        {
-            get => vectorLength.transform.localScale.y;
-            set
-            {
-                vectorLength.transform.localScale = new Vector3(vectorLength.transform.localScale.x, value, value);
-            }
-        }
-
+        #region GetSetFunctions
         public void SetLength(float length)
         {
             vectorLength.transform.localScale = new Vector3(length * _scalingData.lengthScale, 1, 1); 
@@ -92,7 +67,51 @@ namespace Visualisation
         {
             SetDirectionFromQuaternion(Quaternion.Euler(pitch, yaw, roll));
         }
+        #endregion GetSetFunctions
 
+        [ExecuteAlways]
+        private void Update()
+        {
+            VisUpdate(); 
+        }
+
+        private void VisUpdate()
+        {
+            Value = value; 
+        }
+
+        #region VisualScaling
+        [System.Serializable]
+        public class VectorScalingData
+        {
+            public float lengthScale; 
+            
+            public float scalingLowerClamp; 
+            public float scalingUpperClamp;
+            
+            public float minThickness;
+            public float maxThickness;
+
+            public Vector3 minHeadSize; 
+            public Vector3 maxHeadSize;
+        }
+        [SerializeField] private VectorScalingData _scalingData;
+        
+        public Vector3 HeadSize
+        {
+            get => vectorHead.transform.localScale;
+            set => vectorHead.transform.localScale = value;
+        }
+        
+        public float LengthThickness
+        {
+            get => vectorLength.transform.localScale.y;
+            set
+            {
+                vectorLength.transform.localScale = new Vector3(vectorLength.transform.localScale.x, value, value);
+            }
+        }
+        
         public void SetScaling(float alpha)
         {
             if (Mathf.Abs(_scalingData.scalingUpperClamp) + Mathf.Abs(_scalingData.scalingLowerClamp) > 0.001)
@@ -103,7 +122,8 @@ namespace Visualisation
                     (alpha - _scalingData.scalingLowerClamp) / (_scalingData.scalingUpperClamp - _scalingData.scalingLowerClamp)); 
             }
         }
-
+        #endregion VisualScaling
+        
         #if UNITY_EDITOR
         private void OnValidate()
         {

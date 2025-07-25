@@ -41,7 +41,7 @@ namespace RotationVisualisation
             set
             {
                 rotParams.RotationVectorInRadian = value;
-                VisUpdate();
+                VisUpdate(); 
             }
         }
 
@@ -53,8 +53,8 @@ namespace RotationVisualisation
 
         public float AngleInRadian
         {
-            get => rotParams.AngleRadianInRadian; 
-            set => rotParams.AngleRadianInRadian = value;
+            get => rotParams.AngleInRadian; 
+            set => rotParams.AngleInRadian = value;
         }
 
         public override void VisUpdate()
@@ -77,7 +77,7 @@ namespace RotationVisualisation
             vis_PlaneArc.NegativeAngleColor = 
                 ColorPalette.RotationPalette.InterpColorForAxisAndSign(NormalisedAxis, false);
             
-            VisUpdateRotationObject();
+            Debug.Log($"!ZyKa: {nameof(RotVis_AxisAngle)}.{nameof(VisUpdate)}");
         }
 
         #if UNITY_EDITOR

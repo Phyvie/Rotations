@@ -108,7 +108,18 @@ namespace RotParams
         [CreateProperty]
         public Vector3 NormalizedAxis
         {
-            get => new Vector3(X, Y, Z).normalized;
+            get
+            {
+                Vector3 axis = new Vector3(X, Y, Z);
+                if (axis.sqrMagnitude > 0.0001)
+                {
+                    return axis.normalized;
+                }
+                else
+                {
+                    return Vector3.forward; 
+                }
+            }
             set
             {
                 
@@ -162,7 +173,7 @@ namespace RotParams
         [CreateProperty]
         public float Angle
         {
-            get => 2 * Mathf.Acos(W);
+            get => 2 * Mathf.Acos(Mathf.Clamp(W, 0, 1));
             set
             {
                 if (Mathf.Approximately(Angle, value))
@@ -208,6 +219,24 @@ namespace RotParams
         #endregion Properties
         
         #region Constructors
+        public override void CopyValues(RotParams_Base toCopy)
+        {
+            if (toCopy is RotParams_Quaternion rotParams)
+            {
+                this.lockableWXYZ = new LockableVector(new List<LockableFloat>()
+                {
+                    new LockableFloat(W, WLocked),
+                    new LockableFloat(X, XLocked), 
+                    new LockableFloat(Y, YLocked),
+                    new LockableFloat(Z, ZLocked)
+                }); 
+            }
+            else
+            {
+                CopyValues(toCopy.ToAxisAngleParams());
+            }
+        }
+        
         public RotParams_Quaternion()
         {
         }
@@ -222,6 +251,17 @@ namespace RotParams
             lockableWXYZ.SetVector(new List<float>(){w, x, y, z});
             lockableWXYZ.EnforceLength = enforceLength;
             lockableWXYZ.TargetLength = targetLength;
+        }
+
+        public RotParams_Quaternion(Quaternion unityQuaternion)
+        {
+            lockableWXYZ.SetVector(new List<float>()
+            {
+                unityQuaternion.w, 
+                unityQuaternion.x, 
+                unityQuaternion.y, 
+                unityQuaternion.z
+            });
         }
 
         public RotParams_Quaternion(Vector3 inAxis, float inAngle, bool enforceLength = true, float targetLength = 1)
@@ -248,7 +288,12 @@ namespace RotParams
         #region staticQuaternions
         private static readonly RotParams_Quaternion _xdentity = new RotParams_Quaternion(1, 0, 0, 0);
 
-        public static RotParams_Quaternion GetIdentity()
+        public override RotParams_Base GetIdentity()
+        {
+            return GetQuatIdentity();
+        }
+        
+        public static RotParams_Quaternion GetQuatIdentity()
         {
             return new RotParams_Quaternion(_xdentity);
         }
@@ -440,7 +485,9 @@ namespace RotParams
         
         public RotParams_Quaternion Inverse()
         {
-            return new RotParams_Quaternion(W, -X, -Y, -Z, false) / Size;
+            return new RotParams_Quaternion(
+                W, -X, -Y, -Z, false) 
+                   / Size;
         }
 
         public RotParams_Quaternion Conjugate()
@@ -456,17 +503,23 @@ namespace RotParams
         #endregion operators
         
         #region Converters
-        public override RotParams_EulerAngles ToEulerAngleRotation()
+
+        public override RotParams_Base ToSelfType(RotParams_Base toConvert)
         {
-            return ToMatrixRotation().ToEulerAngleRotation();
+            return toConvert.ToQuaternionParams(); 
         }
 
-        public override RotParams_Quaternion ToQuaternionRotation()
+        public override RotParams_EulerAngles ToEulerParams()
+        {
+            return ToMatrixParams().ToEulerParams();
+        }
+
+        public override RotParams_Quaternion ToQuaternionParams()
         {
             return new RotParams_Quaternion(W, X, Y, Z);
         }
 
-        public override RotParams_Matrix ToMatrixRotation()
+        public override RotParams_Matrix ToMatrixParams()
         {
             return new RotParams_Matrix(
                 new float[3, 3]
@@ -478,7 +531,7 @@ namespace RotParams
             );
         }
 
-        public override RotParams_AxisAngle ToAxisAngleRotation()
+        public override RotParams_AxisAngle ToAxisAngleParams()
         {
             return new RotParams_AxisAngle(NormalizedAxis, Angle);
         }
@@ -490,6 +543,18 @@ namespace RotParams
             return $"({W}, {X}, {Y}, {Z})";
         }
         
+        public override RotParams_Base GetInverse()
+        {
+            return Inverse(); 
+        }
+        
+        protected override RotParams_Base Concatenate_Implementation(RotParams_Base otherRotation, bool otherFirst = false)
+        {
+            return otherFirst ? 
+                this * (otherRotation as RotParams_Quaternion) :
+                (otherRotation as RotParams_Quaternion) * this;
+        }
+
         public override void ResetToIdentity()
         {
             lockableWXYZ.SetVector(new List<float>(new float[] { 1, 0, 0, 0}));
@@ -518,7 +583,9 @@ namespace RotParams
             return sum;
         }
 
-        public static RotParams_Quaternion Slerp(RotParams_Quaternion q0, RotParams_Quaternion q1, float alpha, bool shortestPathCorrection = false)
+        public static RotParams_Quaternion Slerp(
+            RotParams_Quaternion q0, RotParams_Quaternion q1, float alpha, 
+            bool shortestPathCorrection = false)
         {
             float dot = Dot(q0, q1);
             if (dot < 0 && shortestPathCorrection)
@@ -544,7 +611,10 @@ namespace RotParams
             return result;
         }
 
-        public static RotParams_Quaternion Squad(RotParams_Quaternion q0, RotParams_Quaternion q1, RotParams_Quaternion outQ1, RotParams_Quaternion inQ2, float alpha)
+        public static RotParams_Quaternion Squad(
+            RotParams_Quaternion q0, RotParams_Quaternion q1, 
+            RotParams_Quaternion outQ1, RotParams_Quaternion inQ2, 
+            float alpha)
         {
             return Slerp(Slerp(q0, q1, alpha), Slerp(outQ1, inQ2, alpha), 2*alpha*(1-alpha));
         }

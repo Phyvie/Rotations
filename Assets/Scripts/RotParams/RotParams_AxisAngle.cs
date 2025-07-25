@@ -35,7 +35,7 @@ namespace RotParams
             }
         }
         
-        public float AngleRadianInRadian
+        public float AngleInRadian
         {
             get => typedAngle.AngleInRadian;
             set
@@ -175,18 +175,18 @@ namespace RotParams
         [CreateProperty]
         public Vector3 RotationVectorInRadian
         {
-            get => NormalisedAxis * AngleRadianInRadian;
+            get => NormalisedAxis * AngleInRadian;
             set
             {
                 if (value.sqrMagnitude > 0)
                 {
                     NormalisedAxis = value.normalized;
-                    AngleRadianInRadian = value.magnitude; 
+                    AngleInRadian = value.magnitude; 
                 }
                 else
                 {
                     NormalisedAxis = Vector3.zero;
-                    AngleRadianInRadian = 0; 
+                    AngleInRadian = 0; 
                 }
                 OnPropertyChanged();
             }
@@ -197,6 +197,10 @@ namespace RotParams
             get => NormalisedAxis * typedAngle; 
             set 
             {
+                if ((value - RotationVectorInCurrentUnit).sqrMagnitude < 0.001f)
+                {
+                    return; 
+                }
                 if (value.sqrMagnitude > 0)
                 {
                     typedAngle.AngleInCurrentUnit = value.magnitude;
@@ -219,6 +223,23 @@ namespace RotParams
         #endregion Properties
         
         #region Constructors
+        public override void CopyValues(RotParams_Base toCopy)
+        {
+            if (toCopy is RotParams_AxisAngle rotParams)
+            {
+                this.NormalisedAxis = rotParams.NormalisedAxis;
+                this.AngleInRadian = rotParams.AngleInRadian; 
+            }
+            else
+            {
+                CopyValues(toCopy.ToAxisAngleParams());
+            }
+        }
+
+        public RotParams_AxisAngle(RotParams_AxisAngle toCopy) : this(toCopy.NormalisedAxis, toCopy.AngleInRadian)
+        {
+        }
+        
         public RotParams_AxisAngle(bool enforceNormalisation = true, float targetLength = 1)
         {
             _axis.EnforceLength = enforceNormalisation;
@@ -235,7 +256,7 @@ namespace RotParams
         {
         }
 
-        public RotParams_AxisAngle(Vector3 inAxis, float inAngleRadian, bool enforceNormalisation = true, float targetLength = 1)
+        public RotParams_AxisAngle(Vector3 inAxis, float inAngleInRadian, bool enforceNormalisation = true, float targetLength = 1)
         {
             List<float> axis;
             if (inAxis.sqrMagnitude > 0.0001)
@@ -248,7 +269,7 @@ namespace RotParams
                 axis = new List<float>() { 1, 0, 0 }; 
             }
             _axis.SetVector(axis);
-            AngleRadianInRadian = inAngleRadian;
+            AngleInRadian = inAngleInRadian;
             
             _axis.EnforceLength = enforceNormalisation;
             _axis.TargetLength = targetLength;
@@ -257,28 +278,33 @@ namespace RotParams
         
         #region Converters
         //AxisAngleRotation.ToEulerAngle() is the same as ToQuaternionRotation().ToEulerAngleRotation()
-        public override  RotParams_EulerAngles ToEulerAngleRotation()
+        public override RotParams_Base ToSelfType(RotParams_Base toConvert)
         {
-            Debug.LogWarning("AxisAngleRotation.ToEulerAngle() is the same as ToQuaternionRotation().ToEulerAngleRotation()");
-            return ToQuaternionRotation().ToEulerAngleRotation(); 
+            return toConvert.ToAxisAngleParams(); 
         }
 
-        public override RotParams_Quaternion ToQuaternionRotation()
+        public override  RotParams_EulerAngles ToEulerParams()
         {
-            RotParams_Quaternion asQuat = new RotParams_Quaternion(NormalisedAxis, AngleRadianInRadian); 
+            Debug.LogWarning("AxisAngleRotation.ToEulerAngle() is the same as ToQuaternionRotation().ToEulerAngleRotation()");
+            return ToQuaternionParams().ToEulerParams(); 
+        }
+
+        public override RotParams_Quaternion ToQuaternionParams()
+        {
+            RotParams_Quaternion asQuat = new RotParams_Quaternion(NormalisedAxis, AngleInRadian); 
             return asQuat; 
         }
 
         //AxisAngleRotation.ToMatrixRotation() is the same as ToQuaternionRotation().ToMatrixRotation()
-        public override RotParams_Matrix ToMatrixRotation()
+        public override RotParams_Matrix ToMatrixParams()
         {
             //TODO: understand this formula (maybe visualise?) and correct it to be left-handed (in case it's right-handed)
             float x = NormalisedAxis.x;
             float y = NormalisedAxis.y;
             float z = NormalisedAxis.z;
         
-            float cosTheta = Mathf.Cos(AngleRadianInRadian);
-            float sinTheta = Mathf.Sin(AngleRadianInRadian);
+            float cosTheta = Mathf.Cos(AngleInRadian);
+            float sinTheta = Mathf.Sin(AngleInRadian);
             float oneMinusCosTheta = 1 - cosTheta;
 
             RotParams_Matrix rotParamsMatrix = new RotParams_Matrix(new float[3, 3]); 
@@ -298,16 +324,19 @@ namespace RotParams
             return rotParamsMatrix; 
         }
 
-        public override RotParams_AxisAngle ToAxisAngleRotation()
+        public override RotParams_AxisAngle ToAxisAngleParams()
         {
             return new RotParams_AxisAngle(RotationVectorInRadian); 
         }
         #endregion //Converters
 
         #region operators
-        public static RotParams_AxisAngle operator+(RotParams_AxisAngle rotParamsA, RotParams_AxisAngle rotParamsB)
+        public static RotParams_AxisAngle operator+(
+            RotParams_AxisAngle rotParamsA, RotParams_AxisAngle rotParamsB)
         {
-            return new RotParams_AxisAngle(rotParamsA.RotationVectorInRadian + rotParamsB.RotationVectorInRadian, false); 
+            return new RotParams_AxisAngle(
+                rotParamsA.RotationVectorInRadian + rotParamsB.RotationVectorInRadian, 
+                false); 
         }
 
         public static RotParams_AxisAngle operator *(RotParams_AxisAngle rotParamsA, float alpha)
@@ -330,20 +359,40 @@ namespace RotParams
         public override void ResetToIdentity()
         {
             NormalisedAxis = Vector3.up;
-            AngleRadianInRadian = 0;
+            AngleInRadian = 0;
+        }
+        
+        public override RotParams_Base GetIdentity()
+        {
+            return new RotParams_AxisAngle();
+        }
+
+        public override RotParams_Base GetInverse()
+        {
+            return new RotParams_AxisAngle(-RotationVectorInRadian); 
+        }
+
+        protected override RotParams_Base Concatenate_Implementation(RotParams_Base otherRotation, bool otherFirst)
+        {
+            Debug.LogWarning("AxisAngle cannot be arithmetically concatenated; converting to Quaternion for concatenation calculation"); 
+            
+            RotParams_Quaternion thisQuat = ToQuaternionParams();
+            RotParams_Quaternion otherQuat = otherRotation.ToQuaternionParams();
+
+            return thisQuat.Concatenate(otherQuat, otherFirst).ToAxisAngleParams();
         }
         
         public override Vector3 RotateVector(Vector3 inVector)
         {
             //Rodrigues' rotation formula (righthand-version) TODO: Try to understand it, visualise it and make it left-handed
             Vector3 rotatedVector = 
-                inVector * Mathf.Cos(AngleRadianInRadian) + 
-                Vector3.Cross(NormalisedAxis, inVector) * Mathf.Sin(AngleRadianInRadian) + 
-                NormalisedAxis * Vector3.Dot(NormalisedAxis, inVector) * (1 - Mathf.Cos(AngleRadianInRadian));
+                inVector * Mathf.Cos(AngleInRadian) + 
+                Vector3.Cross(NormalisedAxis, inVector) * Mathf.Sin(AngleInRadian) + 
+                NormalisedAxis * Vector3.Dot(NormalisedAxis, inVector) * (1 - Mathf.Cos(AngleInRadian));
 
             return rotatedVector; 
         }
-        
+
         public static RotParams_AxisAngle LerpAxisAngle(RotParams_AxisAngle rotParamsA, RotParams_AxisAngle rotParamsB, float alpha)
         {
             return rotParamsA * (1 - alpha) + rotParamsB * alpha; 

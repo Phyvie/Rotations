@@ -158,6 +158,7 @@ MonoBehaviour:
   _negativeAngleColorOverwrite: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   torusMaterial: {fileID: 3766871097072832070}
   circleMaterial: {fileID: 6443256106142866425}
+  autoAdjustForwardForUp: 1
   manualSelfRotationSpeed: 50
 --- !u!1 &7746308340713269120
 GameObject:

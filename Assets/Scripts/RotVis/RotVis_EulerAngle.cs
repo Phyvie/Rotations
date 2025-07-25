@@ -63,7 +63,6 @@ namespace RotationVisualisation
             }
             VisUpdateRingRotations();
             VisUpdateShaderPlaneArcsValues();
-            VisUpdateRotationObject(); 
         }
 
         private void VisReset()

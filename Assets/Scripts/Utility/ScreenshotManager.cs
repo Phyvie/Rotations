@@ -5,7 +5,6 @@ using System.IO;
 using RotContainers;
 using RotParams;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Utility
 {
@@ -19,21 +18,26 @@ namespace Utility
         [Serializable]
         public class ViewShot
         {
-            public RenderTexture renderTexture; 
+            public Texture2D texture2D; 
             public RotParams_Base rotParams;
             public string name;
 
-            public ViewShot(RenderTexture renderTexture, RotParams_Base rotParams, string name = null)
+            public ViewShot(Texture2D texture2D, RotParams_Base rotParams, string name = null)
             {
-                this.renderTexture = renderTexture;
+                this.texture2D = texture2D;
                 this.rotParams = rotParams;
-                this.name = String.IsNullOrEmpty(name) ? rotParams.ToString() : name;
+                this.name = string.IsNullOrEmpty(name) ? rotParams.ToString() : name;
             }
         }
         [SerializeField] private List<ViewShot> viewShots = new List<ViewShot>(); 
         
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.F7))
+            {
+                TakeAndSaveSingleScreenshot();
+            }
+            
             if (Input.GetKeyDown(KeyCode.F8))
             {
                 TakeAndSaveSingleViewshot();
@@ -58,23 +62,41 @@ namespace Utility
             {
                 StartScreenShotInterpolation();
             }
+            
+            if (Input.GetKeyDown(KeyCode.Insert))
+            {
+                StartInterpolationOverTime(); 
+            }
         }
 
         [ContextMenu("TakeViewshot")]
         private void TakeViewshot()
         {
             Rect screenshotCameraRectBuffer = screenshotCamera.rect;
-            screenshotCamera.rect = new Rect(0, 0, 1, 1); 
-            
-            RenderTexture screenTexture = new RenderTexture(screenshotSettings.imageWidth, screenshotSettings.imageWidth, 16);
-            screenshotCamera.targetTexture = screenTexture;
-            RenderTexture.active = screenTexture;
+            screenshotCamera.rect = new Rect(0, 0, 1, 1);
+
+            // Render to temporary RT
+            RenderTexture rt = new RenderTexture(screenshotSettings.imageWidth, screenshotSettings.imageHeight, 16);
+            screenshotCamera.targetTexture = rt;
+            RenderTexture.active = rt;
+
             screenshotCamera.Render();
-            
-            viewShots.Add(new ViewShot(screenTexture, comboRotCot.RotParams_Generic));
-            
-            screenshotCamera.rect = screenshotCameraRectBuffer;
+
+            // Read into Texture2D
+            Texture2D tex = new Texture2D(screenshotSettings.imageWidth, screenshotSettings.imageHeight, TextureFormat.RGBA32, false);
+            tex.ReadPixels(new Rect(0, 0, screenshotSettings.imageWidth, screenshotSettings.imageHeight), 0, 0);
+            tex.Apply();
+
+            // Store the Texture2D
+            viewShots.Add(new ViewShot(tex, comboRotCot.ActiveRotParams_Generic));
+
+            // Cleanup
             screenshotCamera.targetTexture = null;
+            RenderTexture.active = null;
+            rt.Release();
+            Destroy(rt);
+
+            screenshotCamera.rect = screenshotCameraRectBuffer;
         }
 
         [ContextMenu("SaveViewshots")]
@@ -95,11 +117,7 @@ namespace Utility
             Texture2D finalTexture = new Texture2D(totalWidth, totalHeight, TextureFormat.RGBA32, false);
             for (int i = 0; i < totalImages; i++)
             {
-                Texture2D singleFrame = new Texture2D(imageWidth, imageHeight, TextureFormat.RGBA32, false);
-                
-                RenderTexture.active = viewShots[i].renderTexture;
-                singleFrame.ReadPixels(new Rect(0, 0, imageWidth, imageHeight), 0, 0);
-                singleFrame.Apply();
+                Texture2D singleFrame = viewShots[i].texture2D;
                 
                 int col = i % columns;
                 int row = i / columns;
@@ -126,10 +144,15 @@ namespace Utility
         {
             for (int i = 0; i < viewShots.Count; i++)
             {
-                viewShots[i].renderTexture.Release();
-                Destroy(viewShots[i].renderTexture);
+                Destroy(viewShots[i].texture2D);
             }
             viewShots.Clear();
+        }
+
+        [ContextMenu("TakeAndSaveSingleScreenshot")]
+        private void TakeAndSaveSingleScreenshot()
+        {
+            ScreenCapture.CaptureScreenshot(screenshotSettings.path + "/" + comboRotCot.ActiveRotParams_Generic.ToString() + ".png");
         }
         
         [ContextMenu("TakeAndSaveCameraViewshot")]
@@ -150,7 +173,7 @@ namespace Utility
             RenderTexture.active = null;
 
             byte[] byteArray = renderedTexture.EncodeToPNG();
-            File.WriteAllBytes($"{Path.Combine(screenshotSettings.path, comboRotCot.RotParams_Generic.ToString())}.png", byteArray);
+            File.WriteAllBytes($"{Path.Combine(screenshotSettings.path, comboRotCot.ActiveRotParams_Generic.ToString())}.png", byteArray);
         
             Destroy(screenTexture);
             Destroy(renderedTexture);
@@ -174,7 +197,7 @@ namespace Utility
             // ResetViewshots(); 
             for (int i = 0; i < interpolationSettings.InterpolationCount; i++)
             {
-                comboRotCot.RotParams_Generic = interpolationSettings.Interpolate(interpolationSettings.getInterpolationAlpha(i));
+                comboRotCot.ActiveRotParams_Generic = interpolationSettings.Interpolate(interpolationSettings.GetInterpolationAlpha(i));
                 yield return new WaitForEndOfFrame();
                 
                 TakeViewshot();
@@ -184,12 +207,83 @@ namespace Utility
             cor_Interpolation = null; 
         }
 
+        [ContextMenu("InterpolateOverTime")]
+        private void StartInterpolationOverTime()
+        {
+            if (cor_Interpolation == null)
+            {
+                cor_Interpolation = StartCoroutine(InterpolationOverTime(interpolationSettings));
+            }
+        }
+
+        private IEnumerator InterpolationOverTime(InterpolationSettings interpolationSettings)
+        {
+            RotParams_Base storedAppliedRotation = comboRotCot.GetAppliedRotation();
+            
+            RotParams_Base startingParams = interpolationSettings.Interpolate(interpolationSettings.GetInterpolationAlpha(0));
+            RotParams_Base startingInverse = startingParams.GetInverse(); 
+            
+            if (interpolationSettings.visPath)
+            {
+                comboRotCot.ActiveRotParams_Generic = startingParams; 
+                comboRotCot.ApplyRotation();
+                
+                //+ZyKa this is a bad hack to ensure that the Axis is setup correctly
+                RotParams_Base interpolated = interpolationSettings.Interpolate(0.0001f);
+                if (interpolationSettings.visPath)
+                {
+                    interpolated = interpolated.Concatenate(startingInverse, true); 
+                }
+                comboRotCot.ActiveRotParams_Generic = interpolated;
+            }
+
+            yield return new WaitForSeconds(interpolationSettings.orientationHoldTime); 
+            
+            for (int i = 0; i < interpolationSettings.InterpolationCount; i++)
+            {
+                RotParams_Base interpolated = interpolationSettings.Interpolate(interpolationSettings.GetInterpolationAlpha(i));
+                if (interpolationSettings.visPath)
+                {
+                    interpolated = interpolated.Concatenate(startingInverse, true); 
+                }
+                comboRotCot.ActiveRotParams_Generic = interpolated; 
+                yield return new WaitForSeconds(interpolationSettings.InterpolationStepTime); 
+            }
+
+            if (interpolationSettings.pingPongInterpolation)
+            {
+                yield return new WaitForSeconds(interpolationSettings.orientationHoldTime);
+                
+                for (int i = interpolationSettings.InterpolationCount - 1; i > 0; i--) //+ZyKa it should end at i = 0, but I need this bad hack to ensure that the axis-ring is oriented correctly
+                {
+                    RotParams_Base interpolated = interpolationSettings.Interpolate(interpolationSettings.GetInterpolationAlpha(i));
+                    if (interpolationSettings.visPath)
+                    {
+                        interpolated = interpolated.Concatenate(startingInverse, true); 
+                    }
+                    comboRotCot.ActiveRotParams_Generic = interpolated; 
+                    yield return new WaitForSeconds(interpolationSettings.InterpolationStepTime);
+                }
+            }
+
+            yield return new WaitForSeconds(interpolationSettings.orientationHoldTime); 
+            
+            if (interpolationSettings.visPath)
+            {
+                comboRotCot.ResetAppliedObjectRotation(); 
+                comboRotCot.ActiveRotParams_Generic = storedAppliedRotation;
+                comboRotCot.ApplyRotation(); 
+            }
+            
+            cor_Interpolation = null; 
+        }
+
         [SerializeField] private int interpolationStep; 
         [ContextMenu("SetToNextInterpolationStep")]
         private void SetToInterpolationStep()
         {
-            float alpha = interpolationSettings.getInterpolationAlpha(interpolationStep); 
-            comboRotCot.RotParams_Generic = interpolationSettings.Interpolate(alpha);
+            float alpha = interpolationSettings.GetInterpolationAlpha(interpolationStep); 
+            comboRotCot.ActiveRotParams_Generic = interpolationSettings.Interpolate(alpha);
         }
     }
 }

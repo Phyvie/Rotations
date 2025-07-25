@@ -9,9 +9,9 @@
             <engine:Label text="Unit Quaternion" />
             <engine:VisualElement name="ManualQuaternionVector" class="container--horizontalspacearound wxyz centeredText" style="flex-grow: 1;">
                 <engine:FloatField value="42.2" name="W" label="r" class="myFloatField">
-                    <UI_Toolkit.CustomControls.LockableValueToggle value="false" class="valueLocker">
+                    <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-3753015318093942961&amp;guid=8e1dbca73a7e8f643b301ac970d693f5&amp;type=3#arrow-left&quot;);">
                         <Bindings>
-                            <engine:DataBinding property="value" data-source-path="_w.isLocked" binding-mode="TwoWay" />
+                            <engine:DataBinding property="value" data-source-path="lockableWXYZ.values[0].isLocked" binding-mode="TwoWay" />
                         </Bindings>
                     </UI_Toolkit.CustomControls.LockableValueToggle>
                     <Bindings>
@@ -20,9 +20,9 @@
                 </engine:FloatField>
                 <engine:Label text="+" name="plus" />
                 <engine:FloatField value="42.2" name="X" label="i" class="myFloatField">
-                    <UI_Toolkit.CustomControls.LockableValueToggle value="false" class="valueLocker">
+                    <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-3753015318093942961&amp;guid=8e1dbca73a7e8f643b301ac970d693f5&amp;type=3#arrow-left&quot;);">
                         <Bindings>
-                            <engine:DataBinding property="value" data-source-path="_x.isLocked" binding-mode="TwoWay" />
+                            <engine:DataBinding property="value" data-source-path="lockableWXYZ.values[1].isLocked" binding-mode="TwoWay" />
                         </Bindings>
                     </UI_Toolkit.CustomControls.LockableValueToggle>
                     <Bindings>
@@ -31,9 +31,9 @@
                 </engine:FloatField>
                 <engine:Label text="+" name="plus" />
                 <engine:FloatField value="42.2" name="Y" label="j" class="myFloatField">
-                    <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
+                    <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-3753015318093942961&amp;guid=8e1dbca73a7e8f643b301ac970d693f5&amp;type=3#arrow-left&quot;);">
                         <Bindings>
-                            <engine:DataBinding property="value" data-source-path="_y.isLocked" binding-mode="TwoWay" />
+                            <engine:DataBinding property="value" data-source-path="lockableWXYZ.values[2].isLocked" binding-mode="TwoWay" />
                         </Bindings>
                     </UI_Toolkit.CustomControls.LockableValueToggle>
                     <Bindings>
@@ -42,9 +42,9 @@
                 </engine:FloatField>
                 <engine:Label text="+" name="plus" />
                 <engine:FloatField value="42.2" name="Z" label="k" class="myFloatField">
-                    <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
+                    <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-3753015318093942961&amp;guid=8e1dbca73a7e8f643b301ac970d693f5&amp;type=3#arrow-left&quot;);">
                         <Bindings>
-                            <engine:DataBinding property="value" data-source-path="_z.isLocked" binding-mode="TwoWay" />
+                            <engine:DataBinding property="value" data-source-path="lockableWXYZ.values[3].isLocked" binding-mode="TwoWay" />
                         </Bindings>
                     </UI_Toolkit.CustomControls.LockableValueToggle>
                     <Bindings>
@@ -60,7 +60,7 @@
             <engine:VisualElement name="SinCosContainer" class="container--horizontalspacearound" style="height: 45%;">
                 <engine:VisualElement name="SinContainer" class="container--horizontalspacearound" style="align-content: stretch; width: 20%;">
                     <engine:FloatField name="AlphaField" label="Sin(" enabled="false" class="floatField--pure parentheticField myFloatField">
-                        <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
+                        <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-3753015318093942961&amp;guid=8e1dbca73a7e8f643b301ac970d693f5&amp;type=3#arrow-left&quot;);">
                             <Bindings>
                                 <engine:DataBinding property="value" data-source-path="_w.isLocked" binding-mode="TwoWay" />
                             </Bindings>
@@ -74,7 +74,7 @@
                 <engine:Label text="+" name="Plus" class="container--horizontalspacearound centeredText" style="width: 25px;" />
                 <engine:VisualElement name="CosContainer" class="container--horizontalspacearound" style="width: 75%;">
                     <engine:FloatField name="Alpha" label="Cos(" enabled="false" class="floatField--pure parentheticField myFloatField">
-                        <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
+                        <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker" style="background-image: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-3753015318093942961&amp;guid=8e1dbca73a7e8f643b301ac970d693f5&amp;type=3#arrow-left&quot;);">
                             <Bindings>
                                 <engine:DataBinding property="value" data-source-path="_w.isLocked" binding-mode="TwoWay" />
                             </Bindings>
@@ -97,11 +97,6 @@
                 <engine:FloatField value="1" name="W" enabled="false" class="myFloatField" />
                 <engine:Label text="+" />
                 <engine:FloatField value="42.2" name="X" label="x" enabled="false" class="myFloatField">
-                    <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
-                        <Bindings>
-                            <engine:DataBinding property="value" data-source-path="_x.isLocked" binding-mode="TwoWay" />
-                        </Bindings>
-                    </UI_Toolkit.CustomControls.LockableValueToggle>
                     <Bindings>
                         <engine:DataBinding property="value" data-source-path="AxisX" binding-mode="TwoWay" />
                         <engine:DataBinding property="label" data-source-path="AxisX" binding-mode="TwoWay" />
@@ -109,22 +104,12 @@
                 </engine:FloatField>
                 <engine:Label text="+" name="plus" />
                 <engine:FloatField value="42.2" name="Y" label="y" enabled="false" class="myFloatField">
-                    <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
-                        <Bindings>
-                            <engine:DataBinding property="value" data-source-path="_y.isLocked" binding-mode="TwoWay" />
-                        </Bindings>
-                    </UI_Toolkit.CustomControls.LockableValueToggle>
                     <Bindings>
                         <engine:DataBinding property="value" data-source-path="AxisY" binding-mode="TwoWay" />
                     </Bindings>
                 </engine:FloatField>
                 <engine:Label text="+" name="plus" />
                 <engine:FloatField value="42.2" name="Z" label="z" enabled="false" class="myFloatField">
-                    <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
-                        <Bindings>
-                            <engine:DataBinding property="value" data-source-path="_z.isLocked" binding-mode="TwoWay" />
-                        </Bindings>
-                    </UI_Toolkit.CustomControls.LockableValueToggle>
                     <Bindings>
                         <engine:DataBinding property="value" data-source-path="AxisZ" binding-mode="TwoWay" />
                     </Bindings>
