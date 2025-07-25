@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace BaseClasses
 {
-    //-ZyKa check which MonoBehaviours can be reduced to Behaviour or Component
-    //0ZyKa check whether you can remove the GenericBase class here
+    /* GenericBaseClass with a further TemplateBaseClass (below) to create and adjust the Visualisation (e.g. the Rotation axis GameObject) of Rotations depending on the Parameters (e.g. RotParams_AxisAngle) of the Rotation
+     */
     public abstract class RotVis_GenericBase : MonoBehaviour
     {
         protected RotVis_GenericBase()

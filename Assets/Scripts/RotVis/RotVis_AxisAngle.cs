@@ -55,8 +55,6 @@ namespace RotationVisualisation
                 ColorPalette.RotationPalette.InterpColorForAxisAndSign(NormalisedAxis, true);
             vis_PlaneArc.NegativeAngleColor = 
                 ColorPalette.RotationPalette.InterpColorForAxisAndSign(NormalisedAxis, false);
-            
-            Debug.Log($"!ZyKa: {nameof(RotVis_AxisAngle)}.{nameof(VisUpdate)}");
         }
 
         #if UNITY_EDITOR
