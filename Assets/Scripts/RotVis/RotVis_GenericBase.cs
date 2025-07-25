@@ -45,10 +45,15 @@ namespace BaseClasses
             {
                 throw new System.ArgumentNullException($"{nameof(newRotParams)}");
             }
+
+            if (newRotParams is not TRotParams)
+            {
+                throw new System.ArgumentException($"{nameof(newRotParams)} is not of type {nameof(TRotParams)}");
+            }
             
             rotParams.PropertyChanged -= VisUpdateOnRotParamsChanged; 
 
-            rotParams = rotParams.ToSelfType(newRotParams) as TRotParams;
+            rotParams = newRotParams as TRotParams;
             rotParams.PropertyChanged += VisUpdateOnRotParamsChanged;
 
             VisUpdate();

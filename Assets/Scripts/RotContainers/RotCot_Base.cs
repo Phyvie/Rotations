@@ -86,7 +86,8 @@ namespace RotContainers
         public abstract void Initialize(Transform parent, VisualElement UIParent, RotObjCot toSetRotObjCot = null);
         #endregion Initialize
         
-        protected void RotateObjByRotParams(object sender, PropertyChangedEventArgs e)
+        
+        protected void OnPropertyChangedVisUpdate(object sender, PropertyChangedEventArgs e)
         {
             rotObjCot.SetRotation(GetRotParams_Generic().ToUnityQuaternion());
         }
@@ -110,23 +111,33 @@ namespace RotContainers
             get => rotParams;
             set
             {
-                rotParams.PropertyChanged -= RotateObjByRotParams; 
-                    
-                rotParams = value; 
-                if (value != null)
+                rotParams.PropertyChanged -= OnPropertyChangedVisUpdate;
+                // rotVisCS.SetRotParamsByRef(null); //cannot and should not be set to null
+                rotUIroot.dataSource = null;
+
+                if (value is TRotParams)
                 {
-                    enabled = true;
-                    rotVisCS.SetRotParamsByRef(rotParams);
-                    rotUIroot.dataSource = rotParams; 
-                    rotParams.PropertyChanged += RotateObjByRotParams;
+                    rotParams = value; 
                 }
                 else
                 {
-                    enabled = false; 
+                    Debug.LogWarning($"Settings {name}.{nameof(RotParams)} to a new Value which is of type {value.GetType().Name} which is not {typeof(TRotParams).Name}, must therefore convert which creates a new instance of RotParams of the correct Type)");
+                    rotParams = rotParams.ToSelfType(value) as TRotParams; 
                 }
+
+                if (rotParams == null)
+                {
+                    enabled = false;
+                    return; 
+                }
+                enabled = true;
+                
+                rotParams.PropertyChanged += OnPropertyChangedVisUpdate;
+                rotVisCS.SetRotParamsByRef(rotParams);
+                rotUIroot.dataSource = rotParams;
             }
         }
-
+        
         public override RotParams_Base GetRotParams_Generic()
         {
             return RotParams;
