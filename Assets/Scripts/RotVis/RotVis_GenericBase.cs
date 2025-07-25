@@ -41,18 +41,16 @@ namespace BaseClasses
 
         public sealed override void SetRotParamsByRef(RotParams_Base newRotParams)
         {
-            GetRotParams().PropertyChanged -= VisUpdateOnRotParamsChanged; 
-            newRotParams.PropertyChanged += VisUpdateOnRotParamsChanged;
-
-            if (newRotParams is TRotParams newRP)
+            if (newRotParams == null)
             {
-                rotParams = newRP;
-            }
-            else
-            {
-                rotParams = rotParams.ToSelfType(newRotParams) as TRotParams; 
+                throw new System.ArgumentNullException($"{nameof(newRotParams)}");
             }
             
+            rotParams.PropertyChanged -= VisUpdateOnRotParamsChanged; 
+
+            rotParams = rotParams.ToSelfType(newRotParams) as TRotParams;
+            rotParams.PropertyChanged += VisUpdateOnRotParamsChanged;
+
             VisUpdate();
         }
         

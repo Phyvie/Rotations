@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using BaseClasses;
 using RotObj;
 using RotParams;
@@ -14,6 +15,12 @@ namespace RotContainers
     public abstract class RotCot_GenericBase : MonoBehaviour
     {
         #region VariablesAndGetSetProperties
+        #region RotParams
+        public abstract RotParams_Base GetRotParams_Generic();
+        public abstract void SetRotParams_Generic(RotParams_Base newRotParams);
+        #endregion RotParams
+        
+        #region RotObj
         [SerializeField] protected GameObject rotObjCotPrefab; 
         [SerializeField] protected RotObjCot rotObjCot;
 
@@ -21,20 +28,32 @@ namespace RotContainers
         {
             return rotObjCot; 
         }
-        public void SetRotObjCot(RotObjCot rotObjCot)
+        public void SetRotObjCot(RotObjCot newRotObjCot)
         {
-            this.rotObjCot = rotObjCot;
+            this.rotObjCot = newRotObjCot;
         }
+        #endregion RotObj
         
-        public abstract RotParams_Base GetRotParams_Generic();
-        public abstract void SetRotParams_Generic(RotParams_Base rotParams);
-
+        #region RotVis
         public abstract RotVis_GenericBase GetRotVis_Generic();
         public abstract void SetRotVis_Generic(RotVis_GenericBase newRotVis);
-
-        public abstract VisualElement GetRotUI_Generic();
-        public abstract void SetRotUI_Generic(VisualElement newRotUI);
+        #endregion RotVis
         
+        #region RotUI
+        [SerializeField] protected VisualTreeAsset rotUIAsset;
+        [SerializeField] protected VisualElement rotUIroot; 
+        
+        public VisualElement GetRotUI_Generic()
+        {
+            return rotUIroot; 
+        }
+
+        public void SetRotUI_Generic(VisualElement newRotUI)
+        {
+            rotUIroot.parent.Remove(rotUIroot);
+            rotUIroot = newRotUI; 
+        }
+        #endregion RotUI
         #endregion VariablesAndGetSetProperties
         
         #region Initialize
@@ -63,9 +82,14 @@ namespace RotContainers
                 rotObjCot = Instantiate(rotObjCotPrefab, transform).GetComponent<RotObjCot>();
             }
         }
-        
+
         public abstract void Initialize(Transform parent, VisualElement UIParent, RotObjCot toSetRotObjCot = null);
         #endregion Initialize
+        
+        protected void RotateObjByRotParams(object sender, PropertyChangedEventArgs e)
+        {
+            rotObjCot.SetRotation(GetRotParams_Generic().ToUnityQuaternion());
+        }
     }
     
     /*
@@ -80,20 +104,21 @@ namespace RotContainers
         [SerializeField] private TRotVis rotVisCS;
         #endregion
         
-        [SerializeField] private VisualTreeAsset rotUIAsset;
-        [SerializeField] private VisualElement rotUIroot; 
-        
+        #region Properties
         public TRotParams RotParams
         {
             get => rotParams;
             set
             {
+                rotParams.PropertyChanged -= RotateObjByRotParams; 
+                    
                 rotParams = value; 
                 if (value != null)
                 {
                     enabled = true;
                     rotVisCS.SetRotParamsByRef(rotParams);
                     rotUIroot.dataSource = rotParams; 
+                    rotParams.PropertyChanged += RotateObjByRotParams;
                 }
                 else
                 {
@@ -106,41 +131,34 @@ namespace RotContainers
         {
             return RotParams;
         }
-
-        public override void SetRotParams_Generic(RotParams_Base rotParams)
+        
+        public override void SetRotParams_Generic(RotParams_Base newRotParams)
         {
-            if (rotParams.GetType() == typeof(TRotParams))
+            if (newRotParams.GetType() == typeof(TRotParams))
             {
-                RotParams = rotParams as TRotParams; 
+                RotParams = newRotParams as TRotParams; 
+            }
+            else
+            {
+                RotParams = RotParams.ToSelfType(newRotParams) as TRotParams;
             }
             
             RotParams = typeof(TRotParams) switch
             {
                 Type t when t == typeof(RotParams_EulerAngles)
-                    => (TRotParams)(object)rotParams.ToEulerParams(),
+                    => (TRotParams)(object)newRotParams.ToEulerParams(),
 
                 Type t when t == typeof(RotParams_Quaternion)
-                    => (TRotParams)(object)rotParams.ToQuaternionParams(),
+                    => (TRotParams)(object)newRotParams.ToQuaternionParams(),
 
                 Type t when t == typeof(RotParams_AxisAngle)
-                    => (TRotParams)(object)rotParams.ToAxisAngleParams(),
+                    => (TRotParams)(object)newRotParams.ToAxisAngleParams(),
 
                 Type t when t == typeof(RotParams_Matrix)
-                    => (TRotParams)(object)rotParams.ToMatrixParams(),
+                    => (TRotParams)(object)newRotParams.ToMatrixParams(),
 
                 _ => throw new InvalidOperationException($"Unsupported TRotParams type: {typeof(TRotParams).Name}")
             };
-        }
-
-        public override VisualElement GetRotUI_Generic()
-        {
-            return rotUIroot; 
-        }
-
-        public override void SetRotUI_Generic(VisualElement newRotUI)
-        {
-            rotUIroot.parent.Remove(rotUIroot);
-            rotUIroot = newRotUI; 
         }
 
         public override RotVis_GenericBase GetRotVis_Generic()
@@ -152,6 +170,7 @@ namespace RotContainers
         {
             rotVisCS = newRotVis as TRotVis;
         }
+        #endregion Properties
 
         #region EnableDisable
         private void OnEnable()
@@ -167,6 +186,7 @@ namespace RotContainers
         }
         #endregion EnableDisable
 
+        #region InitializeAndSpawnFunctions
         public override void Initialize(Transform parent, VisualElement UIParent, RotObjCot toSetRotObjCot = null)
         { 
             SpawnVis(parent);
@@ -197,7 +217,7 @@ namespace RotContainers
             rotVisCS = newGO.GetComponent<TRotVis>();
             rotVisCS.SetRotParamsByRef(rotParams);
         }
-
+        
         public void SpawnRotObjCot(RotObjCot toSetRotObjCot)
         {
             if (toSetRotObjCot == null)
@@ -229,5 +249,6 @@ namespace RotContainers
             parent.Add(rotUIroot);
             rotUIroot.dataSource = rotParams; 
         }
+        #endregion InitializeAndSpawnFunctions
     }
 }

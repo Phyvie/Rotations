@@ -299,11 +299,9 @@ namespace RotContainers
             }
 
             if (foundRotCot != null)
-            {
-                RotParams_Base rotParams = activeRotCot.GetRotParams_Generic(); 
+            { 
                 DeactiveRotCot();
                 ActivateRotCot(foundRotCot);
-                activeRotCot.SetRotParams_Generic(rotParams);
             }
             else
             {
@@ -324,9 +322,16 @@ namespace RotContainers
 
         private void ActivateRotCot(RotCot_GenericBase rotCot)
         {
+            if (rotCot == null)
+            {
+                return; 
+            }
+            
             activeRotCot = rotCot;
             rotCot.enabled = true;
             activeRotCotType = rotCot.GetType(); 
+            
+            activeRotCot.SetRotParams_Generic(rotCot.GetRotParams_Generic()); //!ZyKa this line makes very little sense
         }
         #endregion SwitchRotParamType
         

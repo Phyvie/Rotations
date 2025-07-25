@@ -15,7 +15,7 @@ namespace RotParams
         public abstract RotParams_Quaternion ToQuaternionParams(); 
         public abstract RotParams_Matrix ToMatrixParams(); 
         public abstract RotParams_AxisAngle ToAxisAngleParams();
-
+        
         public bool DoesTypeMatch(RotParams_Base otherRotation)
         {
             return otherRotation.GetType() == GetType();
