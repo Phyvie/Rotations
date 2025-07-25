@@ -7,7 +7,7 @@ using Visualisation;
 
 namespace RotationVisualisation
 {
-    public class RotVis_EulerAngle : RotVis_Base
+    public class RotVis_EulerAngle : RotVis_TemplateBase<RotParams_EulerAngles>
     {
         private RotParams_EulerAngles _previousRotParamAxes = new RotParams_EulerAngles();
 
@@ -34,22 +34,6 @@ namespace RotationVisualisation
         public RotVis_EulerAngle(RotParams_EulerAngles rotParams) : base(rotParams)
         {
             
-        }
-        
-        [SerializeField] private RotParams_EulerAngles rotParams;
-        public override RotParams_Base GetRotParams()
-        {
-            return rotParams; 
-        }
-
-        public override void SetRotParamsByRef(RotParams_Base newRotParams)
-        {
-            base.SetRotParamsByRef(newRotParams);
-            if (newRotParams is RotParams_EulerAngles rotParamsEulerAngles)
-            {
-                rotParams = rotParamsEulerAngles;
-                VisUpdate();
-            }
         }
         
         public override void VisUpdate()

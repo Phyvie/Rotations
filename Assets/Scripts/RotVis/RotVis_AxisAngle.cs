@@ -7,8 +7,7 @@ using Visualisation;
 
 namespace RotationVisualisation
 {
-    //-ZyKa check which MonoBehaviours can be reduced to Behaviour or Component
-    public class RotVis_AxisAngle : RotVis_Base
+    public class RotVis_AxisAngle : RotVis_TemplateBase<RotParams_AxisAngle>
     {
         [SerializeField] private Vis_Vector vis_rotationVector;
         [SerializeField] private Vis_Axis vis_axis;
@@ -19,30 +18,10 @@ namespace RotationVisualisation
             
         }
 
-        [SerializeField] private RotParams_AxisAngle rotParams;
-        public override RotParams_Base GetRotParams()
-        {
-            return rotParams; 
-        }
-
-        public override void SetRotParamsByRef(RotParams_Base newRotParams)
-        {
-            base.SetRotParamsByRef(newRotParams);
-            if (newRotParams is RotParams_AxisAngle rotParamsAxisAngle)
-            {
-                rotParams = rotParamsAxisAngle;
-                VisUpdate();
-            }
-        }
-        
         public Vector3 RotationVectorInRadian
         {
             get => rotParams.RotationVectorInRadian;
-            set
-            {
-                rotParams.RotationVectorInRadian = value;
-                VisUpdate(); 
-            }
+            set => rotParams.RotationVectorInRadian = value; 
         }
 
         public Vector3 NormalisedAxis

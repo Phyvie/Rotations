@@ -6,7 +6,7 @@ using Visualisation;
 
 namespace RotationVisualisation
 {
-    public class RotVis_Matrix : RotVis_Base
+    public class RotVis_Matrix : RotVis_TemplateBase<RotParams_Matrix>
     {
         [SerializeField] private Vis_Vector visVectorRight; 
         [SerializeField] private Vis_Vector visVectorUp; 
@@ -16,23 +16,7 @@ namespace RotationVisualisation
         {
             
         }
-        
-        [SerializeField] private RotParams_Matrix rotParams;
-        public override RotParams_Base GetRotParams()
-        {
-            return rotParams; 
-        }
 
-        public override void SetRotParamsByRef(RotParams_Base newRotParams)
-        {
-            base.SetRotParamsByRef(newRotParams);
-            if (newRotParams is RotParams_Matrix rotParamsMatrix)
-            {
-                rotParams = rotParamsMatrix;
-                VisUpdate();
-            }
-        }
-        
         public override void VisUpdate()
         {
             if (visVectorRight is not null)

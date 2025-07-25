@@ -29,8 +29,8 @@ namespace RotContainers
         public abstract RotParams_Base GetRotParams_Generic();
         public abstract void SetRotParams_Generic(RotParams_Base rotParams);
 
-        public abstract RotVis_Base GetRotVis_Generic();
-        public abstract void SetRotVis_Generic(RotVis_Base newRotVis);
+        public abstract RotVis_GenericBase GetRotVis_Generic();
+        public abstract void SetRotVis_Generic(RotVis_GenericBase newRotVis);
 
         public abstract VisualElement GetRotUI_Generic();
         public abstract void SetRotUI_Generic(VisualElement newRotUI);
@@ -71,7 +71,7 @@ namespace RotContainers
     /*
      * ChildClass to RotCot_Generic, which contains the actual Variables and implements the generic getters/setters for the variables
      */
-    public abstract class RotCot_Base<TRotParams, TRotVis> : RotCot_GenericBase where TRotParams : RotParams_Base where TRotVis : RotVis_Base
+    public abstract class RotCot_Base<TRotParams, TRotVis> : RotCot_GenericBase where TRotParams : RotParams_Base where TRotVis : RotVis_GenericBase
     {
         #region Variables
         [SerializeField] private TRotParams rotParams;
@@ -143,12 +143,12 @@ namespace RotContainers
             rotUIroot = newRotUI; 
         }
 
-        public override RotVis_Base GetRotVis_Generic()
+        public override RotVis_GenericBase GetRotVis_Generic()
         {
             return rotVisCS; 
         }
 
-        public override void SetRotVis_Generic(RotVis_Base newRotVis)
+        public override void SetRotVis_Generic(RotVis_GenericBase newRotVis)
         {
             rotVisCS = newRotVis as TRotVis;
         }
