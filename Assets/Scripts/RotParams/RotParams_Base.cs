@@ -14,7 +14,7 @@ namespace RotParams
         public abstract RotParams_EulerAngles ToEulerParams(); 
         public abstract RotParams_Quaternion ToQuaternionParams(); 
         public abstract RotParams_Matrix ToMatrixParams(); 
-        public abstract RotParams_AxisAngle ToAxisAngleParams();
+        public abstract RotParams_AxisAngle ToAxisAngleParams(); 
         
         public bool DoesTypeMatch(RotParams_Base otherRotation)
         {
@@ -69,6 +69,8 @@ namespace RotParams
             RotParams_Quaternion asQuat = ToQuaternionParams();
             return new Quaternion(asQuat.X, asQuat.Y, asQuat.Z, asQuat.W);
         }
+
+        public abstract void GetValuesFromUnityQuaternion(Quaternion unityQuaternion);
 
         public override abstract string ToString(); 
         

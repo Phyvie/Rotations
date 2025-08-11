@@ -538,6 +538,15 @@ namespace RotParams
         #endregion Converters
 
         #region Functions
+
+        public override void GetValuesFromUnityQuaternion(Quaternion unityQuaternion)
+        {
+            W = unityQuaternion.w;
+            X = unityQuaternion.x;
+            Y = unityQuaternion.y;
+            Z = unityQuaternion.z;
+        }
+
         public override string ToString()
         {
             return $"({W}, {X}, {Y}, {Z})";

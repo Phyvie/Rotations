@@ -486,6 +486,12 @@ namespace RotParams
             throw new Exception("Rotating by an EulerAngle is useless, because the mathematics is the same as applying multiple MatrixRotations");
         }
 
+        public override void GetValuesFromUnityQuaternion(Quaternion unityQuaternion)
+        {
+            //!ZyKa 
+            throw new NotImplementedException("GetValuesFromUnityQuaternion is not implemented");
+        }
+
         public override string ToString()
         {
             return $"({Outer.GetRotationName()}, {Outer.TypedAngle.AngleInDegree}), " +

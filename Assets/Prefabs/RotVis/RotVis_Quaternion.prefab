@@ -47,9 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d9f949eea64de094e5ba15d933db33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vis_rotationVector: {fileID: 2324647773644681107}
-  vis_Axis: {fileID: 1624183783175644931}
-  vis_PlaneArc: {fileID: 4037794868827199380}
   rotParams:
     lockableWXYZ:
       values:
@@ -61,6 +58,9 @@ MonoBehaviour:
         isLocked: 0
       - typeValue: 0
         isLocked: 0
+  vis_rotationVector: {fileID: 2324647773644681107}
+  vis_Axis: {fileID: 1624183783175644931}
+  vis_PlaneArc: {fileID: 4037794868827199380}
 --- !u!1001 &2217645218068081865
 PrefabInstance:
   m_ObjectHideFlags: 0

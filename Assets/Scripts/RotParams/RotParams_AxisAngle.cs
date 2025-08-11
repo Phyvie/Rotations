@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Extensions.MathExtensions;
+using MathExtensions;
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -351,6 +352,23 @@ namespace RotParams
         #endregion operators
         
         #region Functions
+
+        public override void GetValuesFromUnityQuaternion(Quaternion unityQuaternion)
+        {
+            float clampedW = Mathf.Clamp(unityQuaternion.w, -1.0f, 1.0f);
+            float axisScalar = MathFunctions.SubtractLengthPythagoreon(1, clampedW);
+
+            if (Mathf.Approximately(axisScalar, 0.0f))
+            {
+                AngleInRadian = 0.0f;
+                NormalisedAxis = Vector3.right;
+                return; 
+            }
+            
+            AngleInRadian = Mathf.Acos(unityQuaternion.w) * 2;
+            NormalisedAxis = new Vector3(unityQuaternion.x, unityQuaternion.y, unityQuaternion.z) / axisScalar; 
+        }
+
         public override string ToString()
         {
             return $"({_axis}, {AngleInDegrees})";

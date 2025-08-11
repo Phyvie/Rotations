@@ -47,9 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd8182febb564dada676e5fd3d6595d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vis_rotationVector: {fileID: 4664744952068152325}
-  vis_axis: {fileID: 964289713925506116}
-  vis_PlaneArc: {fileID: 2768336630294926975}
   rotParams:
     typedAngle:
       showAllAngleTypes: 0
@@ -65,6 +62,9 @@ MonoBehaviour:
         isLocked: 0
       - typeValue: 0
         isLocked: 0
+  vis_rotationVector: {fileID: 4664744952068152325}
+  vis_axis: {fileID: 964289713925506116}
+  vis_PlaneArc: {fileID: 2768336630294926975}
   references:
     version: 2
     RefIds:

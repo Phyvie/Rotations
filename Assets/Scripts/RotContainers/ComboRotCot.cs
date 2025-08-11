@@ -213,7 +213,7 @@ namespace RotContainers
         {
             if (rotObjCot == null)
             {
-                rotObjCot = Instantiate(rotObjCotPrefab, this.transform).GetComponent<RotObjCot>(); //!ZyKa this where the bug happens
+                rotObjCot = Instantiate(rotObjCotPrefab, this.transform).GetComponent<RotObjCot>(); 
             }
         }
         
@@ -248,16 +248,16 @@ namespace RotContainers
                 switch (value)
                 {
                     case 0: 
-                        SwitchRotParamType(typeof(RotCot_AxisAngle));
+                        SwitchActiveRotCot(typeof(RotCot_AxisAngle));
                         break;
                     case 1:
-                        SwitchRotParamType(typeof(RotCot_Quaternion));
+                        SwitchActiveRotCot(typeof(RotCot_Quaternion));
                         break;
                     case 2: 
-                        SwitchRotParamType(typeof(RotCot_Euler));
+                        SwitchActiveRotCot(typeof(RotCot_Euler));
                         break;
                     case 3:
-                        SwitchRotParamType(typeof(RotCot_Matrix));
+                        SwitchActiveRotCot(typeof(RotCot_Matrix));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -281,7 +281,7 @@ namespace RotContainers
         }
 
         #region SwitchRotParamType
-        private void SwitchRotParamType(System.Type newType)
+        private void SwitchActiveRotCot(Type newType)
         {
             if (activeRotCotType == newType)
             {
@@ -330,8 +330,6 @@ namespace RotContainers
             activeRotCot = rotCot;
             rotCot.enabled = true;
             activeRotCotType = rotCot.GetType(); 
-            
-            activeRotCot.SetRotParams_Generic(rotCot.GetRotParams_Generic()); //!ZyKa this line makes very little sense
         }
         #endregion SwitchRotParamType
         
@@ -356,7 +354,6 @@ namespace RotContainers
 
         public RotParams_Base GetAppliedRotation()
         {
-            //!ZyKa fix this to use the actual class of the current RotParams
             return new RotParams_Quaternion(rotObjCot.GetAppliedRotation()); //!ZyKa proper conversion functions 
         }
         

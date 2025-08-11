@@ -151,25 +151,8 @@ namespace RotContainers
             }
             else
             {
-                RotParams = RotParams.ToSelfType(newRotParams) as TRotParams;
+                throw new ArgumentException(); 
             }
-            
-            RotParams = typeof(TRotParams) switch
-            {
-                Type t when t == typeof(RotParams_EulerAngles)
-                    => (TRotParams)(object)newRotParams.ToEulerParams(),
-
-                Type t when t == typeof(RotParams_Quaternion)
-                    => (TRotParams)(object)newRotParams.ToQuaternionParams(),
-
-                Type t when t == typeof(RotParams_AxisAngle)
-                    => (TRotParams)(object)newRotParams.ToAxisAngleParams(),
-
-                Type t when t == typeof(RotParams_Matrix)
-                    => (TRotParams)(object)newRotParams.ToMatrixParams(),
-
-                _ => throw new InvalidOperationException($"Unsupported TRotParams type: {typeof(TRotParams).Name}")
-            };
         }
 
         public override RotVis_GenericBase GetRotVis_Generic()
@@ -199,7 +182,8 @@ namespace RotContainers
 
         #region InitializeAndSpawnFunctions
         public override void Initialize(Transform parent, VisualElement UIParent, RotObjCot toSetRotObjCot = null)
-        { 
+        {
+            rotParams.PropertyChanged += OnPropertyChangedVisUpdate; 
             SpawnVis(parent);
             SpawnRotObjCot(toSetRotObjCot); 
             SpawnUI(UIParent);
