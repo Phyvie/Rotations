@@ -17,3 +17,61 @@
     top: 0;
     right: 0;
 }
+
+.Quaternion__Root {
+    padding: 5px; 
+}
+
+.Quaternion__EqualsLine {
+    height: 18px;
+    flex-direction: row;
+    margin: 8px; 
+}
+
+.Quaternion__AxisAngleContainer {
+    display: flex; 
+    flex-direction: row; 
+}
+
+.Quaternion__Real {
+    width: 25%;
+    display: flex; 
+    flex-direction: row; 
+    align-items: stretch;
+}
+
+.Quaternion__Addition {
+    width: 45px;
+    align-items: stretch;
+}
+
+.Quaternion__Imaginary {
+    width: 75%;
+    display: flex; 
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.Quaternion__SinHalfAngleContainer {
+    width: 25%; 
+    flex-direction: column; 
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.Quaternion__HalfAngleDescription {
+    padding-left: 10px; 
+    white-space: normal;
+}
+
+.Quaternion__CosAxisContainer {
+    width: 75%; 
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.Quaternion__AxisContainer {
+    display: flex; 
+    flex-direction: row;
+    align-items: stretch;
+}

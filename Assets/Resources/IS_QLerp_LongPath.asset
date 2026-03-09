@@ -12,40 +12,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb4981031f79f904b97529faabcd1e99, type: 3}
   m_Name: IS_QLerp_LongPath
   m_EditorClassIdentifier: 
-  useLinearAlphaDistance: 0
+  useLinearAlphaDistance: 1
   interpolationAlphas:
   - 0
-  - 0.2
-  - 0.4
-  - 0.6
-  - 0.8
+  - 0.5
   - 1
   q0:
-    enforceNormalisation: 1
-    _w:
-      typeValue: 1
-      isLocked: 0
-    _x:
-      typeValue: 0
-      isLocked: 0
-    _y:
-      typeValue: 0
-      isLocked: 0
-    _z:
-      typeValue: 0
-      isLocked: 0
+    lockableWXYZ:
+      values:
+      - typeValue: 1
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
   q1:
-    enforceNormalisation: 1
-    _w:
-      typeValue: 1
-      isLocked: 0
-    _x:
-      typeValue: 0
-      isLocked: 0
-    _y:
-      typeValue: 0
-      isLocked: 0
-    _z:
-      typeValue: 0
-      isLocked: 0
+    lockableWXYZ:
+      values:
+      - typeValue: 0
+        isLocked: 1
+      - typeValue: 0.7071068
+        isLocked: 0
+      - typeValue: 0.7071068
+        isLocked: 0
+      - typeValue: 0
+        isLocked: 0
   shortestPathCorrection: 0

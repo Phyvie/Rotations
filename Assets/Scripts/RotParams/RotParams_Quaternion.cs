@@ -171,12 +171,12 @@ namespace RotParams
         }
 
         [CreateProperty]
-        public float Angle
+        public float AngleInRadian
         {
             get => 2 * Mathf.Acos(Mathf.Clamp(W, 0, 1));
             set
             {
-                if (Mathf.Approximately(Angle, value))
+                if (Mathf.Approximately(AngleInRadian, value))
                 {
                     return; 
                 }
@@ -201,6 +201,9 @@ namespace RotParams
                 OnPropertyChanged();
             }
         }
+        
+        [CreateProperty]
+        public string HalfAngleInPI => $"{AngleInRadian / (2 * Mathf.PI):F3} π";
 
         public bool EnforceNormalisation
         {
@@ -414,7 +417,7 @@ namespace RotParams
         
         public RotParams_Quaternion Log()
         {
-            float halfAngle = Angle * 0.5f;
+            float halfAngle = AngleInRadian * 0.5f;
 
             if (halfAngle < 1e-6f)
                 return new RotParams_Quaternion(0f, 0f, 0f, 0f, false); 
@@ -533,7 +536,7 @@ namespace RotParams
 
         public override RotParams_AxisAngle ToAxisAngleParams()
         {
-            return new RotParams_AxisAngle(NormalizedAxis, Angle);
+            return new RotParams_AxisAngle(NormalizedAxis, AngleInRadian);
         }
         #endregion Converters
 

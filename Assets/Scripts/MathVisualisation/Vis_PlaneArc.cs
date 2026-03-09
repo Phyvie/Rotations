@@ -196,6 +196,8 @@ namespace Visualisation
         public void OnValidate()
         {
             VisUpdate();
+            PositiveAngleColor = _positiveAngleColorOverwrite; 
+            NegativeAngleColor = _negativeAngleColorOverwrite;
         }
         
         #region Deprecated

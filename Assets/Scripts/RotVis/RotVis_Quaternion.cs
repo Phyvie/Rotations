@@ -31,10 +31,10 @@ namespace RotationVisualisation
 
         public float Angle
         {
-            get => rotParams.Angle;
+            get => rotParams.AngleInRadian;
             set
             {
-                rotParams.Angle = value; 
+                rotParams.AngleInRadian = value; 
                 VisUpdate();
             }
         }
@@ -51,9 +51,9 @@ namespace RotationVisualisation
             
             vis_rotationVector.Color = 
                 ColorPalette.RotationPalette.InterpColorForAxisAndSign(Axis,
-                    rotParams.Angle > 0);
+                    rotParams.AngleInRadian > 0);
             vis_Axis.Color = ColorPalette.RotationPalette.InterpColorForAxisAndSign(Axis,
-                rotParams.Angle > 0);
+                rotParams.AngleInRadian > 0);
             vis_PlaneArc.PositiveAngleColor = 
                 ColorPalette.RotationPalette.InterpColorForAxisAndSign(Axis, true);
             vis_PlaneArc.NegativeAngleColor = 

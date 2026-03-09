@@ -9,6 +9,9 @@ using UnityEngine.UIElements;
 
 namespace RotContainers
 {
+    /*
+     * TODO: Separate this class into multiple classes, because it currently manages everything from setting up UI to camera movement and Coordinate-Grid
+     */
     public class ComboRotCot : MonoBehaviour
     {
         #region Variables
@@ -95,6 +98,10 @@ namespace RotContainers
             }
         }
         #endregion Cam
+        
+        #region CoordinateGrid
+        [SerializeField] private Vis_CoordinateGrid coordinateGrid;
+        #endregion CoordinateGrid
         
         #region TypedRotCots
         private RotCot_GenericBase activeRotCot;
@@ -214,6 +221,18 @@ namespace RotContainers
             if (rotObjCot == null)
             {
                 rotObjCot = Instantiate(rotObjCotPrefab, this.transform).GetComponent<RotObjCot>(); 
+            }
+            InitializeRotCots(); 
+            _selectedTypeIndex = 1; 
+            ActivateRotCot(rotCot_Quaternion);
+            
+            if (coordinateGrid != null)
+            {
+                coordinateGrid.ViewCamera = VisCamera; 
+            }
+            else
+            {
+                Debug.LogWarning("No CoordinateGrid found; cannot initialize CoordinateGrid"); 
             }
         }
         

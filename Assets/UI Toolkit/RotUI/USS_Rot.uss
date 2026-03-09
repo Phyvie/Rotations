@@ -1,31 +1,3 @@
-UICC_AxisAngle {
-    flex-shrink: 1;
-    flex-grow: 1;
-    justify-content: space-around;
-    background-color: rgb(240, 240, 240);
-}
-
-UICC_Quaternion {
-    flex-shrink: 1;
-    flex-grow: 1;
-    justify-content: space-around;
-    background-color: rgb(240, 240, 240);
-}
-
-UICC_EulerAngle {
-    flex-shrink: 1;
-    flex-grow: 1;
-    justify-content: space-around;
-    background-color: rgb(240, 240, 240);
-}
-
-UICC_Matrix {
-    flex-shrink: 1;
-    flex-grow: 1;
-    justify-content: space-around;
-    background-color: rgb(240, 240, 240);
-}
-
 .SplitScreenContainer {
     flex-grow: 1;
     border-left-color: rgb(0, 0, 0);
@@ -39,4 +11,28 @@ UICC_Matrix {
     align-content: stretch;
     align-self: auto;
     width: 33%;
+}
+
+.MathVis--X, 
+.MathVis--X .unity-label, 
+.MathVis--X .unity-text-element
+{
+    color: #FF7373; 
+    -unity-font-style: bold;
+}
+
+.MathVis--Y, 
+.MathVis--Y .unity-label, 
+.MathVis--Y .unity-text-element
+{
+    color: #73FF73;
+    -unity-font-style: bold;
+}
+
+.MathVis--Z, 
+.MathVis--Z .unity-label, 
+.MathVis--Z .unity-text-element
+{
+    color: #7373FF;
+    -unity-font-style: bold;
 }

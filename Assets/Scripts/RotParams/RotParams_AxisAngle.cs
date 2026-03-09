@@ -4,7 +4,6 @@ using Extensions.MathExtensions;
 using MathExtensions;
 using Unity.Properties;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 //-ZyKa adjust the getters and setters for RotationVector so that they only have one access point
 namespace RotParams
@@ -286,6 +285,7 @@ namespace RotParams
 
         public override  RotParams_EulerAngles ToEulerParams()
         {
+            Debug.LogWarning("Conversion to EulerAngles is not correctly implemented"); 
             Debug.LogWarning("AxisAngleRotation.ToEulerAngle() is the same as ToQuaternionRotation().ToEulerAngleRotation()");
             return ToQuaternionParams().ToEulerParams(); 
         }
@@ -332,12 +332,9 @@ namespace RotParams
         #endregion //Converters
 
         #region operators
-        public static RotParams_AxisAngle operator+(
-            RotParams_AxisAngle rotParamsA, RotParams_AxisAngle rotParamsB)
+        public static RotParams_AxisAngle operator+(RotParams_AxisAngle rotParamsA, RotParams_AxisAngle rotParamsB)
         {
-            return new RotParams_AxisAngle(
-                rotParamsA.RotationVectorInRadian + rotParamsB.RotationVectorInRadian, 
-                false); 
+            return new RotParams_AxisAngle(rotParamsA.RotationVectorInRadian + rotParamsB.RotationVectorInRadian, false); 
         }
 
         public static RotParams_AxisAngle operator *(RotParams_AxisAngle rotParamsA, float alpha)

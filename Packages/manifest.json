@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.shtif.runtimetransformhandle": "file:D:/programming/GeneralUnityScripts/RuntimeTransformHandle-main/Assets/Plugins/RuntimeTransformHandle",
+    "com.cyanilux.shadergraph-to-png": "https://github.com/Cyanilux/ShaderGraphToPNG.git",
     "com.unity.collab-proxy": "2.6.0",
     "com.unity.ide.rider": "3.0.36",
     "com.unity.ide.visualstudio": "2.0.23",
