@@ -1,14 +1,12 @@
 {
-    "name": "RotParamsInspector",
+    "name": "MathVisPackage",
     "rootNamespace": "",
     "references": [
         "GUID:157f71002f96d094d838ace3a78e13e6",
-        "GUID:c669e3270c9d1514dbd021764f117673",
-        "GUID:07bbe274327e38047ab7fab2deb8a53f"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:94c9b2ed20b5ce94d8345b2d70ac239d"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

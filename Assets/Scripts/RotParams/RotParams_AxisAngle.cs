@@ -5,7 +5,7 @@ using MathExtensions;
 using Unity.Properties;
 using UnityEngine;
 
-//-ZyKa adjust the getters and setters for RotationVector so that they only have one access point
+//ToDoZyKa RotParams_AxisAngle: adjust the getters and setters for RotationVector so that they only have one access point
 namespace RotParams
 {
     [Serializable]

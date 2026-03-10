@@ -193,7 +193,7 @@ namespace Utility
     
         private IEnumerator ScreenShotInterpolation(InterpolationSettings interpolationSettings)
         {
-            //+ZyKa there probably is a memory leak somewhere in this function, so only use it in playInEditor (because that can easily be stopped and thus memory cleaned)
+            //LaterZyKa Screenshot there probably is a memory leak somewhere in this function, so only use it in playInEditor (because that can easily be stopped and thus memory cleaned)
             // ResetViewshots(); 
             for (int i = 0; i < interpolationSettings.InterpolationCount; i++)
             {
@@ -228,7 +228,7 @@ namespace Utility
                 comboRotCot.ActiveRotParams_Generic = startingParams; 
                 comboRotCot.ApplyRotation();
                 
-                //+ZyKa this is a bad hack to ensure that the Axis is setup correctly
+                //LaterZyKa Interpolation this is a bad hack to ensure that the Axis is setup correctly
                 RotParams_Base interpolated = interpolationSettings.Interpolate(0.0001f);
                 if (interpolationSettings.visPath)
                 {
@@ -254,7 +254,7 @@ namespace Utility
             {
                 yield return new WaitForSeconds(interpolationSettings.orientationHoldTime);
                 
-                for (int i = interpolationSettings.InterpolationCount - 1; i > 0; i--) //+ZyKa it should end at i = 0, but I need this bad hack to ensure that the axis-ring is oriented correctly
+                for (int i = interpolationSettings.InterpolationCount - 1; i > 0; i--) //LaterZyKa Interpolation: it should end at i = 0, but I need this bad hack to ensure that the axis-ring is oriented correctly
                 {
                     RotParams_Base interpolated = interpolationSettings.Interpolate(interpolationSettings.GetInterpolationAlpha(i));
                     if (interpolationSettings.visPath)

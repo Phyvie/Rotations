@@ -277,7 +277,7 @@ namespace RotParams
             if (!isRotationMatrix)
             {
                 Debug.LogWarning($"{nameof(ToQuaternionParams)} error: Matrix is not a RotationMatrix, getting Quaternion for XYRotationMatrix");
-                return ToRotationMatrixFromTwoAxes(primaryAxisIndex, secondaryAxisIndex).ToQuaternionParams(); //-ZyKa this should use GetClosestRotationMatrix
+                return ToRotationMatrixFromTwoAxes(primaryAxisIndex, secondaryAxisIndex).ToQuaternionParams(); //LaterZyKa RotParams_Conversion this should use GetClosestRotationMatrix
             }
 
             float trace = InternalMatrix.Trace();
@@ -374,7 +374,6 @@ namespace RotParams
                     Debug.LogError("Matrix axes are all parallel, returning IdentityMatrix");
                     return RotationIdentity(); 
                 }
-                return null;
             }
             
             bool crossProductForward = (firstAxisIndex + 1) % 3 == secondAxisIndex; 
@@ -421,6 +420,11 @@ namespace RotParams
         public override Vector3 RotateVector(Vector3 inVector)
         {
             return InternalMatrix * inVector; 
+        }
+
+        public override void GetValuesFromUnityQuaternion(Quaternion unityQuaternion)
+        {
+            //TodoZyKa RotParamMath implement fromUnityQuaternion function
         }
 
         public override string ToString()

@@ -3,16 +3,17 @@ using BaseClasses;
 using MathVisualisation;
 using RotParams;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Visualisation;
 
 namespace RotationVisualisation
 {
     public class RotVis_Quaternion : RotVis_TemplateBase<RotParams_Quaternion>
     {
-        //-ZyKa Quaternion -ZyKa RotVis update this to be able to take in non-unit quaternions
+        //LaterZyKa RotVis_Quat: RotVis update this to be able to take in non-unit quaternions
         [SerializeField] private Vis_Vector vis_rotationVector;
         [SerializeField] private Vis_Axis vis_Axis; 
-        [SerializeField] private Vis_PlaneArc vis_PlaneArc;
+        [FormerlySerializedAs("vis_PlaneArc")] [SerializeField] private Vis_Angle visAngle;
         
         public RotVis_Quaternion(RotParams_Quaternion rotParams_Quaternion) : base(rotParams_Quaternion)
         {
@@ -45,18 +46,18 @@ namespace RotationVisualisation
 
             vis_Axis.Value = Axis; 
             
-            vis_PlaneArc.LocalUpAxis = Axis; 
-            vis_PlaneArc.BeginAngle = 0; 
-            vis_PlaneArc.EndingAngle = Angle;
+            visAngle.LocalUpAxis = Axis; 
+            visAngle.BeginAngle = 0; 
+            visAngle.EndingAngle = Angle;
             
             vis_rotationVector.Color = 
                 ColorPalette.RotationPalette.InterpColorForAxisAndSign(Axis,
                     rotParams.AngleInRadian > 0);
             vis_Axis.Color = ColorPalette.RotationPalette.InterpColorForAxisAndSign(Axis,
                 rotParams.AngleInRadian > 0);
-            vis_PlaneArc.PositiveAngleColor = 
+            visAngle.PositiveAngleColor = 
                 ColorPalette.RotationPalette.InterpColorForAxisAndSign(Axis, true);
-            vis_PlaneArc.NegativeAngleColor = 
+            visAngle.NegativeAngleColor = 
                 ColorPalette.RotationPalette.InterpColorForAxisAndSign(Axis, false);
         }
 

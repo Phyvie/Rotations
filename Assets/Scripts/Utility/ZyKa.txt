@@ -1,0 +1,4 @@
+Move InterpolationSettings somewhere within the Project itself. 
+
+InterpolationSettings are currently within the Utility Folder, because I ran out of time towards the end of my bachelor thesis, thus they are stored in utility. 
+However, they should actually be properly intergrated into the project. 

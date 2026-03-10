@@ -60,7 +60,7 @@ MonoBehaviour:
         isLocked: 0
   vis_rotationVector: {fileID: 2324647773644681107}
   vis_Axis: {fileID: 1624183783175644931}
-  vis_PlaneArc: {fileID: 4037794868827199380}
+  visAngle: {fileID: 4037794868827199380}
 --- !u!1001 &2217645218068081865
 PrefabInstance:
   m_ObjectHideFlags: 0

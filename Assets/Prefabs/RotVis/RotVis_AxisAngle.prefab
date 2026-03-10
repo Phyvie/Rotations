@@ -64,7 +64,7 @@ MonoBehaviour:
         isLocked: 0
   vis_rotationVector: {fileID: 4664744952068152325}
   vis_axis: {fileID: 964289713925506116}
-  vis_PlaneArc: {fileID: 2768336630294926975}
+  visAngle: {fileID: 2768336630294926975}
   references:
     version: 2
     RefIds:

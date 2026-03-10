@@ -7,7 +7,7 @@ using UnityEngine;
 namespace RotParams
 {
     [Serializable]
-    public abstract class RotParams_Base : INotifyPropertyChanged // -ZyKa check out Source Generators (e.g. CommunityToolkit.MVVM) for IDataSourceViewHashProvider Hash Generation in child classes
+    public abstract class RotParams_Base : INotifyPropertyChanged
     {
         public abstract RotParams_Base ToSelfType(RotParams_Base toConvert);
         public abstract void CopyValues(RotParams_Base toCopy); 

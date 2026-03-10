@@ -3,6 +3,7 @@ using BaseClasses;
 using MathExtensions;
 using RotParams;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Visualisation;
 
 namespace RotationVisualisation
@@ -16,7 +17,7 @@ namespace RotationVisualisation
         {
             [SerializeField] public GameObject rail;
             [SerializeField] public GameObject ring; 
-            [SerializeField] public Vis_PlaneArc vis_planeArc; 
+            [FormerlySerializedAs("vis_planeArc")] [SerializeField] public Vis_Angle visAngle; 
         }
         [SerializeField] private RailRingPair outer;
         [SerializeField] private RailRingPair middle;
@@ -105,26 +106,26 @@ namespace RotationVisualisation
 
         private void VisUpdateShaderPlaneArcsColours()
         {
-            VisUpdatePlaneArcShaderColourSingle(rotParams.Outer, outer.vis_planeArc);
-            VisUpdatePlaneArcShaderColourSingle(rotParams.Middle, middle.vis_planeArc);
-            VisUpdatePlaneArcShaderColourSingle(rotParams.Inner, inner.vis_planeArc);
+            VisUpdatePlaneArcShaderColourSingle(rotParams.Outer, outer.visAngle);
+            VisUpdatePlaneArcShaderColourSingle(rotParams.Middle, middle.visAngle);
+            VisUpdatePlaneArcShaderColourSingle(rotParams.Inner, inner.visAngle);
         }
 
-        private void VisUpdatePlaneArcShaderColourSingle(_RotParams_EulerAngleGimbalRing gimbalRing, Vis_PlaneArc visPlaneArc)
+        private void VisUpdatePlaneArcShaderColourSingle(_RotParams_EulerAngleGimbalRing gimbalRing, Vis_Angle visAngle)
         {
             switch (gimbalRing.EAxis)
             {
                 case EGimbalAxis.Yaw:
-                    visPlaneArc.PositiveAngleColor = PosYawColor; 
-                    visPlaneArc.NegativeAngleColor = NegYawColor;
+                    visAngle.PositiveAngleColor = PosYawColor; 
+                    visAngle.NegativeAngleColor = NegYawColor;
                     break;
                 case EGimbalAxis.Pitch:
-                    visPlaneArc.PositiveAngleColor = PosPitchColor;
-                    visPlaneArc.NegativeAngleColor = NegPitchColor;
+                    visAngle.PositiveAngleColor = PosPitchColor;
+                    visAngle.NegativeAngleColor = NegPitchColor;
                     break;
                 case EGimbalAxis.Roll:
-                    visPlaneArc.PositiveAngleColor = PosRollColor;
-                    visPlaneArc.NegativeAngleColor = NegRollColor;
+                    visAngle.PositiveAngleColor = PosRollColor;
+                    visAngle.NegativeAngleColor = NegRollColor;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -133,19 +134,19 @@ namespace RotationVisualisation
         
         private void VisUpdateShaderPlaneArcsValues()
         {
-            if (outer.vis_planeArc != null)
+            if (outer.visAngle != null)
             {
-                outer.vis_planeArc.BeginAngle = -rotParams.Outer.AngleInRadian; //The Gimbal itself gets rotated there the BeginAngle must be set to the negative of the AngleInRadian
+                outer.visAngle.BeginAngle = -rotParams.Outer.AngleInRadian; //The Gimbal itself gets rotated there the BeginAngle must be set to the negative of the AngleInRadian
             }
 
-            if (middle.vis_planeArc != null)
+            if (middle.visAngle != null)
             {
-                middle.vis_planeArc.BeginAngle = -rotParams.Middle.AngleInRadian;
+                middle.visAngle.BeginAngle = -rotParams.Middle.AngleInRadian;
             }
             
-            if (inner.vis_planeArc != null)
+            if (inner.visAngle != null)
             {
-                inner.vis_planeArc.BeginAngle = -rotParams.Inner.AngleInRadian;
+                inner.visAngle.BeginAngle = -rotParams.Inner.AngleInRadian;
             }
         }
         

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace RotationTypes
 {
     [CustomPropertyDrawer(typeof(_RotParams_EulerAngleGimbalRing))]
-    public class GimbalRingInspector : NestedPropertyDrawer
+    public class GimbalRingInspector : PropertyDrawer
     {
         private SerializedProperty axisProp; 
         private SerializedProperty angleProp;

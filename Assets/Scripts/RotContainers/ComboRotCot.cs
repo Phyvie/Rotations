@@ -373,7 +373,7 @@ namespace RotContainers
 
         public RotParams_Base GetAppliedRotation()
         {
-            return new RotParams_Quaternion(rotObjCot.GetAppliedRotation()); //!ZyKa proper conversion functions 
+            return new RotParams_Quaternion(rotObjCot.GetAppliedRotation()); //TodoZyKa RotObjectHierarchy proper conversion functions 
         }
         
         [ContextMenu("ResetAppliedObjectRotation")]
