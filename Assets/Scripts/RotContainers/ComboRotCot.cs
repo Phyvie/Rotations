@@ -19,9 +19,26 @@ namespace RotContainers
         [SerializeField] private bool InitializeOnStart = true; 
         #endregion Variables
         
+        #region TypedRotCots
+        [SerializeField] private rotCotTemplateAxisAngle rotCotTemplateAxisAngle; 
+        [SerializeField] private rotCotTemplateQuaternion rotCotTemplateQuaternion; 
+        [SerializeField] private rotCotEuler rotCotEuler;
+        [SerializeField] private rotCotTemplateMatrix rotCotTemplateMatrix;
+        private List<RotCot_GenericBase> rotCotsList => new List<RotCot_GenericBase>(){rotCotTemplateAxisAngle, rotCotTemplateQuaternion, rotCotEuler, rotCotTemplateMatrix};
+        
+        private RotCot_GenericBase activeRotCot;
+        private System.Type activeRotCotType; 
+        public RotParams_Base ActiveRotParams_Generic
+        {
+            get => activeRotCot.GetRotParams_Generic(); 
+            set => activeRotCot.SetRotParams_Generic(value);
+        }
+        
+        #endregion TypedRotCots
+        
         #region RotObjCot
-        [SerializeField] private GameObject rotObjCotPrefab; 
-        [SerializeField] private RotObjCot rotObjCot; 
+        [SerializeField] private GameObject orientedObjectPrefab; 
+        [SerializeField] private OrientedObject orientedObject; 
         #endregion RotObjCot
         
         #region UISetup
@@ -40,22 +57,20 @@ namespace RotContainers
         [Tooltip("This is only needed when the UIDocument is not set externally (e.g. by FullScreenMultiRotationContainer); Thus the component must create a UIDocument itself")]
         [SerializeField] private VisualTreeAsset fullScreenUIAsset;
         [SerializeField] private PanelSettings panelSettingsAsset;
-
-        [FormerlySerializedAs("uiParentName")]
+        
         [Tooltip("This is not the object which contains uiMenu & UIRotSlot; it is the visualElement into which the uiRoot will be spawned")]
         [SerializeField] private string uiComboContainerParentName; 
         private VisualElement _comboContainerUIParent; //the slot into which the _uiRoot will be spawned
-
-        [FormerlySerializedAs("uiFullContainerAsset")]
+        
         [Tooltip("This is the VisualElement which actually contains uiMenuLine & RotParamsSlot")]
         [SerializeField] private VisualTreeAsset uiComboContainerRootAsset;
         private VisualElement _comboContainerRoot; //the actual root containing the menuLine + UIRotSlot
         
-        [FormerlySerializedAs("uiMenuAsset")] [SerializeField] private VisualTreeAsset uiMenuLineAsset;
-        [FormerlySerializedAs("uiMenuName")] [SerializeField] private string uiMenuLineName = "uiMenuLine"; 
+        [SerializeField] private VisualTreeAsset uiMenuLineAsset;
+        [SerializeField] private string uiMenuLineName = "uiMenuLine"; 
         private VisualElement _uiMenuLine;
 
-        [FormerlySerializedAs("uiRotSlotName")] [SerializeField] private string uiRotParamsSlot = "RotParamsSlot"; 
+        [SerializeField] private string uiRotParamsSlot = "RotParamsSlot"; 
         private VisualElement _uiRotParamsSlot;
         #endregion UISetup
         
@@ -103,24 +118,6 @@ namespace RotContainers
         [SerializeField] private Vis_CoordinateGrid coordinateGrid;
         #endregion CoordinateGrid
         
-        #region TypedRotCots
-        private RotCot_GenericBase activeRotCot;
-        private System.Type activeRotCotType; 
-        
-        [SerializeField] private RotCot_AxisAngle rotCot_AxisAngle; 
-        [SerializeField] private RotCot_Quaternion rotCot_Quaternion; 
-        [SerializeField] private RotCot_Euler rotCot_Euler;
-        [SerializeField] private RotCot_Matrix rotCot_Matrix;
-        
-        private List<RotCot_GenericBase> rotCotsList => new List<RotCot_GenericBase>(){rotCot_AxisAngle, rotCot_Quaternion, rotCot_Euler, rotCot_Matrix};
-        #endregion TypedRotCots
-
-        public RotParams_Base ActiveRotParams_Generic
-        {
-            get => activeRotCot.GetRotParams_Generic(); 
-            set => activeRotCot.SetRotParams_Generic(value);
-        }
-        
         #region Initialization
         private void Awake()
         {
@@ -143,11 +140,11 @@ namespace RotContainers
         {
             InitUI();
             InitVisCam(); 
-            InitRotObjCot();
+            InitOrientedObject();
             
             InitializeRotCots(); 
             _selectedTypeIndex = 1; 
-            ActivateRotCot(rotCot_Quaternion);
+            ActivateRotCot(rotCotTemplateQuaternion);
         }
 
         private void InitUI()
@@ -165,7 +162,7 @@ namespace RotContainers
             if (_comboContainerUIParent == null)
             {
                 _comboContainerUIParent = string.IsNullOrEmpty(uiComboContainerParentName) ? 
-                    uiDocument.rootVisualElement :  
+                    null :  
                     uiDocument.rootVisualElement.Q<VisualElement>(uiComboContainerParentName);
                 
                 if (_comboContainerUIParent == null)
@@ -216,15 +213,15 @@ namespace RotContainers
             }
         }
 
-        private void InitRotObjCot()
+        private void InitOrientedObject()
         {
-            if (rotObjCot == null)
+            if (orientedObject == null)
             {
-                rotObjCot = Instantiate(rotObjCotPrefab, this.transform).GetComponent<RotObjCot>(); 
+                orientedObject = Instantiate(orientedObjectPrefab, this.transform).GetComponent<OrientedObject>(); 
             }
             InitializeRotCots(); 
             _selectedTypeIndex = 1; 
-            ActivateRotCot(rotCot_Quaternion);
+            ActivateRotCot(rotCotTemplateQuaternion);
             
             if (coordinateGrid != null)
             {
@@ -240,7 +237,7 @@ namespace RotContainers
         {
             foreach (RotCot_GenericBase rotCot in rotCotsList)
             {
-                rotCot.Initialize(this.transform, _uiRotParamsSlot, rotObjCot);
+                rotCot.Initialize(this.transform, _uiRotParamsSlot, orientedObject);
                 rotCot.enabled = false; 
             }
         }
@@ -267,16 +264,16 @@ namespace RotContainers
                 switch (value)
                 {
                     case 0: 
-                        SwitchActiveRotCot(typeof(RotCot_AxisAngle));
+                        SwitchActiveRotCot(typeof(rotCotTemplateAxisAngle));
                         break;
                     case 1:
-                        SwitchActiveRotCot(typeof(RotCot_Quaternion));
+                        SwitchActiveRotCot(typeof(rotCotTemplateQuaternion));
                         break;
                     case 2: 
-                        SwitchActiveRotCot(typeof(RotCot_Euler));
+                        SwitchActiveRotCot(typeof(rotCotEuler));
                         break;
                     case 3:
-                        SwitchActiveRotCot(typeof(RotCot_Matrix));
+                        SwitchActiveRotCot(typeof(rotCotTemplateMatrix));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -368,18 +365,18 @@ namespace RotContainers
         [ContextMenu("ApplyObjectRotation")]
         public void ApplyRotation()
         {
-            rotObjCot.ApplyObjectRotation();
+            orientedObject.ApplyObjectRotation();
         }
 
         public RotParams_Base GetAppliedRotation()
         {
-            return new RotParams_Quaternion(rotObjCot.GetAppliedRotation()); //TodoZyKa RotObjectHierarchy proper conversion functions 
+            return new RotParams_Quaternion(orientedObject.GetAppliedRotation()); //TodoZyKa RotObjectHierarchy proper conversion functions 
         }
         
         [ContextMenu("ResetAppliedObjectRotation")]
         public void ResetAppliedObjectRotation()
         {
-            rotObjCot.ResetAppliedObjectRotation(); 
+            orientedObject.ResetAppliedObjectRotation(); 
         }
         #endregion ApplyRotation
         

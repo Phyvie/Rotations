@@ -1267,6 +1267,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ComboRotCot
       objectReference: {fileID: 0}
+    - target: {fileID: 6926628981260178338, guid: ee04adb64b582ab4693b6a7ec2e18ac7,
+        type: 3}
+      propertyPath: m_Name
+      value: OrientedObjectContainer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8427126499508128760, guid: ee04adb64b582ab4693b6a7ec2e18ac7,
+        type: 3}
+      propertyPath: uiComboContainerParentName
+      value: RotUIContainer
+      objectReference: {fileID: 0}
     - target: {fileID: 9022089122053651013, guid: ee04adb64b582ab4693b6a7ec2e18ac7,
         type: 3}
       propertyPath: m_Enabled

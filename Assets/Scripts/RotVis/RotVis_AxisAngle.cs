@@ -14,28 +14,13 @@ namespace RotationVisualisation
         [SerializeField] private Vis_Axis vis_axis;
         [FormerlySerializedAs("vis_PlaneArc")] [SerializeField] private Vis_Angle visAngle;
 
-        public RotVis_AxisAngle(RotParams_AxisAngle rotParams) : base(rotParams)
-        {
-            
-        }
+        public RotVis_AxisAngle(RotParams_AxisAngle rotParams) : base(rotParams) { }
 
-        public Vector3 RotationVectorInRadian
-        {
-            get => rotParams.RotationVectorInRadian;
-            set => rotParams.RotationVectorInRadian = value; 
-        }
+        public Vector3 RotationVectorInRadian => rotParams.RotationVectorInRadian;
 
-        public Vector3 NormalisedAxis
-        {
-            get => rotParams.NormalisedAxis;
-            set => rotParams.NormalisedAxis = value.normalized;
-        }
+        public Vector3 NormalisedAxis => rotParams.NormalisedAxis;
 
-        public float AngleInRadian
-        {
-            get => rotParams.AngleInRadian; 
-            set => rotParams.AngleInRadian = value;
-        }
+        public float AngleInRadian => rotParams.AngleInRadian; 
 
         public override void VisUpdate()
         {

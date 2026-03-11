@@ -46,7 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotObjCotPrefab: {fileID: 7561055269216049345, guid: 806fbb60cc548b04598e13abac487ee8,
     type: 3}
-  rotObjCot: {fileID: 2478247325649629978}
+  orientedObject: {fileID: 2478247325649629978}
+  rotUIAsset: {fileID: 9197481963319205126, guid: 959c3fa76db3fac43a696054de3b72aa,
+    type: 3}
   selfInitOnAwake: 0
   selfInitOnStart: 1
   rotParams:
@@ -66,9 +68,7 @@ MonoBehaviour:
         isLocked: 0
   rotVisPrefab: {fileID: 3664387646587197461, guid: 23b4b06e4b3015443997a6dce80be81d,
     type: 3}
-  rotVisCS: {fileID: 0}
-  rotUIAsset: {fileID: 9197481963319205126, guid: 959c3fa76db3fac43a696054de3b72aa,
-    type: 3}
+  rotVisScript: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -124,7 +124,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotObjCotPrefab: {fileID: 7561055269216049345, guid: 806fbb60cc548b04598e13abac487ee8,
     type: 3}
-  rotObjCot: {fileID: 2478247325649629978}
+  orientedObject: {fileID: 2478247325649629978}
+  rotUIAsset: {fileID: 9197481963319205126, guid: edd2d061bb270cd4c93b0c281f09e666,
+    type: 3}
   selfInitOnAwake: 0
   selfInitOnStart: 1
   rotParams:
@@ -154,9 +156,7 @@ MonoBehaviour:
         _angleInRadian: 0
   rotVisPrefab: {fileID: 4359447636591289229, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
     type: 3}
-  rotVisCS: {fileID: 0}
-  rotUIAsset: {fileID: 9197481963319205126, guid: edd2d061bb270cd4c93b0c281f09e666,
-    type: 3}
+  rotVisScript: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -219,8 +219,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InitializeOnAwake: 0
   InitializeOnStart: 1
-  rotObjCotPrefab: {fileID: 5109546756149866199}
-  rotObjCot: {fileID: 2478247325649629978}
+  rotCotTemplateAxisAngle: {fileID: 1689187925402532235}
+  rotCotTemplateQuaternion: {fileID: 9022089122053651013}
+  rotCotEuler: {fileID: 4677344244531783339}
+  rotCotTemplateMatrix: {fileID: 3167021194500162632}
+  orientedObjectPrefab: {fileID: 7561055269216049345, guid: 806fbb60cc548b04598e13abac487ee8,
+    type: 3}
+  orientedObject: {fileID: 2478247325649629978}
   uiDocument: {fileID: 4563528484986964992}
   fullScreenUIAsset: {fileID: 9197481963319205126, guid: 80db4d1107146194db9e75f8b2de8937,
     type: 3}
@@ -242,10 +247,7 @@ MonoBehaviour:
     width: 1
     height: 0.67
   cameraInputEnabled: 0
-  rotCot_AxisAngle: {fileID: 1689187925402532235}
-  rotCot_Quaternion: {fileID: 9022089122053651013}
-  rotCot_Euler: {fileID: 4677344244531783339}
-  rotCot_Matrix: {fileID: 3167021194500162632}
+  coordinateGrid: {fileID: 0}
 --- !u!114 &4563528484986964992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,7 +332,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotObjCotPrefab: {fileID: 7561055269216049345, guid: 806fbb60cc548b04598e13abac487ee8,
     type: 3}
-  rotObjCot: {fileID: 2478247325649629978}
+  orientedObject: {fileID: 2478247325649629978}
+  rotUIAsset: {fileID: 9197481963319205126, guid: e8e275ab96cc4f54eba1128f991b32e0,
+    type: 3}
   selfInitOnAwake: 0
   selfInitOnStart: 1
   rotParams:
@@ -346,9 +350,7 @@ MonoBehaviour:
         isLocked: 0
   rotVisPrefab: {fileID: 2531459553012755455, guid: 14448fb5827a4b0439791001db04710e,
     type: 3}
-  rotVisCS: {fileID: 0}
-  rotUIAsset: {fileID: 9197481963319205126, guid: e8e275ab96cc4f54eba1128f991b32e0,
-    type: 3}
+  rotVisScript: {fileID: 0}
 --- !u!1 &9010870622720340778
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,7 +397,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotObjCotPrefab: {fileID: 7561055269216049345, guid: 806fbb60cc548b04598e13abac487ee8,
     type: 3}
-  rotObjCot: {fileID: 2478247325649629978}
+  orientedObject: {fileID: 2478247325649629978}
+  rotUIAsset: {fileID: 9197481963319205126, guid: 5eda4fd53ba890f47ad74cadbeff7e24,
+    type: 3}
   selfInitOnAwake: 0
   selfInitOnStart: 1
   rotParams:
@@ -416,9 +420,7 @@ MonoBehaviour:
     secondaryAxisIndex: 1
   rotVisPrefab: {fileID: 5477126826957242323, guid: 7a20fc4e7b9f5fd48b27c7347765b099,
     type: 3}
-  rotVisCS: {fileID: 0}
-  rotUIAsset: {fileID: 9197481963319205126, guid: 5eda4fd53ba890f47ad74cadbeff7e24,
-    type: 3}
+  rotVisScript: {fileID: 0}
 --- !u!1001 &634470887105989475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -478,7 +480,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6248128876473555692, guid: 806fbb60cc548b04598e13abac487ee8, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 806fbb60cc548b04598e13abac487ee8, type: 3}

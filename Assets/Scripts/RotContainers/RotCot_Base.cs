@@ -5,13 +5,14 @@ using RotObj;
 using RotParams;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 namespace RotContainers
 {
-    /* absolute baseclass for a single rotation, contains the generic getters and setters for RotParams, RotVis, RotUI and RotObjCot; the first two are only available as function, they are further specified in the templated child-class
+    /*
+     * generic (non-templated) baseclass for a single rotation, contains the generic getters and setters for RotParams, RotVis, RotUI and RotObjCot; the first two are only available as function, they are further specified in the templated child-class
      */
-    
     public abstract class RotCot_GenericBase : MonoBehaviour
     {
         #region VariablesAndGetSetProperties
@@ -22,15 +23,15 @@ namespace RotContainers
         
         #region RotObj
         [SerializeField] protected GameObject rotObjCotPrefab; 
-        [SerializeField] protected RotObjCot rotObjCot;
+        [FormerlySerializedAs("rotatedObjectContainer")] [FormerlySerializedAs("rotObjCot")] [SerializeField] protected OrientedObject orientedObject;
 
-        public RotObjCot GetRotObjCot()
+        public OrientedObject GetRotObjCot()
         {
-            return rotObjCot; 
+            return orientedObject; 
         }
-        public void SetRotObjCot(RotObjCot newRotObjCot)
+        public void SetRotObjCot(OrientedObject newOrientedObject)
         {
-            this.rotObjCot = newRotObjCot;
+            this.orientedObject = newOrientedObject;
         }
         #endregion RotObj
         
@@ -77,32 +78,33 @@ namespace RotContainers
 
         private void InitRotObj()
         {
-            if (rotObjCot == null)
+            if (orientedObject == null)
             {
-                rotObjCot = Instantiate(rotObjCotPrefab, transform).GetComponent<RotObjCot>();
+                orientedObject = Instantiate(rotObjCotPrefab, transform).GetComponent<OrientedObject>();
             }
         }
 
-        public abstract void Initialize(Transform parent, VisualElement UIParent, RotObjCot toSetRotObjCot = null);
+        public abstract void Initialize(Transform parent, VisualElement UIParent, OrientedObject orientedObject = null);
         #endregion Initialize
         
         
         protected void OnPropertyChangedVisUpdate(object sender, PropertyChangedEventArgs e)
         {
-            rotObjCot.SetRotation(GetRotParams_Generic().ToUnityQuaternion());
+            orientedObject.SetRotation(GetRotParams_Generic().ToUnityQuaternion());
         }
     }
     
     /*
      * ChildClass to RotCot_Generic, which contains the actual Variables and implements the generic getters/setters for the variables
      */
-    public abstract class RotCot_Base<TRotParams, TRotVis> : RotCot_GenericBase where TRotParams : RotParams_Base where TRotVis : RotVis_GenericBase
+    /* TodoZyKa RotParams_Conversion: No need for double abstraction, simple dependency injection would be enough */
+    public abstract class RotCot_TemplateBase<TRotParams, TRotVis> : RotCot_GenericBase where TRotParams : RotParams_Base where TRotVis : RotVis_GenericBase
     {
         #region Variables
         [SerializeField] private TRotParams rotParams;
 
         [SerializeField] private GameObject rotVisPrefab; 
-        [SerializeField] private TRotVis rotVisCS;
+        [SerializeField] private TRotVis rotVisScript;
         #endregion
         
         #region Properties
@@ -133,7 +135,7 @@ namespace RotContainers
                 enabled = true;
                 
                 rotParams.PropertyChanged += OnPropertyChangedVisUpdate;
-                rotVisCS.SetRotParamsByRef(rotParams);
+                rotVisScript.SetRotParamsByRef(rotParams);
                 rotUIroot.dataSource = rotParams;
             }
         }
@@ -157,79 +159,79 @@ namespace RotContainers
 
         public override RotVis_GenericBase GetRotVis_Generic()
         {
-            return rotVisCS; 
+            return rotVisScript; 
         }
 
         public override void SetRotVis_Generic(RotVis_GenericBase newRotVis)
         {
-            rotVisCS = newRotVis as TRotVis;
+            rotVisScript = newRotVis as TRotVis;
         }
         #endregion Properties
 
         #region EnableDisable
         private void OnEnable()
         {
-            rotVisCS?.gameObject.SetActive(true);
+            rotVisScript?.gameObject.SetActive(true);
             if (rotUIroot is not null) { rotUIroot.style.display = DisplayStyle.Flex; }
         }
 
         private void OnDisable()
         {
-            rotVisCS?.gameObject.SetActive(false);
+            rotVisScript?.gameObject.SetActive(false);
             if (rotUIroot is not null) { rotUIroot.style.display = DisplayStyle.None; }
         }
         #endregion EnableDisable
 
         #region InitializeAndSpawnFunctions
-        public override void Initialize(Transform parent, VisualElement UIParent, RotObjCot toSetRotObjCot = null)
+        public override void Initialize(Transform parent, VisualElement UIParent, OrientedObject orientedObject = null)
         {
             rotParams.PropertyChanged += OnPropertyChangedVisUpdate; 
             SpawnVis(parent);
-            SpawnRotObjCot(toSetRotObjCot); 
+            SpawnRotObjCot(orientedObject); 
             SpawnUI(UIParent);
         }
         
-        public void SpawnVis(Transform parent)
+        private void SpawnVis(Transform parent)
         {
-            if (rotVisCS != null)
+            if (rotVisScript != null)
             {
+                /* TodoZyKa RotParams_Conversion: Do I need to destroy an existing visualisation to replace it with a new one? */
                 #if UNITY_EDITOR
+                Debug.LogWarning($"Respawning RotVis of TypedRotationContainer {name}");
                 if (EditorApplication.isPlaying)
                 {
-                    Debug.LogWarning($"Respawning RotVis of TypedRotationContainer {name}");
-                    Destroy(rotVisCS.gameObject); 
+                    Destroy(rotVisScript.gameObject); 
                 }
                 else
                 {
-                    Debug.LogWarning($"Respawning RotVis of TypedRotationContainer {name}");
-                    DestroyImmediate(rotVisCS.gameObject);
+                    DestroyImmediate(rotVisScript.gameObject);
                 }
                 #else
                 Destroy(rotVisCS.gameObject); 
                 #endif
             }
             GameObject newGO = Instantiate(rotVisPrefab, this.transform); 
-            rotVisCS = newGO.GetComponent<TRotVis>();
-            rotVisCS.SetRotParamsByRef(rotParams);
+            rotVisScript = newGO.GetComponent<TRotVis>();
+            rotVisScript.SetRotParamsByRef(rotParams);
         }
         
-        public void SpawnRotObjCot(RotObjCot toSetRotObjCot)
+        private void SpawnRotObjCot(OrientedObject toSetOrientedObject)
         {
-            if (toSetRotObjCot == null)
+            if (toSetOrientedObject == null)
             {
-                if (rotObjCot == null)
+                if (orientedObject == null)
                 {
-                    rotObjCot = Instantiate(rotObjCotPrefab, transform).GetComponent<RotObjCot>();
+                    orientedObject = Instantiate(rotObjCotPrefab, transform).GetComponent<OrientedObject>();
                 }
             }
             else
             {
-                if (rotObjCot != toSetRotObjCot && rotObjCot != null)
+                if (orientedObject != toSetOrientedObject && orientedObject != null)
                 {
                     Debug.LogWarning($"Replacing rotObjCot on {name} with the one given from the initialize function");
-                    rotObjCot.gameObject.SetActive(false);
-                    rotObjCot.gameObject.name += "(deactivated by external initialisation)"; 
-                    rotObjCot = toSetRotObjCot;
+                    orientedObject.gameObject.SetActive(false);
+                    orientedObject.gameObject.name += "(deactivated by external initialisation)"; 
+                    orientedObject = toSetOrientedObject;
                 }
             }
         }

@@ -5,160 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b54c963-bad1-41cc-8b0e-252a0574fd2d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Art/Meshes/ReadMe.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Art/Meshes/ReadMe.md.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/ReadMe.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/ReadMe.md.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_workflow/Module_Class_Dependency.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/_workflow/Module_Class_Dependency.md.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/rotCotAxisAngle.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/rotCotEuler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/rotCotQuaternion.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_workflow/RotParams_Conversion.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/_workflow/RotParams_Conversion.md.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Deprecated/M_SphereToRotation.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Deprecated/M_SphereToRotation.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Deprecated/SH_SphereToRotation.shadergraph" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Deprecated/SH_SphereToRotation.shadergraph.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_TransparentRotationObject.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Materials/M_TransparentRotationObject.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes/AngleMath.hlsl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes/AngleMath.hlsl.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes/Grid.hlsl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/CustomNodes/Grid.hlsl.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/Deprecated.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/M_CircleSector.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/M_CircleSector.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/M_QuestionMarkColour.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/M_QuestionMarkColour.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/M_ShaderValueController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/M_ShaderValueController.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/M_VectorColour.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/M_VectorColour.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_AngleLit.shadergraph" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_AngleLit.shadergraph.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_AngleUnlit.shadergraph" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_AngleUnlit.shadergraph.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_Grid.shadergraph" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_Grid.shadergraph.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_TransparentRotationObject.shadergraph" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_TransparentRotationObject.shadergraph.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_VectorLit.shadergraph" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/SH_VectorLit.shadergraph.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/ShaderController.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Shaders/ShaderController.asmdef.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Axis.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Axis/Vis_Axis.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Axis/Vis_Axis.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/CircularVector/Vis_CircularVector.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/CircularVector/Vis_CircularVector.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/MathVisPackage.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/MathVisPackage.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/MathVisualisation.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/MathVisualisation/MathVis.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/MathVisualisation/MathVis.asmdef.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/MathVisualisation/Vis_Axis.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/MathVisualisation/Vis_Axis.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/MathVisualisation/Vis_CoordinateGrid.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/MathVisualisation/Vis_CoordinateGrid.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/MathVisualisation/Vis_PlaneArc.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/MathVisualisation/Vis_PlaneArc.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/MathVisualisation/Vis_Vector.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/MathVisualisation/Vis_Vector.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Plane.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_AngleLit.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_AngleLit.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_AngleUnlit.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_AngleUnlit.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_LitColours.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_LitColours/M_BackGroundColour.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_LitColours/M_BackGroundColour.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_LitColours/M_Blue.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_LitColours/M_Blue.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_LitColours/M_Gray.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_LitColours/M_Gray.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_LitColours/M_Green.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_LitColours/M_Green.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_LitColours/M_Orange.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_LitColours/M_Orange.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_LitColours/M_Red.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_LitColours/M_Red.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_VectorColor.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_VectorColor.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_Wireframe.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Shaders_Materials/M_Wireframe.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYExtensionMethods.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYExtensionMethods/ExtensionMethods.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYExtensionMethods/ExtensionMethods.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYExtensionMethods/UnityExtensions.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYExtensionMethods/UnityExtensions.asmdef.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/EditorUtility.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/EditorUtility/E_LocalReparent.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/EditorUtility/E_LocalReparent.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/EditorUtility/E_MeshAssetGenerator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/EditorUtility/E_MeshAssetGenerator.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/EditorUtility/E_QuaternionMultiplier.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/EditorUtility/E_QuaternionMultiplier.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/EditorUtility/E_ReparentManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/EditorUtility/E_ReparentManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/EditorUtility/E_SelectionBase.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/EditorUtility/E_SelectionBase.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/EditorUtility/E_SetOrientationFromVectors.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/EditorUtility/E_SetOrientationFromVectors.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/EditorUtility/EditorUtility.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/EditorUtility/EditorUtility.asmdef.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/ScreenshotManager.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/ScreenshotManager/ScreenshotInspector.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/ScreenshotManager/ScreenshotInspector.asmdef.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/ScreenshotManager/ScreenshotManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/ScreenshotManager/ScreenshotManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/ScreenshotManager/ViewShotInspector.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/PHYUnityUtility/ScreenshotManager/ViewShotInspector.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/M_AngleLit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/M_AngleLit.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/M_AngleUnlit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/M_AngleUnlit.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Vector/M_VectorColor.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Vector/M_VectorColor.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/ComboRotCot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/ComboRotCot.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_AxisAngle.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_AxisAngle.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_Quaternion.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_Quaternion.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/TransparentAirplane.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/TransparentAirplane.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotationObjects/RotObjCot.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotationObjects/RotObjCot.prefab.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/EditorInspector.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/EditorInspector/EditorInspector.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/EditorInspector/EditorInspector.asmdef.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/EditorInspector/NestedPropertyDrawer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/EditorInspector/NestedPropertyDrawer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/AngleTypeInspector.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/AngleTypeInspector.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/AngleWithTypeInspector.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/AngleWithTypeInspector.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/GimbalRingInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/GimbalRingInspector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/RotParamsInspector.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/RotParamsInspector.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotContainers.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotContainers.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotObj.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotObj/RotObj.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotObj/RotObj.asmdef.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotObj/RotObjCot.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotObj/RotObjCot.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Matrix.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Matrix.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/_RotParams_EulerAngleGimbalRing.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/_RotParams_EulerAngleGimbalRing.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ComboRotCot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ComboRotCot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_AxisAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/rotCotMatrix.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_AxisAngle.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/rotCotAxisAngle.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_Base.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_Base.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_Euler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_Euler.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/rotCotEuler.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_Matrix.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_Matrix.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/rotCotMatrix.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_Quaternion.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_Quaternion.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/rotCotQuaternion.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_AxisAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_AxisAngle.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_EulerAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_EulerAngle.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Quaternion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Quaternion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utility/InterpolationSetting/InterpolationSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utility/InterpolationSetting/InterpolationSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utility/Utility.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utility/Utility.asmdef.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Temp/UnitTorusAndCircle.fbx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Temp/UnitTorusAndCircle.fbx.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/CustomControls/LockableValueToggle.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/CustomControls/LockableValueToggle.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/AxisAngle/UICC_AxisAngle.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/AxisAngle/UICC_AxisAngle.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/EulerAngle/UICC_EulerAngle.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/EulerAngle/UICC_EulerAngle.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Matrix/UICC_Matrix.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Matrix/UICC_Matrix.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Operator/UICC_RotOperator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Operator/UICC_RotOperator.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Quaternion/UICC_Quaternion.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Quaternion/UICC_Quaternion.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/UI.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/UI.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotatedObjCot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotatedObjCot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/CustomControls.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,6 +60,7 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e6aa588f9882420485fca490ded58a721dee00/24/bb490b42/Object.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3ea01e77be99618395f448b16bd7cc2bd4248bd9e5d8474964b2d97f39c5d74/System.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/Vis_Angle.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Packages/MathVisPackage/CoordinateGrid/Grid.hlsl" root0="FORCE_HIGHLIGHTING" />
@@ -227,13 +104,13 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.46270066&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;MathVisualisationExtraction&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -474,6 +351,11 @@
       <workItem from="1773155759207" duration="24000" />
       <workItem from="1773155980782" duration="12000" />
       <workItem from="1773157255613" duration="374000" />
+      <workItem from="1773158289592" duration="264000" />
+      <workItem from="1773158582513" duration="5578000" />
+      <workItem from="1773183981483" duration="4773000" />
+      <workItem from="1773188795071" duration="1848000" />
+      <workItem from="1773238597848" duration="3220000" />
     </task>
     <servers />
   </component>

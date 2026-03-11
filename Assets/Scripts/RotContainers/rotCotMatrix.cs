@@ -3,7 +3,7 @@ using RotParams;
 
 namespace RotContainers
 {
-    public class RotCot_Euler : RotCot_Base<RotParams_EulerAngles, RotVis_EulerAngle>
+    public class rotCotTemplateMatrix : RotCot_TemplateBase<RotParams_Matrix, RotVis_Matrix>
     {
         
     }

@@ -20,25 +20,9 @@ namespace RotationVisualisation
             
         }
         
-        public Vector3 Axis
-        {
-            get => rotParams.NormalizedAxis;
-            set
-            {
-                rotParams.NormalizedAxis = value;
-                VisUpdate();
-            }
-        }
+        public Vector3 Axis => rotParams.NormalizedAxis;
 
-        public float Angle
-        {
-            get => rotParams.AngleInRadian;
-            set
-            {
-                rotParams.AngleInRadian = value; 
-                VisUpdate();
-            }
-        }
+        public float Angle => rotParams.AngleInRadian;
 
         public override void VisUpdate()
         {
@@ -74,11 +58,5 @@ namespace RotationVisualisation
             }
         }
         #endif
-
-        [ContextMenu("ResetToIdentity")]
-        private void ResetToIdentity()
-        {
-            rotParams = new RotParams_Quaternion();
-        }
     }
 }

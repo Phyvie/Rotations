@@ -33,9 +33,7 @@ namespace RotationVisualisation
         [SerializeField] private Color NegRollColor;
         
         public RotVis_EulerAngle(RotParams_EulerAngles rotParams) : base(rotParams)
-        {
-            
-        }
+        { }
         
         public override void VisUpdate()
         {
