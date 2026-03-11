@@ -21,19 +21,19 @@ namespace RotContainers
         public abstract void SetRotParams_Generic(RotParams_Base newRotParams);
         #endregion RotParams
         
-        #region RotObj
+        #region orientedObject
         [SerializeField] protected GameObject rotObjCotPrefab; 
-        [FormerlySerializedAs("rotatedObjectContainer")] [FormerlySerializedAs("rotObjCot")] [SerializeField] protected OrientedObject orientedObject;
+        [SerializeField] protected OrientedObject orientedObject;
 
-        public OrientedObject GetRotObjCot()
+        public OrientedObject GetOrientedObject()
         {
             return orientedObject; 
         }
-        public void SetRotObjCot(OrientedObject newOrientedObject)
+        public void SetOrientedObject(OrientedObject newOrientedObject)
         {
             this.orientedObject = newOrientedObject;
         }
-        #endregion RotObj
+        #endregion orientedObject
         
         #region RotVis
         public abstract RotVis_GenericBase GetRotVis_Generic();
@@ -96,8 +96,10 @@ namespace RotContainers
     
     /*
      * ChildClass to RotCot_Generic, which contains the actual Variables and implements the generic getters/setters for the variables
+     * Reason for the double-abstraction:
+     * A) The Template_Base can do type-safety checks in the setters of RotParams and RotVis
+     * B) The Generic_Base can be stored in a list
      */
-    /* TodoZyKa RotParams_Conversion: No need for double abstraction, simple dependency injection would be enough */
     public abstract class RotCot_TemplateBase<TRotParams, TRotVis> : RotCot_GenericBase where TRotParams : RotParams_Base where TRotVis : RotVis_GenericBase
     {
         #region Variables
@@ -135,11 +137,11 @@ namespace RotContainers
                 enabled = true;
                 
                 rotParams.PropertyChanged += OnPropertyChangedVisUpdate;
-                rotVisScript.SetRotParamsByRef(rotParams);
+                RotVisScript.SetRotParamsByRef(rotParams);
                 rotUIroot.dataSource = rotParams;
             }
         }
-        
+
         public override RotParams_Base GetRotParams_Generic()
         {
             return RotParams;
@@ -157,27 +159,38 @@ namespace RotContainers
             }
         }
 
+        
+        public TRotVis RotVisScript
+        {
+            get => rotVisScript;
+            set
+            {
+                rotVisScript = value;
+                rotVisScript.SetRotParamsByRef(rotParams);
+            }
+        }
+
         public override RotVis_GenericBase GetRotVis_Generic()
         {
-            return rotVisScript; 
+            return RotVisScript; 
         }
 
         public override void SetRotVis_Generic(RotVis_GenericBase newRotVis)
         {
-            rotVisScript = newRotVis as TRotVis;
+            RotVisScript = newRotVis as TRotVis;
         }
         #endregion Properties
 
         #region EnableDisable
         private void OnEnable()
         {
-            rotVisScript?.gameObject.SetActive(true);
+            RotVisScript?.gameObject.SetActive(true);
             if (rotUIroot is not null) { rotUIroot.style.display = DisplayStyle.Flex; }
         }
 
         private void OnDisable()
         {
-            rotVisScript?.gameObject.SetActive(false);
+            RotVisScript?.gameObject.SetActive(false);
             if (rotUIroot is not null) { rotUIroot.style.display = DisplayStyle.None; }
         }
         #endregion EnableDisable
@@ -186,36 +199,36 @@ namespace RotContainers
         public override void Initialize(Transform parent, VisualElement UIParent, OrientedObject orientedObject = null)
         {
             rotParams.PropertyChanged += OnPropertyChangedVisUpdate; 
-            SpawnVis(parent);
-            SpawnRotObjCot(orientedObject); 
+            SpawnAndSetVis(parent);
+            SpawnOrSetOrientedObject(orientedObject); 
             SpawnUI(UIParent);
         }
         
-        private void SpawnVis(Transform parent)
+        private void SpawnAndSetVis(Transform parent, bool overwrite = false)
         {
-            if (rotVisScript != null)
+            if (RotVisScript != null && overwrite)
             {
                 /* TodoZyKa RotParams_Conversion: Do I need to destroy an existing visualisation to replace it with a new one? */
                 #if UNITY_EDITOR
                 Debug.LogWarning($"Respawning RotVis of TypedRotationContainer {name}");
                 if (EditorApplication.isPlaying)
                 {
-                    Destroy(rotVisScript.gameObject); 
+                    Destroy(RotVisScript.gameObject); 
                 }
                 else
                 {
-                    DestroyImmediate(rotVisScript.gameObject);
+                    DestroyImmediate(RotVisScript.gameObject);
                 }
                 #else
                 Destroy(rotVisCS.gameObject); 
                 #endif
             }
             GameObject newGO = Instantiate(rotVisPrefab, this.transform); 
-            rotVisScript = newGO.GetComponent<TRotVis>();
-            rotVisScript.SetRotParamsByRef(rotParams);
+            RotVisScript = newGO.GetComponent<TRotVis>(); 
+            //RotVisScript.SetRotParamsByRef(rotParams) happens via the RotVisScript setter
         }
         
-        private void SpawnRotObjCot(OrientedObject toSetOrientedObject)
+        private void SpawnOrSetOrientedObject(OrientedObject toSetOrientedObject)
         {
             if (toSetOrientedObject == null)
             {

@@ -12,11 +12,6 @@ namespace RotationVisualisation
         [SerializeField] private Vis_Vector visVectorUp; 
         [SerializeField] private Vis_Vector visVectorForward;
 
-        public RotVis_Matrix(RotParams_Matrix rotParams_Matrix) : base(rotParams_Matrix)
-        {
-            
-        }
-
         public override void VisUpdate()
         {
             if (visVectorRight is not null)

@@ -13,9 +13,6 @@ namespace RotationVisualisation
         [SerializeField] private Vis_Vector vis_rotationVector;
         [SerializeField] private Vis_Axis vis_axis;
         [FormerlySerializedAs("vis_PlaneArc")] [SerializeField] private Vis_Angle visAngle;
-
-        public RotVis_AxisAngle(RotParams_AxisAngle rotParams) : base(rotParams) { }
-
         public Vector3 RotationVectorInRadian => rotParams.RotationVectorInRadian;
 
         public Vector3 NormalisedAxis => rotParams.NormalisedAxis;

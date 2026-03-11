@@ -13,14 +13,8 @@ namespace BaseClasses
             throw new System.NotImplementedException();
         }
         
-        public RotVis_GenericBase(RotParams_Base rotParams)
-        {
-            SetRotParamsByRef(rotParams);
-            VisUpdate();
-        }
-        
         public abstract RotParams_Base GetRotParams();
-        
+
         public abstract void SetRotParamsByRef(RotParams_Base newRotParams); 
         
         public abstract void VisUpdate();
@@ -29,10 +23,6 @@ namespace BaseClasses
     public abstract class RotVis_TemplateBase<TRotParams> : RotVis_GenericBase where TRotParams : RotParams_Base
     {
         [SerializeField] protected TRotParams rotParams;
-
-        public RotVis_TemplateBase(TRotParams rotParams) : base(rotParams)
-        {
-        }
         
         public sealed override RotParams_Base GetRotParams()
         {

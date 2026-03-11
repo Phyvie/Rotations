@@ -24,6 +24,7 @@ namespace RotParams
         public abstract RotParams_Base GetIdentity();
         public abstract RotParams_Base GetInverse();
 
+        /* TodoZyKa RotParams_Conversion: Not sure whether this should be in here, since not all RotParams can concatenate, maybe an interface would be better? */
         public RotParams_Base Concatenate(RotParams_Base otherRotation, bool otherFirst = false)
         {
             if (!DoesTypeMatch(otherRotation))
@@ -37,6 +38,7 @@ namespace RotParams
             }
         }
 
+        /* TodoZyKa RotParams_Conversion: Not sure whether this should be in here, since not all RotParams can concatenate, maybe an interface would be better? */
         protected abstract RotParams_Base Concatenate_Implementation(RotParams_Base otherRotation, bool otherFirst = false); 
         
         public abstract void ResetToIdentity();

@@ -36,14 +36,13 @@ namespace RotContainers
         
         #endregion TypedRotCots
         
-        #region RotObjCot
+        #region orientedObject
         [SerializeField] private GameObject orientedObjectPrefab; 
         [SerializeField] private OrientedObject orientedObject; 
-        #endregion RotObjCot
+        #endregion orientedObject
         
         #region UISetup
         [SerializeField] private UIDocument uiDocument;
-
         public UIDocument UIDocument
         {
             get => uiDocument;

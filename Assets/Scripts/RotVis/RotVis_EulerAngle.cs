@@ -32,9 +32,6 @@ namespace RotationVisualisation
         [SerializeField] private Color PosRollColor;
         [SerializeField] private Color NegRollColor;
         
-        public RotVis_EulerAngle(RotParams_EulerAngles rotParams) : base(rotParams)
-        { }
-        
         public override void VisUpdate()
         {
             if (_previousRotParamAxes == null || !RotParams_EulerAngles.AreAxesMatching(rotParams, _previousRotParamAxes))
