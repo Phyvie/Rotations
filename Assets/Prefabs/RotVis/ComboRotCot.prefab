@@ -47,10 +47,13 @@ MonoBehaviour:
   rotObjCotPrefab: {fileID: 7561055269216049345, guid: 806fbb60cc548b04598e13abac487ee8,
     type: 3}
   orientedObject: {fileID: 2478247325649629978}
+  uiDocument: {fileID: 0}
+  UIAsset: {fileID: 0}
+  panelSettingsAsset: {fileID: 0}
+  uiParentName: 
   rotUIAsset: {fileID: 9197481963319205126, guid: 959c3fa76db3fac43a696054de3b72aa,
     type: 3}
-  selfInitOnAwake: 0
-  selfInitOnStart: 1
+  initMode: 0
   rotParams:
     typedAngle:
       showAllAngleTypes: 0
@@ -125,10 +128,13 @@ MonoBehaviour:
   rotObjCotPrefab: {fileID: 7561055269216049345, guid: 806fbb60cc548b04598e13abac487ee8,
     type: 3}
   orientedObject: {fileID: 2478247325649629978}
+  uiDocument: {fileID: 0}
+  UIAsset: {fileID: 0}
+  panelSettingsAsset: {fileID: 0}
+  uiParentName: 
   rotUIAsset: {fileID: 9197481963319205126, guid: edd2d061bb270cd4c93b0c281f09e666,
     type: 3}
-  selfInitOnAwake: 0
-  selfInitOnStart: 1
+  initMode: 0
   rotParams:
     outer:
       eAxis: 0
@@ -218,12 +224,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e33dc5cae44fcca39a22a4df046401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitializeOnAwake: 0
-  InitializeOnStart: 1
-  rotCotTemplateAxisAngle: {fileID: 1689187925402532235}
-  rotCotTemplateQuaternion: {fileID: 9022089122053651013}
+  initMode: 2
+  rotCotAxisAngle: {fileID: 1689187925402532235}
+  rotCotQuaternion: {fileID: 9022089122053651013}
   rotCotEuler: {fileID: 4677344244531783339}
-  rotCotTemplateMatrix: {fileID: 3167021194500162632}
+  rotCotMatrix: {fileID: 3167021194500162632}
+  cameraPrefab: {fileID: 3772307241307734496, guid: 394edcfc98fae854f9e7187644570658,
+    type: 3}
+  visCamera: {fileID: 0}
+  coordinateGrid: {fileID: 2585243204663825934}
   orientedObjectPrefab: {fileID: 7561055269216049345, guid: 806fbb60cc548b04598e13abac487ee8,
     type: 3}
   orientedObject: {fileID: 2478247325649629978}
@@ -238,9 +247,6 @@ MonoBehaviour:
     type: 3}
   uiMenuLineName: uiMenuLine
   uiRotParamsSlot: RotParamsSlot
-  cameraPrefab: {fileID: 3772307241307734496, guid: 394edcfc98fae854f9e7187644570658,
-    type: 3}
-  visCamera: {fileID: 0}
   cameraScreenRect:
     serializedVersion: 2
     x: 0
@@ -248,7 +254,6 @@ MonoBehaviour:
     width: 1
     height: 0.67
   cameraInputEnabled: 0
-  coordinateGrid: {fileID: 0}
 --- !u!114 &4563528484986964992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,10 +339,13 @@ MonoBehaviour:
   rotObjCotPrefab: {fileID: 7561055269216049345, guid: 806fbb60cc548b04598e13abac487ee8,
     type: 3}
   orientedObject: {fileID: 2478247325649629978}
+  uiDocument: {fileID: 0}
+  UIAsset: {fileID: 0}
+  panelSettingsAsset: {fileID: 0}
+  uiParentName: 
   rotUIAsset: {fileID: 9197481963319205126, guid: e8e275ab96cc4f54eba1128f991b32e0,
     type: 3}
-  selfInitOnAwake: 0
-  selfInitOnStart: 1
+  initMode: 0
   rotParams:
     lockableWXYZ:
       values:
@@ -399,10 +407,13 @@ MonoBehaviour:
   rotObjCotPrefab: {fileID: 7561055269216049345, guid: 806fbb60cc548b04598e13abac487ee8,
     type: 3}
   orientedObject: {fileID: 2478247325649629978}
+  uiDocument: {fileID: 0}
+  UIAsset: {fileID: 0}
+  panelSettingsAsset: {fileID: 0}
+  uiParentName: 
   rotUIAsset: {fileID: 9197481963319205126, guid: 5eda4fd53ba890f47ad74cadbeff7e24,
     type: 3}
-  selfInitOnAwake: 0
-  selfInitOnStart: 1
+  initMode: 0
   rotParams:
     InternalMatrix:
       InternalMatrix:
@@ -578,3 +589,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3906293474629514321}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2585243204663825934 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1573253567094792799, guid: 32e01b40da309184e91477c335f15ecf,
+    type: 3}
+  m_PrefabInstance: {fileID: 3906293474629514321}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f97e64a5aca22e4682b14a5063cba05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

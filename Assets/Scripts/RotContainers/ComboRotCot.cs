@@ -5,7 +5,6 @@ using RotObj;
 using RotParams;
 using Unity.Properties;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 namespace RotContainers
@@ -46,6 +45,23 @@ namespace RotContainers
         
         #endregion TypedRotCots
         
+        #region Cam
+        [SerializeField] private GameObject cameraPrefab;
+        private GameObject cameraRotationPivot;  
+        [SerializeField] private Camera visCamera;
+        public Camera VisCamera
+        {
+            get => visCamera;
+            set
+            {
+                visCamera = value;
+                if (visCamera != null && coordinateGrid != null)
+                {
+                    coordinateGrid.ViewCamera = VisCamera; 
+                }
+            }
+        }
+
         #region CoordinateGrid
         [SerializeField] private Vis_CoordinateGrid coordinateGrid;
         #endregion CoordinateGrid
@@ -86,16 +102,6 @@ namespace RotContainers
         [SerializeField] private string uiRotParamsSlot = "RotParamsSlot"; 
         private VisualElement _uiRotParamsSlot;
         #endregion UISetup
-        
-        #region Cam
-        [SerializeField] private GameObject cameraPrefab;
-        private GameObject cameraRotationPivot;  
-        [SerializeField] private Camera visCamera;
-        public Camera VisCamera
-        {
-            get => visCamera;
-            set => visCamera = value;
-        }
         
         [SerializeField] private Rect cameraScreenRect = new Rect(0, 0, 1, 1);
         [SerializeField] private bool cameraInputEnabled = false;
@@ -213,7 +219,18 @@ namespace RotContainers
         {
             if (VisCamera ==null)
             {
-                VisCamera = Instantiate(cameraPrefab, this.transform).transform.GetChild(0).GetComponent<Camera>();
+                if (cameraPrefab == null)
+                {
+                    Debug.LogError($"{name} VisCamera prefab is null");
+                    return;
+                }
+                GameObject visCamGO = Instantiate(cameraPrefab, this.transform);
+                VisCamera = visCamGO.GetComponentInChildren<Camera>();
+                if (VisCamera == null)
+                {
+                    Debug.LogError($"{name} VisCamera prefab does not contain a Camera component");
+                    return;
+                }
                 VisCamera.rect = cameraScreenRect; 
             }
 
@@ -250,7 +267,6 @@ namespace RotContainers
                 Debug.LogWarning("No CoordinateGrid found; cannot initialize CoordinateGrid");
                 return; 
             }
-            
             coordinateGrid.ViewCamera = VisCamera; 
         }
         #endregion Initialization
