@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Packages.MathExtensions;
 using Unity.Properties;
 using UnityEditor;
 using UnityEngine;
@@ -75,14 +76,14 @@ namespace RotParams
         private _RotParams_EulerAngleGimbalRing()
         {
             eAxis = EGimbalAxis.Yaw;
-            typedAngle = new AngleWithType(AngleType.Degree, 0);
+            typedAngle = new AngleWithType(EAngleType.Degree, 0);
         }
         
-        public _RotParams_EulerAngleGimbalRing(EGimbalAxis inEAxis, float angleInRadian) : this(inEAxis, AngleType.Radian, angleInRadian)
+        public _RotParams_EulerAngleGimbalRing(EGimbalAxis inEAxis, float angleInRadian) : this(inEAxis, EAngleType.Radian, angleInRadian)
         {
         }
 
-        public _RotParams_EulerAngleGimbalRing(EGimbalAxis inEAxis, AngleType angleType, float angle) : this(inEAxis, new AngleWithType(angleType, angle))
+        public _RotParams_EulerAngleGimbalRing(EGimbalAxis inEAxis, EAngleType angleType, float angle) : this(inEAxis, new AngleWithType(angleType, angle))
         {
         }
 
@@ -100,15 +101,15 @@ namespace RotParams
         
         public static _RotParams_EulerAngleGimbalRing Yaw()
         {
-            return new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Yaw, AngleType.Degree, 90); 
+            return new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Yaw, EAngleType.Degree, 90); 
         }
         public static _RotParams_EulerAngleGimbalRing Pitch(RotParams_EulerAngles parent)
         {
-            return new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Pitch, AngleType.Degree, 90); 
+            return new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Pitch, EAngleType.Degree, 90); 
         }
         public static _RotParams_EulerAngleGimbalRing Roll(RotParams_EulerAngles parent)
         {
-            return new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Roll, AngleType.Degree, 90); 
+            return new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Roll, EAngleType.Degree, 90); 
         }
         #endregion //Constructors
         

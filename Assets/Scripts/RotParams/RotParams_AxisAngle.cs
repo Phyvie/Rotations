@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Extensions.MathExtensions;
 using MathExtensions;
+using Packages.MathExtensions;
 using Unity.Properties;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ namespace RotParams
     public class RotParams_AxisAngle : RotParams_Base
     {
         #region Variables
-        [SerializeField] private AngleWithType typedAngle = new AngleWithType(AngleType.Radian, 0);
+        [SerializeField] private AngleWithType typedAngle = new AngleWithType(EAngleType.Radian, 0);
 
         [SerializeField] private LockableVector _axis = new LockableVector(new List<LockableFloat>()
         {
@@ -215,7 +216,7 @@ namespace RotParams
             }
         }
 
-        public AngleType AngleType
+        public EAngleType AngleType
         {
             get => typedAngle.angleType;
             set => typedAngle.angleType = value;

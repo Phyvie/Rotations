@@ -14,12 +14,13 @@
                             <engine:DataBinding property="value" data-source-path="AngleInCurrentUnit" binding-mode="TwoWay" />
                         </Bindings>
                     </engine:FloatField>
-                    <engine:DropdownField name="AngleTypeSelector">
+                    <engine:EnumField name="AngleTypeSelector" value="Yaw" type="Packages.MathExtensions.EAngleType, MathExtensions">
                         <Bindings>
                             <engine:DataBinding property="choices" data-source-path="typedAngle.AngleTypeChoices" binding-mode="ToTarget" />
                             <engine:DataBinding property="index" data-source-path="typedAngle.AngleTypeIndex" binding-mode="TwoWay" />
+                            <engine:DataBinding property="value" data-source-path="typedAngle.AngleType" binding-mode="TwoWay" />
                         </Bindings>
-                    </engine:DropdownField>
+                    </engine:EnumField>
                     <engine:VisualElement style="flex-grow: 1;" />
                 </engine:VisualElement>
                 <engine:Label text="x" name="Lbl__Multiply" class="centeredText" style="-unity-font-style: bold; width: 20px;" />

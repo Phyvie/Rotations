@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Packages.MathExtensions;
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -142,6 +143,17 @@ namespace RotParams
         }
 
         [CreateProperty]
+        public EAngleType OuterAngleType
+        {
+            get => outer.TypedAngle.AngleType;
+            set
+            {
+                outer.TypedAngle.AngleType = value;
+                OnPropertyChanged(nameof(OuterAngleType));
+            }
+        }
+
+        [CreateProperty]
         public float MiddleAngle
         {
             get => middle.TypedAngle.AngleInCurrentUnit;
@@ -153,6 +165,17 @@ namespace RotParams
         }
 
         [CreateProperty]
+        public EAngleType MiddleAngleType
+        {
+            get => middle.TypedAngle.AngleType;
+            set
+            {
+                middle.TypedAngle.AngleType = value;
+                OnPropertyChanged(nameof(MiddleAngleType));
+            }
+        }
+        
+        [CreateProperty]
         public EGimbalAxis MiddleAxis
         {
             get => middle.EAxis;
@@ -160,6 +183,17 @@ namespace RotParams
             {
                 middle.EAxis = value;
                 OnPropertyChanged(nameof(MiddleAxis));
+            }
+        }
+        
+        [CreateProperty]
+        public EAngleType InnerAngleType
+        {
+            get => inner.TypedAngle.AngleType;
+            set
+            {
+                inner.TypedAngle.AngleType = value;
+                OnPropertyChanged(nameof(InnerAngleType));
             }
         }
         
@@ -212,9 +246,9 @@ namespace RotParams
         }
         
         public RotParams_EulerAngles() : this(
-            new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Yaw, AngleType.Degree, 0), 
-            new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Pitch, AngleType.Degree, 0), 
-            new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Roll, AngleType.Degree, 0))
+            new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Yaw, EAngleType.Degree, 0), 
+            new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Pitch, EAngleType.Degree, 0), 
+            new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Roll, EAngleType.Degree, 0))
         {
         }
         

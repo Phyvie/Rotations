@@ -102,9 +102,9 @@ MonoBehaviour:
   editSharedMaterial: {fileID: 2100000, guid: 33fdf24a949fe4b458d6eb6a85bb4e2e, type: 2}
   _positiveAngleColor: {r: 0.45098042, g: 1, b: 0.45098042, a: 0.2}
   _negativeAngleColor: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0.2}
-  _fullRotationColor: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0.2}
+  _fullRotationColor: {r: 0.45098042, g: 1, b: 0.45098042, a: 0.2}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
-  _beginAngle: -0
+  _beginAngle: -6.2831855
   _endAngle: 0
 --- !u!1 &2460166654622229268
 GameObject:
@@ -208,9 +208,9 @@ MonoBehaviour:
   editSharedMaterial: {fileID: 2100000, guid: 33fdf24a949fe4b458d6eb6a85bb4e2e, type: 2}
   _positiveAngleColor: {r: 1, g: 0.45098042, b: 0.45098042, a: 0.2}
   _negativeAngleColor: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0.2}
-  _fullRotationColor: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0.2}
+  _fullRotationColor: {r: 1, g: 0.45098042, b: 0.45098042, a: 0.2}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
-  _beginAngle: -0
+  _beginAngle: -6.2831855
   _endAngle: 0
 --- !u!1 &4356467761502027135
 GameObject:
@@ -314,7 +314,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2442438066559996244
 Transform:
   m_ObjectHideFlags: 0
@@ -343,25 +343,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc092fa2e1eb4593a2085b0aac8252d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotObjCot: {fileID: 0}
-  outer:
-    rail: {fileID: 6957279353251134465}
-    ring: {fileID: 4976681947260355434}
-    vis_planeArc: {fileID: 730280732468509012}
-  middle:
-    rail: {fileID: 7685605742782546286}
-    ring: {fileID: 4758980111551920935}
-    vis_planeArc: {fileID: 6080925716595271637}
-  inner:
-    rail: {fileID: 4520340664653103367}
-    ring: {fileID: 6446721322427425129}
-    vis_planeArc: {fileID: 6308813285352157611}
-  PosYawColor: {r: 0.45098042, g: 1, b: 0.45098042, a: 0.2}
-  NegYawColor: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0.2}
-  PosPitchColor: {r: 1, g: 0.45098042, b: 0.45098042, a: 0.2}
-  NegPitchColor: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0.2}
-  PosRollColor: {r: 0.45098042, g: 0.45098042, b: 1, a: 0.2}
-  NegRollColor: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0.2}
   rotParams:
     outer:
       eAxis: 0
@@ -369,28 +350,46 @@ MonoBehaviour:
         showAllAngleTypes: 0
         showAngleTypeSelector: 1
         angleType:
-          rid: 1000
-        _angleInRadian: 0
+          rid: 4235530158628405962
+        _angleInRadian: 6.2831855
     middle:
       eAxis: 1
       typedAngle:
         showAllAngleTypes: 0
         showAngleTypeSelector: 1
         angleType:
-          rid: 1000
-        _angleInRadian: 0
+          rid: 4235530158628405962
+        _angleInRadian: 6.2831855
     inner:
       eAxis: 2
       typedAngle:
         showAllAngleTypes: 0
         showAngleTypeSelector: 1
         angleType:
-          rid: 1000
-        _angleInRadian: 0
+          rid: 4235530158628405962
+        _angleInRadian: 6.2831855
+  outer:
+    rail: {fileID: 6957279353251134465}
+    ring: {fileID: 4976681947260355434}
+    visAngle: {fileID: 730280732468509012}
+  middle:
+    rail: {fileID: 7685605742782546286}
+    ring: {fileID: 4758980111551920935}
+    visAngle: {fileID: 6080925716595271637}
+  inner:
+    rail: {fileID: 4520340664653103367}
+    ring: {fileID: 6446721322427425129}
+    visAngle: {fileID: 6308813285352157611}
+  PosYawColor: {r: 0.45098042, g: 1, b: 0.45098042, a: 0.2}
+  NegYawColor: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0.2}
+  PosPitchColor: {r: 1, g: 0.45098042, b: 0.45098042, a: 0.2}
+  NegPitchColor: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0.2}
+  PosRollColor: {r: 0.45098042, g: 0.45098042, b: 1, a: 0.2}
+  NegRollColor: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0.2}
   references:
     version: 2
     RefIds:
-    - rid: 1000
+    - rid: 4235530158628405962
       type: {class: AngleType, ns: RotParams, asm: MathExtensions}
       data:
         angleTypeName: Radian
@@ -512,7 +511,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4758980111551920935}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.00000008742278, z: 0, w: -1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.923077, y: 0.92307687, z: 0.923077}
   m_ConstrainProportionsScale: 0
@@ -585,7 +584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7466f4bac16547c7a774699302670536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beginAngle: -0
+  beginAngle: -6.2831855
   endingAngle: 0
   _positiveAngleColorOverwrite: {r: 1, g: 0.45098042, b: 0.45098042, a: 0.2}
   _negativeAngleColorOverwrite: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0.2}
@@ -609,8 +608,8 @@ MonoBehaviour:
   _positiveAngleColor: {r: 1, g: 0.45098042, b: 0.45098042, a: 0.2}
   _negativeAngleColor: {r: 0.54901963, g: 0.2470588, b: 0.2470588, a: 0.2}
   _fullRotationColor: {r: 0, g: 0, b: 0, a: 0}
-  _outsideAngleColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  _beginAngle: -0
+  _outsideAngleColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  _beginAngle: -6.2831855
   _endAngle: 0
 --- !u!1 &4976681947260355434
 GameObject:
@@ -640,7 +639,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4976681947260355434}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.00000008742278, z: 0, w: -1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9285715, y: 0.9285715, z: 0.9285714}
   m_ConstrainProportionsScale: 0
@@ -713,7 +712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7466f4bac16547c7a774699302670536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beginAngle: -0
+  beginAngle: -6.2831855
   endingAngle: 0
   _positiveAngleColorOverwrite: {r: 0.45098042, g: 1, b: 0.45098042, a: 0.2}
   _negativeAngleColorOverwrite: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0.2}
@@ -737,8 +736,8 @@ MonoBehaviour:
   _positiveAngleColor: {r: 0.45098042, g: 1, b: 0.45098042, a: 0.2}
   _negativeAngleColor: {r: 0.2470588, g: 0.54901963, b: 0.2470588, a: 0.2}
   _fullRotationColor: {r: 0.36078432, g: 0.8000001, b: 0.36078432, a: 0}
-  _outsideAngleColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  _beginAngle: -0
+  _outsideAngleColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  _beginAngle: -6.2831855
   _endAngle: 0
 --- !u!1 &6446721322427425129
 GameObject:
@@ -768,7 +767,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6446721322427425129}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.00000008742278, z: 0, w: -1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9259255, y: 0.9259261, z: 0.92592597}
   m_ConstrainProportionsScale: 0
@@ -841,7 +840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7466f4bac16547c7a774699302670536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beginAngle: -0
+  beginAngle: -6.2831855
   endingAngle: 0
   _positiveAngleColorOverwrite: {r: 0.45098042, g: 0.45098042, b: 1, a: 0.2}
   _negativeAngleColorOverwrite: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0.2}
@@ -865,8 +864,8 @@ MonoBehaviour:
   _positiveAngleColor: {r: 0.45098042, g: 0.45098042, b: 1, a: 0.2}
   _negativeAngleColor: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0.2}
   _fullRotationColor: {r: 0, g: 0, b: 0, a: 0}
-  _outsideAngleColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  _beginAngle: -0
+  _outsideAngleColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  _beginAngle: -6.2831855
   _endAngle: 0
 --- !u!1 &6957279353251134465
 GameObject:
@@ -1058,9 +1057,9 @@ MonoBehaviour:
   editSharedMaterial: {fileID: 2100000, guid: 33fdf24a949fe4b458d6eb6a85bb4e2e, type: 2}
   _positiveAngleColor: {r: 0.45098042, g: 0.45098042, b: 1, a: 0.2}
   _negativeAngleColor: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0.2}
-  _fullRotationColor: {r: 0.2470588, g: 0.2470588, b: 0.54901963, a: 0.2}
+  _fullRotationColor: {r: 0.45098042, g: 0.45098042, b: 1, a: 0.2}
   _outsideAngleColor: {r: 0, g: 0, b: 0, a: 0}
-  _beginAngle: -0
+  _beginAngle: -6.2831855
   _endAngle: 0
 --- !u!1 &7685605742782546286
 GameObject:

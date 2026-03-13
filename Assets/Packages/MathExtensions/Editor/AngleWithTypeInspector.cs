@@ -1,3 +1,4 @@
+using Packages.MathExtensions;
 using RotParams;
 using UnityEditor;
 using UnityEngine;
@@ -18,9 +19,9 @@ namespace Editor
         {
             if (initialized) return;
 
-            showAllAngleTypesProp = property.FindPropertyRelative("showAllAngleTypes");
-            showAngleTypeSelectorProp = property.FindPropertyRelative("showAngleTypeSelector");
-            angleTypeProp = property.FindPropertyRelative("angleType");
+            showAllAngleTypesProp = property.FindPropertyRelative(nameof(AngleWithType.showAllAngleTypes));
+            showAngleTypeSelectorProp = property.FindPropertyRelative(nameof(AngleWithType.showAngleTypeSelector));
+            angleTypeProp = property.FindPropertyRelative("angleType"); //nameof?
             angleInRadianProp = property.FindPropertyRelative("_angleInRadian");
 
             initialized = true;
@@ -46,29 +47,28 @@ namespace Editor
             // Draw variable label (e.g., "angleWithType")
             EditorGUI.LabelField(labelRect, label);
 
-            // Get current AngleType
-            AngleType currentType = GetCurrentAngleType();
-            float currentAngle = (float)(angleInRadianProp.floatValue * currentType.UnitMultiplier / (2 * Mathf.PI));
+            // Get current EAngleType
+            EAngleType currentType = (EAngleType)angleTypeProp.enumValueIndex;
+            float currentAngle = (float)(angleInRadianProp.doubleValue * currentType.GetMultiplier() / (2 * Mathf.PI));
 
             // Float Field (no label)
             float newAngle = EditorGUI.FloatField(fieldRect, GUIContent.none, currentAngle);
             if (!Mathf.Approximately(newAngle, currentAngle))
             {
-                angleInRadianProp.floatValue = (float)(newAngle / currentType.UnitMultiplier * 2 * Mathf.PI);
+                angleInRadianProp.doubleValue = (double)(newAngle / currentType.GetMultiplier() * 2 * Mathf.PI);
             }
 
             // Dropdown: show if enabled
             if (showAngleTypeSelectorProp.boolValue)
             {
-                string[] dropdownLabels = System.Array.ConvertAll(AngleType.AngleTypes,
-                    t => $"{t.AngleTypeName} ({t.UnitLabel})");
+                string[] dropdownLabels = System.Array.ConvertAll((EAngleType[])System.Enum.GetValues(typeof(EAngleType)),
+                    t => $"{t.GetName()} ({t.GetLabel()})");
 
-                int currentIndex = System.Array.IndexOf(AngleType.AngleTypes, currentType);
-                int selectedIndex = EditorGUI.Popup(dropdownRect, currentIndex, dropdownLabels);
+                int selectedIndex = EditorGUI.Popup(dropdownRect, angleTypeProp.enumValueIndex, dropdownLabels);
 
-                if (selectedIndex != currentIndex)
+                if (selectedIndex != angleTypeProp.enumValueIndex)
                 {
-                    angleTypeProp.managedReferenceValue = AngleType.AngleTypes[selectedIndex];
+                    angleTypeProp.enumValueIndex = selectedIndex;
                 }
             }
 
@@ -78,12 +78,6 @@ namespace Editor
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             return EditorGUIUtility.singleLineHeight;
-        }
-
-        private AngleType GetCurrentAngleType()
-        {
-            object managedRef = angleTypeProp.managedReferenceValue;
-            return managedRef as AngleType ?? AngleType.Radian;
         }
     }
 }

@@ -1,7 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Packages.MathExtensions;
 using Unity.Properties;
 using UnityEngine;
 
@@ -14,13 +14,13 @@ namespace RotParams
         
         [SerializeField] public bool showAllAngleTypes = false;
         [SerializeField] public bool showAngleTypeSelector = true;
-        [SerializeReference] public AngleType angleType = AngleType.Radian;
-        [SerializeField] private double _angleInRadian = 0f;
+        [SerializeField] public EAngleType angleType = EAngleType.Radian;
+        [SerializeField] private double angleInRadian = 0f;
 
         #region Constructors
         private AngleWithType() { }
 
-        public AngleWithType(AngleType angleType, float valueInAngleType, bool showAngleTypeSelector = true, bool showAllAngleTypes = false)
+        public AngleWithType(EAngleType angleType, float valueInAngleType, bool showAngleTypeSelector = true, bool showAllAngleTypes = false)
         {
             this.angleType = angleType;
             this.showAngleTypeSelector = showAngleTypeSelector;
@@ -31,13 +31,25 @@ namespace RotParams
         #endregion Constructors
 
         #region Properties
+
+        [CreateProperty]
+        public EAngleType AngleType
+        {
+            get => angleType;
+            set
+            {
+                angleType = value;
+                OnPropertyChanged(); 
+            }
+        }
+
         [CreateProperty]
         public float AngleInRadian
         {
-            get => (float) _angleInRadian;
+            get => (float) angleInRadian;
             set
             {
-                _angleInRadian = value;
+                angleInRadian = value;
                 OnPropertyChanged();
             }
         }
@@ -45,10 +57,10 @@ namespace RotParams
         [CreateProperty]
         public float AngleInDegree
         {
-            get => (float) (_angleInRadian * Mathf.Rad2Deg);
+            get => (float) (angleInRadian * Mathf.Rad2Deg);
             set
             {
-                _angleInRadian = value * Mathf.Deg2Rad;
+                angleInRadian = value * Mathf.Deg2Rad;
                 OnPropertyChanged();
             }
         }
@@ -56,10 +68,10 @@ namespace RotParams
         [CreateProperty]
         public float AngleInCircleParts
         {
-            get => (float) (_angleInRadian / (2 * PI_d));
+            get => (float) (angleInRadian / (2 * PI_d));
             set
             {
-                _angleInRadian = value * 2 * PI_d;
+                angleInRadian = value * 2 * PI_d;
                 OnPropertyChanged();
             }
         }
@@ -67,10 +79,10 @@ namespace RotParams
         [CreateProperty]
         public float AngleInCurrentUnit
         {
-            get => (float) (_angleInRadian * (angleType?.UnitMultiplier ?? 1.0) / (2 * PI_d));
+            get => (float) (angleInRadian * angleType.GetMultiplier() / (2 * PI_d)); 
             set
             {
-                _angleInRadian = (float)(value / (angleType?.UnitMultiplier ?? 1.0) * 2 * PI_d);
+                angleInRadian = (float)(value / angleType.GetMultiplier() * 2 * PI_d);
                 OnPropertyChanged();
             }
         }
@@ -104,7 +116,7 @@ namespace RotParams
         {
             if (ReferenceEquals(a, b)) return true;
             if (ReferenceEquals(a, null) || ReferenceEquals(b, null)) return false;
-            return Mathf.Approximately((float) a._angleInRadian, (float) b._angleInRadian);
+            return Mathf.Approximately((float) a.angleInRadian, (float) b.angleInRadian);
         }
 
         public static bool operator !=(AngleWithType a, AngleWithType b) => !(a == b);
@@ -120,32 +132,14 @@ namespace RotParams
 
         public override int GetHashCode()
         {
-            return _angleInRadian.GetHashCode();
+            return angleInRadian.GetHashCode();
         }
 
         public override string ToString()
         {
-            return $"{AngleInCurrentUnit:F2} {angleType?.UnitLabel}";
+            return $"{AngleInCurrentUnit:F2} {angleType.GetLabel()}";
         }
         #endregion Overrides
-        
-        #region UI Toolkit Binding Support
-        // Expose the angle types as choice strings for DropdownField.choices
-        [CreateProperty]
-        public List<string> AngleTypeChoices => AngleType.AngleTypeNames;
-
-        // Index of current type in the list
-        [CreateProperty]
-        public int AngleTypeIndex
-        {
-            get => Array.IndexOf(AngleType.AngleTypes, angleType);
-            set
-            {
-                if (value >= 0 && value < AngleType.AngleTypes.Length)
-                    angleType = AngleType.AngleTypes[value];
-            }
-        }
-        #endregion
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

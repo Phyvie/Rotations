@@ -24,12 +24,11 @@
                     <engine:DataBinding property="value" data-source-path="OuterAngle" binding-mode="TwoWay" />
                 </Bindings>
             </engine:FloatField>
-            <engine:DropdownField>
+            <engine:EnumField value="Radian" type="Packages.MathExtensions.EAngleType, MathExtensions">
                 <Bindings>
-                    <engine:DataBinding property="index" data-source-path="outer.typedAngle.AngleTypeIndex" binding-mode="TwoWay" />
-                    <engine:DataBinding property="choices" data-source-path="outer.typedAngle.AngleTypeChoices" binding-mode="ToTarget" />
+                    <engine:DataBinding property="value" binding-mode="TwoWay" data-source-path="OuterAngleType" />
                 </Bindings>
-            </engine:DropdownField>
+            </engine:EnumField>
         </engine:VisualElement>
         <engine:VisualElement name="SecondAxis" class="container--horizontalspacearound gimbalRing">
             <engine:EnumField value="Pitch" type="RotParams.EGimbalAxis, RotParams">
@@ -42,12 +41,11 @@
                     <engine:DataBinding property="value" data-source-path="MiddleAngle" binding-mode="TwoWay" />
                 </Bindings>
             </engine:FloatField>
-            <engine:DropdownField index="1">
+            <engine:EnumField value="Radian" type="Packages.MathExtensions.EAngleType, MathExtensions">
                 <Bindings>
-                    <engine:DataBinding property="choices" data-source-path="outer.typedAngle.AngleTypeChoices" binding-mode="ToTarget" />
-                    <engine:DataBinding property="index" data-source-path="middle.typedAngle.AngleTypeIndex" binding-mode="TwoWay" />
+                    <engine:DataBinding property="value" data-source-path="MiddleAngleType" binding-mode="TwoWay" />
                 </Bindings>
-            </engine:DropdownField>
+            </engine:EnumField>
         </engine:VisualElement>
         <engine:VisualElement name="ThirdAxis" class="container--horizontalspacearound gimbalRing">
             <engine:EnumField value="Roll" type="RotParams.EGimbalAxis, RotParams">
@@ -60,12 +58,11 @@
                     <engine:DataBinding property="value" data-source-path="InnerAngle" binding-mode="TwoWay" />
                 </Bindings>
             </engine:FloatField>
-            <engine:DropdownField>
+            <engine:EnumField value="Radian" type="Packages.MathExtensions.EAngleType, MathExtensions">
                 <Bindings>
-                    <engine:DataBinding property="choices" data-source-path="outer.typedAngle.AngleTypeChoices" binding-mode="ToTarget" />
-                    <engine:DataBinding property="index" data-source-path="inner.typedAngle.AngleTypeIndex" binding-mode="TwoWay" />
+                    <engine:DataBinding property="value" data-source-path="InnerAngleType" binding-mode="TwoWay" />
                 </Bindings>
-            </engine:DropdownField>
+            </engine:EnumField>
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>
