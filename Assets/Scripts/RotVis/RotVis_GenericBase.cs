@@ -8,11 +8,6 @@ namespace BaseClasses
      */
     public abstract class RotVis_GenericBase : MonoBehaviour
     {
-        protected RotVis_GenericBase()
-        {
-            throw new System.NotImplementedException();
-        }
-        
         public abstract RotParams_Base GetRotParams();
 
         public abstract void SetRotParamsByRef(RotParams_Base newRotParams); 
@@ -31,6 +26,8 @@ namespace BaseClasses
 
         public sealed override void SetRotParamsByRef(RotParams_Base newRotParams)
         {
+            /* LaterZyKa RotVis_RotParams: null should be possible, it should just deactivate all the remaining visualisation */
+            
             if (newRotParams == null)
             {
                 throw new System.ArgumentNullException($"{nameof(newRotParams)}");

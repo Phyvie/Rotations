@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Packages.UnityExtensionMethods;
 using RotObj;
 using RotParams;
 using Unity.Properties;
@@ -14,27 +15,40 @@ namespace RotContainers
      */
     public class ComboRotCot : MonoBehaviour
     {
-        #region Variables
-        [SerializeField] private bool InitializeOnAwake = false;
-        [SerializeField] private bool InitializeOnStart = true; 
-        #endregion Variables
+        #region InitializeVariables
+        [SerializeField] private MonoBehaviourFunctions initMode; 
+        #endregion InitializeVariables
         
         #region TypedRotCots
-        [SerializeField] private rotCotTemplateAxisAngle rotCotTemplateAxisAngle; 
-        [SerializeField] private rotCotTemplateQuaternion rotCotTemplateQuaternion; 
-        [SerializeField] private rotCotEuler rotCotEuler;
-        [SerializeField] private rotCotTemplateMatrix rotCotTemplateMatrix;
-        private List<RotCot_GenericBase> rotCotsList => new List<RotCot_GenericBase>(){rotCotTemplateAxisAngle, rotCotTemplateQuaternion, rotCotEuler, rotCotTemplateMatrix};
+        [SerializeField] private RotCotAxisAngle rotCotAxisAngle; 
+        [SerializeField] private RotCotQuaternion rotCotQuaternion; 
+        [SerializeField] private RotCotEuler rotCotEuler;
+        [SerializeField] private RotCotMatrix rotCotMatrix;
+        private List<RotCot_GenericBase> _rotCotsList;
+        private List<RotCot_GenericBase> RotCotsList
+        {
+            get
+            {
+                if (_rotCotsList == null)
+                {
+                    _rotCotsList = new List<RotCot_GenericBase>() { rotCotAxisAngle, rotCotQuaternion, rotCotEuler, rotCotMatrix };
+                }
+                return _rotCotsList;
+            }
+        }
         
-        private RotCot_GenericBase activeRotCot;
-        private System.Type activeRotCotType; 
+        private RotCot_GenericBase _activeRotCot;
         public RotParams_Base ActiveRotParams_Generic
         {
-            get => activeRotCot.GetRotParams_Generic(); 
-            set => activeRotCot.SetRotParams_Generic(value);
+            get => _activeRotCot.GetRotParams_Generic(); 
+            set => _activeRotCot.SetRotParams_Generic(value);
         }
         
         #endregion TypedRotCots
+        
+        #region CoordinateGrid
+        [SerializeField] private Vis_CoordinateGrid coordinateGrid;
+        #endregion CoordinateGrid
         
         #region orientedObject
         [SerializeField] private GameObject orientedObjectPrefab; 
@@ -80,14 +94,7 @@ namespace RotContainers
         public Camera VisCamera
         {
             get => visCamera;
-            set
-            {
-                if (visCamera != null && visCamera != value)
-                {
-                    Destroy(visCamera);
-                }
-                visCamera = value;
-            }
+            set => visCamera = value;
         }
         
         [SerializeField] private Rect cameraScreenRect = new Rect(0, 0, 1, 1);
@@ -113,14 +120,10 @@ namespace RotContainers
         }
         #endregion Cam
         
-        #region CoordinateGrid
-        [SerializeField] private Vis_CoordinateGrid coordinateGrid;
-        #endregion CoordinateGrid
-        
         #region Initialization
         private void Awake()
         {
-            if (InitializeOnAwake)
+            if (initMode == MonoBehaviourFunctions.Awake)
             {
                 SelfInitialize();
             }
@@ -128,22 +131,30 @@ namespace RotContainers
 
         public void Start()
         {
-            if (InitializeOnStart)
+            if (initMode == MonoBehaviourFunctions.Start)
             {
                 SelfInitialize();
             }
         }
-        
+
+        private bool isInitialized = false; 
         [ContextMenu("Init Rotation Container")]
         private void SelfInitialize()
         {
+            if (isInitialized)
+            {
+                Debug.LogWarning($"{name} is already initialized");
+                return;
+            }
+            isInitialized = true;
+            
             InitUI();
             InitVisCam(); 
             InitOrientedObject();
+            InitCoordinateGrid(); 
             
             InitializeRotCots(); 
-            _selectedTypeIndex = 1; 
-            ActivateRotCot(rotCotTemplateQuaternion);
+            SelectedTypeIndex = 0; 
         }
 
         private void InitUI()
@@ -179,7 +190,7 @@ namespace RotContainers
                 _comboContainerRoot.name = "RotationContainer"; 
             }
             
-            _uiMenuLine = _comboContainerUIParent.Q<VisualElement>(uiMenuLineName);
+            _uiMenuLine = _comboContainerRoot.Q<VisualElement>(uiMenuLineName);
             if (_uiMenuLine == null)
             {
                 Debug.LogError($"{name} could not find uiMenu");
@@ -218,27 +229,29 @@ namespace RotContainers
             {
                 orientedObject = Instantiate(orientedObjectPrefab, this.transform).GetComponent<OrientedObject>(); 
             }
-            InitializeRotCots(); 
-            _selectedTypeIndex = 1; 
-            ActivateRotCot(rotCotTemplateQuaternion);
-            
-            if (coordinateGrid != null)
-            {
-                coordinateGrid.ViewCamera = VisCamera; 
-            }
-            else
-            {
-                Debug.LogWarning("No CoordinateGrid found; cannot initialize CoordinateGrid"); 
-            }
         }
         
         private void InitializeRotCots()
         {
-            foreach (RotCot_GenericBase rotCot in rotCotsList)
+            foreach (RotCot_GenericBase rotCot in RotCotsList)
             {
-                rotCot.Initialize(this.transform, _uiRotParamsSlot, orientedObject);
-                rotCot.enabled = false; 
+                if (rotCot != null)
+                {
+                    rotCot.Initialize(this.transform, _uiRotParamsSlot, orientedObject);
+                    rotCot.enabled = false;
+                }
             }
+        }
+
+        private void InitCoordinateGrid()
+        {
+            if (coordinateGrid == null)
+            {
+                Debug.LogWarning("No CoordinateGrid found; cannot initialize CoordinateGrid");
+                return; 
+            }
+            
+            coordinateGrid.ViewCamera = VisCamera; 
         }
         #endregion Initialization
         
@@ -260,23 +273,7 @@ namespace RotContainers
             get => _selectedTypeIndex;
             set
             {
-                switch (value)
-                {
-                    case 0: 
-                        SwitchActiveRotCot(typeof(rotCotTemplateAxisAngle));
-                        break;
-                    case 1:
-                        SwitchActiveRotCot(typeof(rotCotTemplateQuaternion));
-                        break;
-                    case 2: 
-                        SwitchActiveRotCot(typeof(rotCotEuler));
-                        break;
-                    case 3:
-                        SwitchActiveRotCot(typeof(rotCotTemplateMatrix));
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                SwitchActiveRotCot(RotCotsList[value]);
                 _selectedTypeIndex = value;
             }
         }
@@ -296,66 +293,89 @@ namespace RotContainers
         }
 
         #region SwitchRotParamType
+        /* accessor function, mostly for backwards compatibility */
         private void SwitchActiveRotCot(Type newType)
         {
-            if (activeRotCotType == newType)
+            SwitchActiveRotCot(RotCotsList.Find((rotCot) => rotCot != null && rotCot.GetType().IsAssignableFrom(newType)));
+        }
+
+        private void SwitchActiveRotCot(RotCot_GenericBase newActiveRotCot)
+        {
+            if (_activeRotCot == newActiveRotCot)
             {
                 return; 
             }
 
-            RotCot_GenericBase foundRotCot = null; 
-            foreach (RotCot_GenericBase rotCot in rotCotsList)
+            if (_activeRotCot != null)
             {
-                if (rotCot.GetType() == newType)
-                {
-                    foundRotCot = rotCot;
-                    break; 
-                }
+                _activeRotCot.enabled = false;
             }
 
-            if (foundRotCot != null)
-            { 
-                DeactiveRotCot();
-                ActivateRotCot(foundRotCot);
-            }
-            else
+            /* !!!ZyKa RotParams_Conversion: There should be a conversion of rotParams here */
+            _activeRotCot = newActiveRotCot;
+            
+            if (newActiveRotCot == null)
             {
-                Debug.LogError($"{name} cannot switch to RotCot of Type {newType}; no object of such type exists in this {nameof(ComboRotCot)}"); 
-            }
-        }
-
-        private void DeactiveRotCot()
-        {
-            if (activeRotCot == null)
-            {
-                return; 
-            }
-
-            activeRotCot.enabled = false; 
-            activeRotCotType = null; 
-        }
-
-        private void ActivateRotCot(RotCot_GenericBase rotCot)
-        {
-            if (rotCot == null)
-            {
+                Debug.LogWarning($"{nameof(SwitchActiveRotCot)} just switched ActiveRotCot to null");
                 return; 
             }
             
-            activeRotCot = rotCot;
-            rotCot.enabled = true;
-            activeRotCotType = rotCot.GetType(); 
+            _activeRotCot.enabled = true;
         }
         #endregion SwitchRotParamType
         
+        #region Reset
+
+        /* LaterZyKa User Controls: Figure out how to create UI-Buttons that the user can click to access functions */
+        [CreateProperty]
+        public bool ParamsResetFunction
+        {
+            get => false;
+            set
+            {
+                if (_activeRotCot != null)
+                {
+                    _activeRotCot.GetRotParams_Generic()?.ResetToIdentity();
+                    /* LaterZyKa ResetRotCot: check whether you need to manually call a VisUpdate here */   
+                    _activeRotCot.GetRotVis_Generic()?.VisUpdate();
+                }
+            }
+        }
+        
+        public void Reset()
+        {
+            foreach (RotCot_GenericBase rotCot in RotCotsList)
+            {
+                if (rotCot != null)
+                {
+                    rotCot.Reset();
+                    rotCot.enabled = false;
+                }
+            }
+            SelectedTypeIndex = 0; 
+            ResetAppliedObjectRotation();
+        }
+        #endregion Reset
+
+        /* LaterZyKa CameraControls: Move CameraControls into their own class with their own script */
         #region CameraInteraction
         private void RotateCamera(float deltaX, float deltaY)
         {
+            if (cameraRotationPivot == null)
+            {
+                Debug.LogWarning("CameraRotationPivot is null");
+                return;
+            }
             cameraRotationPivot.transform.localEulerAngles += new Vector3(deltaY, deltaX, 0); 
         }
 
         private void ZoomCamera(float deltaZoom)
         {
+            if (visCamera == null)
+            {
+                Debug.LogWarning("VisCamera is null");
+                return;
+            }
             visCamera.transform.localPosition += Vector3.back * deltaZoom; 
         }
         #endregion CameraInteraction
@@ -379,16 +399,6 @@ namespace RotContainers
         }
         #endregion ApplyRotation
         
-        [CreateProperty]
-        public bool ParamsResetFunction
-        {
-            get => false;
-            set
-            {
-                activeRotCot.GetRotParams_Generic().ResetToIdentity();
-                activeRotCot.GetRotVis_Generic().VisUpdate();
-            }
-        }
         #endregion userInteraction
     }
 }

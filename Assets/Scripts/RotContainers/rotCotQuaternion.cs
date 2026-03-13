@@ -3,7 +3,7 @@ using RotParams;
 
 namespace RotContainers
 {
-    public class rotCotTemplateQuaternion : RotCot_TemplateBase<RotParams_Quaternion, RotVis_Quaternion>
+    public class RotCotQuaternion : RotCot_TemplateBase<RotParams_Quaternion, RotVis_Quaternion>
     {
         
     }

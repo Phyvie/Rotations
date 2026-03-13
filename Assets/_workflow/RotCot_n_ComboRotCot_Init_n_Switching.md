@@ -17,7 +17,7 @@
 | 3                  | 3            | medium     | 1 day       |
 
 Begin-Time: 2026-10-03, 17:06
-Finish-Time: 
+Finish-Time: 2026-13-03, 01:37
 
 -> switch (use-case * impact): 
 - \>=7: elegant solution
@@ -298,10 +298,10 @@ Switch Rotation Type -> see Miro
 
 ### Kill Duck
 - am I using this solution, only because it ...
-- ... is intellectually interesting?
-- ... appears cool?
-- ... is fun to make?
-- ... helps an imaginary future?
+- ~~... is intellectually interesting?~~
+- ~~... appears cool?~~
+- ~~... is fun to make?~~
+- ~~... helps an imaginary future?~~
 -> any yes = kill
 
 ### Happy-Path Summary:
@@ -330,13 +330,18 @@ Switching from one RotCot to another happens via the state-pattern.
 ### implement cases into Solution (from Happy-Path)
 
 ### Kill Duck: 
-- implementable without further thinking?
-- is it "boring"?
-  - backwards-compatible?  
+- ~~implementable without further thinking?~~
+- ~~is it "boring"?~~
+- ~~backwards-compatible?~~  
 => I need to ensure that during the remodelling all the steps are backward compatible. -> create an order in which I want to implement/refactor the functionality. 
 
 ### Solution Summary: 
-!!!ZyKa MISSING ORDER OF IMPLEMENTATION/REFACTORING!!!
+1. Write all individual functions from the Miro Board & make ZyKa notes wherever a function-call should be replaced
+2. replace function calls in order: 
+    - Init calls within RotCot
+    - Init Calls within ComboRotCot
+    - SwitchActive
+3. test
 
 # ________
 
@@ -346,7 +351,9 @@ Switching from one RotCot to another happens via the state-pattern.
 - implement feature-documentation
 - implement solution
 - implement happy-path test
-- compare with design
+- compare with design  
+===> I did not implement feature documentation, because I already have the flowchart online; I'm not sure how exactly I should handle proper documentation, such that I don't have to consistently update it. 
+===> I did also not implement the test-functions, because I still haven't looked up how testing works in unity / c#. 
 
 ###  workflow: test success? continue!
 
@@ -360,26 +367,29 @@ Switching from one RotCot to another happens via the state-pattern.
     - no structural changes (= no abstraction, no extra classes)
 
 ###  workflow: tests succeed? continue!
+===> I am not really paying attention to this workflow / documentation while I am working on code; probably because I am too much in focus-mode during coding time. I really need to start working with timers again. 
 
 # ________
 
 ## PHASE 4 - POSTMORTEM:
 
-### compare: 
-
-| planned | executed |
-|---------|----------|
-|         |          
-
 work problems list: 
-- meow
+- switching from one modeling tool to another
+- asking AI for Diagram was mostly a waste of time; It can sometimes make my diagrams a bit fancier, but it has no chance of actually structuring the diagrams. 
+- I completely forgot that checking out my old code is also a part of the work, which took extra time. 
 
 success list: 
-- meow
+- created very clean models in Miro, because I can adjust the layout of the model there by myself. 
+- color-coding the model & using ZyKas allowed me to properly work on one step after another. 
+- created a structure where RotCots can self-initialize or be initialized form the outside. 
+- letting AI check the code for errors helps with null-checks, duplication and other code smell. 
+- I really like the mixture of sequence-diagram and flowchart
 
 | estimated time | actual time |
 |----------------|-------------|
-|                |             |
+| 8h             | 13h         |
+
+===> took 1.5x as long as expected; mostly because I underestimated the complexity of the task; but partially also because I needed more extra time to figure out which UML-modeling tool I should use. It's really about time I learn a proper modeling Tool. 
 
 ### recheck alternatives
 

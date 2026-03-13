@@ -5,16 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b54c963-bad1-41cc-8b0e-252a0574fd2d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Packages/UnityExtensionMethods/MonoBehaviourFunctions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Packages/UnityExtensionMethods/MonoBehaviourFunctions.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Packages/EditUtility/EditorUtility/E_ReparentManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/EditUtility/EditorUtility/E_ReparentManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/M_AngleLit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/M_AngleLit.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Vector/M_VectorColor.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Vector/M_VectorColor.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Packages/UnityExtensionMethods/ExtensionMethods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/UnityExtensionMethods/ExtensionMethods.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/ComboRotCot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/ComboRotCot.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ComboRotCot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ComboRotCot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotContainers.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotContainers.asmdef" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_Base.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_Base.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Base.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Base.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_AxisAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_AxisAngle.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_EulerAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_EulerAngle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/rotCotAxisAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCotAxisAngle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/rotCotAxisAngle.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/rotCotEuler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCotEuler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/rotCotEuler.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/rotCotMatrix.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCotMatrix.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/rotCotMatrix.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/rotCotQuaternion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/rotCotQuaternion.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_GenericBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_GenericBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Matrix.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Matrix.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Quaternion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Quaternion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_workflow/RotParams_Conversion.md" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_workflow/RotParams_Conversion.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_workflow/RotParams_Conversion.md" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_workflow/RotCot_n_ComboRotCot_Init_n_Switching.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_workflow/RotParams_Conversion.md.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_workflow/RotCot_n_ComboRotCot_Init_n_Switching.md.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,8 +52,11 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1adcb970be0847609d15f8a671c3af281f9200/35/b7815ee4/DisplayStyle.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1adcb970be0847609d15f8a671c3af281f9200/b3/3de71068/IStyle.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e6aa588f9882420485fca490ded58a721dee00/24/bb490b42/Object.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3ea01e77be99618395f448b16bd7cc2bd4248bd9e5d8474964b2d97f39c5d74/System.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/EditUtility/EditorUtility/E_ReparentManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/Vis_Angle.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Packages/MathVisPackage/CoordinateGrid/Grid.hlsl" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Prefabs/ThesisTheory/CodeScreenshots.cs" root0="FORCE_HIGHLIGHTING" />
@@ -56,7 +71,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Matrix.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Quaternion.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Test/_Test.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_workflow/RotParams_Conversion.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/Assets/_workflow/RotCot_n_ComboRotCot_Init_n_Switching.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ide.rider@4d374c7eb6db/Rider/Editor/RiderScriptEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@89eb3bdcd743/Runtime/Debugging/DebugUI.Fields.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@89eb3bdcd743/Runtime/Debugging/DebugUI.cs" root0="SKIP_HIGHLIGHTING" />
@@ -69,6 +84,9 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@603b5c2e4e5a/Runtime/TMP/TextMeshProUGUI.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="AISelfReview" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -82,11 +100,12 @@
     "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "WebServerToolWindowFactoryState": "false",
     "XThreadsFramesViewSplitterKey": "0.46270066",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "RotInitAndConversion",
     "junie.onboarding.icon.badge.shown": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -339,7 +358,10 @@
       <workItem from="1773158582513" duration="5578000" />
       <workItem from="1773183981483" duration="4773000" />
       <workItem from="1773188795071" duration="1848000" />
-      <workItem from="1773238597848" duration="17383000" />
+      <workItem from="1773238597848" duration="17650000" />
+      <workItem from="1773329403043" duration="4947000" />
+      <workItem from="1773350355271" duration="11092000" />
+      <workItem from="1773361799229" duration="2297000" />
     </task>
     <servers />
   </component>
@@ -370,60 +392,14 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <condition expression="Mathf.Approximately(t, 0.8f)" language="C#" />
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Utility/InterpolationSetting/SIS_QuaternionLerpNormalized.cs</url>
-          <line>13</line>
-          <properties documentPath="D:\programming\Rotations\Assets\Scripts\Utility\InterpolationSetting\SIS_QuaternionLerpNormalized.cs" containingFunctionPresentation="Method 'Interpolate'">
-            <startOffsets>
-              <option value="511" />
-            </startOffsets>
-            <endOffsets>
-              <option value="589" />
-            </endOffsets>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
           </properties>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Quaternion.cs</url>
-          <line>145</line>
-          <properties documentPath="D:\programming\Rotations\Assets\Scripts\RotParams\RotParams_Quaternion.cs" containingFunctionPresentation="Property 'AxisX'">
-            <startOffsets>
-              <option value="4300" />
-            </startOffsets>
-            <endOffsets>
-              <option value="4391" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_AxisAngle.cs</url>
-          <line>87</line>
-          <properties documentPath="D:\programming\Rotations\Assets\Scripts\RotParams\RotParams_AxisAngle.cs" containingFunctionPresentation="Property 'AxisX'">
-            <startOffsets>
-              <option value="2406" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2407" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
-          <properties exception="System.OperationCanceledException" breakIfHandledByOtherCode="false" displayValue="System.OperationCanceledException" />
-          <option name="timeStamp" value="34" />
         </breakpoint>
-        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
-          <properties exception="System.Threading.Tasks.TaskCanceledException" breakIfHandledByOtherCode="false" displayValue="System.Threading.Tasks.TaskCanceledException" />
-          <option name="timeStamp" value="35" />
-        </breakpoint>
-        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
-          <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
-          <option name="timeStamp" value="36" />
-        </breakpoint>
-      </breakpoints>
+        <breakpoint type="DotNet_Exception_Breakpoints" />
+      </default-breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
