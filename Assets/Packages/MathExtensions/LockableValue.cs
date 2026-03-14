@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MathExtensions;
 using UnityEngine;
 
@@ -10,363 +9,408 @@ namespace Extensions.MathExtensions
     public enum ELockableValueForceSetBehaviour
     {
         Force, //Forces that a LockableValues value will be set by functions, even if it is locked; For LockableVectors.SetToScale this unlocks everything scales everything and relocks
-        BlockWithMessage, //Default behaviour: Blocks changes when the value is locked
-        BlockWithoutMessage //Same as BlockWithMessage, but doesn't print a warning
-    }
-    
-    [System.Serializable] 
-    public class LockableValue<Type> 
-    { 
-        [SerializeField] private Type typeValue; 
-        [SerializeField] public bool isLocked; 
-        
-        public LockableValue(Type newTypeValue, bool isLocked)
-        {
-            this.typeValue = newTypeValue; 
-            this.isLocked = isLocked;
-        } 
-        
-        public Type TypeValue
-        {
-            get => typeValue;
-            set
-            {
-                if (!isLocked)
-                {
-                    this.typeValue = value;
-                }
-                else
-                {
-                    Debug.LogWarning("Value is locked and cannot be changed.");
-                }
-            }
-        } 
-        
-        public static implicit operator Type(LockableValue<Type> lockableValue)
-        {
-            return lockableValue.TypeValue;
-        }
-        
-        public static implicit operator LockableValue<Type>(Type value) 
-        { 
-            LockableValue<Type> lockableValue = new LockableValue<Type>(value, false); 
-            return lockableValue; 
-        }
-        
-        public void SetValue(Type value, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.BlockWithMessage)
-        {
-            if (!isLocked || forceSetBehaviour == ELockableValueForceSetBehaviour.Force)
-            {
-                typeValue = value;
-            }
-            else
-            {
-                if (forceSetBehaviour == ELockableValueForceSetBehaviour.BlockWithMessage)
-                {
-                    Debug.Log("Value is locked and cannot be changed.");
-                }
-            }
-        }
-
-        public override string ToString()
-        {
-            return typeValue.ToString();
-        }
+        BlockWithMessage, //Default behaviour: Blocks changes when the value is locked & prints a warning that a change was attempted
+        BlockWithoutMessage //Blocks attempted changes, prints no warning
     }
 
-    [Serializable]
-    public class LockableFloat : LockableValue<float>
-    {
-        public LockableFloat(float newTypeValue, bool isLocked) : base(newTypeValue, isLocked)
-        {
-        }
-    }
-
+    /// <summary>
+    /// A vector where individual components can be locked.
+    /// Supports automatic normalization to a target length, even with locked components.
+    /// </summary>
     [Serializable]
     public class LockableVector
     {
         #region Variables
-        private float targetLength = 1;
-        public List<LockableFloat> values;
-        private bool enforceLength; 
+        [SerializeField] private float targetLength = 1;
+        [SerializeField] private float[] values;
+        [SerializeField] private bool[] locks;
+        [SerializeField] private bool autoNormalizeToTargetLength;
         #endregion Variables
-        
-        #region GetSet
+
         #region Properties
+        public static implicit operator float[](LockableVector lockableVector) => lockableVector.values; 
+
         public float this[int index]
         {
-            get => values[index].TypeValue;
-            set => SetFloatValue(index, value); 
+            get => values[index];
+            set => SetValue(index, value);
         }
-       
-        public float TargetLength
-        {
-            get => targetLength;
-            set
-            {
-                targetLength = value;
-                if (enforceLength)
-                {
-                    ScaleLockedVectorToLength(targetLength, ELockableValueForceSetBehaviour.Force);
-                }
-            }
-        }
-        
-        public bool EnforceLength
-        {
-            get => enforceLength;
-            set
-            {
-                enforceLength = value;
-                if (value)
-                {
-                    ScaleLockedVectorToLength(targetLength, ELockableValueForceSetBehaviour.Force); 
-                }
-            }
-        }
-        #endregion
-        
-        #region GetSetFunctions
 
+        public float GetTargetLength() => targetLength;
+
+        public bool SetTargetLength(float value)
+        {
+            float originalTargetLength = targetLength;
+            targetLength = value;
+            if (autoNormalizeToTargetLength)
+            {
+                if (NormalizeToTargetLength())
+                {
+                    return true;
+                }
+                else
+                {
+                    targetLength = originalTargetLength;
+                    Debug.LogWarning($"Could not set targetLength to {value} because normalization failed. Resetting to original TargetLength. \n Possible Problem Cause: lockedLength is greater than the new targetLength. To solve the problem unlock components before setting targetLength");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool GetAutoNormalizeToTargetLength() => autoNormalizeToTargetLength;
+
+        public bool SetAutoNormalizeToTargetLength(bool value)
+        {
+            bool originalValue = autoNormalizeToTargetLength;
+            autoNormalizeToTargetLength = value;
+            if (value)
+            {
+                if (NormalizeToTargetLength())
+                {
+                    return true;
+                }
+                else
+                {
+                    autoNormalizeToTargetLength = false;
+                    Debug.LogWarning("Could not enable AutoNormalizeToTargetLength because normalization failed. Resetting to false. \n Possible Problem Cause: lockedLength is greater than the new targetLength. To solve the problem unlock components before setting AutoNormalizeToTargetLength to true");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public float[] ValuesCopy => values.ToArray();
+        public bool[] LocksCopy => locks.ToArray(); 
+        #endregion
+
+        #region GetSetFunctions
+        public float GetValueAtIndex(int index)
+        {
+            return values[index];
+        }
+
+        public void ReplaceValueAtIndex(int index, float newValue)
+        {
+            values[index] = newValue;
+        }
+        
         public bool GetLock(int index)
         {
-            return values[index].isLocked;
+            return locks[index];
         }
 
         public void SetLock(int index, bool value)
         {
-            values[index].isLocked = value; 
-        }
-        
-        public LockableFloat GetLockableFloatAtIndex(int index)
-        {
-            return values[index]; 
-        }
-
-        public void ReplaceLockableFloatAtIndex(int index, LockableFloat newValue)
-        {
-            values.RemoveAt(index);
-            values.Insert(index, newValue);
+            locks[index] = value;
         }
         #endregion GetSetFunctions
-        #endregion GetSet
-        
+
         #region Constructors
         public LockableVector(int dimensions)
         {
-            values = new List<LockableFloat>();
+            values = new float[dimensions];
+            locks = new bool[dimensions];
             for (int i = 0; i < dimensions; i++)
             {
-                values.Add(new LockableFloat(0, false));
+                values[i] = 0f;
+                locks[i] = false;
             }
-            CheckMissingMagnitude(null);
         }
 
-        public LockableVector(List<LockableFloat> values, float targetLength = 1, bool enforceLength = true, bool checkMissingMagnitude = true)
+        public LockableVector(LockableVector lockableVector) : this(lockableVector.ValuesCopy, lockableVector.LocksCopy, lockableVector.targetLength, lockableVector.autoNormalizeToTargetLength)
+        { }
+
+        //!!!ZyKa SafeCreate works in the case that everything is locked and lockedLength is smaller than targetLength
+        public static LockableVector SafeCreateLockableVector(float[] newValues, bool[] newLocks, float newTargetLength = 1,
+            bool newAutoNormalizeToTargetLength = true)
         {
-            this.values = values; 
-            this.targetLength = targetLength;
-            this.enforceLength = enforceLength;
-            if (checkMissingMagnitude)
+            LockableVector newLockableVector = new LockableVector(newValues, newLocks, newTargetLength, newAutoNormalizeToTargetLength);
+            newLockableVector.GetLockedAndUnlockedLength(out float lockedVectorLength, out float unlockedVectorLength);
+            if (lockedVectorLength > newTargetLength)
             {
-                CheckMissingMagnitude(null);
+                Debug.LogWarning("LockableVector Construction: Cannot create a Vector with a lockedLength longer than targetLength and autoNormalizeToTargetLength active.");
+                return null; 
             }
+            if (newAutoNormalizeToTargetLength)
+            {
+                if (!newLockableVector.NormalizeToTargetLength())
+                {
+                    Debug.LogError("LockableVector Construction: Failed to normalize Vector");
+                }
+            }
+
+            return newLockableVector; 
+        }
+        
+        //TodoZyKa LockableVector: Improve how random Vector creation works
+        public static LockableVector CreateRandom(
+            int minDimension, int maxDimension,
+            float minValue, float maxValue,
+            float minTargetLength, float maxTargetLength,
+            bool enforceLength,
+            System.Random random = null)
+        {
+            if (random == null) random = new System.Random();
+            
+            int dimensions = random.Next(minDimension, maxDimension + 1);
+            var values = new float[dimensions];
+            var locks = new bool[dimensions];
+            
+            for (int d = 0; d < dimensions; d++)
+            {
+                values[d] = (float)random.NextDouble() * (maxValue - minValue) + minValue;
+                locks[d] = random.Next(0, 2) == 1;
+            }
+            
+            float targetLength = (float)random.NextDouble() * (maxTargetLength - minTargetLength) + minTargetLength;
+            
+            LockableVector newLockableVector = SafeCreateLockableVector(values, locks, targetLength, enforceLength);
+            List<int> lockedIndices = new List<int>();
+            for (int i = 0; i < dimensions; i++)
+            {
+                if (locks[i])
+                {
+                    lockedIndices.Add(i);
+                }
+            }
+
+            while (newLockableVector is null && lockedIndices.Count > 0)
+            {
+                int randomNumber = random.Next(0, lockedIndices.Count);
+                int unlockIndex = lockedIndices[randomNumber];
+                locks[unlockIndex] = false;
+                lockedIndices.RemoveAt(randomNumber);
+                newLockableVector = SafeCreateLockableVector(values, locks, targetLength, enforceLength);
+            }
+
+            if (newLockableVector == null)
+            {
+                Debug.LogError("LockableVector Construction: Failed to create a random LockableVector");
+                return null;
+            }
+            return new LockableVector(values, locks, targetLength, enforceLength);
+        }
+        
+        private LockableVector(float[] values, bool[] locks, float targetLength = 1, bool autoNormalizeToTargetLength = true)
+        {
+            this.values = values;
+            this.locks = locks;
+            this.targetLength = targetLength;
+            this.autoNormalizeToTargetLength = autoNormalizeToTargetLength;
         }
         #endregion Constructors
 
         #region PropertyFunctions
+        /// <summary>
+        /// Returns the magnitude of the vector.
+        /// </summary>
         public float Magnitude()
         {
-            float MagnitudeSquared = 0; 
-            foreach (LockableFloat lockableFloat in values)
+            float magnitudeSquared = 0;
+            for (int i = 0; i < values.Length; i++)
             {
-                MagnitudeSquared += lockableFloat.TypeValue * lockableFloat.TypeValue;
+                magnitudeSquared += values[i] * values[i];
             }
-            return Mathf.Sqrt(MagnitudeSquared);
+            return Mathf.Sqrt(magnitudeSquared);
         }
-        
+
+        /// <summary>
+        /// Splits the vector into locked and unlocked parts, returning the length of each.
+        /// </summary>
         public void GetLockedAndUnlockedLength(out float lockedVectorLength, out float unlockedVectorLength)
         {
-            int _lockedCount = 0;
             float lockedLengthSquared = 0;
             float unlockedLengthSquared = 0;
-            foreach (LockableFloat lockableFloat in values)
+            for (int i = 0; i < values.Length; i++)
             {
-                AddToLength(lockableFloat);
+                if (locks[i])
+                {
+                    lockedLengthSquared += values[i] * values[i];
+                }
+                else
+                {
+                    unlockedLengthSquared += values[i] * values[i];
+                }
             }
             lockedVectorLength = Mathf.Sqrt(lockedLengthSquared);
             unlockedVectorLength = Mathf.Sqrt(unlockedLengthSquared);
-
-            void AddToLength(LockableFloat lockableFloat)
-            {
-                if (lockableFloat.isLocked)
-                {
-                    lockedLengthSquared += lockableFloat * lockableFloat;
-                    _lockedCount++;
-                }
-                else
-                {
-                    unlockedLengthSquared += lockableFloat * lockableFloat;
-                }
-            }
         }
         #endregion PropertyFunctions
-        
+
         #region GetSetFunctions
-        public void SetVector(List<float> newValues, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.Force)
+        public void SetVector(IEnumerable<float> newValues, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.Force)
         {
-            for (int i = 0; i < newValues.Count; i++)
+            float[] newVals = newValues.ToArray();
+            if (newVals.Length != values.Length)
             {
-                values[i].SetValue(newValues[i], forceSetBehaviour);
-            }
-        }
-        
-        public void SetFloatValue(int index, float newValue, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.BlockWithMessage , float newTargetLength = -1)
-        {
-            SetFloatValue(values[index], newValue, forceSetBehaviour, newTargetLength);
-        }
-        
-        public void SetFloatValue(LockableFloat _lockableValue, float newValue, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.BlockWithMessage, float newTargetLength = -1)
-        {
-            if (!values.Contains(_lockableValue))
-            {
-                Debug.Log("Can't set value that is not in vector");
-                return; 
-            }
-            
-            if (_lockableValue.isLocked && forceSetBehaviour != ELockableValueForceSetBehaviour.Force)
-            {
-                Debug.LogWarning("Can't set locked value");
-                return; 
-            }
-            
-            if (Mathf.Approximately(_lockableValue.TypeValue, newValue))
-            {
-                return; 
+                Debug.LogError("Vector dimension mismatch");
+                return;
             }
 
-            if (newTargetLength != -1)
+            for (int i = 0; i < values.Length; i++)
             {
-                targetLength = newTargetLength;
+                if (locks[i] && forceSetBehaviour != ELockableValueForceSetBehaviour.Force)
+                {
+                    continue;
+                }
+                values[i] = newVals[i];
             }
-            
-            if (enforceLength)
+
+            if (GetAutoNormalizeToTargetLength())
             {
-                bool isLockedBuffer = _lockableValue.isLocked; 
-                _lockableValue.isLocked = true; 
-                
+                NormalizeToTargetLength(); 
+            }
+        }
+
+        /// <summary>
+        /// Attempts to set the value at the specified index.
+        /// 1. Temporarily locks the index.
+        /// 2. Sets the value.
+        /// 3. If autoNormalizeToTargetLength is true:
+        ///    a. If the locked part of the vector (without the new value) is greater than targetLength, an error is printed and return false. 
+        ///    b. If the newly typed in value would make the vector larger than the targetLength, the new value is clamped to the maximum length, such that targetLength is reached. 
+        ///    c. Default: call NormalizeToTargetLength
+        /// 4. Resets the lock to its original state.
+        /// 5. Verifies if Magnitude equals targetLength.
+        /// </summary>
+        /// <returns>True if the value was set successfully (possibly clamped).</returns>
+        public bool SetValue(int index, float newValue, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.BlockWithMessage)
+        {
+            if (index < 0 || index >= values.Length)
+            {
+                Debug.LogError("Index out of bounds");
+                return false;
+            }
+
+            if (locks[index] && forceSetBehaviour != ELockableValueForceSetBehaviour.Force)
+            {
+                if (forceSetBehaviour == ELockableValueForceSetBehaviour.BlockWithMessage)
+                {
+                    Debug.LogWarning("Can't set locked value");
+                }
+                return false;
+            }
+
+            //1. Store Original values and lock
+            float originalVal = values[index];
+            bool originalLock = locks[index];
+            locks[index] = true;
+            
+            //2. Set the new value
+            values[index] = newValue;
+
+            // 3. if enforceLength do the following: 
+            if (autoNormalizeToTargetLength)
+            {
+                // a. calculate locked and unlocked lengths, subtract the current value's contribution from the locked length
                 GetLockedAndUnlockedLength(out float lockedLength, out float unlockedLength);
-                
-                if (_lockableValue.isLocked)
+                float otherLockedLength = MathFunctions.SubtractLengthPythagoreon(lockedLength, values[index]);
+
+                // b. if targetLength < lockedLength, reset value[index] to what it originally was, print a warning and return
+                if (targetLength < otherLockedLength - 0.0001f)
                 {
-                    lockedLength = MathFunctions.SubtractLengthPythagoreon(lockedLength, _lockableValue.TypeValue); 
-                    float maxAbsLength = Mathf.Sqrt(targetLength - lockedLength * lockedLength);
-                    _lockableValue.SetValue(Mathf.Clamp(newValue, -maxAbsLength, maxAbsLength), ELockableValueForceSetBehaviour.Force);
-                    lockedLength = MathFunctions.AddLengthsPythagoreon(lockedLength, _lockableValue.TypeValue);
+                    Debug.LogWarning("TargetLength is smaller than locked length of other components");
+                    values[index] = originalVal;
+                    locks[index] = originalLock;
+                    return false;
                 }
-                else
+
+                // c. if targetLength with contribution from value[index] is greater than lockedLength, set value[index] to the maximum length it can be such that the overall Magnitude is targetLength and return
+                float maxPossibleContribution = MathFunctions.SubtractLengthPythagoreon(targetLength, otherLockedLength);
+                if (Mathf.Abs(values[index]) > maxPossibleContribution + 0.0001f)
                 {
-                    unlockedLength = MathFunctions.SubtractLengthPythagoreon(unlockedLength, _lockableValue.TypeValue); 
-                    float maxAbsLength = Mathf.Sqrt(targetLength - lockedLength * lockedLength);
-                    _lockableValue.SetValue(Mathf.Clamp(newValue, -maxAbsLength, maxAbsLength), ELockableValueForceSetBehaviour.Force);
-                    unlockedLength = MathFunctions.AddLengthsPythagoreon(unlockedLength, _lockableValue.TypeValue);
+                    values[index] = Mathf.Sign(values[index]) * maxPossibleContribution;
+                    //Must call NormalizeToTargetLength even after clamping, in case that the unlockedValues need to be decreased such that the newly set value can have its value
                 }
-                ScaleLockedVectorToLength(lockedLength, unlockedLength);
-                
-                _lockableValue.isLocked = isLockedBuffer; 
-                
-                CheckMissingMagnitude(_lockableValue);
-            }
-            else
-            {
-                _lockableValue.SetValue(newValue, ELockableValueForceSetBehaviour.Force);
-            }
-        }
-        #endregion GetSetFunctions
-        
-        #region Functions
-        public bool ScaleLockedVectorToLength(float newTargetLength = 1, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.BlockWithMessage)
-        {
-            GetLockedAndUnlockedLength(out float lockedVectorLength, out float unlockedVectorLength);
-            return ScaleLockedVectorToLength(lockedVectorLength, unlockedVectorLength, newTargetLength, forceSetBehaviour);
-        }
-        
-        public bool ScaleLockedVectorToLength(float lockedVectorLength, float unlockedVectorLength, float newTargetLength = -1, ELockableValueForceSetBehaviour forceSetBehaviour = ELockableValueForceSetBehaviour.BlockWithMessage)
-        {
-            if (newTargetLength != -1)
-            {
-                targetLength = newTargetLength;
-            }
-            
-            float ratio;
-            
-            if (forceSetBehaviour == ELockableValueForceSetBehaviour.Force)
-            {
-                float fullLength = Magnitude(); 
-                ratio = targetLength / fullLength;
-            }
-            else
-            {
-                if (lockedVectorLength > targetLength)
+
+                if (!NormalizeToTargetLength(lockedLength, unlockedLength))
                 {
-                    Debug.LogError($"Can't normalize LockableVector when values are locked to be at a length > targetLength");
+                    values[index] = originalVal;
+                    locks[index] = originalLock;
                     return false; 
                 }
-                
-                float UnlockedMaxLength = MathFunctions.SubtractLengthPythagoreon(targetLength, lockedVectorLength);
-                ratio = unlockedVectorLength != 0 ? 
-                    UnlockedMaxLength / unlockedVectorLength : 
-                    0;
-            }
-            foreach (LockableFloat value in values) //It's ok not to not create a new list for the unlocked floats, because each lockableFloat can only be changed if unlocked
-            {
-                value.SetValue(value.TypeValue * ratio, ELockableValueForceSetBehaviour.BlockWithoutMessage); 
             }
 
-            return true; 
+            // 4. reset the edited index lock back to what it was before the function
+            locks[index] = originalLock;
+
+            // 5. check whether Magnitude is equal to targetLength, if not, print a warning and return
+            if (autoNormalizeToTargetLength && Mathf.Abs(Magnitude() - targetLength) > 0.001f)
+            {
+                Debug.LogError($"Magnitude {Magnitude()} is not equal to targetLength {targetLength}");
+                return false;
+            }
+
+            return true;
         }
+        #endregion GetSetFunctions
 
-        private void CheckMissingMagnitude(LockableFloat _lockableFloat)
+        #region Functions
+        public bool NormalizeToTargetLength()
         {
-            float missingMagnitude = MathFunctions.SubtractLengthPythagoreon(1, Magnitude());
-            foreach (LockableFloat lockableFloat in values)
+            GetLockedAndUnlockedLength(out float lockedVectorLength, out float unlockedVectorLength);
+            return NormalizeToTargetLength(lockedVectorLength, unlockedVectorLength);
+        }
+        
+        /// <summary>
+        /// Scales the vector to the targetLength.
+        /// 1. Calculates length of locked and unlocked parts.
+        /// 2. If lockedLength > targetLength, sets unlocked to 0 and returns false.
+        /// 3. If all unlocked parts are zero, sets the first unlocked value to reach targetLength.
+        /// 4. Scales unlocked parts proportionally if possible.
+        /// </summary>
+        private bool NormalizeToTargetLength(float lockedVectorLength, float unlockedVectorLength)
+        {
+            // 1. calculate the length of the vectors locked parts and unlocked parts (already passed in)
+            
+            // 2. if the locked parts are already longer than the targetLength, put the unlocked all to 0, return false
+            if (lockedVectorLength > targetLength + 0.0001f)
             {
-                if (missingMagnitude < 0.0001f)
-                {
-                    break; 
-                }
-                if (lockableFloat == _lockableFloat)
-                {
-                    continue; 
-                }
-                if (lockableFloat.isLocked)
-                {
-                    continue; 
-                }
-                lockableFloat.SetValue(lockableFloat.TypeValue + missingMagnitude, ELockableValueForceSetBehaviour.BlockWithoutMessage);
-                break; 
+                Debug.LogWarning($"Can't normalize to targetLength, locked parts are longer than targetLength: {lockedVectorLength} > targetLength = {(lockedVectorLength - targetLength)}");
+                return false;
             }
+
+            float unlockedTargetLength = MathFunctions.SubtractLengthPythagoreon(targetLength, lockedVectorLength);
+            
+            // 3. if all unlocked parts are zero, set the first unlocked value to the value, such that the vector as a whole has the targetLength, return true
+            if (unlockedVectorLength < 0.0001f)
+            {
+                for (int i = 0; i < values.Length; i++)
+                {
+                    if (!locks[i])
+                    {
+                        values[i] = unlockedTargetLength;
+                        return true;
+                    }
+                }
+                // If no unlocked parts exist, check if we're already at target length
+                return lockedVectorLength > targetLength - 0.001f;
+            }
+
+            // 4. if the unlocked parts can be downscaled / upscaled via multiplication/division enough to reach the targetLength, do so, return true
+            float scaleRatio = unlockedTargetLength / unlockedVectorLength;
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (!locks[i])
+                {
+                    values[i] *= scaleRatio;
+                }
+            }
+
+            return true;
         }
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("(");
-    
-            foreach (LockableFloat lockable in values)
-            {
-                sb.Append(lockable.TypeValue.ToString());
-                sb.Append(", ");
-            }
-
-            if (values.Count > 0)
-                sb.Length -= 2; // Remove the last ", "
-    
-            sb.Append(")");
-            return sb.ToString();
+            return $"({string.Join(", ", values)})";
         }
 
-
+        public string ToLongString()
+        {
+            var mixed = values.Zip(locks, (v, l) => $"({v}, {l})");
+            return $"targetLength: {targetLength}, enforced: {GetAutoNormalizeToTargetLength()}, data: [{string.Join(", ", mixed)}]"; 
+        }
         #endregion Functions
     }
 }

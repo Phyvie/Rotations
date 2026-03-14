@@ -15,12 +15,7 @@ namespace RotParams
         #region Variables
         [SerializeField] private AngleWithType typedAngle = new AngleWithType(EAngleType.Radian, 0);
 
-        [SerializeField] private LockableVector _axis = new LockableVector(new List<LockableFloat>()
-        {
-            new LockableFloat(0, false), 
-            new LockableFloat(0, false), 
-            new LockableFloat(0, false)
-        }); 
+        [SerializeField] private LockableVector _axis = new LockableVector(3); 
         
         #endregion Variables
         
@@ -73,7 +68,7 @@ namespace RotParams
             set
             {
                 value = value.normalized;
-                _axis.SetVector(new List<float>(){value.x, value.y, value.z});
+                _axis.SetVector(new float[]{value.x, value.y, value.z});
                 OnPropertyChanged();
             }
         }
@@ -84,7 +79,7 @@ namespace RotParams
             get => _axis[0];
             set
             {
-                _axis.SetFloatValue(0, value, ELockableValueForceSetBehaviour.Force);
+                _axis.SetValue(0, value, ELockableValueForceSetBehaviour.Force);
                 OnPropertyChanged();
             }
         }
@@ -102,7 +97,7 @@ namespace RotParams
             get => _axis[1];
             set
             {
-                _axis.SetFloatValue(1, value, ELockableValueForceSetBehaviour.Force);
+                _axis.SetValue(1, value, ELockableValueForceSetBehaviour.Force);
                 OnPropertyChanged();
             }
         }
@@ -121,7 +116,7 @@ namespace RotParams
             get => _axis[2];
             set
             {
-                _axis.SetFloatValue(2, value, ELockableValueForceSetBehaviour.Force);
+                _axis.SetValue(2, value, ELockableValueForceSetBehaviour.Force);
                 OnPropertyChanged();
             }
         }
@@ -237,43 +232,40 @@ namespace RotParams
             }
         }
 
-        public RotParams_AxisAngle(RotParams_AxisAngle toCopy) : this(toCopy.NormalisedAxis, toCopy.AngleInRadian)
+        public RotParams_AxisAngle(RotParams_AxisAngle toCopy) : this(toCopy.NormalisedAxis, toCopy.AngleInRadian) { }
+        
+        public RotParams_AxisAngle(bool autoNormalizeToTargetNormalisation = true, float targetLength = 1)
         {
+            _axis.SetAutoNormalizeToTargetLength(autoNormalizeToTargetNormalisation);
+            _axis.SetTargetLength(targetLength);
         }
         
-        public RotParams_AxisAngle(bool enforceNormalisation = true, float targetLength = 1)
-        {
-            _axis.EnforceLength = enforceNormalisation;
-            _axis.TargetLength = targetLength;
-        }
-        
-        public RotParams_AxisAngle(Vector3 inRotationVectorInRadian, bool enforceNormalisation = true, float targetLength = 1) : 
-            this(
-            inRotationVectorInRadian, 
-            inRotationVectorInRadian.magnitude, 
-            enforceNormalisation, 
-            targetLength
+        public RotParams_AxisAngle(Vector3 inRotationVectorInRadian, bool autoNormalizeToTargetNormalisation = true, float targetLength = 1) 
+            : this(
+                inRotationVectorInRadian, 
+                inRotationVectorInRadian.magnitude, 
+                autoNormalizeToTargetNormalisation, 
+                targetLength
             )
-        {
-        }
+        { }
 
-        public RotParams_AxisAngle(Vector3 inAxis, float inAngleInRadian, bool enforceNormalisation = true, float targetLength = 1)
+        public RotParams_AxisAngle(Vector3 inAxis, float inAngleInRadian, bool autoNormalizeToTargetNormalisation = true, float targetLength = 1)
         {
-            List<float> axis;
+            float[] axis;
             if (inAxis.sqrMagnitude > 0.0001)
             {
                 inAxis = inAxis.normalized;
-                axis = new List<float>(){ inAxis.x, inAxis.y, inAxis.z }; 
+                axis = new float[]{ inAxis.x, inAxis.y, inAxis.z }; 
             }
             else
             {
-                axis = new List<float>() { 1, 0, 0 }; 
+                axis = new float[] { 1, 0, 0 }; 
             }
             _axis.SetVector(axis);
             AngleInRadian = inAngleInRadian;
             
-            _axis.EnforceLength = enforceNormalisation;
-            _axis.TargetLength = targetLength;
+            _axis.SetAutoNormalizeToTargetLength(autoNormalizeToTargetNormalisation);
+            _axis.SetTargetLength(targetLength);
         }
         #endregion //Constructors
         
@@ -335,12 +327,12 @@ namespace RotParams
         #region operators
         public static RotParams_AxisAngle operator+(RotParams_AxisAngle rotParamsA, RotParams_AxisAngle rotParamsB)
         {
-            return new RotParams_AxisAngle(rotParamsA.RotationVectorInRadian + rotParamsB.RotationVectorInRadian, false); 
+            return new RotParams_AxisAngle(rotParamsA.RotationVectorInRadian + rotParamsB.RotationVectorInRadian); 
         }
 
         public static RotParams_AxisAngle operator *(RotParams_AxisAngle rotParamsA, float alpha)
         {
-            return new RotParams_AxisAngle(rotParamsA.RotationVectorInRadian * alpha, false);
+            return new RotParams_AxisAngle(rotParamsA.RotationVectorInRadian * alpha);
         }
 
         public static RotParams_AxisAngle operator *(float alpha, RotParams_AxisAngle rotParamsA)
