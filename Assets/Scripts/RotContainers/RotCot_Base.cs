@@ -94,6 +94,8 @@ namespace RotContainers
             {
                 SelfInitialize(); 
             }
+
+            ResetToIdentity(); 
         }
         
         protected void Start()
@@ -112,13 +114,13 @@ namespace RotContainers
                 Debug.LogWarning($"{name} is already initialized");
                 return; 
             }
-            isInitialized = true; 
             Initialize(null);
+            isInitialized = true; 
         }
         public abstract void Initialize(Transform parent, VisualElement UIParent = null, OrientedObject newOrientedObject = null);
         #endregion Initialize
 
-        public abstract void Reset(); 
+        public abstract void ResetToIdentity(); 
         
         protected void UpdateOrientedObject(object sender, PropertyChangedEventArgs e)
         {
@@ -344,7 +346,8 @@ namespace RotContainers
         }
         #endregion InitializeAndSpawnFunctions
 
-        public override void Reset()
+        [ContextMenu(nameof(ResetToIdentity))]
+        public override void ResetToIdentity()
         {
             rotParams?.ResetToIdentity();
         }

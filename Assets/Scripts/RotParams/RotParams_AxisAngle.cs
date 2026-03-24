@@ -10,13 +10,11 @@ using UnityEngine;
 namespace RotParams
 {
     [Serializable]
-    public class RotParams_AxisAngle : RotParams_Base
+    public class RotParams_AxisAngle : RotParams_Base, ISerializationCallbackReceiver
     {
         #region Variables
         [SerializeField] private AngleWithType typedAngle = new AngleWithType(EAngleType.Radian, 0);
-
-        [SerializeField] private LockableVector _axis = new LockableVector(3); 
-        
+        [SerializeField] private LockableVector _axis; 
         #endregion Variables
         
         #region Properties
@@ -71,6 +69,13 @@ namespace RotParams
                 _axis.SetVector(new float[]{value.x, value.y, value.z});
                 OnPropertyChanged();
             }
+        }
+
+        [CreateProperty]
+        public bool EnforceNormalisation
+        {
+            get => _axis.GetAutoNormalizeToTargetMagnitude();
+            set => _axis.SetAutoNormalizeToTargetMagnitude(value);
         }
 
         [CreateProperty]
@@ -223,6 +228,8 @@ namespace RotParams
         {
             if (toCopy is RotParams_AxisAngle rotParams)
             {
+                _axis.SetAutoNormalizeToTargetMagnitude(true); 
+                _axis.SetTargetMagnitude(1);
                 this.NormalisedAxis = rotParams.NormalisedAxis;
                 this.AngleInRadian = rotParams.AngleInRadian; 
             }
@@ -234,22 +241,16 @@ namespace RotParams
 
         public RotParams_AxisAngle(RotParams_AxisAngle toCopy) : this(toCopy.NormalisedAxis, toCopy.AngleInRadian) { }
         
-        public RotParams_AxisAngle(bool autoNormalizeToTargetNormalisation = true, float targetLength = 1)
-        {
-            _axis.SetAutoNormalizeToTargetLength(autoNormalizeToTargetNormalisation);
-            _axis.SetTargetLength(targetLength);
-        }
-        
-        public RotParams_AxisAngle(Vector3 inRotationVectorInRadian, bool autoNormalizeToTargetNormalisation = true, float targetLength = 1) 
+        public RotParams_AxisAngle(Vector3 inRotationVectorInRadian, bool autoNormalizeToTargetNormalisation = true, float targetMagnitude = 1) 
             : this(
                 inRotationVectorInRadian, 
                 inRotationVectorInRadian.magnitude, 
                 autoNormalizeToTargetNormalisation, 
-                targetLength
+                targetMagnitude
             )
         { }
 
-        public RotParams_AxisAngle(Vector3 inAxis, float inAngleInRadian, bool autoNormalizeToTargetNormalisation = true, float targetLength = 1)
+        public RotParams_AxisAngle(Vector3 inAxis, float inAngleInRadian, bool autoNormalizeToTargetNormalisation = true, float targetMagnitude = 1)
         {
             float[] axis;
             if (inAxis.sqrMagnitude > 0.0001)
@@ -264,8 +265,8 @@ namespace RotParams
             _axis.SetVector(axis);
             AngleInRadian = inAngleInRadian;
             
-            _axis.SetAutoNormalizeToTargetLength(autoNormalizeToTargetNormalisation);
-            _axis.SetTargetLength(targetLength);
+            _axis.SetAutoNormalizeToTargetMagnitude(autoNormalizeToTargetNormalisation);
+            _axis.SetTargetMagnitude(targetMagnitude);
         }
         #endregion //Constructors
         
@@ -346,7 +347,7 @@ namespace RotParams
         public override void GetValuesFromUnityQuaternion(Quaternion unityQuaternion)
         {
             float clampedW = Mathf.Clamp(unityQuaternion.w, -1.0f, 1.0f);
-            float axisScalar = MathFunctions.SubtractLengthPythagoreon(1, clampedW);
+            float axisScalar = MathFunctions.SubtractMagnitudePythagoreon(1, clampedW);
 
             if (Mathf.Approximately(axisScalar, 0.0f))
             {
@@ -366,13 +367,15 @@ namespace RotParams
         
         public override void ResetToIdentity()
         {
-            NormalisedAxis = Vector3.up;
+            NormalisedAxis = Vector3.right;
             AngleInRadian = 0;
+            _axis.SetTargetMagnitude(1.0f); 
+            EnforceNormalisation = true;
         }
         
         public override RotParams_Base GetIdentity()
         {
-            return new RotParams_AxisAngle();
+            return new RotParams_AxisAngle(Vector3.right, 0);
         }
 
         public override RotParams_Base GetInverse()
@@ -419,5 +422,23 @@ namespace RotParams
                 ; 
         }
         #endregion
+
+        public void OnBeforeSerialize()
+        {
+            if (_axis.Dimensions != 3)
+            {
+                Debug.LogWarning("AxisAngleRotation: Axis vector has invalid dimensions. Resetting to identity.");
+                _axis = LockableVector.SafeCreateLockableVector(new float[]{1, 0, 0}, new bool[]{false, false, false}, 1, true);
+            }
+        }
+
+        public void OnAfterDeserialize()
+        {
+            if (_axis.Dimensions != 3)
+            {
+                Debug.LogWarning("AxisAngleRotation: Axis vector has invalid dimensions. Resetting to identity.");
+                _axis = LockableVector.SafeCreateLockableVector(new float[]{1, 0, 0}, new bool[]{false, false, false}, 1, true);
+            }
+        }
     }
 }

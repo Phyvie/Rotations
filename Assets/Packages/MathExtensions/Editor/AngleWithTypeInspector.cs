@@ -21,8 +21,8 @@ namespace Editor
 
             showAllAngleTypesProp = property.FindPropertyRelative(nameof(AngleWithType.showAllAngleTypes));
             showAngleTypeSelectorProp = property.FindPropertyRelative(nameof(AngleWithType.showAngleTypeSelector));
-            angleTypeProp = property.FindPropertyRelative("angleType"); //nameof?
-            angleInRadianProp = property.FindPropertyRelative("_angleInRadian");
+            angleTypeProp = property.FindPropertyRelative(nameof(AngleWithType.angleType)); 
+            angleInRadianProp = property.FindPropertyRelative("angleInRadian");
 
             initialized = true;
         }

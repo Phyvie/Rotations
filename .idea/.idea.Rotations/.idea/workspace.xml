@@ -5,17 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b54c963-bad1-41cc-8b0e-252a0574fd2d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Packages/MathExtensions/Editor/LockableVectorInspector.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Packages/MathExtensions/Editor/LockableVectorInspector.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathExtensions/Editor/lockableFloatInspector.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathExtensions/Editor/lockableFloatInspector.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathExtensions/LockableValue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathExtensions/LockableValue.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathExtensions/Editor/AngleWithTypeInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathExtensions/Editor/AngleWithTypeInspector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathExtensions/Editor/MathInspector.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathExtensions/Editor/MathInspector.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathExtensions/Editor/NestedPropertyDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathExtensions/Editor/NestedPropertyDrawer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathExtensions/LockableValue.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathExtensions/LockableVector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathExtensions/LockableValue.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathExtensions/LockableVector.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathExtensions/LockableValueTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathExtensions/LockableVectorTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathExtensions/LockableValueTests.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathExtensions/LockableVectorTests.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathExtensions/MathFunctions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathExtensions/MathFunctions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/M_AngleLit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/M_AngleLit.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/M_AngleUnlit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/M_AngleUnlit.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Vector/M_VectorColor.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Vector/M_VectorColor.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/ComboRotCot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/ComboRotCot.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_AxisAngle.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_AxisAngle.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ArtImport.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/AxisAngleRotationInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/AxisAngleRotationInspector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/QuaternionRotationInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/QuaternionRotationInspector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/RotParamsInspector.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/RotParamsInspector/RotParamsInspector.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ComboRotCot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ComboRotCot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCotAxisAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCotAxisAngle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_Base.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_Base.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/rotCotQuaternion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/rotCotQuaternion.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_AxisAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_AxisAngle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Base.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Base.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Quaternion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Quaternion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utility/InterpolationSetting/SIS_AxisAngleBezier.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utility/InterpolationSetting/SIS_AxisAngleBezier.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,44 +58,29 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1adcb970be0847609d15f8a671c3af281f9200/22/9c289216/LayoutDelegates.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1adcb970be0847609d15f8a671c3af281f9200/35/b7815ee4/DisplayStyle.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1adcb970be0847609d15f8a671c3af281f9200/8c/d4114705/VisualElement.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1adcb970be0847609d15f8a671c3af281f9200/ac/e541651a/IMGUIContainer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1adcb970be0847609d15f8a671c3af281f9200/b1/b6aab4f7/VisualTreeUpdater.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1adcb970be0847609d15f8a671c3af281f9200/b3/3de71068/IStyle.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/84e0b8eb1eb1433b8b0c82a761e3050931600/df/ba730b8d/GUILayout.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9e6ebc012b944bf1ac9a620fd8e232d19b8a00/4c/20e825cf/PropertyField.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9e6ebc012b944bf1ac9a620fd8e232d19b8a00/81/8d5b5f41/EditorGUI.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9e6ebc012b944bf1ac9a620fd8e232d19b8a00/9e/6005fb22/PropertyHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e6aa588f9882420485fca490ded58a721dee00/24/bb490b42/Object.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3ea01e77be99618395f448b16bd7cc2bd4248bd9e5d8474964b2d97f39c5d74/System.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d44b17e136d09081da1e8fd0e8c83fde60e11818b9f2442d7ed8cb733fae895e/System.Collections.Generic.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/AngleType.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/AngleType.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/AngleWithType.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/AngleWithType.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/Editor/AngleWithTypeInspector.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/Editor/AngleWithTypeInspector.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/Editor/LockableVectorInspector.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/Editor/LockableVectorInspector.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/Editor/LockableVectorInspector.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Packages/MathExtensions/Editor/LockableVectorInspector.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/Editor/LockableVectorInspector.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Packages/MathExtensions/Editor/MathFunctionsTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/Editor/NestedPropertyDrawer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/Editor/NestedPropertyDrawer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/Editor/NestedPropertyDrawer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/Editor/NestedPropertyDrawer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValue.cs" root0="SKIP_HIGHLIGHTING" />
@@ -89,20 +91,26 @@
     <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValueTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValueTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableValueTests.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableVector.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableVector.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableVector.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/LockableVector.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Packages/MathExtensions/LockableVectorTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/MathFunctions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Packages/MathExtensions/MathFunctions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/Vis_Angle.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Packages/MathVisPackage/CoordinateGrid/Grid.hlsl" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Prefabs/RotVis/ComboRotCot.prefab" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Prefabs/ThesisTheory/CodeScreenshots.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Prefabs/ThesisTheory/ThesisDefenceBackground.prefab" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Readme.asset" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Deprecated/Meow.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Scripts/Editor/RotParamsInspector/AxisAngleRotationInspector.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Scripts/Editor/RotParamsInspector/AxisAngleRotationInspector.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Scripts/Editor/RotParamsInspector/QuaternionRotationInspector.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/programming/Games/Rotations/Assets/Scripts/Editor/RotParamsInspector/QuaternionRotationInspector.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/RotContainers/ComboRotCot.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_Base.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Scripts/RotParams/RotParams_AxisAngle.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Scripts/RotParams/RotParams_AxisAngle.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Scripts/RotParams/RotParams_AxisAngle.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Scripts/RotParams/RotParams_AxisAngle.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Scripts/RotParams/RotParams_EulerAngleGimbalRing.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/Scripts/RotParams/RotParams_EulerAngleGimbalRing.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Quaternion.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/RotVis/ColorPalette.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_AxisAngle.cs" root0="FORCE_HIGHLIGHTING" />
@@ -111,8 +119,6 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Matrix.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_Quaternion.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/UI Toolkit/CustomControls.meta" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/UI Toolkit/RotUI/EulerAngle/UID_EulerAngle.uxml" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/programming/Games/Rotations/Assets/UI Toolkit/RotUI/EulerAngle/UID_EulerAngle.uxml" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Test/_Test.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_workflow/Debug_Post_Dependency_Changes.md" root0="SKIP_INSPECTION" root1="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/Assets/_workflow/RotCot_n_ComboRotCot_Init_n_Switching.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_INSPECTION" />
@@ -133,7 +139,7 @@
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="AISelfReview" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
@@ -242,15 +248,13 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="24560">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="24560" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list>
-          <MonoRuntime />
-        </list>
+        <list />
       </option>
       <option name="selectedOptions">
         <list />
@@ -413,6 +417,9 @@
       <workItem from="1773350355271" duration="11092000" />
       <workItem from="1773361799229" duration="2442000" />
       <workItem from="1773407649914" duration="797000" />
+      <workItem from="1773491900068" duration="8635000" />
+      <workItem from="1774270918818" duration="24558000" />
+      <workItem from="1774363385802" duration="878000" />
     </task>
     <task id="LOCAL-00001" summary="Improved ComboRotCot.cs and RotCot_Base.cs initialization &amp; switching; still need to fix the conversion functions.">
       <option name="closed" value="true" />
@@ -463,6 +470,21 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Packages/MathExtensions/LockableVectorTests.cs</url>
+          <line>95</line>
+          <properties documentPath="D:\programming\Games\Rotations\Assets\Packages\MathExtensions\LockableValueTests.cs" containingFunctionPresentation="Method 'LockableVector_SetValue_RenormalizesCorrectly'">
+            <startOffsets>
+              <option value="4618" />
+            </startOffsets>
+            <endOffsets>
+              <option value="4643" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">

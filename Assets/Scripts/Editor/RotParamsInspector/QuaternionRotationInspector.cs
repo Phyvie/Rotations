@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using Editor;
 using RotParams;
 using UnityEditor;
 using UnityEngine;
 
 [CustomPropertyDrawer(typeof(RotParams_Quaternion))]
-public class QuaternionRotationInspector : PropertyDrawer
+public class QuaternionRotationInspector : NestedPropertyDrawer
 {
     private const float LockToggleWidth = 18f;
     private const float LabelWidth = 20f;
@@ -18,7 +19,9 @@ public class QuaternionRotationInspector : PropertyDrawer
         string propertyKey = property.propertyPath;
 
         if (!foldoutStates.ContainsKey(propertyKey))
+        {
             foldoutStates[propertyKey] = false;
+        }
 
         foldoutStates[propertyKey] = EditorGUI.Foldout(
             new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight),
@@ -31,8 +34,9 @@ public class QuaternionRotationInspector : PropertyDrawer
 
         Rect fieldPosition = new Rect(position.x, position.y + EditorGUIUtility.singleLineHeight + Spacing, position.width, EditorGUIUtility.singleLineHeight);
 
-        // Get target object
-        var target = fieldInfo.GetValue(property.serializedObject.targetObject) as RotParams_Quaternion;
+        // Get target object via PropertyNesting, because GetField only works if the property is at topmost level; i.e. not in an array or a property of a property
+        InitializePropertyNesting(property);
+        var target = objectHierarchy[^1] as RotParams_Quaternion;
 
         if (target == null)
         {
@@ -40,20 +44,20 @@ public class QuaternionRotationInspector : PropertyDrawer
             EditorGUI.EndProperty();
             return;
         }
-
-        DrawComponentWithLock(ref fieldPosition, "W", target.W, target.WLocked,
+        
+        LockableVectorInspector.DrawComponentWithLock(ref fieldPosition, "W", target.W, target.WLocked,
             newVal => target.W = newVal,
             newLock => target.WLocked = newLock);
 
-        DrawComponentWithLock(ref fieldPosition, "X", target.X, target.XLocked,
+        LockableVectorInspector.DrawComponentWithLock(ref fieldPosition, "X", target.X, target.XLocked,
             newVal => target.X = newVal,
             newLock => target.XLocked = newLock);
 
-        DrawComponentWithLock(ref fieldPosition, "Y", target.Y, target.YLocked,
+        LockableVectorInspector.DrawComponentWithLock(ref fieldPosition, "Y", target.Y, target.YLocked,
             newVal => target.Y = newVal,
             newLock => target.YLocked = newLock);
 
-        DrawComponentWithLock(ref fieldPosition, "Z", target.Z, target.ZLocked,
+        LockableVectorInspector.DrawComponentWithLock(ref fieldPosition, "Z", target.Z, target.ZLocked,
             newVal => target.Z = newVal,
             newLock => target.ZLocked = newLock);
 
@@ -63,45 +67,16 @@ public class QuaternionRotationInspector : PropertyDrawer
         EditorGUI.EndProperty();
     }
 
-    private void DrawComponentWithLock(
-        ref Rect position,
-        string label,
-        float value,
-        bool isLocked,
-        System.Action<float> setValue,
-        System.Action<bool> setLock)
-    {
-        float lineHeight = EditorGUIUtility.singleLineHeight;
-
-        Rect labelRect = new Rect(position.x, position.y, LabelWidth, lineHeight);
-        Rect floatFieldRect = new Rect(position.x + LabelWidth + Spacing, position.y,
-            position.width - LabelWidth - LockToggleWidth - 3 * Spacing, lineHeight);
-        Rect lockToggleRect = new Rect(position.x + position.width - LockToggleWidth, position.y,
-            LockToggleWidth, lineHeight);
-
-        EditorGUI.LabelField(labelRect, label);
-        float newValue = EditorGUI.FloatField(floatFieldRect, value);
-        if (newValue != value)
-        {
-            setValue(newValue);
-        }
-
-        bool newLock = EditorGUI.Toggle(lockToggleRect, isLocked);
-        if (newLock != isLocked)
-        {
-            setLock(newLock);
-        }
-
-        position.y += lineHeight + Spacing;
-    }
-
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
         string propertyKey = property.propertyPath;
         bool isExpanded = foldoutStates.TryGetValue(propertyKey, out bool expanded) && expanded;
-
-        return isExpanded
-            ? (EditorGUIUtility.singleLineHeight + Spacing) * 6 + EditorGUIUtility.singleLineHeight + Spacing
-            : EditorGUIUtility.singleLineHeight + Spacing;
+        if (!isExpanded)
+        {
+            return EditorGUIUtility.singleLineHeight + Spacing;
+        }
+        
+        // Foldout (1) + W,X,Y,Z (4) + Enforce Normalisation (1)
+        return 6 * (EditorGUIUtility.singleLineHeight + Spacing); 
     }
 }

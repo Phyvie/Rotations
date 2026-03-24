@@ -359,25 +359,30 @@ namespace MathExtensions
         #endregion
         #endregion Matrix
 
-        public static float SubtractLengthPythagoreon(float originalLength, float subtractValue)
+
+        public static float SubtractMagnitudePythagoreon(float originalLength, float subtractValue)
         {
-            float estimate = originalLength - subtractValue;
-            if (estimate < 0)
+            if (originalLength < 0)
             {
-                if (estimate > -0.001)
-                {
-                    return 0; 
-                }
-                else
-                {
-                    Debug.LogWarning("Can't take squareRoot of negative number");
-                    return -1.0f; 
-                }
+                Debug.LogWarning($"Can't take squareRoot of negative number: {originalLength}^2 - {subtractValue}^2 < 0");
+                return -1.0f;
             }
+            
+            if (Mathf.Abs(originalLength - Mathf.Abs(subtractValue)) < 0.0001f)
+            {
+                return 0; 
+            }
+            
+            if (originalLength < Mathf.Abs(subtractValue))
+            {
+                Debug.LogWarning($"Can't take squareRoot of negative number: {originalLength}^2 - {subtractValue}^2 < 0");
+                return -1.0f;
+            }
+            
             return Mathf.Sqrt(originalLength * originalLength - subtractValue * subtractValue);
         }
 
-        public static float AddLengthsPythagoreon(float originalLength, float addValue)
+        public static float AddMagnitudePhythagoreon(float originalLength, float addValue)
         {
             return Mathf.Sqrt(originalLength * originalLength + addValue * addValue);
         }

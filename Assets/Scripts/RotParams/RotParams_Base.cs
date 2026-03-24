@@ -41,6 +41,7 @@ namespace RotParams
         /* TodoZyKa RotParams_Conversion: Not sure whether this should be in here, since not all RotParams can concatenate, maybe an interface would be better? */
         protected abstract RotParams_Base Concatenate_Implementation(RotParams_Base otherRotation, bool otherFirst = false); 
         
+        [ContextMenu("Reset to Identity")]
         public abstract void ResetToIdentity();
         
         public abstract Vector3 RotateVector(Vector3 inVector);

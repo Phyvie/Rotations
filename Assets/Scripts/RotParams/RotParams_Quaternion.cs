@@ -11,7 +11,7 @@ namespace RotParams
     [Serializable]
     public class RotParams_Quaternion : RotParams_Base
     {
-        [SerializeField] private LockableVector lockableWXYZ =
+        [FormerlySerializedAs("lockableWXYZ")] [SerializeField] private LockableVector _internalVector =
             new LockableVector(4);
         
         #region Properties
@@ -19,74 +19,74 @@ namespace RotParams
         [CreateProperty]
         public float W
         {
-            get => lockableWXYZ[0];
+            get => _internalVector[0];
             set
             {
-                lockableWXYZ.SetValue(0, value, ELockableValueForceSetBehaviour.Force);
+                _internalVector.SetValue(0, value, ELockableValueForceSetBehaviour.Force);
                 OnPropertyChanged(nameof(W));
             }
         }
 
         public bool WLocked
         {
-            get => lockableWXYZ.GetLock(0); 
-            set => lockableWXYZ.SetLock(0, value);
+            get => _internalVector.GetLock(0); 
+            set => _internalVector.SetLock(0, value);
         }
 
         [CreateProperty]
         public float X
         {
-            get => lockableWXYZ[1];
+            get => _internalVector[1];
             set
             {
-                lockableWXYZ.SetValue(1, value, ELockableValueForceSetBehaviour.Force);
+                _internalVector.SetValue(1, value, ELockableValueForceSetBehaviour.Force);
                 OnPropertyChanged(nameof(W));
             }
         }
 
         public bool XLocked
         {
-            get => lockableWXYZ.GetLock(1); 
-            set => lockableWXYZ.SetLock(1, value);
+            get => _internalVector.GetLock(1); 
+            set => _internalVector.SetLock(1, value);
         }
         
         [CreateProperty]
         public float Y
         {
-            get => lockableWXYZ[2];
+            get => _internalVector[2];
             set
             {
-                lockableWXYZ.SetValue(2, value, ELockableValueForceSetBehaviour.Force);
+                _internalVector.SetValue(2, value, ELockableValueForceSetBehaviour.Force);
                 OnPropertyChanged(nameof(W));
             }
         }
 
         public bool YLocked
         {
-            get => lockableWXYZ.GetLock(2); 
-            set => lockableWXYZ.SetLock(2, value);
+            get => _internalVector.GetLock(2); 
+            set => _internalVector.SetLock(2, value);
         }
         
         [CreateProperty]
         public float Z
         {
-            get => lockableWXYZ[3];
+            get => _internalVector[3];
             set
             {
-                lockableWXYZ.SetValue(3, value, ELockableValueForceSetBehaviour.Force);
+                _internalVector.SetValue(3, value, ELockableValueForceSetBehaviour.Force);
                 OnPropertyChanged(nameof(W));
             }
         }
 
         public bool ZLocked
         {
-            get => lockableWXYZ.GetLock(3); 
-            set => lockableWXYZ.SetLock(3, value);
+            get => _internalVector.GetLock(3); 
+            set => _internalVector.SetLock(3, value);
         }
         
         public float GetInternalValueByIndex(int index)
         {
-            return lockableWXYZ[index]; 
+            return _internalVector[index]; 
         }
         #endregion XYZWValueAccessors
 
@@ -122,9 +122,9 @@ namespace RotParams
                 }
 
                 Vector3 scaledAxis = value * SinHalfAngle; 
-                lockableWXYZ.SetValue(1, scaledAxis.x, ELockableValueForceSetBehaviour.Force);
-                lockableWXYZ.SetValue(2, scaledAxis.y, ELockableValueForceSetBehaviour.Force);
-                lockableWXYZ.SetValue(3, scaledAxis.z, ELockableValueForceSetBehaviour.Force);
+                _internalVector.SetValue(1, scaledAxis.x, ELockableValueForceSetBehaviour.Force);
+                _internalVector.SetValue(2, scaledAxis.y, ELockableValueForceSetBehaviour.Force);
+                _internalVector.SetValue(3, scaledAxis.z, ELockableValueForceSetBehaviour.Force);
                 
                 OnPropertyChanged();
             }
@@ -136,7 +136,7 @@ namespace RotParams
             get => new Vector3(X, Y, Z).normalized.x;
             set
             {
-                lockableWXYZ.SetValue(1, value * SinHalfAngle, ELockableValueForceSetBehaviour.Force);
+                _internalVector.SetValue(1, value * SinHalfAngle, ELockableValueForceSetBehaviour.Force);
                 OnPropertyChanged();
             }
         }
@@ -147,7 +147,7 @@ namespace RotParams
             get => new Vector3(X, Y, Z).normalized.y;
             set
             {
-                lockableWXYZ.SetValue(2, value * SinHalfAngle, ELockableValueForceSetBehaviour.Force);
+                _internalVector.SetValue(2, value * SinHalfAngle, ELockableValueForceSetBehaviour.Force);
                 OnPropertyChanged();
             }
         }
@@ -158,7 +158,7 @@ namespace RotParams
             get => new Vector3(X, Y, Z).normalized.z;
             set
             {
-                lockableWXYZ.SetValue(3, value * SinHalfAngle, ELockableValueForceSetBehaviour.Force);
+                _internalVector.SetValue(3, value * SinHalfAngle, ELockableValueForceSetBehaviour.Force);
                 OnPropertyChanged();
             }
         }
@@ -174,22 +174,22 @@ namespace RotParams
                     return; 
                 }
                 
-                bool isWLocked = lockableWXYZ.GetLock(0);
-                bool isXLocked = lockableWXYZ.GetLock(1);
-                bool isYLocked = lockableWXYZ.GetLock(2);
-                bool isZLocked = lockableWXYZ.GetLock(3);
+                bool isWLocked = _internalVector.GetLock(0);
+                bool isXLocked = _internalVector.GetLock(1);
+                bool isYLocked = _internalVector.GetLock(2);
+                bool isZLocked = _internalVector.GetLock(3);
                 
-                lockableWXYZ.SetLock(0, false);
-                lockableWXYZ.SetLock(1, false);
-                lockableWXYZ.SetLock(2, false);
-                lockableWXYZ.SetLock(3, false);
+                _internalVector.SetLock(0, false);
+                _internalVector.SetLock(1, false);
+                _internalVector.SetLock(2, false);
+                _internalVector.SetLock(3, false);
                 
-                lockableWXYZ.SetValue(0, Mathf.Cos(value/2), ELockableValueForceSetBehaviour.Force);
+                _internalVector.SetValue(0, Mathf.Cos(value/2), ELockableValueForceSetBehaviour.Force);
                 
-                lockableWXYZ.SetLock(0, isWLocked);
-                lockableWXYZ.SetLock(1, isXLocked);
-                lockableWXYZ.SetLock(2, isYLocked);
-                lockableWXYZ.SetLock(3, isZLocked);
+                _internalVector.SetLock(0, isWLocked);
+                _internalVector.SetLock(1, isXLocked);
+                _internalVector.SetLock(2, isYLocked);
+                _internalVector.SetLock(3, isZLocked);
                 
                 OnPropertyChanged();
             }
@@ -200,10 +200,10 @@ namespace RotParams
 
         public bool EnforceNormalisation
         {
-            get => lockableWXYZ.GetAutoNormalizeToTargetLength();
+            get => _internalVector.GetAutoNormalizeToTargetMagnitude();
             set
             {
-                lockableWXYZ.SetAutoNormalizeToTargetLength(value); 
+                _internalVector.SetAutoNormalizeToTargetMagnitude(value); 
                 OnPropertyChanged();
             }
         }
@@ -219,7 +219,7 @@ namespace RotParams
         {
             if (toCopy is RotParams_Quaternion rotParams)
             {
-                this.lockableWXYZ = new LockableVector(rotParams.lockableWXYZ);
+                this._internalVector = new LockableVector(rotParams._internalVector);
             }
             else
             {
@@ -236,16 +236,17 @@ namespace RotParams
         {
         }
 
-        public RotParams_Quaternion(float w, float x, float y, float z, bool autoNormalizeToTargetLength = true, float targetLength = 1)
+        public RotParams_Quaternion(float w, float x, float y, float z, bool autoNormalizeToTargetMagnitude = true, float TargetMagnitude = 1)
         {
-            lockableWXYZ.SetVector(new float[]{w, x, y, z});
-            lockableWXYZ.SetAutoNormalizeToTargetLength(autoNormalizeToTargetLength);
-            lockableWXYZ.SetTargetLength(targetLength);
+            _internalVector.SetVector(new float[]{w, x, y, z});
+            _internalVector.SetLocks(new bool[] { false, false, false, false });
+            _internalVector.SetTargetMagnitude(TargetMagnitude);
+            _internalVector.SetAutoNormalizeToTargetMagnitude(autoNormalizeToTargetMagnitude);
         }
 
         public RotParams_Quaternion(Quaternion unityQuaternion)
         {
-            lockableWXYZ.SetVector(new float[]
+            _internalVector.SetVector(new float[]
             {
                 unityQuaternion.w, 
                 unityQuaternion.x, 
@@ -254,7 +255,7 @@ namespace RotParams
             });
         }
 
-        public RotParams_Quaternion(Vector3 inAxis, float inAngle, bool autoNormalizeToTargetLength = true, float targetLength = 1)
+        public RotParams_Quaternion(Vector3 inAxis, float inAngle, bool autoNormalizeToTargetMagnitude = true, float TargetMagnitude = 1)
         {
             inAxis = inAxis.normalized;
 
@@ -262,7 +263,7 @@ namespace RotParams
             float cos = (float)Math.Cos(halfAngle);
             float sin = (float)Math.Sin(halfAngle);
 
-            lockableWXYZ.SetVector(new float[]
+            _internalVector.SetVector(new float[]
             {
                 cos, 
                 inAxis.x * sin, 
@@ -270,8 +271,8 @@ namespace RotParams
                 inAxis.z * sin
             });
 
-            lockableWXYZ.SetAutoNormalizeToTargetLength(autoNormalizeToTargetLength);
-            lockableWXYZ.SetTargetLength(targetLength);
+            _internalVector.SetAutoNormalizeToTargetMagnitude(autoNormalizeToTargetMagnitude);
+            _internalVector.SetTargetMagnitude(TargetMagnitude);
         }
         #endregion Constructors
 
@@ -458,7 +459,7 @@ namespace RotParams
         
         public void Normalize()
         {
-            lockableWXYZ.SetTargetLength(1);
+            _internalVector.SetTargetMagnitude(1);
         }
         
         public RotParams_Quaternion GetNormalized()
@@ -556,7 +557,11 @@ namespace RotParams
 
         public override void ResetToIdentity()
         {
-            lockableWXYZ.SetVector(new float[] { 1, 0, 0, 0});
+            _internalVector.SetAutoNormalizeToTargetMagnitude(false); 
+            _internalVector.SetLocks(new bool[] { false, false, false, false }); 
+            _internalVector.SetVector(new float[] { 1, 0, 0, 0});
+            _internalVector.SetTargetMagnitude(1);
+            _internalVector.SetAutoNormalizeToTargetMagnitude(true);
         }
 
         public override Vector3 RotateVector(Vector3 inVector)
@@ -656,5 +661,24 @@ namespace RotParams
             return result; 
         }
         #endregion Functions
+        
+        
+        public void OnBeforeSerialize()
+        {
+            if (_internalVector.Dimensions != 4)
+            {
+                Debug.LogWarning("AxisAngleRotation: Axis vector has invalid dimensions. Resetting to identity.");
+                _internalVector = LockableVector.SafeCreateLockableVector(new float[]{1, 0, 0, 0}, new bool[]{false, false, false}, 1, true);
+            }
+        }
+
+        public void OnAfterDeserialize()
+        {
+            if (_internalVector.Dimensions != 4)
+            {
+                Debug.LogWarning("AxisAngleRotation: Axis vector has invalid dimensions. Resetting to identity.");
+                _internalVector = LockableVector.SafeCreateLockableVector(new float[]{1, 0, 0, 0}, new bool[]{false, false, false}, 1, true);
+            }
+        }
     }
 }

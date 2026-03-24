@@ -364,7 +364,7 @@ namespace RotContainers
             {
                 if (rotCot != null)
                 {
-                    rotCot.Reset();
+                    rotCot.ResetToIdentity();
                     rotCot.enabled = false;
                 }
             }
