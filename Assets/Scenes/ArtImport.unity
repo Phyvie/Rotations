@@ -819,11 +819,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c20cd8e06ca0704399906dca89a23f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lockVec:
-    targetMagnitude: 0
-    values: []
-    locks: 
-    autoNormalizeToTargetMagnitude: 0
+  rotPar_AA:
+    typedAngle:
+      showAllAngleTypes: 0
+      showAngleTypeSelector: 1
+      angleType: 0
+      angleInRadian: 0
+    _axis:
+      targetMagnitude: 1
+      values:
+      - 1
+      - 0
+      - 0
+      locks: 000000
+      autoNormalizeToTargetMagnitude: 1
+  rotPar_Q:
+    _internalVector:
+      targetMagnitude: 1
+      values:
+      - 0
+      - 0
+      - 0
+      - 0
+      locks: 00000000
+      autoNormalizeToTargetMagnitude: 0
 --- !u!4 &1346378784 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8140486303572410664, guid: c1c54ead5757d724db18794425682b4d,
@@ -1049,11 +1068,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c20cd8e06ca0704399906dca89a23f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lockVec:
-    targetMagnitude: 0
-    values: []
-    locks: 
-    autoNormalizeToTargetMagnitude: 0
+  rotPar_AA:
+    typedAngle:
+      showAllAngleTypes: 0
+      showAngleTypeSelector: 1
+      angleType: 0
+      angleInRadian: 0
+    _axis:
+      targetMagnitude: 1
+      values:
+      - 1
+      - 0
+      - 0
+      locks: 000000
+      autoNormalizeToTargetMagnitude: 1
+  rotPar_Q:
+    _internalVector:
+      targetMagnitude: 1
+      values:
+      - 0
+      - 0
+      - 0
+      - 0
+      locks: 00000000
+      autoNormalizeToTargetMagnitude: 0
 --- !u!1 &1732390330 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5477126826957242323, guid: 7a20fc4e7b9f5fd48b27c7347765b099,
@@ -1233,6 +1271,26 @@ PrefabInstance:
       propertyPath: rotVisPrefab
       value: 
       objectReference: {fileID: 1351463979}
+    - target: {fileID: 1689187925402532235, guid: ee04adb64b582ab4693b6a7ec2e18ac7,
+        type: 3}
+      propertyPath: rotParams._axis.targetMagnitude
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689187925402532235, guid: ee04adb64b582ab4693b6a7ec2e18ac7,
+        type: 3}
+      propertyPath: rotParams._axis.locks.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689187925402532235, guid: ee04adb64b582ab4693b6a7ec2e18ac7,
+        type: 3}
+      propertyPath: 'rotParams._axis.values.Array.data[0]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689187925402532235, guid: ee04adb64b582ab4693b6a7ec2e18ac7,
+        type: 3}
+      propertyPath: rotParams._axis.autoNormalizeToTargetMagnitude
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3167021194500162632, guid: ee04adb64b582ab4693b6a7ec2e18ac7,
         type: 3}
       propertyPath: m_Enabled
