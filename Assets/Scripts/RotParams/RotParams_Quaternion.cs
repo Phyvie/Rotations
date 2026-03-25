@@ -223,7 +223,7 @@ namespace RotParams
             }
             else
             {
-                CopyValues(toCopy.ToAxisAngleParams());
+                CopyValues(toCopy.ToQuaternionParams());
             }
         }
         
@@ -255,11 +255,11 @@ namespace RotParams
             });
         }
 
-        public RotParams_Quaternion(Vector3 inAxis, float inAngle, bool autoNormalizeToTargetMagnitude = true, float TargetMagnitude = 1)
+        public RotParams_Quaternion(Vector3 inAxis, float inAngleInRadian, bool autoNormalizeToTargetMagnitude = true, float TargetMagnitude = 1)
         {
             inAxis = inAxis.normalized;
 
-            float halfAngle = inAngle * 0.5f;
+            float halfAngle = inAngleInRadian * 0.5f;
             float cos = (float)Math.Cos(halfAngle);
             float sin = (float)Math.Sin(halfAngle);
 
@@ -495,36 +495,89 @@ namespace RotParams
         
         #region Converters
 
-        public override RotParams_Base ToSelfType(RotParams_Base toConvert)
+        public override RotParams_Base ToSelfTypeCopy(RotParams_Base toConvert)
         {
             return toConvert.ToQuaternionParams(); 
         }
 
+        public override void ToSelfType(RotParams_Base toConvert)
+        {
+            toConvert.ToQuaternionParams(this); 
+        }
+
+        // TodoZyKa RotParams_Conversion: Reread & Test
         public override RotParams_EulerAngles ToEulerParams()
         {
-            return ToMatrixParams().ToEulerParams();
+            return ToEulerParams(new RotParams_EulerAngles());
         }
 
+        // TodoZyKa RotParams_Conversion: Reread & Test
         public override RotParams_Quaternion ToQuaternionParams()
         {
-            return new RotParams_Quaternion(W, X, Y, Z);
+            return ToQuaternionParams(new RotParams_Quaternion());
         }
 
+        // TodoZyKa RotParams_Conversion: Reread & Test
         public override RotParams_Matrix ToMatrixParams()
         {
-            return new RotParams_Matrix(
-                new float[3, 3]
-                {
-                    { 1 - 2 * (Y * Y + Z * Z), 2 * (X * Y - W * Z), 2 * (W * Y + X * Z) },
-                    { 2 * (X * Y + W * Z), 1 - 2 * (X * X + Z * Z), 2 * (Y * Z - W * X) },
-                    { 2 * (X * Z - W * Y), 2 * (W * X + Y * Z), 1 - 2 * (X * X + Y * Y) }
-                }
-            );
+            return ToMatrixParams(new RotParams_Matrix(new float[3, 3]));
         }
 
         public override RotParams_AxisAngle ToAxisAngleParams()
         {
-            return new RotParams_AxisAngle(NormalizedAxis, AngleInRadian);
+            return ToAxisAngleParams(new RotParams_AxisAngle()); 
+        }
+
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public override RotParams_EulerAngles ToEulerParams(RotParams_EulerAngles eulerParams)
+        {
+            ToMatrixParams().ToEulerParams(eulerParams);
+            return eulerParams;
+        }
+
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public override RotParams_Quaternion ToQuaternionParams(RotParams_Quaternion quaternionParams)
+        {
+            quaternionParams.CopyValues(new RotParams_Quaternion(W, X, Y, Z));
+            return quaternionParams;
+        }
+
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public override RotParams_Matrix ToMatrixParams(RotParams_Matrix matrixParams)
+        {
+            float xx = X * X;
+            float xy = X * Y;
+            float xz = X * Z;
+            float xw = X * W;
+
+            float yy = Y * Y;
+            float yz = Y * Z;
+            float yw = Y * W;
+
+            float zz = Z * Z;
+            float zw = Z * W;
+
+            matrixParams[0, 0] = 1 - 2 * (yy + zz);
+            matrixParams[1, 0] = 2 * (xy - zw);
+            matrixParams[2, 0] = 2 * (xz + yw);
+
+            matrixParams[0, 1] = 2 * (xy + zw);
+            matrixParams[1, 1] = 1 - 2 * (xx + zz);
+            matrixParams[2, 1] = 2 * (yz - xw);
+
+            matrixParams[0, 2] = 2 * (xz - yw);
+            matrixParams[1, 2] = 2 * (yz + xw);
+            matrixParams[2, 2] = 1 - 2 * (xx + yy);
+            
+            return matrixParams;
+        }
+
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public override RotParams_AxisAngle ToAxisAngleParams(RotParams_AxisAngle axisAngleParams)
+        {
+            axisAngleParams.NormalisedAxis = NormalizedAxis; 
+            axisAngleParams.AngleInRadian = AngleInRadian;
+            return axisAngleParams; 
         }
         #endregion Converters
 
@@ -570,7 +623,7 @@ namespace RotParams
                 new RotParams_Quaternion(0, inVector.x, inVector.y, inVector.z);
             vectorAsRotParamsQuaternion = this * vectorAsRotParamsQuaternion * this.Inverse();
             return new Vector3(vectorAsRotParamsQuaternion.X, vectorAsRotParamsQuaternion.Y,
-                vectorAsRotParamsQuaternion.Y);
+                vectorAsRotParamsQuaternion.Z);
         }
         
         public static RotParams_Quaternion CombineSequentialRotation(

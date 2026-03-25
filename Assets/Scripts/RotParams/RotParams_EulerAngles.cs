@@ -344,17 +344,49 @@ namespace RotParams
 
         #region Converters
 
-        public override RotParams_Base ToSelfType(RotParams_Base toConvert)
+        public override RotParams_Base ToSelfTypeCopy(RotParams_Base toConvert)
         {
             return toConvert.ToEulerParams(); 
         }
 
-        public override RotParams_EulerAngles ToEulerParams()
+        public override void ToSelfType(RotParams_Base toConvert)
         {
-            return new RotParams_EulerAngles(this); 
+            toConvert.ToEulerParams(this); 
         }
 
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public override RotParams_EulerAngles ToEulerParams()
+        {
+            return ToEulerParams(new RotParams_EulerAngles());
+        }
+
+        // TodoZyKa RotParams_Conversion: Reread & Test
         public override RotParams_Quaternion ToQuaternionParams()
+        {
+            return ToQuaternionParams(new RotParams_Quaternion());
+        }
+
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public override RotParams_Matrix ToMatrixParams()
+        {
+            return ToMatrixParams(new RotParams_Matrix(new float[3, 3]));
+        }
+
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public override RotParams_AxisAngle ToAxisAngleParams()
+        {
+            return ToAxisAngleParams(new RotParams_AxisAngle(Vector3.right, 0));
+        }
+
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public override RotParams_EulerAngles ToEulerParams(RotParams_EulerAngles eulerParams)
+        {
+            eulerParams.CopyValues(this);
+            return eulerParams;
+        }
+
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public override RotParams_Quaternion ToQuaternionParams(RotParams_Quaternion quaternionParams)
         {
             RotParams_Quaternion result = new RotParams_Quaternion();
             foreach (_RotParams_EulerAngleGimbalRing rotation in gimbal.Reverse())
@@ -362,91 +394,66 @@ namespace RotParams
                 RotParams_Quaternion asQuat = rotation.toQuaternionRotation();
                 result = asQuat * result; 
             }
-            return result; 
+            quaternionParams.CopyValues(result);
+            return quaternionParams;
         }
 
-        /*
-        public void GetValuesFromQuaternion(RotParams_Quaternion rotParamsQuaternion) //TODO: Test
-        {
-            if (GetGimbalType() == EGimbalType.InvalidGimbalOrder)
-            {
-                Debug.LogError("EulerAngleRotation.GetValuesFromQuaternion() error: GimbalType is Invalid");
-                return; 
-            }
-
-            if (GetGimbalType() == EGimbalType.TrueEulerAngle)
-            {
-                Debug.LogError("EulerAngleRotation.GetValuesFromQuaternion() error: Conversion from Quaternion to TrueEulerAngles not implemented");
-                return; 
-            }
-
-            
-            RotParams_Quaternion rotParamsQuaternionCopy = new RotParams_Quaternion(rotParamsQuaternion); 
-            RotParams_EulerAngles incompleteRotParamsEulerAngles = new RotParams_EulerAngles(this); 
-            
-            for (int i = 0; i < gimbal.Length; i++)
-            {
-                gimbal[i].ExtractValueFromQuaternion(rotParamsQuaternionCopy);  
-                RotParams_Quaternion inverse = incompleteRotParamsEulerAngles.ToQuaternionRotation().Inverse();
-                
-                rotParamsQuaternionCopy = inverse * rotParamsQuaternionCopy; 
-
-                if (rotParamsQuaternionCopy == RotParams_Quaternion.GetIdentity())
-                {
-                    return; 
-                }
-            }
-        }
-        */
-        
-        //ToQuaternionRotation.ToMatrixRotation is cheaper, because converting from EulerAngles to another RotationParent requires combining and inversing multiple rotation, which is cheaper in Quaternions
-        public override RotParams_Matrix ToMatrixParams() //TODO: test this function
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public override RotParams_Matrix ToMatrixParams(RotParams_Matrix matrixParams)
         {
             RotParams_Matrix result = new RotParams_Matrix(RotParams_Matrix.RotationIdentity());
             foreach (_RotParams_EulerAngleGimbalRing rotation in gimbal)
             {
                 result = result * rotation.toMatrixRotation() * result.Inverse(); 
             }
-            return result; 
+            matrixParams.CopyValues(result);
+            return matrixParams;
         }
 
-        /*
-        public void GetValuesFromMatrix(RotParams_Matrix rotParamsMatrix) //TODO: test this function
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public override RotParams_AxisAngle ToAxisAngleParams(RotParams_AxisAngle axisAngleParams)
         {
-            if (GetGimbalType() == EGimbalType.InvalidGimbalOrder)
-            {
-                Debug.LogError("EulerAngleRotation.GetValuesFromMatrix() error: GimbalType is Invalid");
-                return; 
-            }
-
-            if (GetGimbalType() == EGimbalType.TrueEulerAngle)
-            {
-                Debug.LogError("EulerAngleRotation.GetValuesFromMatrix() error: Conversion from Matrix to TrueEulerAngles not implemented");
-                return; 
-            }
-            
-            RotParams_Matrix rotParamsMatrixCopy = new RotParams_Matrix(rotParamsMatrix); 
-            
-            for (int i = 0; i < gimbal.Length; i++)
-            {
-                gimbal[i].ExtractValueFromMatrix(rotParamsMatrixCopy); 
-                RotParams_Matrix inverse = gimbal[i].toMatrixRotation().Inverse();
-                
-                rotParamsMatrixCopy = inverse * rotParamsMatrixCopy; 
-
-                if (rotParamsMatrixCopy == RotParams_Matrix.RotationIdentity())
-                {
-                    return; 
-                }
-            }
-        }
-        */
-        
-        public override RotParams_AxisAngle ToAxisAngleParams()
-        {
-            return ToQuaternionParams().ToAxisAngleParams(); 
+            ToQuaternionParams().ToAxisAngleParams(axisAngleParams);
+            return axisAngleParams;
         }
         
+        #region comparison
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            RotParams_EulerAngles other = (RotParams_EulerAngles)obj;
+            return this == other;
+        }
+
+        //!!!ZyKa need to overwork this equality comparison, because it currently only returns true when two EulerAngles are exactly the same including order of rotation. 
+        public static bool operator ==(RotParams_EulerAngles a, RotParams_EulerAngles b)
+        {
+            if (ReferenceEquals(a, b)) return true;
+            if (((object)a == null) || ((object)b == null)) return false;
+
+            return a.OuterAxis == b.OuterAxis &&
+                   Mathf.Abs(a.OuterAngle - b.OuterAngle) < 0.0001f &&
+                   a.MiddleAxis == b.MiddleAxis &&
+                   Mathf.Abs(a.MiddleAngle - b.MiddleAngle) < 0.0001f &&
+                   a.InnerAxis == b.InnerAxis &&
+                   Mathf.Abs(a.InnerAngle - b.InnerAngle) < 0.0001f; 
+        }
+
+        public static bool operator !=(RotParams_EulerAngles a, RotParams_EulerAngles b)
+        {
+            return !(a == b);
+        }
+
+        public override int GetHashCode()
+        {
+            return (OuterAngle, MiddleAngle, InnerAngle, OuterAxis, MiddleAxis, InnerAxis).GetHashCode();
+        }
+        #endregion comparison
+
         public override RotParams_Base GetInverse()
         {
             Debug.LogWarning("Cannot get inverse of RotParams_EulerAngles, need to convert to RotParams_Matrix");

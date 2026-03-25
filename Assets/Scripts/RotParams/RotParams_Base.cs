@@ -9,12 +9,27 @@ namespace RotParams
     [Serializable]
     public abstract class RotParams_Base : INotifyPropertyChanged
     {
-        public abstract RotParams_Base ToSelfType(RotParams_Base toConvert);
+        public abstract RotParams_Base ToSelfTypeCopy(RotParams_Base toConvert); 
+        public abstract void ToSelfType(RotParams_Base toConvert); 
+        
         public abstract void CopyValues(RotParams_Base toCopy); 
+        // TodoZyKa RotParams_Conversion: Reread & Test
         public abstract RotParams_EulerAngles ToEulerParams(); 
+        // TodoZyKa RotParams_Conversion: Reread & Test
         public abstract RotParams_Quaternion ToQuaternionParams(); 
+        // TodoZyKa RotParams_Conversion: Reread & Test
         public abstract RotParams_Matrix ToMatrixParams(); 
-        public abstract RotParams_AxisAngle ToAxisAngleParams(); 
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public abstract RotParams_AxisAngle ToAxisAngleParams();
+
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public abstract RotParams_EulerAngles ToEulerParams(RotParams_EulerAngles eulerParams); 
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public abstract RotParams_Quaternion ToQuaternionParams(RotParams_Quaternion quaternionParams);
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public abstract RotParams_Matrix ToMatrixParams(RotParams_Matrix matrixParams);
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public abstract RotParams_AxisAngle ToAxisAngleParams(RotParams_AxisAngle axisAngleParams);
         
         public bool DoesTypeMatch(RotParams_Base otherRotation)
         {

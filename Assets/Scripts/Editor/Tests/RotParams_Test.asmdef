@@ -1,0 +1,19 @@
+{
+    "name": "RotParamsTest",
+    "rootNamespace": "",
+    "references": [
+        "GUID:157f71002f96d094d838ace3a78e13e6",
+        "GUID:c669e3270c9d1514dbd021764f117673"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

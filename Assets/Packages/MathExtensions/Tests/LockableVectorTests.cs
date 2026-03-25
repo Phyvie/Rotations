@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Linq;
 using Extensions.MathExtensions;
-using MathExtensions;
 using NUnit.Framework;
 using UnityEngine;
 
-namespace Extensions.MathExtensions.Tests
+namespace Packages.MathExtensions.Tests
 {
     public static class TestExtensions
     {

@@ -239,18 +239,18 @@ namespace RotParams
             }
         }
 
+        public RotParams_AxisAngle() : this(Vector3.right, 0) { }
+        
         public RotParams_AxisAngle(RotParams_AxisAngle toCopy) : this(toCopy.NormalisedAxis, toCopy.AngleInRadian) { }
         
         public RotParams_AxisAngle(Vector3 inRotationVectorInRadian, bool autoNormalizeToTargetNormalisation = true, float targetMagnitude = 1) 
             : this(
                 inRotationVectorInRadian, 
-                inRotationVectorInRadian.magnitude, 
-                autoNormalizeToTargetNormalisation, 
-                targetMagnitude
+                inRotationVectorInRadian.magnitude
             )
         { }
 
-        public RotParams_AxisAngle(Vector3 inAxis, float inAngleInRadian, bool autoNormalizeToTargetNormalisation = true, float targetMagnitude = 1)
+        public RotParams_AxisAngle(Vector3 inAxis, float inAngleInRadian)
         {
             float[] axis;
             if (inAxis.sqrMagnitude > 0.0001)
@@ -262,70 +262,134 @@ namespace RotParams
             {
                 axis = new float[] { 1, 0, 0 }; 
             }
-            _axis.SetVector(axis);
+            _axis = LockableVector.SafeCreateLockableVector(axis, new bool[]{false, false, false}, 1.0f, true);
+            if (_axis == null)
+            {
+                Debug.LogWarning("Can't create AxisAngleRotation with given axis. Axis is set to default (1,0,0).");
+                _axis = LockableVector.SafeCreateLockableVector(new float[]{1, 0, 0}, new bool[]{false, false, false}, 1, true);
+            }
             AngleInRadian = inAngleInRadian;
-            
-            _axis.SetAutoNormalizeToTargetMagnitude(autoNormalizeToTargetNormalisation);
-            _axis.SetTargetMagnitude(targetMagnitude);
         }
         #endregion //Constructors
         
         #region Converters
-        //AxisAngleRotation.ToEulerAngle() is the same as ToQuaternionRotation().ToEulerAngleRotation()
-        public override RotParams_Base ToSelfType(RotParams_Base toConvert)
+
+        public override RotParams_Base ToSelfTypeCopy(RotParams_Base toConvert)
         {
             return toConvert.ToAxisAngleParams(); 
         }
 
-        public override  RotParams_EulerAngles ToEulerParams()
+        public override void ToSelfType(RotParams_Base toConvert)
         {
-            Debug.LogWarning("Conversion to EulerAngles is not correctly implemented"); 
-            Debug.LogWarning("AxisAngleRotation.ToEulerAngle() is the same as ToQuaternionRotation().ToEulerAngleRotation()");
-            return ToQuaternionParams().ToEulerParams(); 
+            toConvert.ToSelfType(this);
+        }
+
+        public override RotParams_EulerAngles ToEulerParams()
+        {
+            return ToEulerParams(new RotParams_EulerAngles());
         }
 
         public override RotParams_Quaternion ToQuaternionParams()
         {
-            RotParams_Quaternion asQuat = new RotParams_Quaternion(NormalisedAxis, AngleInRadian); 
-            return asQuat; 
+            return ToQuaternionParams(new RotParams_Quaternion());
         }
 
-        //AxisAngleRotation.ToMatrixRotation() is the same as ToQuaternionRotation().ToMatrixRotation()
         public override RotParams_Matrix ToMatrixParams()
         {
-            //TODO: understand this formula (maybe visualise?) and correct it to be left-handed (in case it's right-handed)
-            float x = NormalisedAxis.x;
-            float y = NormalisedAxis.y;
-            float z = NormalisedAxis.z;
-        
-            float cosTheta = Mathf.Cos(AngleInRadian);
-            float sinTheta = Mathf.Sin(AngleInRadian);
-            float oneMinusCosTheta = 1 - cosTheta;
-
-            RotParams_Matrix rotParamsMatrix = new RotParams_Matrix(new float[3, 3]); 
-        
-            rotParamsMatrix[0, 0] = cosTheta + x * x * oneMinusCosTheta;
-            rotParamsMatrix[0, 1] = x * y * oneMinusCosTheta - z * sinTheta;
-            rotParamsMatrix[0, 2] = x * z * oneMinusCosTheta + y * sinTheta;
-
-            rotParamsMatrix[1, 0] = y * x * oneMinusCosTheta + z * sinTheta;
-            rotParamsMatrix[1, 1] = cosTheta + y * y * oneMinusCosTheta;
-            rotParamsMatrix[1, 2] = y * z * oneMinusCosTheta - x * sinTheta;
-
-            rotParamsMatrix[2, 0] = z * x * oneMinusCosTheta - y * sinTheta;
-            rotParamsMatrix[2, 1] = z * y * oneMinusCosTheta + x * sinTheta;
-            rotParamsMatrix[2, 2] = cosTheta + z * z * oneMinusCosTheta;
-
-            return rotParamsMatrix; 
+            return ToMatrixParams(new RotParams_Matrix(new float[3, 3]));
         }
 
         public override RotParams_AxisAngle ToAxisAngleParams()
         {
-            return new RotParams_AxisAngle(RotationVectorInRadian); 
+            return ToAxisAngleParams(new RotParams_AxisAngle(Vector3.right, 0));
+        }
+
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public override RotParams_EulerAngles ToEulerParams(RotParams_EulerAngles eulerParams)
+        {
+            ToMatrixParams().ToEulerParams(eulerParams);
+            return eulerParams;
+        }
+
+        public override RotParams_Quaternion ToQuaternionParams(RotParams_Quaternion quaternionParams)
+        {
+            float halfAngle = AngleInRadian * 0.5f;
+            float s = Mathf.Sin(halfAngle);
+            float c = Mathf.Cos(halfAngle);
+            quaternionParams.W = c;
+            quaternionParams.X = NormalisedAxis.x * s;
+            quaternionParams.Y = NormalisedAxis.y * s;
+            quaternionParams.Z = NormalisedAxis.z * s;
+            return quaternionParams;
+        }
+
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public override RotParams_Matrix ToMatrixParams(RotParams_Matrix matrixParams)
+        {
+            float x = NormalisedAxis.x;
+            float y = NormalisedAxis.y;
+            float z = NormalisedAxis.z;
+
+            float cosTheta = Mathf.Cos(AngleInRadian);
+            float sinTheta = Mathf.Sin(AngleInRadian);
+            float oneMinusCosTheta = 1 - cosTheta;
+
+            matrixParams[0, 0] = cosTheta + x * x * oneMinusCosTheta;
+            matrixParams[1, 0] = x * y * oneMinusCosTheta + z * sinTheta;
+            matrixParams[2, 0] = x * z * oneMinusCosTheta - y * sinTheta;
+
+            matrixParams[0, 1] = x * y * oneMinusCosTheta - z * sinTheta;
+            matrixParams[1, 1] = cosTheta + y * y * oneMinusCosTheta;
+            matrixParams[2, 1] = y * z * oneMinusCosTheta + x * sinTheta;
+
+            matrixParams[0, 2] = x * z * oneMinusCosTheta + y * sinTheta;
+            matrixParams[1, 2] = y * z * oneMinusCosTheta - x * sinTheta;
+            matrixParams[2, 2] = cosTheta + z * z * oneMinusCosTheta;
+
+            return matrixParams;
+        }
+
+        // TodoZyKa RotParams_Conversion: Reread & Test
+        public override RotParams_AxisAngle ToAxisAngleParams(RotParams_AxisAngle axisAngleParams)
+        {
+            axisAngleParams.CopyValues(new RotParams_AxisAngle(RotationVectorInRadian));
+            return axisAngleParams;
         }
         #endregion //Converters
 
         #region operators
+        #region comparison
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            RotParams_AxisAngle other = (RotParams_AxisAngle)obj;
+            return this == other;
+        }
+
+        public static bool operator ==(RotParams_AxisAngle a, RotParams_AxisAngle b)
+        {
+            if (ReferenceEquals(a, b)) return true;
+            if (((object)a == null) || ((object)b == null)) return false;
+
+            return Mathf.Abs(a.AngleInRadian - b.AngleInRadian) < 0.0001f && 
+                   Vector3.Distance(a.NormalisedAxis, b.NormalisedAxis) < 0.0001f;
+        }
+
+        public static bool operator !=(RotParams_AxisAngle a, RotParams_AxisAngle b)
+        {
+            return !(a == b);
+        }
+
+        public override int GetHashCode()
+        {
+            return (NormalisedAxis, AngleInRadian).GetHashCode();
+        }
+        #endregion comparison
+        
         public static RotParams_AxisAngle operator+(RotParams_AxisAngle rotParamsA, RotParams_AxisAngle rotParamsB)
         {
             return new RotParams_AxisAngle(rotParamsA.RotationVectorInRadian + rotParamsB.RotationVectorInRadian); 
@@ -346,18 +410,18 @@ namespace RotParams
 
         public override void GetValuesFromUnityQuaternion(Quaternion unityQuaternion)
         {
-            float clampedW = Mathf.Clamp(unityQuaternion.w, -1.0f, 1.0f);
-            float axisScalar = MathFunctions.SubtractMagnitudePythagoreon(1, clampedW);
+            float w = Mathf.Clamp(unityQuaternion.w, -1.0f, 1.0f);
+            AngleInRadian = 2.0f * Mathf.Acos(w);
+            float s = Mathf.Sqrt(1.0f - w * w);
 
-            if (Mathf.Approximately(axisScalar, 0.0f))
+            if (s < 0.0001f)
             {
-                AngleInRadian = 0.0f;
                 NormalisedAxis = Vector3.right;
-                return; 
             }
-            
-            AngleInRadian = Mathf.Acos(unityQuaternion.w) * 2;
-            NormalisedAxis = new Vector3(unityQuaternion.x, unityQuaternion.y, unityQuaternion.z) / axisScalar; 
+            else
+            {
+                NormalisedAxis = new Vector3(unityQuaternion.x / s, unityQuaternion.y / s, unityQuaternion.z / s);
+            }
         }
 
         public override string ToString()
