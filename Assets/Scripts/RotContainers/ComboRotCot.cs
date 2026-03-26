@@ -328,6 +328,10 @@ namespace RotContainers
             }
 
             /* !!!ZyKa RotParams_Conversion: There should be a conversion of rotParams here */
+            // if (_activeRotCot != null)
+            // {
+            //     newActiveRotCot.GetRotParams_Generic().ToSelfType(_activeRotCot.GetRotParams_Generic()); 
+            // }
             _activeRotCot = newActiveRotCot;
             
             if (newActiveRotCot == null)

@@ -8,7 +8,6 @@ using UnityEngine;
 
 namespace Editor
 {
-	/*  LaterZyKa Dependencies: Only AngleTypeInspector is based on this class */
     public class NestedPropertyDrawer : PropertyDrawer
     {
         static readonly Regex arrayRegex = new Regex(@"^data\[(\d+)\]$");

@@ -126,38 +126,19 @@ namespace RotParams
                 }),
                 EGimbalAxis.Pitch => new RotParams_Matrix(new float[3,3]
                 {
-                    { Mathf.Cos(AngleInRadian), -Mathf.Sin(AngleInRadian),  0 },
-                    { Mathf.Sin(AngleInRadian),  Mathf.Cos(AngleInRadian),  0 },
-                    {           0,                          0,              1 }
-                }),
-                EGimbalAxis.Roll => new RotParams_Matrix(new float[3,3]
-                {
                     { 1,              0,                       0            },
                     { 0, Mathf.Cos(AngleInRadian), -Mathf.Sin(AngleInRadian) },
                     { 0, Mathf.Sin(AngleInRadian), Mathf.Cos(AngleInRadian) }
                 }),
+                EGimbalAxis.Roll => new RotParams_Matrix(new float[3,3]
+                {
+                    { Mathf.Cos(AngleInRadian), -Mathf.Sin(AngleInRadian),  0 },
+                    { Mathf.Sin(AngleInRadian),  Mathf.Cos(AngleInRadian),  0 },
+                    {           0,                          0,              1 }
+                }),
                 _ => throw new InvalidEnumArgumentException()
             }; 
         }
-
-        /*
-        public void ExtractValueFromMatrix(RotParams_Matrix m) 
-        {
-            switch (eAxis)
-            {
-                case EGimbalAxis.Yaw:
-                    AngleInRadian = Mathf.Atan2(m[2, 0], m[0, 0]); 
-                    break; 
-                case EGimbalAxis.Pitch:
-                    AngleInRadian = Mathf.Atan2(m[0, 1], m[0, 0]); 
-                    break; 
-                case EGimbalAxis.Roll:
-                    AngleInRadian = Mathf.Atan2(m[2, 1], m[1, 1]); 
-                    break; 
-            }
-        }
-        */
-
         public RotParams_Quaternion toQuaternionRotation() 
         {
             return new RotParams_Quaternion(RotationAxis, AngleInRadian);

@@ -104,7 +104,7 @@ namespace RotParams
             get
             {
                 Vector3 axis = new Vector3(X, Y, Z);
-                if (axis.sqrMagnitude > 0.0001)
+                if (axis.sqrMagnitude > 0.0f)
                 {
                     return axis.normalized;
                 }
@@ -166,7 +166,7 @@ namespace RotParams
         [CreateProperty]
         public float AngleInRadian
         {
-            get => 2 * Mathf.Acos(Mathf.Clamp(W, 0, 1));
+            get => 2 * Mathf.Acos(Mathf.Clamp(W, -1, 1));
             set
             {
                 if (Mathf.Approximately(AngleInRadian, value))
@@ -322,8 +322,11 @@ namespace RotParams
                 return false;
             }
 
-            return Math.Abs(qr1.W - qr2.W) < 0.0001f && Math.Abs(qr1.X - qr2.X) < 0.0001f &&
-                   Math.Abs(qr1.Y - qr2.Y) < 0.0001f && Math.Abs(qr1.Z - qr2.Z) < 0.0001f;
+            return (Math.Abs(qr1.W - qr2.W) < 0.0001f && Math.Abs(qr1.X - qr2.X) < 0.0001f &&
+                   Math.Abs(qr1.Y - qr2.Y) < 0.0001f && Math.Abs(qr1.Z - qr2.Z) < 0.0001f) 
+                   ||
+                   (Math.Abs(qr1.W + qr2.W) < 0.0001f && Math.Abs(qr1.X + qr2.X) < 0.0001f &&
+                   Math.Abs(qr1.Y + qr2.Y) < 0.0001f && Math.Abs(qr1.Z + qr2.Z) < 0.0001f);
         }
 
         public static bool operator !=(RotParams_Quaternion qr1, RotParams_Quaternion qr2)
@@ -505,19 +508,16 @@ namespace RotParams
             toConvert.ToQuaternionParams(this); 
         }
 
-        // TodoZyKa RotParams_Conversion: Reread & Test
         public override RotParams_EulerAngles ToEulerParams()
         {
             return ToEulerParams(new RotParams_EulerAngles());
         }
 
-        // TodoZyKa RotParams_Conversion: Reread & Test
         public override RotParams_Quaternion ToQuaternionParams()
         {
             return ToQuaternionParams(new RotParams_Quaternion());
         }
 
-        // TodoZyKa RotParams_Conversion: Reread & Test
         public override RotParams_Matrix ToMatrixParams()
         {
             return ToMatrixParams(new RotParams_Matrix(new float[3, 3]));
@@ -528,21 +528,120 @@ namespace RotParams
             return ToAxisAngleParams(new RotParams_AxisAngle()); 
         }
 
-        // TodoZyKa RotParams_Conversion: Reread & Test
         public override RotParams_EulerAngles ToEulerParams(RotParams_EulerAngles eulerParams)
         {
-            ToMatrixParams().ToEulerParams(eulerParams);
+            if (!eulerParams.IsGimbalValid())
+            {
+                eulerParams.ResetToIdentity();
+                return eulerParams;
+            }
+
+            RotParams_Quaternion q = this; // Assuming the current quaternion is the rotation
+            float qx = q.X;
+            float qy = q.Y;
+            float qz = q.Z;
+            float qw = q.W;
+
+            switch (eulerParams.GetExtrinsicGimbalOrder())
+            {
+                case EGimbalOrder.YXZ:
+                    // Yaw (Z), Pitch (X), Roll (Y) - intrinsic
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(2.0f * (qy * qz + qw * qx), qw * qw - qx * qx - qy * qy + qz * qz);
+                    eulerParams.Middle.AngleInRadian = Mathf.Asin(-2.0f * (qx * qz - qw * qy));
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(2.0f * (qx * qy + qw * qz), qw * qw + qx * qx - qy * qy - qz * qz);
+                    break;
+
+                case EGimbalOrder.XYZ:
+                    // Pitch (X), Yaw (Y), Roll (Z) - intrinsic
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(2.0f * (qz * qw - qx * qy), 1.0f - 2.0f * (qy * qy + qz * qz));
+                    eulerParams.Middle.AngleInRadian = Mathf.Asin(2.0f * (qx * qz + qy * qw));
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(2.0f * (qx * qw - qy * qz), 1.0f - 2.0f * (qx * qx + qy * qy));
+                    break;
+
+                case EGimbalOrder.XZY:
+                    // Pitch (X), Roll (Z), Yaw (Y) - intrinsic
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(-2.0f * (qy * qz - qw * qx), 1.0f - 2.0f * (qx * qx + qz * qz));
+                    eulerParams.Middle.AngleInRadian = Mathf.Asin(2.0f * (qx * qy + qz * qw));
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(-2.0f * (qx * qz - qw * qy), 1.0f - 2.0f * (qx * qx + qy * qy));
+                    break;
+
+                case EGimbalOrder.YZX:
+                    // Yaw (Y), Roll (Z), Pitch (X) - intrinsic
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(-2.0f * (qx * qz - qw * qy), 1.0f - 2.0f * (qy * qy + qz * qz));
+                    eulerParams.Middle.AngleInRadian = Mathf.Asin(2.0f * (qx * qy + qz * qw));
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(-2.0f * (qy * qz - qw * qx), 1.0f - 2.0f * (qx * qx + qy * qy));
+                    break;
+
+                case EGimbalOrder.ZXY:
+                    // Roll (Z), Pitch (X), Yaw (Y) - intrinsic
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(2.0f * (qx * qy + qz * qw), 1.0f - 2.0f * (qx * qx + qz * qz));
+                    eulerParams.Middle.AngleInRadian = Mathf.Asin(-2.0f * (qy * qz - qw * qx));
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(2.0f * (qx * qz + qy * qw), 1.0f - 2.0f * (qx * qx + qy * qy));
+                    break;
+
+                case EGimbalOrder.ZYX:
+                    // Roll (Z), Yaw (Y), Pitch (X) - intrinsic
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(2.0f * (qx * qz + qy * qw), 1.0f - 2.0f * (qy * qy + qz * qz));
+                    eulerParams.Middle.AngleInRadian = Mathf.Asin(-2.0f * (qx * qy - qz * qw));
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(2.0f * (qy * qz + qx * qw), 1.0f - 2.0f * (qx * qx + qy * qy));
+                    break;
+
+                case EGimbalOrder.XYX:
+                    // Pitch (X), Yaw (Y), Pitch (X) - intrinsic
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(2.0f * (qx * qy + qz * qw), 1.0f - 2.0f * (qy * qy + qz * qz));
+                    eulerParams.Middle.AngleInRadian = Mathf.Acos(2.0f * (qw * qw + qx * qx) - 1.0f);
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(2.0f * (qx * qy - qz * qw), 1.0f - 2.0f * (qx * qx + qy * qy));
+                    break;
+
+                case EGimbalOrder.XZX:
+                    // Pitch (X), Roll (Z), Pitch (X) - intrinsic
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(2.0f * (qx * qz - qy * qw), 1.0f - 2.0f * (qx * qx + qz * qz));
+                    eulerParams.Middle.AngleInRadian = Mathf.Acos(2.0f * (qw * qw + qx * qx) - 1.0f);
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(2.0f * (qx * qz + qy * qw), 1.0f - 2.0f * (qx * qx + qz * qz));
+                    break;
+
+                case EGimbalOrder.YXY:
+                    // Yaw (Y), Pitch (X), Yaw (Y) - intrinsic
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(2.0f * (qx * qy - qz * qw), 1.0f - 2.0f * (qx * qx + qz * qz));
+                    eulerParams.Middle.AngleInRadian = Mathf.Acos(2.0f * (qw * qw + qy * qy) - 1.0f);
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(2.0f * (qy * qz - qx * qw), 1.0f - 2.0f * (qy * qy + qz * qz));
+                    break;
+
+                case EGimbalOrder.YZY:
+                    // Yaw (Y), Roll (Z), Yaw (Y) - intrinsic
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(2.0f * (qy * qz + qx * qw), 1.0f - 2.0f * (qx * qx + qy * qy));
+                    eulerParams.Middle.AngleInRadian = Mathf.Acos(2.0f * (qw * qw + qy * qy) - 1.0f);
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(2.0f * (qy * qz - qx * qw), 1.0f - 2.0f * (qy * qy + qz * qz));
+                    break;
+
+                case EGimbalOrder.ZXZ:
+                    // Roll (Z), Pitch (X), Roll (Z) - intrinsic
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(2.0f * (qx * qz + qy * qw), 1.0f - 2.0f * (qy * qy + qz * qz));
+                    eulerParams.Middle.AngleInRadian = Mathf.Acos(2.0f * (qw * qw + qz * qz) - 1.0f);
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(2.0f * (qy * qz - qx * qw), 1.0f - 2.0f * (qx * qx + qz * qz));
+                    break;
+
+                case EGimbalOrder.ZYZ:
+                    // Roll (Z), Yaw (Y), Roll (Z) - intrinsic
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(2.0f * (qy * qz - qx * qw), 1.0f - 2.0f * (qx * qx + qy * qy));
+                    eulerParams.Middle.AngleInRadian = Mathf.Acos(2.0f * (qw * qw + qz * qz) - 1.0f);
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(2.0f * (qy * qz + qx * qw), 1.0f - 2.0f * (qx * qx + qz * qz));
+                    break;
+
+                default:
+                    eulerParams.ResetToIdentity();
+                    break;
+            }
+
             return eulerParams;
         }
 
-        // TodoZyKa RotParams_Conversion: Reread & Test
         public override RotParams_Quaternion ToQuaternionParams(RotParams_Quaternion quaternionParams)
         {
             quaternionParams.CopyValues(new RotParams_Quaternion(W, X, Y, Z));
             return quaternionParams;
         }
 
-        // TodoZyKa RotParams_Conversion: Reread & Test
         public override RotParams_Matrix ToMatrixParams(RotParams_Matrix matrixParams)
         {
             float xx = X * X;
@@ -557,22 +656,21 @@ namespace RotParams
             float zz = Z * Z;
             float zw = Z * W;
 
-            matrixParams[0, 0] = 1 - 2 * (yy + zz);
-            matrixParams[1, 0] = 2 * (xy - zw);
-            matrixParams[2, 0] = 2 * (xz + yw);
+            matrixParams[0, 0] = 1 - (2 * (yy + zz));
+            matrixParams[0, 1] = 2 * (xy - zw);
+            matrixParams[0, 2] = 2 * (xz + yw);
 
-            matrixParams[0, 1] = 2 * (xy + zw);
-            matrixParams[1, 1] = 1 - 2 * (xx + zz);
-            matrixParams[2, 1] = 2 * (yz - xw);
+            matrixParams[1, 0] = 2 * (xy + zw);
+            matrixParams[1, 1] = 1 - (2 * (xx + zz));
+            matrixParams[1, 2] = 2 * (yz - xw);
 
-            matrixParams[0, 2] = 2 * (xz - yw);
-            matrixParams[1, 2] = 2 * (yz + xw);
-            matrixParams[2, 2] = 1 - 2 * (xx + yy);
+            matrixParams[2, 0] = 2 * (xz - yw);
+            matrixParams[2, 1] = 2 * (yz + xw);
+            matrixParams[2, 2] = 1 - (2 * (xx + yy));
             
             return matrixParams;
         }
 
-        // TodoZyKa RotParams_Conversion: Reread & Test
         public override RotParams_AxisAngle ToAxisAngleParams(RotParams_AxisAngle axisAngleParams)
         {
             axisAngleParams.NormalisedAxis = NormalizedAxis; 
@@ -714,7 +812,6 @@ namespace RotParams
             return result; 
         }
         #endregion Functions
-        
         
         public void OnBeforeSerialize()
         {

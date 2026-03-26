@@ -13,22 +13,14 @@ namespace RotParams
         public abstract void ToSelfType(RotParams_Base toConvert); 
         
         public abstract void CopyValues(RotParams_Base toCopy); 
-        // TodoZyKa RotParams_Conversion: Reread & Test
         public abstract RotParams_EulerAngles ToEulerParams(); 
-        // TodoZyKa RotParams_Conversion: Reread & Test
         public abstract RotParams_Quaternion ToQuaternionParams(); 
-        // TodoZyKa RotParams_Conversion: Reread & Test
         public abstract RotParams_Matrix ToMatrixParams(); 
-        // TodoZyKa RotParams_Conversion: Reread & Test
         public abstract RotParams_AxisAngle ToAxisAngleParams();
 
-        // TodoZyKa RotParams_Conversion: Reread & Test
         public abstract RotParams_EulerAngles ToEulerParams(RotParams_EulerAngles eulerParams); 
-        // TodoZyKa RotParams_Conversion: Reread & Test
         public abstract RotParams_Quaternion ToQuaternionParams(RotParams_Quaternion quaternionParams);
-        // TodoZyKa RotParams_Conversion: Reread & Test
         public abstract RotParams_Matrix ToMatrixParams(RotParams_Matrix matrixParams);
-        // TodoZyKa RotParams_Conversion: Reread & Test
         public abstract RotParams_AxisAngle ToAxisAngleParams(RotParams_AxisAngle axisAngleParams);
         
         public bool DoesTypeMatch(RotParams_Base otherRotation)
@@ -39,7 +31,7 @@ namespace RotParams
         public abstract RotParams_Base GetIdentity();
         public abstract RotParams_Base GetInverse();
 
-        /* TodoZyKa RotParams_Conversion: Not sure whether this should be in here, since not all RotParams can concatenate, maybe an interface would be better? */
+        /* TodoZyKa RotParams_Concatenate: Not sure whether this should be in here, since not all RotParams can concatenate, maybe an interface would be better? */
         public RotParams_Base Concatenate(RotParams_Base otherRotation, bool otherFirst = false)
         {
             if (!DoesTypeMatch(otherRotation))
@@ -53,7 +45,7 @@ namespace RotParams
             }
         }
 
-        /* TodoZyKa RotParams_Conversion: Not sure whether this should be in here, since not all RotParams can concatenate, maybe an interface would be better? */
+        /* TodoZyKa RotParams_Concatenate: Not sure whether this should be in here, since not all RotParams can concatenate, maybe an interface would be better? */
         protected abstract RotParams_Base Concatenate_Implementation(RotParams_Base otherRotation, bool otherFirst = false); 
         
         [ContextMenu("Reset to Identity")]

@@ -6,7 +6,6 @@ using Packages.MathExtensions;
 using Unity.Properties;
 using UnityEngine;
 
-//ToDoZyKa RotParams_AxisAngle: adjust the getters and setters for RotationVector so that they only have one access point
 namespace RotParams
 {
     [Serializable]
@@ -296,7 +295,7 @@ namespace RotParams
 
         public override RotParams_Matrix ToMatrixParams()
         {
-            return ToMatrixParams(new RotParams_Matrix(new float[3, 3]));
+            return ToMatrixParams(new RotParams_Matrix());
         }
 
         public override RotParams_AxisAngle ToAxisAngleParams()
@@ -304,35 +303,38 @@ namespace RotParams
             return ToAxisAngleParams(new RotParams_AxisAngle(Vector3.right, 0));
         }
 
-        // TodoZyKa RotParams_Conversion: Reread & Test
         public override RotParams_EulerAngles ToEulerParams(RotParams_EulerAngles eulerParams)
         {
-            ToMatrixParams().ToEulerParams(eulerParams);
+            ToQuaternionParams().ToEulerParams(eulerParams);
             return eulerParams;
         }
 
         public override RotParams_Quaternion ToQuaternionParams(RotParams_Quaternion quaternionParams)
         {
             float halfAngle = AngleInRadian * 0.5f;
-            float s = Mathf.Sin(halfAngle);
-            float c = Mathf.Cos(halfAngle);
-            quaternionParams.W = c;
+            float s = Mathf.Sin(halfAngle); 
+            quaternionParams.W = Mathf.Cos(halfAngle);
             quaternionParams.X = NormalisedAxis.x * s;
             quaternionParams.Y = NormalisedAxis.y * s;
             quaternionParams.Z = NormalisedAxis.z * s;
             return quaternionParams;
         }
 
-        // TodoZyKa RotParams_Conversion: Reread & Test
         public override RotParams_Matrix ToMatrixParams(RotParams_Matrix matrixParams)
         {
-            float x = NormalisedAxis.x;
-            float y = NormalisedAxis.y;
-            float z = NormalisedAxis.z;
+            float x = AxisX;
+            float y = AxisY;
+            float z = AxisZ;
 
-            float cosTheta = Mathf.Cos(AngleInRadian);
-            float sinTheta = Mathf.Sin(AngleInRadian);
-            float oneMinusCosTheta = 1 - cosTheta;
+            float cosTheta, sinTheta, oneMinusCosTheta; 
+            cosTheta = Mathf.Cos(AngleInRadian);
+            sinTheta = Mathf.Sin(AngleInRadian);
+            oneMinusCosTheta = 1 - Mathf.Cos(AngleInRadian);
+            
+            if (Mathf.Abs(AngleInRadian - Mathf.PI) < 0.01f)
+            {
+                oneMinusCosTheta = 2 - (AngleInRadian - Mathf.PI) * (AngleInRadian - Mathf.PI) / 2.0f; 
+            }
 
             matrixParams[0, 0] = cosTheta + x * x * oneMinusCosTheta;
             matrixParams[1, 0] = x * y * oneMinusCosTheta + z * sinTheta;
@@ -349,7 +351,6 @@ namespace RotParams
             return matrixParams;
         }
 
-        // TodoZyKa RotParams_Conversion: Reread & Test
         public override RotParams_AxisAngle ToAxisAngleParams(RotParams_AxisAngle axisAngleParams)
         {
             axisAngleParams.CopyValues(new RotParams_AxisAngle(RotationVectorInRadian));
@@ -375,8 +376,11 @@ namespace RotParams
             if (ReferenceEquals(a, b)) return true;
             if (((object)a == null) || ((object)b == null)) return false;
 
-            return Mathf.Abs(a.AngleInRadian - b.AngleInRadian) < 0.0001f && 
-                   Vector3.Distance(a.NormalisedAxis, b.NormalisedAxis) < 0.0001f;
+            return (Mathf.Abs(a.AngleInRadian - b.AngleInRadian) < 0.0001f && 
+                   Vector3.Distance(a.NormalisedAxis, b.NormalisedAxis) < 0.0001f) 
+                   ||
+                   (Mathf.Repeat((a.AngleInRadian + b.AngleInRadian)/(2*Mathf.PI) + 0.00005f, 1) < 0.0001f &&
+                   Vector3.Distance(a.NormalisedAxis, -b.NormalisedAxis) < 0.0001f);
         }
 
         public static bool operator !=(RotParams_AxisAngle a, RotParams_AxisAngle b)
@@ -426,7 +430,7 @@ namespace RotParams
 
         public override string ToString()
         {
-            return $"({_axis}, {AngleInDegrees})";
+            return $"({_axis}, {AngleInDegrees}°)";
         }
         
         public override void ResetToIdentity()
