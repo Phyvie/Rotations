@@ -1,6 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using RotParams;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Editor.Tests
 {
@@ -246,23 +250,39 @@ namespace Editor.Tests
         #region randomised tests
 
         [Test]
-        public void ConversionTest_Quaternion_EulerAngles_Randomised()
+        public void ConversionTest_Quaternion_EulerAngles_Quaternion_Randomised()
         {
-            for (int i = 0; i < 100; i++)
+            Random.InitState(42);
+
+            for (int gimbalNumber = 1; gimbalNumber <= 12; gimbalNumber++)
             {
-                RotParams_Quaternion quaternion = new RotParams_Quaternion(Random.insideUnitSphere, Random.Range(0.001f, 2*Mathf.PI));
-                Assert.AreEqual(quaternion, quaternion.ToEulerParams().ToQuaternionParams(), $"Quaternion to EulerAngles to Quaternion failed at iteration {i}");
+                for (int i = 0; i < 100; i++)
+                {
+                    RotParams_Quaternion quaternion =
+                        new RotParams_Quaternion(Random.insideUnitSphere, Random.Range(0.001f, 2 * Mathf.PI));
+                    RotParams_EulerAngles eulerAngles = new RotParams_EulerAngles((EGimbalOrder)gimbalNumber);
+                    Assert.AreEqual(quaternion, quaternion.ToEulerParams(eulerAngles).ToQuaternionParams(),
+                        $"Quaternion to EulerAngles to Quaternion failed at gimbalNumber {gimbalNumber} at iteration {i}, with EulerGimbal: {eulerAngles}");
+                }
             }
         }
 
         [Test]
-        public void ConversionTest_Matrix_EulerAngles_Randomised()
+        public void ConversionTest_Matrix_EulerAngles_Matrix_Randomised()
         {
-            for (int i = 0; i < 100; i++)
+            Random.InitState(42);
+
+            for (int gimbalNumber = 1; gimbalNumber <= 12; gimbalNumber++)
             {
-                RotParams_Matrix matrix = new RotParams_Matrix(Random.insideUnitSphere, Random.insideUnitSphere, Random.insideUnitSphere);
-                matrix = matrix.ToRotationMatrixFromTwoAxes(0, 1); 
-                Assert.AreEqual(matrix, matrix.ToEulerParams().ToMatrixParams(), $"Matrix to EulerAngles to Matrix failed at iteration {i}");
+                for (int i = 0; i < 100; i++)
+                {
+                    RotParams_Matrix matrix = new RotParams_Matrix(Random.insideUnitSphere, Random.insideUnitSphere, Random.insideUnitSphere);
+                    matrix = matrix.ToRotationMatrixFromTwoAxes(0, 1);
+                    RotParams_EulerAngles eulerAngles = new RotParams_EulerAngles((EGimbalOrder)gimbalNumber); 
+                    matrix.ToEulerParams(eulerAngles);
+                    RotParams_Matrix resultMatrix = eulerAngles.ToMatrixParams(); 
+                    Assert.AreEqual(matrix, resultMatrix, $"Matrix to EulerAngles to Matrix failed at gimbalNumber {gimbalNumber} at iteration {i}, with EulerGimbal: {eulerAngles}");
+                }
             }
         }
         #endregion

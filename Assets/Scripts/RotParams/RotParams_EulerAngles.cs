@@ -303,8 +303,19 @@ namespace RotParams
                 new _RotParams_EulerAngleGimbalRing(innerAxis, inInnerRadian))
         {
         }
-            
 
+        public RotParams_EulerAngles(EGimbalAxis outerAxis, EGimbalAxis middleAxis, EGimbalAxis innerAxis) :
+            this(new _RotParams_EulerAngleGimbalRing(outerAxis, 0),
+                new _RotParams_EulerAngleGimbalRing(middleAxis, 0),
+                new _RotParams_EulerAngleGimbalRing(innerAxis, 0))
+        {
+        }
+
+        public RotParams_EulerAngles(EGimbalOrder gimbalOrder) : this()
+        {
+            SetIntrinsicGimbalOrder(gimbalOrder); 
+        }
+        
         public RotParams_EulerAngles(_RotParams_EulerAngleGimbalRing firstRing, _RotParams_EulerAngleGimbalRing secondRing, _RotParams_EulerAngleGimbalRing thirdRing, bool bCopyRings = false)
         {
             if (bCopyRings)
@@ -480,6 +491,97 @@ namespace RotParams
         {
             (firstRing, secondRing) = (secondRing, firstRing); 
         }
+
+        public void SetExtrinsicGimbalOrder(EGimbalOrder gimbalOrder)
+        {
+            SetIntrinsicGimbalOrder(gimbalOrder.GetInverseOrder());
+        }
+        
+        public void SetIntrinsicGimbalOrder(EGimbalOrder gimbalOrder)
+        {
+            if (gimbalOrder == EGimbalOrder.InvalidGimbalOrder)
+            {
+                Debug.LogError("Cannot set Gimbal-Order to Invalid; Setting to Yaw-Pitch Roll instead");
+                gimbalOrder = EGimbalOrder.YXZ; 
+            }
+
+            switch (gimbalOrder)
+            {
+                // Tait-Bryan angles (non-repeating axes)
+                case EGimbalOrder.XYZ:
+                    OuterAxis = EGimbalAxis.Pitch; 
+                    MiddleAxis = EGimbalAxis.Yaw; 
+                    InnerAxis = EGimbalAxis.Roll; 
+                    break;
+                
+                case EGimbalOrder.XZY:
+                    OuterAxis = EGimbalAxis.Pitch;
+                    MiddleAxis = EGimbalAxis.Roll;
+                    InnerAxis = EGimbalAxis.Yaw;
+                    break;
+                
+                case EGimbalOrder.YXZ:
+                    OuterAxis = EGimbalAxis.Yaw;
+                    MiddleAxis = EGimbalAxis.Pitch;
+                    InnerAxis = EGimbalAxis.Roll;
+                    break;
+                
+                case EGimbalOrder.YZX:
+                    OuterAxis = EGimbalAxis.Yaw;
+                    MiddleAxis = EGimbalAxis.Roll;
+                    InnerAxis = EGimbalAxis.Pitch;
+                    break;
+                
+                case EGimbalOrder.ZXY:
+                    OuterAxis = EGimbalAxis.Roll;
+                    MiddleAxis = EGimbalAxis.Pitch;
+                    InnerAxis = EGimbalAxis.Yaw;
+                    break;
+                
+                case EGimbalOrder.ZYX:
+                    OuterAxis = EGimbalAxis.Roll;
+                    MiddleAxis = EGimbalAxis.Yaw;
+                    InnerAxis = EGimbalAxis.Pitch;
+                    break;
+                
+                // True Euler angles (first and last axes repeat)
+                case EGimbalOrder.XYX:
+                    OuterAxis = EGimbalAxis.Pitch;
+                    MiddleAxis = EGimbalAxis.Yaw;
+                    InnerAxis = EGimbalAxis.Pitch;
+                    break;
+                
+                case EGimbalOrder.XZX:
+                    OuterAxis = EGimbalAxis.Pitch;
+                    MiddleAxis = EGimbalAxis.Roll;
+                    InnerAxis = EGimbalAxis.Pitch;
+                    break;
+                
+                case EGimbalOrder.YXY:
+                    OuterAxis = EGimbalAxis.Yaw;
+                    MiddleAxis = EGimbalAxis.Pitch;
+                    InnerAxis = EGimbalAxis.Yaw;
+                    break;
+                
+                case EGimbalOrder.YZY:
+                    OuterAxis = EGimbalAxis.Yaw;
+                    MiddleAxis = EGimbalAxis.Roll;
+                    InnerAxis = EGimbalAxis.Yaw;
+                    break;
+                
+                case EGimbalOrder.ZXZ:
+                    OuterAxis = EGimbalAxis.Roll;
+                    MiddleAxis = EGimbalAxis.Pitch;
+                    InnerAxis = EGimbalAxis.Roll;
+                    break;
+                
+                case EGimbalOrder.ZYZ:
+                    OuterAxis = EGimbalAxis.Roll;
+                    MiddleAxis = EGimbalAxis.Yaw;
+                    InnerAxis = EGimbalAxis.Roll;
+                    break;
+            }
+        }
         #endregion GimbalOperations
 
         #region Converters
@@ -536,7 +638,8 @@ namespace RotParams
             matrixParams.ResetToIdentity(); 
             foreach (_RotParams_EulerAngleGimbalRing rotation in gimbal.Reverse())
             {
-                matrixParams = rotation.toMatrixRotation() * matrixParams; 
+                RotParams_Matrix asMatrix = rotation.toMatrixRotation();
+                matrixParams = asMatrix * matrixParams; 
             }
             return matrixParams;
         }

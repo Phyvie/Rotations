@@ -665,12 +665,6 @@ Transform:
   - {fileID: 1236571136}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &897623637 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5109546756149866199, guid: ee04adb64b582ab4693b6a7ec2e18ac7,
-    type: 3}
-  m_PrefabInstance: {fileID: 696088977689551311}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &963783918 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4359447636591289229, guid: 45ab3c960b7a1ed498ce8665f9351e5b,
@@ -807,42 +801,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 696088977689551311}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1309710474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897623637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c20cd8e06ca0704399906dca89a23f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotPar_AA:
-    typedAngle:
-      showAllAngleTypes: 0
-      showAngleTypeSelector: 1
-      angleType: 0
-      angleInRadian: 0
-    _axis:
-      targetMagnitude: 1
-      values:
-      - 1
-      - 0
-      - 0
-      locks: 000000
-      autoNormalizeToTargetMagnitude: 1
-  rotPar_Q:
-    _internalVector:
-      targetMagnitude: 1
-      values:
-      - 0
-      - 0
-      - 0
-      - 0
-      locks: 00000000
-      autoNormalizeToTargetMagnitude: 0
 --- !u!4 &1346378784 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8140486303572410664, guid: c1c54ead5757d724db18794425682b4d,
@@ -1384,11 +1342,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5109546756149866199, guid: ee04adb64b582ab4693b6a7ec2e18ac7,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1309710474}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee04adb64b582ab4693b6a7ec2e18ac7, type: 3}
 --- !u!1001 &974095157027784147
 PrefabInstance:

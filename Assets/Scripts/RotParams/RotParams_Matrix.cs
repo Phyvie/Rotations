@@ -306,90 +306,78 @@ namespace RotParams
                 eulerParams.ResetToIdentity();
             }
 
-            switch (eulerParams.GetExtrinsicGimbalOrder())
+            switch (eulerParams.GetIntrinsicGimbalOrder())
             {
                 case EGimbalOrder.XZY:
-                    // Order: Yaw, Roll, Pitch (intrinsic)
-                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[1, 2], this[1, 1]);
-                    eulerParams.Middle.AngleInRadian = Mathf.Asin(-this[1, 0]);
-                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[2, 0], this[0, 0]);
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[2, 1], this[1, 1]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Asin(-this[0, 1]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[0, 2], this[0, 0]);
                     break;
                 
                 case EGimbalOrder.XYZ:
-                    // Order: Roll, Yaw, Pitch (intrinsic)
-                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(-this[2, 1], this[2, 2]);
-                    eulerParams.Middle.AngleInRadian = -Mathf.Asin(this[2, 0]);
-                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(-this[1, 0], this[0, 0]);
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(-this[1, 2], this[2, 2]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Asin(this[0, 2]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(-this[0, 1], this[0, 0]);
                     break;
                 
                 case EGimbalOrder.YXZ:
-                    // Order: Roll, Pitch, Yaw (intrinsic)
-                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[2, 0], this[2, 2]);
-                    eulerParams.Middle.AngleInRadian = Mathf.Asin(-this[2, 1]);
-                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[0, 1], this[1, 1]);
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[0, 2], this[2, 2]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Asin(-this[1, 2]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[1, 0], this[1, 1]);
                     break;
                 
                 case EGimbalOrder.YZX:
-                    // Order: Pitch, Roll, Yaw (intrinsic)
-                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(-this[0, 2], this[0, 0]);
-                    eulerParams.Middle.AngleInRadian = -Mathf.Asin(this[0, 1]);
-                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(-this[2, 1], this[1, 1]);
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(-this[2, 0], this[0, 0]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Asin(this[1, 0]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(-this[1, 2], this[1, 1]);
                     break;
                 
                 case EGimbalOrder.ZYX:
-                    // Order: Pitch, Yaw, Roll (intrinsic)
-                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[0, 1], this[0, 0]);
-                    eulerParams.Middle.AngleInRadian = Mathf.Asin(-this[0, 2]);
-                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[1, 2], this[2, 2]);
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[1, 0], this[0, 0]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Asin(-this[2, 0]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[2, 1], this[2, 2]);
                     break;
 
                 case EGimbalOrder.ZXY: 
-                    //Order: Yaw, Pitch, Roll (intrinsic)
-                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[1, 0], this[1, 1]);
-                    eulerParams.Middle.AngleInRadian = Mathf.Asin(-this[1, 2]); 
-                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[0, 2], this[2, 2]);
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(-this[0, 1], this[1, 1]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Asin(this[2, 1]); 
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(-this[2, 0], this[2, 2]);
                     break;
                     
                 case EGimbalOrder.XZX:
-                    // Order: Pitch, Roll, Pitch (intrinsic)
-                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[0, 2], this[0, 1]);
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[2, 0], this[1, 0]);
                     eulerParams.Middle.AngleInRadian = Mathf.Acos(this[0, 0]);
-                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[2, 0], -this[1, 0]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[0, 2], -this[0, 1]);
                     break;
 
                 case EGimbalOrder.XYX:
-                    // Order: Pitch, Yaw, Pitch (intrinsic)
-                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[0, 1], -this[0, 2]);
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[1, 0], -this[2, 0]);
                     eulerParams.Middle.AngleInRadian = Mathf.Acos(this[0, 0]);
-                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[1, 0], this[2, 0]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[0, 1], this[0, 2]);
                     break;
                     
                 case EGimbalOrder.YXY:
-                    // Order: Yaw, Pitch, Yaw (intrinsic)
-                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[1, 0], this[1, 2]);
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[0, 1], this[2, 1]);
                     eulerParams.Middle.AngleInRadian = Mathf.Acos(this[1, 1]);
-                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[0, 1], -this[2, 1]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[1, 0], -this[1, 2]);
                     break;
 
                 case EGimbalOrder.YZY:
-                    // Order: Yaw, Roll, Yaw (intrinsic)
-                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[1, 2], -this[1, 0]);
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[2, 1], -this[0, 1]);
                     eulerParams.Middle.AngleInRadian = Mathf.Acos(this[1, 1]);
-                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[2, 1], this[0, 1]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[1, 2], this[1, 0]);
                     break;
 
-                case EGimbalOrder.ZYZ:
-                    // Order: Roll, Yaw, Roll (intrinsic)
-                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[2, 1], this[2, 0]);
-                    eulerParams.Middle.AngleInRadian = Mathf.Atan2(Mathf.Sqrt(1-(this[2, 2] * this[2, 2])), this[2, 2]);
-                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[1, 2], -this[0, 2]);
+                case EGimbalOrder.ZYZ: 
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[1, 2], this[0, 2]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Acos(this[2, 2]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[2, 1], -this[2, 0]);
                     break;
 
                 case EGimbalOrder.ZXZ:
-                    // Order: Roll, Pitch, Roll (intrinsic)
-                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[2, 0], -this[2, 1]);
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[0, 2], -this[1, 2]);
                     eulerParams.Middle.AngleInRadian = Mathf.Acos(this[2, 2]);
-                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[0, 2], this[1, 2]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[2, 0], this[2, 1]);
                     break;
                     
                 default:

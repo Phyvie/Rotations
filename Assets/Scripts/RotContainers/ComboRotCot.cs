@@ -42,6 +42,14 @@ namespace RotContainers
             get => _activeRotCot.GetRotParams_Generic(); 
             set => _activeRotCot.SetRotParams_Generic(value);
         }
+
+        private bool _convertRotParamsOnSwitch = false;
+        [CreateProperty]
+        private bool ConvertRotParamsOnSwitch
+        {
+            get => _convertRotParamsOnSwitch; 
+            set => _convertRotParamsOnSwitch = value;
+        }
         
         #endregion TypedRotCots
         
@@ -327,11 +335,10 @@ namespace RotContainers
                 _activeRotCot.enabled = false;
             }
 
-            /* !!!ZyKa RotParams_Conversion: There should be a conversion of rotParams here */
-            // if (_activeRotCot != null)
-            // {
-            //     newActiveRotCot.GetRotParams_Generic().ToSelfType(_activeRotCot.GetRotParams_Generic()); 
-            // }
+            if (ConvertRotParamsOnSwitch && _activeRotCot != null)
+            {
+                newActiveRotCot.GetRotParams_Generic().ToSelfType(_activeRotCot.GetRotParams_Generic()); 
+            }
             _activeRotCot = newActiveRotCot;
             
             if (newActiveRotCot == null)

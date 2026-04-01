@@ -1,0 +1,26 @@
+#MenuLine {
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    justify-content: space-around; 
+}
+
+#MenuLine__ParameterizationSelection {
+    flex-grow: 1; 
+    flex-shrink: 1; 
+    flex-basis: 50%; 
+}
+
+#MenuLine__ContextMenu {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 50%;
+}
+
+#ContextMenu__Convert-Values-Toggle {
+    
+}
+
+#ContextMenu__Identity-Reset {
+    
+}

@@ -5,14 +5,14 @@
     <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/BoxLayouts.uss?fileID=7433441132597879392&amp;guid=f0491e6785d76264da46194eb373072c&amp;type=3#BoxLayouts" />
     <Style src="project://database/Assets/UI%20Toolkit/RotUI/Quaternion/USS_Quaternion.uss?fileID=7433441132597879392&amp;guid=e897557bb9c9e6a49ac065b7f20433c3&amp;type=3#USS_Quaternion" />
     <engine:VisualElement name="QuaternionRoot" data-source-type="RotParams.RotParams_Quaternion, RotParams" class="unityUIBackgroundColor unityUIFieldColor unityUITextColor Quaternion RotPadding Quaternion__Root" style="flex-grow: 1;">
-        <engine:VisualElement name="QuatContainer" style="height: 40%;">
-            <engine:Label text="Unit Quaternion" />
+        <engine:VisualElement name="Quat__ValuesContainer" class="Quaternion__ValuesContainer">
+            <engine:Label text="Unit Quaternion" style="display: none;" />
             <engine:VisualElement name="ManualQuaternionVector" class="container--horizontalspacearound wxyz centeredText" style="flex-grow: 1;">
-                <engine:VisualElement name="RealHalf" class="Quaternion__Real Quaternion__Part">
+                <engine:VisualElement name="RealHalf" class="Quaternion__Real">
                     <engine:FloatField value="42.2" name="W" label="r" class="myFloatField">
                         <UI_Toolkit.CustomControls.LockableValueToggle value="false" class="valueLocker">
                             <Bindings>
-                                <engine:DataBinding property="value" data-source-path="_w.isLocked" binding-mode="TwoWay" />
+                                <engine:DataBinding property="value" data-source-path="WLocked" binding-mode="TwoWay" />
                             </Bindings>
                         </UI_Toolkit.CustomControls.LockableValueToggle>
                         <Bindings>
@@ -21,11 +21,11 @@
                     </engine:FloatField>
                 </engine:VisualElement>
                 <engine:Label text="+" name="plus" class="Quaternion__Addition" />
-                <engine:VisualElement name="ImaginaryHalf" class="Quaternion__Imaginary Quaternion__Part">
+                <engine:VisualElement name="ImaginaryHalf" class="Quaternion__Imaginary">
                     <engine:FloatField value="42.2" name="X" label="i" class="myFloatField MathVis--X">
                         <UI_Toolkit.CustomControls.LockableValueToggle value="false" class="valueLocker">
                             <Bindings>
-                                <engine:DataBinding property="value" data-source-path="_x.isLocked" binding-mode="TwoWay" />
+                                <engine:DataBinding property="value" data-source-path="XLocked" binding-mode="TwoWay" />
                             </Bindings>
                         </UI_Toolkit.CustomControls.LockableValueToggle>
                         <Bindings>
@@ -36,7 +36,7 @@
                     <engine:FloatField value="42.2" name="Y" label="j" class="myFloatField MathVis--Y">
                         <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
                             <Bindings>
-                                <engine:DataBinding property="value" data-source-path="_y.isLocked" binding-mode="TwoWay" />
+                                <engine:DataBinding property="value" data-source-path="YLocked" binding-mode="TwoWay" />
                             </Bindings>
                         </UI_Toolkit.CustomControls.LockableValueToggle>
                         <Bindings>
@@ -47,7 +47,7 @@
                     <engine:FloatField value="42.2" name="Z" label="k" class="myFloatField MathVis--Z">
                         <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
                             <Bindings>
-                                <engine:DataBinding property="value" data-source-path="_z.isLocked" binding-mode="TwoWay" />
+                                <engine:DataBinding property="value" data-source-path="ZLocked" binding-mode="TwoWay" />
                             </Bindings>
                         </UI_Toolkit.CustomControls.LockableValueToggle>
                         <Bindings>
@@ -57,14 +57,18 @@
                 </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:VisualElement text="=" name="EqualSign" class="centeredText Quaternion__EqualsLine">
-            <engine:Label text="=" name="RealEquals" class="Quaternion__Real" />
-            <engine:VisualElement text="=" name="RealEquals" class="Quaternion__Addition" />
-            <engine:Label text="=" name="RealEquals" class="Quaternion__Imaginary" />
+        <engine:VisualElement text="=" name="EqualsLine" class="centeredText Quaternion__EqualsLine">
+            <engine:VisualElement name="RealEqualsContainer" class="Quaternion__Real">
+                <engine:Label text="=" name="RealEquals" class="centeredText" />
+            </engine:VisualElement>
+            <engine:VisualElement name="AdditionSpace" class="Quaternion__Addition" style="flex-grow: 1;" />
+            <engine:VisualElement name="ComplexEqualsContainer" class="Quaternion__Imaginary">
+                <engine:Label text="=" name="ComplexEquals" class="centeredText" />
+            </engine:VisualElement>
         </engine:VisualElement>
         <engine:VisualElement name="AxisAngleRepresentation" class="Quaternion__AxisAngleContainer" style="flex-grow: 1; height: 50%;">
-            <engine:VisualElement name="SinHalfAngleContainer" class="container--horizontalspacearound Quaternion__SinHalfAngleContainer">
-                <engine:TextField name="AlphaField" label="Sin" enabled="false" class="floatField--pure parentheticField myFloatField" style="flex-grow: 3;">
+            <engine:VisualElement name="SinHalfAngleContainer" class="container--horizontalspacearound Quaternion__Real">
+                <engine:TextField name="AlphaField" label="Sin" enabled="false" class="floatField--pure myFloatField" style="flex-grow: 3; display: none;">
                     <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker" style="visibility: hidden;">
                         <Bindings>
                             <engine:DataBinding property="value" data-source-path="_w.isLocked" binding-mode="TwoWay" />
@@ -74,11 +78,12 @@
                         <engine:DataBinding property="value" data-source-path="HalfAngleInPI" binding-mode="TwoWay" />
                     </Bindings>
                 </engine:TextField>
-                <engine:Label text="Sin and Cos of half the rotation angle" class="Quaternion__HalfAngleDescription" />
+                <engine:Label text="Cos (2 · Angle)" class="Quaternion__HalfAngleDescription centeredText" />
             </engine:VisualElement>
             <engine:Label text="+" name="Plus" class="container--horizontalspacearound centeredText Quaternion__Addition" style="-unity-text-align: upper-center;" />
-            <engine:VisualElement name="CosAxisContainer" class="Quaternion__CosAxisContainer">
-                <engine:TextField name="CosAlpha" label="Cos" enabled="false" class="floatField--pure parentheticField myFloatField">
+            <engine:VisualElement name="CosAxisContainer" class="Quaternion__Imaginary">
+                <engine:Label text="Sin (2 · Angle) · Unit-Axis" class="Quaternion__HalfAngleDescription centeredText" />
+                <engine:TextField name="CosAlpha" label="Cos" enabled="false" class="floatField--pure myFloatField" style="display: none;">
                     <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker" style="visibility: hidden;">
                         <Bindings>
                             <engine:DataBinding property="value" data-source-path="_w.isLocked" binding-mode="TwoWay" />
@@ -88,11 +93,11 @@
                         <engine:DataBinding property="value" data-source-path="HalfAngleInPI" binding-mode="TwoWay" />
                     </Bindings>
                 </engine:TextField>
-                <engine:VisualElement name="MultiplyLine" class="container--horizontalspacearound centeredText" style="height: 20px;">
+                <engine:VisualElement name="MultiplyLine" class="container--horizontalspacearound centeredText" style="height: 20px; display: none;">
                     <engine:Label text="x" class="Quaternion__Imaginary" />
                     <engine:VisualElement name="SinCosContainer" class="container--horizontalspacearound" style="height: 45%;" />
                 </engine:VisualElement>
-                <engine:VisualElement name="AxisContainer" class="container--horizontalspacearound centeredText wxyz Quaternion__AxisContainer">
+                <engine:VisualElement name="AxisContainer" class="container--horizontalspacearound centeredText wxyz Quaternion__AxisContainer" style="display: none;">
                     <engine:FloatField value="42.2" name="X" label="x" enabled="false" class="myFloatField MathVis--X">
                         <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker" style="visibility: hidden;">
                             <Bindings>
