@@ -28,6 +28,8 @@ namespace Packages.MathExtensions
             { EAngleType.Degree, new Metadata { Name = "Degree", Multiplier = 360, Label = "360°" } },
             { EAngleType.CirclePart, new Metadata { Name = "CirclePart", Multiplier = 1, Label = "Circle(s)" } }
         };
+        
+        public static bool IsValid(EAngleType type) => _metadata.ContainsKey(type);
         #endregion Metadata Definition
 
         #region Public Static API

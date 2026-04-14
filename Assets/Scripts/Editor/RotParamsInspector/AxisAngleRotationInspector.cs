@@ -31,6 +31,8 @@ public class AxisAngleRotationInspector : NestedPropertyDrawer
 
         EditorGUI.BeginProperty(position, label, property);
         
+        EditorGUIUtility.IconContent("LockIcon"); 
+        
         Rect fieldPosition = new Rect(position.x, position.y + EditorGUIUtility.singleLineHeight + Spacing, position.width, EditorGUIUtility.singleLineHeight);
 
         // Get target object via PropertyNesting, because GetField only works if the property is at topmost level; i.e. not in an array or a property of a property

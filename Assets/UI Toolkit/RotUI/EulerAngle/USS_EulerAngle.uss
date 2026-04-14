@@ -1,15 +1,37 @@
-.gimbalRing EnumField {
-    width: 30%;
-    margin: 0;
-    padding: 10px;
+#EulerAngleRoot {
+    flex-direction: column; 
+    justify-content: space-around; 
 }
 
-.gimbalRing FloatField {
-    width: 40%;
-    padding: 10px;
+#EulerAngle__TitleContainer {
+    flex-direction: row;
 }
 
-.gimbalRing DropdownField {
-    width: 30%;
-    padding: 10px;
+#EulerAngle__TitleContainer #EulerAngle__TitleLabel {
+    width: 50%;
+    -unity-font-style: bold; 
+}
+
+#EulerAngle__TitleContainer #EulerAngle__AngleUnitSelector {
+    width: 50%; 
+}
+
+#EulerAngle__TitleContainer
+, .EulerAngle__GimbalAxis {
+    flex-basis: 24%;
+    min-height: 24px; 
+    max-height: 48px; 
+    flex-grow: 1; 
+}
+
+.EulerAngle__GimbalAxis #EulerAngle__AxisSelector {
+    width: 50%;
+}
+
+.EulerAngle__GimbalAxis #EulerAngle__AngleField {
+    width: 50%;
+}
+
+#EulerAngleRoot {
+    flex-grow: 1;
 }

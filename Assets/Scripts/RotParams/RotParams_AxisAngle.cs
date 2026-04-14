@@ -215,10 +215,15 @@ namespace RotParams
             }
         }
 
+        [CreateProperty]
         public EAngleType AngleType
         {
             get => typedAngle.angleType;
-            set => typedAngle.angleType = value;
+            set
+            {
+                typedAngle.angleType = value;
+                OnPropertyChanged();
+            }
         }
         #endregion Properties
         
@@ -278,9 +283,9 @@ namespace RotParams
             return toConvert.ToAxisAngleParams(); 
         }
 
-        public override void ToSelfType(RotParams_Base toConvert)
+        public override void ConvertAndCopyValues(RotParams_Base toConvert)
         {
-            toConvert.ToSelfType(this);
+            toConvert.ToAxisAngleParams(this);
         }
 
         public override RotParams_EulerAngles ToEulerParams()
@@ -436,6 +441,7 @@ namespace RotParams
         public override void ResetToIdentity()
         {
             NormalisedAxis = Vector3.right;
+            AngleType = EAngleType.Radian;
             AngleInRadian = 0;
             _axis.SetTargetMagnitude(1.0f); 
             EnforceNormalisation = true;

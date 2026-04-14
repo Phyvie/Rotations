@@ -1,0 +1,11 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:Template name="RotUI_ContextLine" src="project://database/Assets/UI%20Toolkit/RotUI/Container/RotUI_ComboRotCot__MenuLine.uxml?fileID=9197481963319205126&amp;guid=78e16fe7c76a899429952db85117e024&amp;type=3#RotUI_ComboRotCot__MenuLine" />
+    <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UnityColors.uss?fileID=7433441132597879392&amp;guid=05afd8f5bd01ac04682fabbc8e02db4f&amp;type=3#UnityColors" />
+    <Style src="project://database/Assets/UI%20Toolkit/RotUI/Container/RotUI_ComboRotCot.uss?fileID=7433441132597879392&amp;guid=899f245ad6a80d146856a0dffb41fb84&amp;type=3#RotUI_ComboRotCot" />
+    <engine:VisualElement name="ComboRotCot__Root" data-source-type="RotContainers.ComboRotCot, RotContainers">
+        <UI_Toolkit.UISlot name="ComboRotCot__RotUISlot" />
+        <engine:Instance template="RotUI_ContextLine" name="ComboRotCot__MenuLine">
+            <AttributeOverrides element-name="MenuLine__ContextMenu" value="false" />
+        </engine:Instance>
+    </engine:VisualElement>
+</engine:UXML>

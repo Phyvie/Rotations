@@ -5,6 +5,7 @@ using RotObj;
 using RotParams;
 using Unity.Properties;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 namespace RotContainers
@@ -70,6 +71,37 @@ namespace RotContainers
             }
         }
 
+        private void AdjustCameraAndUIRatio(GeometryChangedEvent e)
+        {
+            if (e.newRect.size == e.oldRect.size)
+            {
+                return; 
+            }
+
+            if (visCamera == null)
+            {
+                Debug.Log($"{nameof(AdjustCameraAndUIRatio)} visCamera is null");
+                return; 
+            }
+
+            if (_splitscreen__CameraSpace_Element == null)
+            {
+                Debug.Log($"{nameof(AdjustCameraAndUIRatio)} {nameof(_splitscreen__CameraSpace_Element)} is null");
+                return; 
+            }
+
+            float screenHeight = Screen.height;
+            float cameraHeightFraction = _splitscreen__CameraSpace_Element.resolvedStyle.height / screenHeight;
+
+            visCamera.rect = new Rect
+            (
+                0f,
+                1f - cameraHeightFraction,
+                1f,
+                cameraHeightFraction
+            ); 
+        }
+
         #region CoordinateGrid
         [SerializeField] private Vis_CoordinateGrid coordinateGrid;
         #endregion CoordinateGrid
@@ -91,13 +123,15 @@ namespace RotContainers
             }
         }
 
-        [Tooltip("This is only needed when the UIDocument is not set externally (e.g. by FullScreenMultiRotationContainer); Thus the component must create a UIDocument itself")]
-        [SerializeField] private VisualTreeAsset fullScreenUIAsset;
+        [Tooltip("This is only needed when the UIDocument is not set externally (e.g. by SplitscreenMultiRotationContainer); Thus the component must create a UIDocument itself")]
+        [SerializeField] private VisualTreeAsset SplitscreenUIAsset;
         [SerializeField] private PanelSettings panelSettingsAsset;
         
         [Tooltip("This is not the object which contains uiMenu & UIRotSlot; it is the visualElement into which the uiRoot will be spawned")]
-        [SerializeField] private string uiComboContainerParentName; 
-        private VisualElement _comboContainerUIParent; //the slot into which the _uiRoot will be spawned
+        [SerializeField] private string Splitscreen__UISpace_ElementName = "Splitscreen__UISpace";
+        private VisualElement _splitscreen__UISpace_Element;  
+        [SerializeField] private string Splitscreen__CameraSpace_ElementName = "Splitscreen__CameraSpace";
+        private VisualElement _splitscreen__CameraSpace_Element; 
         
         [Tooltip("This is the VisualElement which actually contains uiMenuLine & RotParamsSlot")]
         [SerializeField] private VisualTreeAsset uiComboContainerRootAsset;
@@ -163,12 +197,21 @@ namespace RotContainers
             isInitialized = true;
             
             InitUI();
-            InitVisCam(); 
+            InitVisCam();
+            uiDocument?.rootVisualElement?.RegisterCallback<GeometryChangedEvent>(AdjustCameraAndUIRatio); 
             InitOrientedObject();
             InitCoordinateGrid(); 
             
             InitializeRotCots(); 
             SelectedTypeIndex = 0; 
+        }
+
+        private void OnDestroy()
+        {
+            if (isInitialized)
+            {
+                uiDocument?.rootVisualElement?.UnregisterCallback<GeometryChangedEvent>(AdjustCameraAndUIRatio);
+            }
         }
 
         private void InitUI()
@@ -178,28 +221,43 @@ namespace RotContainers
                 if (!TryGetComponent<UIDocument>(out uiDocument))
                 {
                     uiDocument = gameObject.AddComponent<UIDocument>();
-                    uiDocument.visualTreeAsset = fullScreenUIAsset; 
+                    uiDocument.visualTreeAsset = SplitscreenUIAsset; 
                     uiDocument.panelSettings = panelSettingsAsset;
                 }
             }
             
-            if (_comboContainerUIParent == null)
+            if (_splitscreen__UISpace_Element == null)
             {
-                _comboContainerUIParent = string.IsNullOrEmpty(uiComboContainerParentName) ? 
-                    null :  
-                    uiDocument.rootVisualElement.Q<VisualElement>(uiComboContainerParentName);
+                _splitscreen__UISpace_Element = 
+                    string.IsNullOrEmpty(Splitscreen__UISpace_ElementName) ? 
+                        null :  
+                        uiDocument.rootVisualElement.Q<VisualElement>(Splitscreen__UISpace_ElementName);
                 
-                if (_comboContainerUIParent == null)
+                if (_splitscreen__UISpace_Element == null)
                 {
                     Debug.LogError($"{name} could not find uiRotationRoot");
-                    _comboContainerUIParent = uiDocument.rootVisualElement;
+                    _splitscreen__UISpace_Element = uiDocument.rootVisualElement;
+                }
+            }
+
+            if (_splitscreen__CameraSpace_Element == null)
+            {
+                _splitscreen__CameraSpace_Element = 
+                    string.IsNullOrEmpty(Splitscreen__CameraSpace_ElementName) ? 
+                        null : 
+                        uiDocument.rootVisualElement.Q<VisualElement>(Splitscreen__CameraSpace_ElementName);
+                
+                if (_splitscreen__CameraSpace_Element == null)
+                {
+                    Debug.LogError($"{name} could not find uiCameraSpace");
+                    _splitscreen__CameraSpace_Element = uiDocument.rootVisualElement;
                 }
             }
             
             if (_comboContainerRoot == null)
             {
                 _comboContainerRoot = uiComboContainerRootAsset.CloneTree(); 
-                _comboContainerUIParent.Add(_comboContainerRoot);
+                _splitscreen__UISpace_Element.Add(_comboContainerRoot);
                 _comboContainerRoot.style.flexGrow = 1; 
                 _comboContainerRoot.name = "RotationContainer"; 
             }
@@ -247,7 +305,7 @@ namespace RotContainers
                 cameraRotationPivot = VisCamera.transform.parent.gameObject; 
             }
         }
-
+        
         private void InitOrientedObject()
         {
             if (orientedObject == null)
@@ -337,7 +395,7 @@ namespace RotContainers
 
             if (ConvertRotParamsOnSwitch && _activeRotCot != null)
             {
-                newActiveRotCot.GetRotParams_Generic().ToSelfType(_activeRotCot.GetRotParams_Generic()); 
+                newActiveRotCot.GetRotParams_Generic().ConvertAndCopyValues(_activeRotCot.GetRotParams_Generic()); 
             }
             _activeRotCot = newActiveRotCot;
             

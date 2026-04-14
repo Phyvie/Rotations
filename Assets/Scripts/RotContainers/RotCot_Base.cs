@@ -229,6 +229,11 @@ namespace RotContainers
             {
                 rotUIRoot.style.display = _rotUIDisplayStyle;
             }
+
+            if (OrientedObject is not null)
+            {
+                OrientedObject.SetRotation(RotParams.ToUnityQuaternion());
+            }
         }
 
         private void OnDisable()
@@ -259,6 +264,7 @@ namespace RotContainers
         {
             if (RotVisScript != null && overwrite)
             {
+                #if UNITY_EDITOR //required for build compilation
                 if (EditorApplication.isPlaying)
                 {
                     Destroy(RotVisScript.gameObject); 
@@ -267,6 +273,9 @@ namespace RotContainers
                 {
                     DestroyImmediate(RotVisScript.gameObject);
                 }
+                #else
+                Destroy(RotVisScript.gameObject); 
+                #endif
             }
 
             if (RotVisScript == null)

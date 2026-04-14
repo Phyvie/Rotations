@@ -10,7 +10,7 @@ namespace RotParams
     public abstract class RotParams_Base : INotifyPropertyChanged
     {
         public abstract RotParams_Base ToSelfTypeCopy(RotParams_Base toConvert); 
-        public abstract void ToSelfType(RotParams_Base toConvert); 
+        public abstract void ConvertAndCopyValues(RotParams_Base toConvert); 
         
         public abstract void CopyValues(RotParams_Base toCopy); 
         public abstract RotParams_EulerAngles ToEulerParams(); 

@@ -1,27 +1,34 @@
-#XVector {
+#Matrix__Vector--X
+, #Matrix__Vector--Y
+, #Matrix__Vector--Z
+{
+    flex-grow: 1; 
+    flex-shrink: 1; 
+    
+    flex-direction: column;
+    justify-content: space-around; 
+    
+    align-items: stretch;
+    -unity-text-align: middle-center;
     width: 33%;
+    margin: 0 5px; 
 }
 
-#YVector {
-    width: 33%;
+#Matrix__Vector--X .unity-base-field__input
+, #Matrix__Vector--Y .unity-base-field__input
+, #Matrix__Vector--Z .unity-base-field__input
+{
+    flex-direction: column; 
+    justify-content: space-around; 
+    align-items: stretch; 
 }
 
-#ZVector {
-    width: 33%;
-}
-
-#ColumnLabelContainer {
-    display: flex;
-    -unity-text-align: upper-center;
-}
-
-#ColumnLabelContainer Label {
-}
-
-#ColumnLabelContainer FloatField > Label {
-    display: flex;
-}
-
-#ColumnLabelContainer FloatField > #unity-text-input {
-    display: none;
+#Matrix__Vector--X .unity-base-field__input .unity-base-field
+, #Matrix__Vector--Y .unity-base-field__input .unity-base-field
+, #Matrix__Vector--Z .unity-base-field__input .unity-base-field
+{
+    flex-basis: 32%;
+    min-height: 24px; 
+    max-height: 48px;
+    flex-grow: 0; 
 }

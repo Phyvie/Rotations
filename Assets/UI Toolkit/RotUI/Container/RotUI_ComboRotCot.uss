@@ -1,0 +1,16 @@
+#ComboRotCot__Root {
+    flex-direction: column-reverse; 
+    height: 100%; 
+}
+
+#ComboRotCot__RotUISlot {
+    height: 100px;
+    flex-shrink: 1; 
+    flex-grow: 1; 
+}
+
+#ComboRotCot__MenuLine {
+    height: 50px; 
+    flex-grow: 0.5; 
+    overflow: visible;
+}

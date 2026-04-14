@@ -507,7 +507,7 @@ namespace RotParams
             return toConvert.ToQuaternionParams(); 
         }
 
-        public override void ToSelfType(RotParams_Base toConvert)
+        public override void ConvertAndCopyValues(RotParams_Base toConvert)
         {
             toConvert.ToQuaternionParams(this); 
         }

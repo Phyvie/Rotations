@@ -1,0 +1,22 @@
+#Root_Splitscreen
+{
+    flex-grow: 1; 
+    flex-direction: column; 
+    align-content: stretch;
+}
+
+#Splitscreen__CameraSpace
+{
+    flex-grow: 1;
+    flex-shrink: 1; 
+    flex-basis: 66%; 
+}
+
+#Splitscreen__UISpace
+{
+    flex-grow: 0.5;
+    flex-shrink: 0; 
+    flex-basis: 33%; 
+    min-height: 150px;
+    max-height: 350px; 
+}

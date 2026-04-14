@@ -1,56 +1,53 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UnityColors.uss?fileID=7433441132597879392&amp;guid=05afd8f5bd01ac04682fabbc8e02db4f&amp;type=3#UnityColors" />
-    <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UserInputFields.uss?fileID=7433441132597879392&amp;guid=6dd3f635675e8f246b205a73e8f7b1dd&amp;type=3#UserInputFields" />
     <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/BoxLayouts.uss?fileID=7433441132597879392&amp;guid=f0491e6785d76264da46194eb373072c&amp;type=3#BoxLayouts" />
+    <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UserInputFields.uss?fileID=7433441132597879392&amp;guid=6dd3f635675e8f246b205a73e8f7b1dd&amp;type=3#UserInputFields" />
     <Style src="project://database/Assets/UI%20Toolkit/RotUI/USS_Rot.uss?fileID=7433441132597879392&amp;guid=13a4e7952ce03644eac0a699c3aecf34&amp;type=3#USS_Rot" />
-    <engine:VisualElement name="AxisAngleRoot" data-source-type="RotParams.RotParams_AxisAngle, RotParams" class="unityUIBackgroundColor unityUIFieldColor unityUITextColor" style="flex-grow: 1; flex-direction: row;">
-        <engine:VisualElement name="AxisAngleContainer" style="flex-grow: 1; width: 60%;">
-            <engine:Label text="AxisAngle" name="AxisAngleLabel" class="centeredText" style="-unity-font-style: bold;" />
-            <engine:VisualElement name="AxisAngleValueContainer" class="container--horizontalspacearound">
-                <engine:VisualElement name="AngleContainer" style="flex-grow: 1; width: 45%;">
-                    <engine:VisualElement style="flex-grow: 1;" />
-                    <engine:FloatField name="AngleField" label="φ" class="floatField--pure myFloatField">
+    <Style src="project://database/Assets/UI%20Toolkit/RotUI/AxisAngle/USS_AxisAngle.uss?fileID=7433441132597879392&amp;guid=cc1226cbfa674364481b491e6153bd73&amp;type=3#USS_AxisAngle" />
+    <engine:VisualElement name="AxisAngleRoot" data-source-type="RotParams.RotParams_AxisAngle, RotParams" class="unityUIBackgroundColor unityUIFieldColor unityUITextColor">
+        <engine:VisualElement name="AxisAngle__Container">
+            <engine:Label text="Angle ⋅Axis" name="AxisAngle__Label" class="centeredText" />
+            <engine:VisualElement name="AxisAngle__ValueContainer">
+                <engine:VisualElement name="AxisAngle__AngleContainer">
+                    <engine:FloatField name="AxisAngle__AngleField" label="φ" class="fieldStyle--minimal fieldStyle--minimal-one-line">
                         <Bindings>
                             <engine:DataBinding property="value" data-source-path="AngleInCurrentUnit" binding-mode="TwoWay" />
                         </Bindings>
                     </engine:FloatField>
-                    <engine:EnumField name="AngleTypeSelector" value="Yaw" type="Packages.MathExtensions.EAngleType, MathExtensions">
+                    <engine:EnumField name="AxisAngle__AngleTypeSelector" value="Radian" type="Packages.MathExtensions.EAngleType, MathExtensions" class="fieldStyle--minimal fieldStyle--minimal-one-line">
                         <Bindings>
-                            <engine:DataBinding property="choices" data-source-path="typedAngle.AngleTypeChoices" binding-mode="ToTarget" />
-                            <engine:DataBinding property="index" data-source-path="typedAngle.AngleTypeIndex" binding-mode="TwoWay" />
-                            <engine:DataBinding property="value" data-source-path="typedAngle.AngleType" binding-mode="TwoWay" />
+                            <engine:DataBinding property="value" data-source-path="AngleType" binding-mode="TwoWay" />
                         </Bindings>
                     </engine:EnumField>
-                    <engine:VisualElement style="flex-grow: 1;" />
                 </engine:VisualElement>
-                <engine:Label text="x" name="Lbl__Multiply" class="centeredText" style="-unity-font-style: bold; width: 20px;" />
-                <engine:VisualElement name="AxisContainer" class="container--verticalspacearound" style="flex-grow: 1; width: 45%;">
-                    <engine:FloatField value="42.2" name="X" label="x" class="myFloatField MathVis--X">
-                        <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
+                <engine:Label text="x" name="AxisAngle__MultiplySign" class="centeredText" />
+                <engine:VisualElement name="AxisAngle__AxisContainer">
+                    <engine:FloatField value="42.2" name="AxisAngle__Axis-X" label="x" max-length="-1" class="fieldStyle--minimal fieldStyle--minimal-one-line MathVis--X">
+                        <engine:Toggle name="AxisAngle__Axis-lock-X" class="lockable-value-toggle">
                             <Bindings>
                                 <engine:DataBinding property="value" data-source-path="XLocked" binding-mode="TwoWay" />
                             </Bindings>
-                        </UI_Toolkit.CustomControls.LockableValueToggle>
+                        </engine:Toggle>
                         <Bindings>
                             <engine:DataBinding property="value" data-source-path="AxisX" binding-mode="TwoWay" />
                         </Bindings>
                     </engine:FloatField>
-                    <engine:FloatField value="42.2" name="Y" label="y" class="myFloatField MathVis--Y">
-                        <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
+                    <engine:FloatField value="42.2" name="AxisAngle__Axis-Y" label="y" max-length="-1" class="fieldStyle--minimal fieldStyle--minimal-one-line MathVis--Y">
+                        <engine:Toggle name="AxisAngle__Axis-lock-Y" class="lockable-value-toggle">
                             <Bindings>
                                 <engine:DataBinding property="value" data-source-path="YLocked" binding-mode="TwoWay" />
                             </Bindings>
-                        </UI_Toolkit.CustomControls.LockableValueToggle>
+                        </engine:Toggle>
                         <Bindings>
                             <engine:DataBinding property="value" data-source-path="AxisY" binding-mode="TwoWay" />
                         </Bindings>
                     </engine:FloatField>
-                    <engine:FloatField value="42.2" name="Z" label="z" class="myFloatField MathVis--Z">
-                        <UI_Toolkit.CustomControls.LockableValueToggle class="valueLocker">
+                    <engine:FloatField value="42.2" name="AxisAngle__Axis-Z" label="z" max-length="-1" class="fieldStyle--minimal fieldStyle--minimal-one-line MathVis--Z">
+                        <engine:Toggle name="AxisAngle__Axis-lock-Z" class="lockable-value-toggle">
                             <Bindings>
                                 <engine:DataBinding property="value" data-source-path="ZLocked" binding-mode="TwoWay" />
                             </Bindings>
-                        </UI_Toolkit.CustomControls.LockableValueToggle>
+                        </engine:Toggle>
                         <Bindings>
                             <engine:DataBinding property="value" data-source-path="AxisZ" binding-mode="TwoWay" />
                         </Bindings>
@@ -58,23 +55,26 @@
                 </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:VisualElement name="EqualContainer" style="flex-grow: 1; align-content: center;">
-            <engine:Label text="=" name="EqualSign" class="centeredText" style="font-size: 28px; -unity-font-style: bold; width: 35px; min-width: 35px; flex-grow: 1;" />
+        <engine:VisualElement name="EqualContainer">
+            <engine:Label text="=" name="EqualContainer__TopEqual" />
+            <engine:VisualElement name="EqualContainer__BottomContainer" style="flex-grow: 1;">
+                <engine:Label text="=" name="EqualSign" class="centeredText" />
+            </engine:VisualElement>
         </engine:VisualElement>
-        <engine:VisualElement name="RotationVectorContainer" style="width: 40%;">
-            <engine:Label text="RotationVector" name="RotationVectorLabel" class="centeredText" style="background-color: rgba(42, 42, 42, 0); -unity-font-style: bold;" />
-            <engine:VisualElement name="RotationVectorContainer" class="container--verticalspacearound" style="flex-grow: 1;">
-                <engine:FloatField value="42.2" name="X" label="x" class="myFloatField MathVis--X">
+        <engine:VisualElement name="RotationVector__Container">
+            <engine:Label text="RotationVector" name="RotationVector__Label" class="centeredText" />
+            <engine:VisualElement name="RotationVector__ValueContainer" class="container--verticalspacearound">
+                <engine:FloatField value="42.2" name="AxisAngle__RotationVector-X" label="x" max-length="-1" class="fieldStyle--minimal fieldStyle--minimal-one-line MathVis--X">
                     <Bindings>
                         <engine:DataBinding property="value" data-source-path="RotVecX" binding-mode="TwoWay" />
                     </Bindings>
                 </engine:FloatField>
-                <engine:FloatField value="42.2" name="Y" label="y" class="myFloatField MathVis--Y">
+                <engine:FloatField value="42.2" name="AxisAngle__RotationVector-Y" label="y" max-length="-1" class="fieldStyle--minimal fieldStyle--minimal-one-line MathVis--Y">
                     <Bindings>
                         <engine:DataBinding property="value" data-source-path="RotVecY" binding-mode="TwoWay" />
                     </Bindings>
                 </engine:FloatField>
-                <engine:FloatField value="42.2" name="Z" label="z" class="myFloatField MathVis--Z">
+                <engine:FloatField value="42.2" name="AxisAngle__RotationVector-Z" label="z" max-length="-1" class="fieldStyle--minimal fieldStyle--minimal-one-line MathVis--Z">
                     <Bindings>
                         <engine:DataBinding property="value" data-source-path="RotVecZ" binding-mode="TwoWay" />
                     </Bindings>
