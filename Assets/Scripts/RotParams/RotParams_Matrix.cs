@@ -231,7 +231,7 @@ namespace RotParams
         #endregion //Comparison
         
         #region operators&arithmetic
-        public static RotParams_Matrix operator*(RotParams_Matrix matrix, RotParams_Matrix second)
+        public static RotParams_Matrix operator *(RotParams_Matrix matrix, RotParams_Matrix second)
         {
             return new RotParams_Matrix(matrix.InternalMatrix * second.InternalMatrix); 
         }

@@ -7,13 +7,15 @@
     flex-direction: row;
 }
 
-#EulerAngle__TitleContainer #EulerAngle__TitleLabel {
-    width: 50%;
+#EulerAngle__TitleLabel {
+    width: 55%;
     -unity-font-style: bold; 
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-#EulerAngle__TitleContainer #EulerAngle__AngleUnitSelector {
-    width: 50%; 
+#EulerAngle__AngleUnitSelector {
+    width: 45%; 
 }
 
 #EulerAngle__TitleContainer
@@ -25,11 +27,29 @@
 }
 
 .EulerAngle__GimbalAxis #EulerAngle__AxisSelector {
-    width: 50%;
+    flex-basis: 40%;
 }
 
 .EulerAngle__GimbalAxis #EulerAngle__AngleField {
-    width: 50%;
+    flex-basis: 60%;
+    flex-direction: row; 
+}
+
+.EulerAngle__GimbalAxis #EulerAngle__AngleField Label  
+{
+    flex-basis: 25%;
+    flex-grow: 1; 
+    flex-shrink: 1; 
+    min-width: 36px;
+    max-width: 72px; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.EulerAngle__GimbalAxis #EulerAngle__AngleField #unity-text-input {
+    flex-basis: 75%;
+    flex-grow: 1;
+    flex-shrink: 1;
 }
 
 #EulerAngleRoot {

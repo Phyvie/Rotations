@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Packages.UnityExtensionMethods;
 using RotObj;
 using RotParams;
@@ -71,6 +72,13 @@ namespace RotContainers
             }
         }
 
+        #if UNITY_WEBGL
+        [DllImport("__Internal")]
+        private static extern int GetCanvasHeight();
+        [DllImport("__Internal")]
+        private static extern int GetCanvasWidth();
+        #endif
+        
         private void AdjustCameraAndUIRatio(GeometryChangedEvent e)
         {
             if (e.newRect.size == e.oldRect.size)
@@ -90,9 +98,15 @@ namespace RotContainers
                 return; 
             }
 
+            #if UNITY_WEBGL && !UNITY_EDITOR
+            float screenHeight = GetCanvasHeight(); //ZyKa!
+            #else
             float screenHeight = Screen.height;
+            #endif
             float cameraHeightFraction = _splitscreen__CameraSpace_Element.resolvedStyle.height / screenHeight;
 
+            Debug.Log("ScreenHeight: " + screenHeight + "_splitscreen_CameraSpace.height" + _splitscreen__CameraSpace_Element.resolvedStyle.height + " CameraHeightFraction: " + cameraHeightFraction); 
+            
             visCamera.rect = new Rect
             (
                 0f,
@@ -101,7 +115,7 @@ namespace RotContainers
                 cameraHeightFraction
             ); 
         }
-
+        
         #region CoordinateGrid
         [SerializeField] private Vis_CoordinateGrid coordinateGrid;
         #endregion CoordinateGrid

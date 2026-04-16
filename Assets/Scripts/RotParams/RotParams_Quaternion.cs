@@ -343,7 +343,7 @@ namespace RotParams
             return Tuple.Create(W, X, Y, Z).GetHashCode();
         }
         #endregion comparison
-
+        
         #region Arithmetic
         public static RotParams_Quaternion operator *(RotParams_Quaternion q1, RotParams_Quaternion q2)
         {

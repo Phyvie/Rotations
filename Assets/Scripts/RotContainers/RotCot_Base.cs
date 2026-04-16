@@ -229,7 +229,7 @@ namespace RotContainers
             {
                 rotUIRoot.style.display = _rotUIDisplayStyle;
             }
-
+            
             if (OrientedObject is not null)
             {
                 OrientedObject.SetRotation(RotParams.ToUnityQuaternion());

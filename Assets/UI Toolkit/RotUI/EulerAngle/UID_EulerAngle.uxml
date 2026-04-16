@@ -13,7 +13,7 @@
             </engine:Label>
             <engine:EnumField value="Radian" type="Packages.MathExtensions.EAngleType, MathExtensions" name="EulerAngle__AngleUnitSelector" class="fieldStyle--minimal">
                 <Bindings>
-                    <engine:DataBinding property="value" data-source-path="InnerAngleType" binding-mode="TwoWay" />
+                    <engine:DataBinding property="value" data-source-path="AngleType" binding-mode="TwoWay" />
                 </Bindings>
             </engine:EnumField>
         </engine:VisualElement>
@@ -23,9 +23,9 @@
                     <engine:DataBinding property="value" data-source-path="OuterAxis" binding-mode="TwoWay" />
                 </Bindings>
             </engine:EnumField>
-            <engine:FloatField name="EulerAngle__AngleField" class="fieldStyle--minimal">
+            <engine:FloatField name="EulerAngle__AngleField" label="Outer" class="fieldStyle--minimal">
                 <Bindings>
-                    <engine:DataBinding property="value" data-source-path="OuterAngle" binding-mode="TwoWay" />
+                    <engine:DataBinding property="value" data-source-path="OuterAngleInCurrentUnit" binding-mode="TwoWay" />
                 </Bindings>
             </engine:FloatField>
         </engine:VisualElement>
@@ -35,9 +35,9 @@
                     <engine:DataBinding property="value" data-source-path="MiddleAxis" binding-mode="TwoWay" />
                 </Bindings>
             </engine:EnumField>
-            <engine:FloatField name="EulerAngle__AngleField" class="fieldStyle--minimal">
+            <engine:FloatField name="EulerAngle__AngleField" label="Middle" class="fieldStyle--minimal">
                 <Bindings>
-                    <engine:DataBinding property="value" data-source-path="MiddleAngle" binding-mode="TwoWay" />
+                    <engine:DataBinding property="value" data-source-path="MiddleAngleInCurrentUnit" binding-mode="TwoWay" />
                 </Bindings>
             </engine:FloatField>
         </engine:VisualElement>
@@ -47,9 +47,9 @@
                     <engine:DataBinding property="value" data-source-path="InnerAxis" binding-mode="TwoWay" />
                 </Bindings>
             </engine:EnumField>
-            <engine:FloatField name="EulerAngle__AngleField" class="fieldStyle--minimal">
+            <engine:FloatField name="EulerAngle__AngleField" label="Inner" class="fieldStyle--minimal">
                 <Bindings>
-                    <engine:DataBinding property="value" data-source-path="InnerAngle" binding-mode="TwoWay" />
+                    <engine:DataBinding property="value" data-source-path="InnerAngleInCurrentUnit" binding-mode="TwoWay" />
                 </Bindings>
             </engine:FloatField>
         </engine:VisualElement>

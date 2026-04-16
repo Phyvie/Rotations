@@ -167,6 +167,19 @@ namespace RotParams
         }
 
         [CreateProperty]
+        public EAngleType AngleType
+        {
+            get => outer.TypedAngle.AngleType;
+            set
+            {
+                outer.TypedAngle.AngleType = value;
+                middle.TypedAngle.AngleType = value;
+                inner.TypedAngle.AngleType = value;
+                OnPropertyChanged(nameof(AngleType));
+            }
+        }
+        
+        [CreateProperty]
         public EGimbalAxis OuterAxis
         {
             get => outer.EAxis;
@@ -624,26 +637,30 @@ namespace RotParams
 
         public override RotParams_Quaternion ToQuaternionParams(RotParams_Quaternion quaternionParams)
         {
-            quaternionParams.ResetToIdentity(); 
+            RotParams_Quaternion result = RotParams_Quaternion.GetQuatIdentity();
+    
             foreach (_RotParams_EulerAngleGimbalRing rotation in gimbal.Reverse())
             {
                 RotParams_Quaternion asQuat = rotation.toQuaternionRotation();
-                quaternionParams = asQuat * quaternionParams; 
+                result = asQuat * result; 
             }
+    
+            quaternionParams.CopyValues(result); 
             return quaternionParams;
         }
 
         public override RotParams_Matrix ToMatrixParams(RotParams_Matrix matrixParams)
         {
-            matrixParams.ResetToIdentity(); 
+            RotParams_Matrix result = RotParams_Matrix.RotationIdentity();
             foreach (_RotParams_EulerAngleGimbalRing rotation in gimbal.Reverse())
             {
                 RotParams_Matrix asMatrix = rotation.toMatrixRotation();
-                matrixParams = asMatrix * matrixParams; 
+                result = asMatrix * result;
             }
+            matrixParams.CopyValues(result);
             return matrixParams;
         }
-
+        
         public override RotParams_AxisAngle ToAxisAngleParams(RotParams_AxisAngle axisAngleParams)
         {
             ToQuaternionParams().ToAxisAngleParams(axisAngleParams);

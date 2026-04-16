@@ -10,6 +10,11 @@ namespace BaseClasses
     {
         public abstract RotParams_Base GetRotParams();
 
+        private void OnEnable()
+        {
+            VisUpdate(); 
+        }
+
         public abstract void SetRotParamsByRef(RotParams_Base newRotParams); 
         
         public abstract void VisUpdate();
