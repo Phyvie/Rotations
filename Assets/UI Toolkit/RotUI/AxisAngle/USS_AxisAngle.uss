@@ -1,0 +1,95 @@
+#AxisAngleRoot {
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+#AxisAngle__Container {
+    flex-grow: 1;
+    width: 65%;
+}
+
+#AxisAngle__Label {
+    -unity-font-style: bold;
+}
+
+#AxisAngle__ValueContainer {
+    flex-direction: row;
+    justify-content: space-around;
+    border-color: rgb(0, 0, 0);
+    border-width: 0;
+    flex-grow: 1;
+}
+
+#AxisAngle__AngleContainer {
+    flex-grow: 0;
+    align-self: stretch; 
+    width: 40%;
+    justify-content: center;
+}
+
+#AxisAngle__AngleField {
+    flex-grow: 1; 
+    flex-basis: 33%; 
+    max-height: 33%; 
+}
+
+#AxisAngle__AngleTypeSelector {
+    flex-grow: 1;
+    flex-basis: 33%;
+    max-height: 33%; 
+}
+
+#AxisAngle__MultiplySign {
+    width: 10%;
+
+    -unity-font-style: bold;
+}
+
+#AxisAngle__AxisContainer {
+    flex-grow: 1;
+    
+    align-items: stretch; 
+    justify-content: space-around; 
+}
+
+#EqualContainer {
+    flex-grow: 1;
+    flex-direction: column; 
+    align-content: center;
+}
+
+#EqualContainer__TopEqual {
+    -unity-font-style: bold;
+}
+
+#EqualContainer__BottomContainer {
+    flex-direction: column; 
+    justify-content: center; 
+}
+
+#EqualSign {
+    font-size: 24px; 
+    -unity-font-style: bold; 
+    margin: 0; 
+}
+
+#RotationVector__Container {
+    width: 35%;
+    flex-grow: 1;
+}
+
+#RotationVector__ValueContainer 
+{
+    flex-grow: 1;
+}
+
+#RotationVector__Label {
+    -unity-font-style: bold;
+}
+
+#AxisAngle__AxisContainer .fieldStyle--minimal-one-line
+, #RotationVector__ValueContainer .fieldStyle--minimal-one-line
+{
+    flex-grow: 1; 
+    flex-basis: 24px;
+}

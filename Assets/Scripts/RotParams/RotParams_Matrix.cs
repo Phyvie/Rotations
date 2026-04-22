@@ -135,7 +135,7 @@ namespace RotParams
             }
             else
             {
-                CopyValues(toCopy.ToAxisAngleParams());
+                CopyValues(toCopy.ToMatrixParams());
             }
         }
 
@@ -149,9 +149,20 @@ namespace RotParams
             InternalMatrix = new Matrix(toCopy.InternalMatrix);
         }
 
+        //Warning, this constructor does not check whether the passed in matrix is actually a RotationMatrix
         public RotParams_Matrix(Matrix matrix)
         {
             InternalMatrix = new Matrix(matrix);
+        }
+
+        public RotParams_Matrix(Vector3 xVector, Vector3 yVector, Vector3 zVector)
+        {
+            InternalMatrix = new Matrix(new float[3,3]
+            {
+                {xVector.x, yVector.x, zVector.x},
+                {xVector.y, yVector.y, zVector.y},
+                {xVector.z, yVector.z, zVector.z}
+            });
         }
         
         public static RotParams_Matrix RotationIdentity()
@@ -220,7 +231,7 @@ namespace RotParams
         #endregion //Comparison
         
         #region operators&arithmetic
-        public static RotParams_Matrix operator*(RotParams_Matrix matrix, RotParams_Matrix second)
+        public static RotParams_Matrix operator *(RotParams_Matrix matrix, RotParams_Matrix second)
         {
             return new RotParams_Matrix(matrix.InternalMatrix * second.InternalMatrix); 
         }
@@ -258,78 +269,261 @@ namespace RotParams
         
         #region Converters
 
-        public override RotParams_Base ToSelfType(RotParams_Base toConvert)
+        public override RotParams_Base ToSelfTypeCopy(RotParams_Base toConvert)
         {
             return toConvert.ToMatrixParams(); 
         }
 
+        public override void ConvertAndCopyValues(RotParams_Base toConvert)
+        {
+            toConvert.ToMatrixParams(this); 
+        }
+
         public override RotParams_EulerAngles ToEulerParams()
         {
-            RotParams_EulerAngles newRotParamsEulerAngles = new RotParams_EulerAngles(0, 0, 0);
-            newRotParamsEulerAngles.OuterAngle = Mathf.Atan2(this[0, 1], this[1, 1]);
-            newRotParamsEulerAngles.MiddleAngle = Mathf.Asin(this[2, 1]);  
-            newRotParamsEulerAngles.InnerAngle = Mathf.Atan2(this[2, 0], this[2, 2]); 
-            return newRotParamsEulerAngles; 
+            return ToEulerParams(new RotParams_EulerAngles());
         }
 
         public override RotParams_Quaternion ToQuaternionParams()
         {
-            if (!isRotationMatrix)
-            {
-                Debug.LogWarning($"{nameof(ToQuaternionParams)} error: Matrix is not a RotationMatrix, getting Quaternion for XYRotationMatrix");
-                return ToRotationMatrixFromTwoAxes(primaryAxisIndex, secondaryAxisIndex).ToQuaternionParams(); //LaterZyKa RotParams_Conversion this should use GetClosestRotationMatrix
-            }
-
-            float trace = InternalMatrix.Trace();
-            float w, x, y, z;
-
-            if (trace > 0)
-            {
-                float s = 0.5f / Mathf.Sqrt(trace + 1.0f);
-                w = 0.25f / s;
-                x = (InternalMatrix[2, 1] - InternalMatrix[1, 2]) * s;
-                y = (InternalMatrix[0, 2] - InternalMatrix[2, 0]) * s;
-                z = (InternalMatrix[1, 0] - InternalMatrix[0, 1]) * s;
-            }
-            else
-            {
-                if (InternalMatrix[0, 0] > InternalMatrix[1, 1] && InternalMatrix[0, 0] > InternalMatrix[2, 2])
-                {
-                    float s = 2.0f * Mathf.Sqrt(1.0f + InternalMatrix[0, 0] - InternalMatrix[1, 1] - InternalMatrix[2, 2]);
-                    w = (InternalMatrix[2, 1] - InternalMatrix[1, 2]) / s;
-                    x = 0.25f * s;
-                    y = (InternalMatrix[0, 1] + InternalMatrix[1, 0]) / s;
-                    z = (InternalMatrix[0, 2] + InternalMatrix[2, 0]) / s;
-                }
-                else if (InternalMatrix[1, 1] > InternalMatrix[2, 2])
-                {
-                    float s = 2.0f * Mathf.Sqrt(1.0f + InternalMatrix[1, 1] - InternalMatrix[0, 0] - InternalMatrix[2, 2]);
-                    w = (InternalMatrix[0, 2] - InternalMatrix[2, 0]) / s;
-                    x = (InternalMatrix[0, 1] + InternalMatrix[1, 0]) / s;
-                    y = 0.25f * s;
-                    z = (InternalMatrix[1, 2] + InternalMatrix[2, 1]) / s;
-                }
-                else
-                {
-                    float s = 2.0f * Mathf.Sqrt(1.0f + InternalMatrix[2, 2] - InternalMatrix[0, 0] - InternalMatrix[1, 1]);
-                    w = (InternalMatrix[1, 0] - InternalMatrix[0, 1]) / s;
-                    x = (InternalMatrix[0, 2] + InternalMatrix[2, 0]) / s;
-                    y = (InternalMatrix[1, 2] + InternalMatrix[2, 1]) / s;
-                    z = 0.25f * s;
-                }
-            }
-
-            return new RotParams_Quaternion(w, x, y, z);
+            return ToQuaternionParams(new RotParams_Quaternion());
         }
 
         public override RotParams_Matrix ToMatrixParams()
         {
-            return new RotParams_Matrix(InternalMatrix); 
+            return ToMatrixParams(new RotParams_Matrix(new float[3, 3]));
         }
 
         public override RotParams_AxisAngle ToAxisAngleParams()
         {
-            return ToQuaternionParams().ToAxisAngleParams(); 
+            return ToAxisAngleParams(new RotParams_AxisAngle(Vector3.right, 0));
+        }
+
+        public override RotParams_EulerAngles ToEulerParams(RotParams_EulerAngles eulerParams)
+        {
+            if (!eulerParams.IsGimbalValid())
+            {
+                eulerParams.ResetToIdentity();
+            }
+
+            switch (eulerParams.GetIntrinsicGimbalOrder())
+            {
+                case EGimbalOrder.XZY:
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[2, 1], this[1, 1]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Asin(-this[0, 1]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[0, 2], this[0, 0]);
+                    break;
+                
+                case EGimbalOrder.XYZ:
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(-this[1, 2], this[2, 2]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Asin(this[0, 2]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(-this[0, 1], this[0, 0]);
+                    break;
+                
+                case EGimbalOrder.YXZ:
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[0, 2], this[2, 2]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Asin(-this[1, 2]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[1, 0], this[1, 1]);
+                    break;
+                
+                case EGimbalOrder.YZX:
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(-this[2, 0], this[0, 0]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Asin(this[1, 0]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(-this[1, 2], this[1, 1]);
+                    break;
+                
+                case EGimbalOrder.ZYX:
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[1, 0], this[0, 0]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Asin(-this[2, 0]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[2, 1], this[2, 2]);
+                    break;
+
+                case EGimbalOrder.ZXY: 
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(-this[0, 1], this[1, 1]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Asin(this[2, 1]); 
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(-this[2, 0], this[2, 2]);
+                    break;
+                    
+                case EGimbalOrder.XZX:
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[2, 0], this[1, 0]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Acos(this[0, 0]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[0, 2], -this[0, 1]);
+                    break;
+
+                case EGimbalOrder.XYX:
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[1, 0], -this[2, 0]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Acos(this[0, 0]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[0, 1], this[0, 2]);
+                    break;
+                    
+                case EGimbalOrder.YXY:
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[0, 1], this[2, 1]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Acos(this[1, 1]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[1, 0], -this[1, 2]);
+                    break;
+
+                case EGimbalOrder.YZY:
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[2, 1], -this[0, 1]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Acos(this[1, 1]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[1, 2], this[1, 0]);
+                    break;
+
+                case EGimbalOrder.ZYZ: 
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[1, 2], this[0, 2]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Acos(this[2, 2]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[2, 1], -this[2, 0]);
+                    break;
+
+                case EGimbalOrder.ZXZ:
+                    eulerParams.Outer.AngleInRadian = Mathf.Atan2(this[0, 2], -this[1, 2]);
+                    eulerParams.Middle.AngleInRadian = Mathf.Acos(this[2, 2]);
+                    eulerParams.Inner.AngleInRadian = Mathf.Atan2(this[2, 0], this[2, 1]);
+                    break;
+                    
+                default:
+                    eulerParams.ResetToIdentity();
+                    break;
+            }
+            
+            return eulerParams;
+        }
+
+        public override RotParams_Quaternion ToQuaternionParams(RotParams_Quaternion quaternionParams)
+        {
+            if (!isRotationMatrix)
+            {
+                Debug.LogWarning($"{nameof(ToQuaternionParams)} error: Matrix is not a RotationMatrix {this}, getting Quaternion for XYRotationMatrix");
+                return ToRotationMatrixFromTwoAxes(primaryAxisIndex, secondaryAxisIndex).ToQuaternionParams(quaternionParams);
+            }
+
+            float trace = InternalMatrix.Trace();
+
+            bool _enforceNormalisation = quaternionParams.EnforceNormalisation; 
+            quaternionParams.EnforceNormalisation = false;
+            
+            //Algo source: https://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/
+            if (trace > 0.0f) 
+            {
+                float r = Mathf.Sqrt(trace + 1.0f);
+                float s = 2 * r; 
+    
+                quaternionParams.W = r / 2; 
+                quaternionParams.X = (InternalMatrix[2, 1] - InternalMatrix[1, 2]) / s; 
+                quaternionParams.Y = (InternalMatrix[0, 2] - InternalMatrix[2, 0]) / s; 
+                quaternionParams.Z = (InternalMatrix[1, 0] - InternalMatrix[0, 1]) / s; 
+            }
+            else //alternative for more numerical stability
+            {
+                //entry[0, 0] is largest (X component)
+                if (InternalMatrix[0, 0] > InternalMatrix[1, 1] && InternalMatrix[0, 0] > InternalMatrix[2, 2])
+                {
+                    float s = 2 * Mathf.Sqrt(1.0f + InternalMatrix[0, 0] - InternalMatrix[1, 1] - InternalMatrix[2, 2]); 
+    
+                    quaternionParams.W = (InternalMatrix[2, 1] - InternalMatrix[1, 2]) / s; 
+                    quaternionParams.X = 0.25f * s; 
+                    quaternionParams.Y = (InternalMatrix[0, 1] + InternalMatrix[1, 0]) / s; 
+                    quaternionParams.Z = (InternalMatrix[0, 2] + InternalMatrix[2, 0]) / s; 
+                }
+                //entry[1, 1] is largest (Y component)
+                else if (InternalMatrix[1, 1] > InternalMatrix[2, 2])
+                { 
+                    float s = 2.0f * Mathf.Sqrt(1.0f + InternalMatrix[1, 1] - InternalMatrix[0, 0] - InternalMatrix[2, 2]); 
+                    quaternionParams.W = (InternalMatrix[0, 2] - InternalMatrix[2, 0]) / s; 
+                    quaternionParams.X = (InternalMatrix[0, 1] + InternalMatrix[1, 0]) / s; 
+                    quaternionParams.Y = 0.25f * s; 
+                    quaternionParams.Z = (InternalMatrix[1, 2] + InternalMatrix[2, 1]) / s; 
+                }
+                //entry[2, 2] is largest (Z component)
+                else
+                {
+                    float s = 2.0f * Mathf.Sqrt(1.0f + InternalMatrix[2, 2] - InternalMatrix[1, 1] - InternalMatrix[0, 0]); 
+                    quaternionParams.W = (InternalMatrix[1, 0] - InternalMatrix[0, 1]) / s; 
+                    quaternionParams.X = (InternalMatrix[0, 2] + InternalMatrix[2, 0]) / s; 
+                    quaternionParams.Y = (InternalMatrix[1, 2] + InternalMatrix[2, 1]) / s;
+                    quaternionParams.Z = 0.25f * s; 
+                }
+            }
+
+            quaternionParams.EnforceNormalisation = _enforceNormalisation; 
+            
+            return quaternionParams;
+        }
+
+        public override RotParams_Matrix ToMatrixParams(RotParams_Matrix matrixParams)
+        {
+            matrixParams.CopyValues(this);
+            return matrixParams;
+        }
+
+        public override RotParams_AxisAngle ToAxisAngleParams(RotParams_AxisAngle axisAngleParams)
+        {
+            if (!isRotationMatrix)
+            {
+                Debug.LogWarning($"{nameof(ToAxisAngleParams)} error: Matrix is not a RotationMatrix, getting AxisAngle for XYRotationMatrix");
+                return ToRotationMatrixFromTwoAxes(primaryAxisIndex, secondaryAxisIndex).ToAxisAngleParams(axisAngleParams);
+            }
+
+            float trace = InternalMatrix[0, 0] + InternalMatrix[1, 1] + InternalMatrix[2, 2];
+            float cosTheta = (trace - 1.0f) * 0.5f;
+            float theta = Mathf.Acos(Mathf.Clamp(cosTheta, -1.0f, 1.0f));
+
+            if (trace > 3.0f - 0.0001f)
+            {
+                float thetaX = (InternalMatrix[2, 1] - InternalMatrix[1, 2]) / 2.0f;
+                float thetaY = (InternalMatrix[0, 2] - InternalMatrix[2, 0]) / 2.0f;
+                float thetaZ = (InternalMatrix[1, 0] - InternalMatrix[0, 1]) / 2.0f;
+                float angle = Mathf.Sqrt(thetaX * thetaX + thetaY * thetaY + thetaZ * thetaZ);
+
+                if (angle < 0.0001f)
+                {
+                    axisAngleParams.NormalisedAxis = Vector3.right;
+                    axisAngleParams.AngleInRadian = 0;
+                    return axisAngleParams;
+                }
+                else
+                {
+                    axisAngleParams.NormalisedAxis = new Vector3(thetaX, thetaY, thetaZ).normalized;
+                    axisAngleParams.AngleInRadian = angle;
+                    return axisAngleParams;
+                }
+            }
+
+            float x, y, z; 
+            if (Mathf.Abs(theta - Mathf.PI) < 0.0001f)
+            {
+                // Angle is PI, need to find the axis from the diagonal
+                x = Mathf.Sqrt(Mathf.Max(0, (InternalMatrix[0, 0] + 1.0f) * 0.5f));
+                y = Mathf.Sqrt(Mathf.Max(0, (InternalMatrix[1, 1] + 1.0f) * 0.5f));
+                z = Mathf.Sqrt(Mathf.Max(0, (InternalMatrix[2, 2] + 1.0f) * 0.5f));
+
+                if (x >= y && x >= z)
+                {
+                    y = (InternalMatrix[0, 1] >= 0) ? y : -y;
+                    z = (InternalMatrix[0, 2] >= 0) ? z : -z;
+                }
+                else if (y >= z)
+                {
+                    x = (InternalMatrix[0, 1] >= 0) ? x : -x;
+                    z = (InternalMatrix[1, 2] >= 0) ? z : -z;
+                }
+                else
+                {
+                    x = (InternalMatrix[0, 2] >= 0) ? x : -x;
+                    y = (InternalMatrix[1, 2] >= 0) ? y : -y;
+                }
+                axisAngleParams.NormalisedAxis = new Vector3(x, y, z).normalized;
+                axisAngleParams.AngleInRadian = Mathf.PI;
+                return axisAngleParams; 
+            }
+            
+            float s = 2.0f * Mathf.Sin(theta);
+            x = (InternalMatrix[2, 1] - InternalMatrix[1, 2]) / s;
+            y = (InternalMatrix[0, 2] - InternalMatrix[2, 0]) / s;
+            z = (InternalMatrix[1, 0] - InternalMatrix[0, 1]) / s;
+            axisAngleParams.NormalisedAxis = new Vector3(x, y, z).normalized;
+            axisAngleParams.AngleInRadian = theta;
+
+            return axisAngleParams;
         }
         
         public override void ResetToIdentity()
@@ -337,6 +531,9 @@ namespace RotParams
             InternalMatrix = Matrix.Identity(3);
         }
 
+        //returns a matrix that has the same column at "firstAxisIndex", but normalised;
+        //the column at "secondAxisIndex" lies on the same firstAxisIndex-secondAxisIndex plane as before, but is orthogonalised to "firstAxisIndex" and normalised;
+        //thirdAxisIndex is fully orthogonalised and normalised
         public RotParams_Matrix ToRotationMatrixFromTwoAxes(int firstAxisIndex, int secondAxisIndex)
         {
             if (firstAxisIndex < 0 || firstAxisIndex > 2 || secondAxisIndex < 0 || secondAxisIndex > 2)
@@ -424,7 +621,9 @@ namespace RotParams
 
         public override void GetValuesFromUnityQuaternion(Quaternion unityQuaternion)
         {
-            //TodoZyKa RotParamMath implement fromUnityQuaternion function
+            RotParams_Quaternion quaternionParams = new RotParams_Quaternion(); 
+            quaternionParams.GetValuesFromUnityQuaternion(unityQuaternion);
+            quaternionParams.ToMatrixParams(this); 
         }
 
         public override string ToString()

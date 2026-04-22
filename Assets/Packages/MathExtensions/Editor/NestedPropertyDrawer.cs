@@ -8,7 +8,6 @@ using UnityEngine;
 
 namespace Editor
 {
-	/*  LaterZyKa Dependencies: Only AngleTypeInspector is based on this class */
     public class NestedPropertyDrawer : PropertyDrawer
     {
         static readonly Regex arrayRegex = new Regex(@"^data\[(\d+)\]$");
@@ -19,7 +18,8 @@ namespace Editor
         protected List<object> objectHierarchy = new List<object>();
         protected List<FieldInfo> fieldInfoHierarchy = new List<FieldInfo>();
 
-        protected object parentObject => objectHierarchy[^2]; 
+        protected object parentObject => objectHierarchy.Count >= 2 ? objectHierarchy[^2] : null;
+        protected FieldInfo fieldInfo => fieldInfoHierarchy.Count >= 1 ? fieldInfoHierarchy[^1] : null;
         
         void AddToHierarchies(object obj, FieldInfo fieldInfo)
         {
@@ -42,7 +42,7 @@ namespace Editor
             
             if (string.IsNullOrEmpty(prop.propertyPath) || propertyAsObject is null)
             {
-	            Debug.LogError("InitializeNesting failed");
+	            Debug.LogError($"InitializeNesting failed for SerializedProperty: {prop.name}");
                 return; 
             }
             AddToHierarchies(propertyAsObject, null);
@@ -51,46 +51,74 @@ namespace Editor
             
             FieldInfo cFieldInfo = null;
             object cObject = prop.serializedObject.targetObject; 
-            
-            for (int i = 0; i < splitPath.Length; i++)
+
+            try
             {
-                string pathNode = splitPath[i];
-                if (pathNode.Equals("Array"))
-                {
-	                i++;
-	                pathNode = splitPath[i];
-	                int arrayIndex = GetIndexFromPathNode(pathNode); 
-	                GetFieldArrayObject(cObject, cFieldInfo, arrayIndex, out cObject);
-                }
-                else
-                {
-	                GetSubField(cObject, pathNode, out cObject, out cFieldInfo);
-                }
-                AddToHierarchies(cObject, cFieldInfo);
+	            for (int i = 0; i < splitPath.Length; i++)
+	            {
+		            string pathNode = splitPath[i];
+		            if (pathNode.Equals("Array"))
+		            {
+			            i++;
+			            pathNode = splitPath[i];
+			            int arrayIndex = GetIndexFromPathNode(pathNode);
+			            GetFieldArrayObject(cObject, cFieldInfo, arrayIndex, out cObject);
+		            }
+		            else
+		            {
+			            GetSubField(cObject, pathNode, out cObject, out cFieldInfo);
+		            }
+
+		            AddToHierarchies(cObject, cFieldInfo);
+	            }
+            }
+            catch (Exception e)
+            {
+	            Debug.LogError($"InitializePropertyNesting failed at path '{prop.propertyPath}'. Failed to resolve node.\nException: {e.Message}");
+	            throw;
             }
 		}
 
         protected void GetSubField(object source, string fieldName, out object obj, out FieldInfo fI)
         {
-	        if (source == null) { throw new NullReferenceException(); }
+	        if (source == null)
+	        {
+		        throw new NullReferenceException($"Cannot get subfield '{fieldName}' from a null source.");
+	        }
 	        Type type = source.GetType();
-	        fI = type.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-	        if (fI == null) { throw new NullReferenceException(); }
+	        fI = null;
+	        while (type != null && fI == null)
+	        {
+		        fI = type.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+		        type = type.BaseType;
+	        }
+	        
+	        if (fI == null)
+	        {
+		        throw new MissingFieldException(source.GetType().FullName, fieldName);
+	        }
 	        obj = fI.GetValue(source); 
         }
         
         protected void GetFieldArrayObject(object source, FieldInfo fIn, int index, out object arrayElement)
         {
-	        var enumerator = (source as IList)?.GetEnumerator();
-	        if (enumerator == null) { throw new TypeAccessException(); }
-			
-	        while (index-- >= 0) enumerator.MoveNext();
-	        arrayElement = enumerator.Current; 
+	        if (source is not IList list)
+	        {
+		        string typeName = source?.GetType().FullName ?? "null";
+		        throw new InvalidOperationException($"Source of type '{typeName}' is not an IList. Expected a list or array to access index {index}.");
+	        }
+
+	        if (index < 0 || index >= list.Count)
+	        {
+		        throw new IndexOutOfRangeException($"Index {index} is out of range for list of size {list.Count}.");
+	        }
+
+	        arrayElement = list[index];
         }
 
         protected object GetParentObject(SerializedProperty property)
         {
-	        return objectHierarchy[~2];
+	        return objectHierarchy.Count >= 2 ? objectHierarchy[^2] : null;
         }
         
         protected SerializedProperty GetParentSerializedProperty(SerializedProperty prop)
@@ -130,10 +158,13 @@ namespace Editor
 	        Match arrayMatch = arrayRegex.Match(pathNode);
 	        if (!arrayMatch.Success)
 	        {
-		        throw new Exception(); 
+		        throw new FormatException($"Path node '{pathNode}' does not match expected array format 'data[index]'."); 
 	        }
 
-	        int.TryParse(arrayMatch.Groups[1].Value, out int arrayIndex);
+	        if (!int.TryParse(arrayMatch.Groups[1].Value, out int arrayIndex))
+	        {
+		        throw new FormatException($"Failed to parse index from path node '{pathNode}'.");
+	        }
 	        return arrayIndex; 
         }
         

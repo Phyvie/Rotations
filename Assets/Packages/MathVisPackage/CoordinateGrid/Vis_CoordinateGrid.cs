@@ -79,6 +79,12 @@ public class Vis_CoordinateGrid : MonoBehaviour
 
     private void UpdateLabelPositionAndRotation()
     {
+        if (!ViewCamera)
+        {
+            Debug.LogWarning($"{name}.{nameof(ViewCamera)} is null");
+            return; 
+        }
+        
         xLabel.transform.rotation = ViewCamera.transform.rotation; 
         yLabel.transform.rotation = ViewCamera.transform.rotation; 
         zLabel.transform.rotation = ViewCamera.transform.rotation;

@@ -134,8 +134,11 @@ namespace MathExtensions
             {
                 for (int column = 0; column < Width; column++)
                 {
-                    if (System.Math.Abs(InternalMatrix[row*Width+column] - other.InternalMatrix[row*Width+column]) > tolerance)
+                    if (Math.Abs(InternalMatrix[row * Width + column] - other.InternalMatrix[row * Width + column]) >
+                        tolerance)
+                    {
                         return false;
+                    }
                 }
             }
             return true;

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Packages.MathExtensions;
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -13,6 +14,41 @@ namespace RotParams
         InvalidGimbalOrder, 
         TrueEulerAngle, 
         TaitBryanAngle, 
+    }
+
+    public enum EGimbalOrder
+    {
+        InvalidGimbalOrder = 0, 
+        XYZ = 1, 
+        XZY = 2, 
+        ZXY = 3, 
+        YXZ = 4, 
+        YZX = 5, 
+        ZYX = 6,
+        XYX = 7, 
+        XZX = 8, 
+        YXY = 9, 
+        YZY = 10, 
+        ZXZ = 11, 
+        ZYZ = 12, 
+    }
+
+    public static class GimbalOrderExtensions
+    {
+        public static EGimbalOrder GetInverseOrder(this EGimbalOrder eGimbalOrder)
+        {
+            if (eGimbalOrder == EGimbalOrder.InvalidGimbalOrder)
+            {
+                return EGimbalOrder.InvalidGimbalOrder; 
+            }
+
+            if ((int)eGimbalOrder <= 7)
+            {
+                return (EGimbalOrder)(7 - (int)eGimbalOrder); 
+            }
+
+            return eGimbalOrder; 
+        }
     }
     
     [Serializable]
@@ -120,16 +156,29 @@ namespace RotParams
         }
 
         [CreateProperty]
-        public float OuterAngle
+        public float OuterAngleInCurrentUnit
         {
             get => outer.TypedAngle.AngleInCurrentUnit;
             set
             {
                 outer.TypedAngle.AngleInCurrentUnit = value;
-                OnPropertyChanged(nameof(OuterAngle));
+                OnPropertyChanged(nameof(OuterAngleInCurrentUnit));
             }
         }
 
+        [CreateProperty]
+        public EAngleType AngleType
+        {
+            get => outer.TypedAngle.AngleType;
+            set
+            {
+                outer.TypedAngle.AngleType = value;
+                middle.TypedAngle.AngleType = value;
+                inner.TypedAngle.AngleType = value;
+                OnPropertyChanged(nameof(AngleType));
+            }
+        }
+        
         [CreateProperty]
         public EGimbalAxis OuterAxis
         {
@@ -142,16 +191,38 @@ namespace RotParams
         }
 
         [CreateProperty]
-        public float MiddleAngle
+        public EAngleType OuterAngleType
+        {
+            get => outer.TypedAngle.AngleType;
+            set
+            {
+                outer.TypedAngle.AngleType = value;
+                OnPropertyChanged(nameof(OuterAngleType));
+            }
+        }
+
+        [CreateProperty]
+        public float MiddleAngleInCurrentUnit
         {
             get => middle.TypedAngle.AngleInCurrentUnit;
             set
             {
                 middle.TypedAngle.AngleInCurrentUnit = value;
-                OnPropertyChanged(nameof(MiddleAngle));
+                OnPropertyChanged(nameof(MiddleAngleInCurrentUnit));
             }
         }
 
+        [CreateProperty]
+        public EAngleType MiddleAngleType
+        {
+            get => middle.TypedAngle.AngleType;
+            set
+            {
+                middle.TypedAngle.AngleType = value;
+                OnPropertyChanged(nameof(MiddleAngleType));
+            }
+        }
+        
         [CreateProperty]
         public EGimbalAxis MiddleAxis
         {
@@ -164,13 +235,24 @@ namespace RotParams
         }
         
         [CreateProperty]
-        public float InnerAngle
+        public EAngleType InnerAngleType
+        {
+            get => inner.TypedAngle.AngleType;
+            set
+            {
+                inner.TypedAngle.AngleType = value;
+                OnPropertyChanged(nameof(InnerAngleType));
+            }
+        }
+        
+        [CreateProperty]
+        public float InnerAngleInCurrentUnit
         {
             get => inner.TypedAngle.AngleInCurrentUnit;
             set
             {
                 inner.TypedAngle.AngleInCurrentUnit = value;
-                OnPropertyChanged(nameof(InnerAngle));
+                OnPropertyChanged(nameof(InnerAngleInCurrentUnit));
             }
         }
 
@@ -212,9 +294,9 @@ namespace RotParams
         }
         
         public RotParams_EulerAngles() : this(
-            new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Yaw, AngleType.Degree, 0), 
-            new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Pitch, AngleType.Degree, 0), 
-            new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Roll, AngleType.Degree, 0))
+            new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Yaw, EAngleType.Degree, 0), 
+            new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Pitch, EAngleType.Degree, 0), 
+            new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Roll, EAngleType.Degree, 0))
         {
         }
         
@@ -234,8 +316,19 @@ namespace RotParams
                 new _RotParams_EulerAngleGimbalRing(innerAxis, inInnerRadian))
         {
         }
-            
 
+        public RotParams_EulerAngles(EGimbalAxis outerAxis, EGimbalAxis middleAxis, EGimbalAxis innerAxis) :
+            this(new _RotParams_EulerAngleGimbalRing(outerAxis, 0),
+                new _RotParams_EulerAngleGimbalRing(middleAxis, 0),
+                new _RotParams_EulerAngleGimbalRing(innerAxis, 0))
+        {
+        }
+
+        public RotParams_EulerAngles(EGimbalOrder gimbalOrder) : this()
+        {
+            SetIntrinsicGimbalOrder(gimbalOrder); 
+        }
+        
         public RotParams_EulerAngles(_RotParams_EulerAngleGimbalRing firstRing, _RotParams_EulerAngleGimbalRing secondRing, _RotParams_EulerAngleGimbalRing thirdRing, bool bCopyRings = false)
         {
             if (bCopyRings)
@@ -290,6 +383,111 @@ namespace RotParams
             }
         }
 
+        public EGimbalOrder GetIntrinsicGimbalOrder()
+        {
+            if (!IsGimbalValid())
+            {
+                return EGimbalOrder.InvalidGimbalOrder; 
+            }
+
+            switch (gimbal[0].EAxis)
+            {
+                case EGimbalAxis.Yaw:
+                    if (gimbal[1].EAxis == EGimbalAxis.Pitch)
+                    {
+                        if (gimbal[2].EAxis == EGimbalAxis.Yaw)
+                        {
+                            return EGimbalOrder.YXY; 
+                        }
+                        else if (gimbal[2].EAxis == EGimbalAxis.Roll)
+                        {
+                            return EGimbalOrder.YXZ; 
+                        }
+                    }
+                    else if (gimbal[1].EAxis == EGimbalAxis.Roll)
+                    {
+                        if (gimbal[2].EAxis == EGimbalAxis.Yaw)
+                        {
+                            return EGimbalOrder.YZY;
+                        }
+                        else if (gimbal[2].EAxis == EGimbalAxis.Pitch)
+                        {
+                            return EGimbalOrder.YZX;
+                        }
+                    }
+                    else
+                    {
+                        return EGimbalOrder.InvalidGimbalOrder; 
+                    }
+                    break; 
+                    
+                case EGimbalAxis.Pitch:
+                    if (gimbal[1].EAxis == EGimbalAxis.Yaw)
+                    {
+                        if (gimbal[2].EAxis == EGimbalAxis.Pitch)
+                        {
+                            return EGimbalOrder.XYX;
+                        }
+                        else if (gimbal[2].EAxis == EGimbalAxis.Roll)
+                        {
+                            return EGimbalOrder.XYZ;
+                        }
+                    }
+                    else if (gimbal[1].EAxis == EGimbalAxis.Roll)
+                    {
+                        if (gimbal[2].EAxis == EGimbalAxis.Pitch)
+                        {
+                            return EGimbalOrder.XZX;
+                        }
+                        else if (gimbal[2].EAxis == EGimbalAxis.Yaw)
+                        {
+                            return EGimbalOrder.XZY;
+                        }
+                    }
+                    else
+                    {
+                        return EGimbalOrder.InvalidGimbalOrder;
+                    }
+                    break;
+                    
+                case EGimbalAxis.Roll:
+                    if (gimbal[1].EAxis == EGimbalAxis.Yaw)
+                    {
+                        if (gimbal[2].EAxis == EGimbalAxis.Roll)
+                        {
+                            return EGimbalOrder.ZYZ;
+                        }
+                        else if (gimbal[2].EAxis == EGimbalAxis.Pitch)
+                        {
+                            return EGimbalOrder.ZYX;
+                        }
+                    }
+                    else if (gimbal[1].EAxis == EGimbalAxis.Pitch)
+                    {
+                        if (gimbal[2].EAxis == EGimbalAxis.Roll)
+                        {
+                            return EGimbalOrder.ZXZ;
+                        }
+                        else if (gimbal[2].EAxis == EGimbalAxis.Yaw)
+                        {
+                            return EGimbalOrder.ZXY;
+                        }
+                    }
+                    else
+                    {
+                        return EGimbalOrder.InvalidGimbalOrder;
+                    }
+                    break;
+            }
+            
+            return EGimbalOrder.InvalidGimbalOrder;
+        }
+
+        public EGimbalOrder GetExtrinsicGimbalOrder()
+        {
+            return GetIntrinsicGimbalOrder().GetInverseOrder(); 
+        }
+        
         public static bool AreAxesMatching(RotParams_EulerAngles a, RotParams_EulerAngles b)
         {
             return a.outer.EAxis == b.outer.EAxis && a.middle.EAxis == b.middle.EAxis && a.inner.EAxis == b.inner.EAxis;
@@ -306,113 +504,205 @@ namespace RotParams
         {
             (firstRing, secondRing) = (secondRing, firstRing); 
         }
+
+        public void SetExtrinsicGimbalOrder(EGimbalOrder gimbalOrder)
+        {
+            SetIntrinsicGimbalOrder(gimbalOrder.GetInverseOrder());
+        }
+        
+        public void SetIntrinsicGimbalOrder(EGimbalOrder gimbalOrder)
+        {
+            if (gimbalOrder == EGimbalOrder.InvalidGimbalOrder)
+            {
+                Debug.LogError("Cannot set Gimbal-Order to Invalid; Setting to Yaw-Pitch Roll instead");
+                gimbalOrder = EGimbalOrder.YXZ; 
+            }
+
+            switch (gimbalOrder)
+            {
+                // Tait-Bryan angles (non-repeating axes)
+                case EGimbalOrder.XYZ:
+                    OuterAxis = EGimbalAxis.Pitch; 
+                    MiddleAxis = EGimbalAxis.Yaw; 
+                    InnerAxis = EGimbalAxis.Roll; 
+                    break;
+                
+                case EGimbalOrder.XZY:
+                    OuterAxis = EGimbalAxis.Pitch;
+                    MiddleAxis = EGimbalAxis.Roll;
+                    InnerAxis = EGimbalAxis.Yaw;
+                    break;
+                
+                case EGimbalOrder.YXZ:
+                    OuterAxis = EGimbalAxis.Yaw;
+                    MiddleAxis = EGimbalAxis.Pitch;
+                    InnerAxis = EGimbalAxis.Roll;
+                    break;
+                
+                case EGimbalOrder.YZX:
+                    OuterAxis = EGimbalAxis.Yaw;
+                    MiddleAxis = EGimbalAxis.Roll;
+                    InnerAxis = EGimbalAxis.Pitch;
+                    break;
+                
+                case EGimbalOrder.ZXY:
+                    OuterAxis = EGimbalAxis.Roll;
+                    MiddleAxis = EGimbalAxis.Pitch;
+                    InnerAxis = EGimbalAxis.Yaw;
+                    break;
+                
+                case EGimbalOrder.ZYX:
+                    OuterAxis = EGimbalAxis.Roll;
+                    MiddleAxis = EGimbalAxis.Yaw;
+                    InnerAxis = EGimbalAxis.Pitch;
+                    break;
+                
+                // True Euler angles (first and last axes repeat)
+                case EGimbalOrder.XYX:
+                    OuterAxis = EGimbalAxis.Pitch;
+                    MiddleAxis = EGimbalAxis.Yaw;
+                    InnerAxis = EGimbalAxis.Pitch;
+                    break;
+                
+                case EGimbalOrder.XZX:
+                    OuterAxis = EGimbalAxis.Pitch;
+                    MiddleAxis = EGimbalAxis.Roll;
+                    InnerAxis = EGimbalAxis.Pitch;
+                    break;
+                
+                case EGimbalOrder.YXY:
+                    OuterAxis = EGimbalAxis.Yaw;
+                    MiddleAxis = EGimbalAxis.Pitch;
+                    InnerAxis = EGimbalAxis.Yaw;
+                    break;
+                
+                case EGimbalOrder.YZY:
+                    OuterAxis = EGimbalAxis.Yaw;
+                    MiddleAxis = EGimbalAxis.Roll;
+                    InnerAxis = EGimbalAxis.Yaw;
+                    break;
+                
+                case EGimbalOrder.ZXZ:
+                    OuterAxis = EGimbalAxis.Roll;
+                    MiddleAxis = EGimbalAxis.Pitch;
+                    InnerAxis = EGimbalAxis.Roll;
+                    break;
+                
+                case EGimbalOrder.ZYZ:
+                    OuterAxis = EGimbalAxis.Roll;
+                    MiddleAxis = EGimbalAxis.Yaw;
+                    InnerAxis = EGimbalAxis.Roll;
+                    break;
+            }
+        }
         #endregion GimbalOperations
 
         #region Converters
 
-        public override RotParams_Base ToSelfType(RotParams_Base toConvert)
+        public override RotParams_Base ToSelfTypeCopy(RotParams_Base toConvert)
         {
             return toConvert.ToEulerParams(); 
         }
 
+        public override void ConvertAndCopyValues(RotParams_Base toConvert)
+        {
+            toConvert.ToEulerParams(this); 
+        }
+
         public override RotParams_EulerAngles ToEulerParams()
         {
-            return new RotParams_EulerAngles(this); 
+            return ToEulerParams(new RotParams_EulerAngles());
         }
 
         public override RotParams_Quaternion ToQuaternionParams()
         {
-            RotParams_Quaternion result = new RotParams_Quaternion();
+            return ToQuaternionParams(new RotParams_Quaternion());
+        }
+
+        public override RotParams_Matrix ToMatrixParams()
+        {
+            return ToMatrixParams(new RotParams_Matrix(new float[3, 3]));
+        }
+
+        public override RotParams_AxisAngle ToAxisAngleParams()
+        {
+            return ToAxisAngleParams(new RotParams_AxisAngle(Vector3.right, 0));
+        }
+
+        public override RotParams_EulerAngles ToEulerParams(RotParams_EulerAngles eulerParams)
+        {
+            eulerParams.CopyValues(this);
+            return eulerParams;
+        }
+
+        public override RotParams_Quaternion ToQuaternionParams(RotParams_Quaternion quaternionParams)
+        {
+            RotParams_Quaternion result = RotParams_Quaternion.GetQuatIdentity();
+    
             foreach (_RotParams_EulerAngleGimbalRing rotation in gimbal.Reverse())
             {
                 RotParams_Quaternion asQuat = rotation.toQuaternionRotation();
                 result = asQuat * result; 
             }
-            return result; 
+    
+            quaternionParams.CopyValues(result); 
+            return quaternionParams;
         }
 
-        /*
-        public void GetValuesFromQuaternion(RotParams_Quaternion rotParamsQuaternion) //TODO: Test
+        public override RotParams_Matrix ToMatrixParams(RotParams_Matrix matrixParams)
         {
-            if (GetGimbalType() == EGimbalType.InvalidGimbalOrder)
+            RotParams_Matrix result = RotParams_Matrix.RotationIdentity();
+            foreach (_RotParams_EulerAngleGimbalRing rotation in gimbal.Reverse())
             {
-                Debug.LogError("EulerAngleRotation.GetValuesFromQuaternion() error: GimbalType is Invalid");
-                return; 
+                RotParams_Matrix asMatrix = rotation.toMatrixRotation();
+                result = asMatrix * result;
             }
-
-            if (GetGimbalType() == EGimbalType.TrueEulerAngle)
-            {
-                Debug.LogError("EulerAngleRotation.GetValuesFromQuaternion() error: Conversion from Quaternion to TrueEulerAngles not implemented");
-                return; 
-            }
-
-            
-            RotParams_Quaternion rotParamsQuaternionCopy = new RotParams_Quaternion(rotParamsQuaternion); 
-            RotParams_EulerAngles incompleteRotParamsEulerAngles = new RotParams_EulerAngles(this); 
-            
-            for (int i = 0; i < gimbal.Length; i++)
-            {
-                gimbal[i].ExtractValueFromQuaternion(rotParamsQuaternionCopy);  
-                RotParams_Quaternion inverse = incompleteRotParamsEulerAngles.ToQuaternionRotation().Inverse();
-                
-                rotParamsQuaternionCopy = inverse * rotParamsQuaternionCopy; 
-
-                if (rotParamsQuaternionCopy == RotParams_Quaternion.GetIdentity())
-                {
-                    return; 
-                }
-            }
-        }
-        */
-        
-        //ToQuaternionRotation.ToMatrixRotation is cheaper, because converting from EulerAngles to another RotationParent requires combining and inversing multiple rotation, which is cheaper in Quaternions
-        public override RotParams_Matrix ToMatrixParams() //TODO: test this function
-        {
-            RotParams_Matrix result = new RotParams_Matrix(RotParams_Matrix.RotationIdentity());
-            foreach (_RotParams_EulerAngleGimbalRing rotation in gimbal)
-            {
-                result = result * rotation.toMatrixRotation() * result.Inverse(); 
-            }
-            return result; 
-        }
-
-        /*
-        public void GetValuesFromMatrix(RotParams_Matrix rotParamsMatrix) //TODO: test this function
-        {
-            if (GetGimbalType() == EGimbalType.InvalidGimbalOrder)
-            {
-                Debug.LogError("EulerAngleRotation.GetValuesFromMatrix() error: GimbalType is Invalid");
-                return; 
-            }
-
-            if (GetGimbalType() == EGimbalType.TrueEulerAngle)
-            {
-                Debug.LogError("EulerAngleRotation.GetValuesFromMatrix() error: Conversion from Matrix to TrueEulerAngles not implemented");
-                return; 
-            }
-            
-            RotParams_Matrix rotParamsMatrixCopy = new RotParams_Matrix(rotParamsMatrix); 
-            
-            for (int i = 0; i < gimbal.Length; i++)
-            {
-                gimbal[i].ExtractValueFromMatrix(rotParamsMatrixCopy); 
-                RotParams_Matrix inverse = gimbal[i].toMatrixRotation().Inverse();
-                
-                rotParamsMatrixCopy = inverse * rotParamsMatrixCopy; 
-
-                if (rotParamsMatrixCopy == RotParams_Matrix.RotationIdentity())
-                {
-                    return; 
-                }
-            }
-        }
-        */
-        
-        public override RotParams_AxisAngle ToAxisAngleParams()
-        {
-            return ToQuaternionParams().ToAxisAngleParams(); 
+            matrixParams.CopyValues(result);
+            return matrixParams;
         }
         
+        public override RotParams_AxisAngle ToAxisAngleParams(RotParams_AxisAngle axisAngleParams)
+        {
+            ToQuaternionParams().ToAxisAngleParams(axisAngleParams);
+            return axisAngleParams;
+        }
+        
+        #region comparison
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            RotParams_EulerAngles other = (RotParams_EulerAngles)obj;
+            return this == other;
+        }
+
+        public static bool operator ==(RotParams_EulerAngles a, RotParams_EulerAngles b)
+        {
+            if (ReferenceEquals(a, b)) return true;
+            if (((object)a == null) || ((object)b == null)) return false;
+
+            return a.OuterAxis == b.OuterAxis &&
+                   Mathf.Abs(a.Outer.AngleInRadian - b.Outer.AngleInRadian) < 0.0001f &&
+                   a.MiddleAxis == b.MiddleAxis &&
+                   Mathf.Abs(a.Middle.AngleInRadian - b.Middle.AngleInRadian) < 0.0001f &&
+                   a.InnerAxis == b.InnerAxis &&
+                   Mathf.Abs(a.Inner.AngleInRadian - b.Inner.AngleInRadian) < 0.0001f; 
+        }
+
+        public static bool operator !=(RotParams_EulerAngles a, RotParams_EulerAngles b)
+        {
+            return !(a == b);
+        }
+
+        public override int GetHashCode()
+        {
+            return (OuterAngle: OuterAngleInCurrentUnit, MiddleAngle: MiddleAngleInCurrentUnit, InnerAngle: InnerAngleInCurrentUnit, OuterAxis, MiddleAxis, InnerAxis).GetHashCode();
+        }
+        #endregion comparison
+
         public override RotParams_Base GetInverse()
         {
             Debug.LogWarning("Cannot get inverse of RotParams_EulerAngles, need to convert to RotParams_Matrix");
@@ -476,6 +766,13 @@ namespace RotParams
 
         public override void ResetToIdentity()
         {
+            if (!IsGimbalValid())
+            {
+                OuterAxis = EGimbalAxis.Yaw; 
+                MiddleAxis = EGimbalAxis.Pitch; 
+                InnerAxis = EGimbalAxis.Roll;
+            }
+            
             outer.AngleInRadian = 0; 
             middle.AngleInRadian = 0;
             inner.AngleInRadian = 0;
@@ -488,8 +785,9 @@ namespace RotParams
 
         public override void GetValuesFromUnityQuaternion(Quaternion unityQuaternion)
         {
-            //TodoZyKa RotParams_EulerAngle: missing function 
-            throw new NotImplementedException("GetValuesFromUnityQuaternion is not implemented");
+            RotParams_Quaternion quaternionParams = new RotParams_Quaternion();
+            quaternionParams.GetValuesFromUnityQuaternion(unityQuaternion);
+            quaternionParams.ToEulerParams(this); 
         }
 
         public override string ToString()

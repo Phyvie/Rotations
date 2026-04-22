@@ -3,11 +3,10 @@
 
 #define PI 3.14159265
 #define TWO_PI 6.2831853
-#define THREE_PI 9.424777961
 
 float WrapAngleToPlusMinusPI(float angle)
 {
-    return fmod(angle + THREE_PI, TWO_PI)-PI; 
+    return angle - TWO_PI * floor((angle + PI) / TWO_PI); 
 }
 
 void IsValueInModRange_float(float val, float alpha, float beta, bool excludeFullCircle, out float result)
@@ -36,7 +35,6 @@ void IsValueInModRange_float(float val, float alpha, float beta, bool excludeFul
     }
 }
 
-
 void FullCircle_float(float distanceTo0, float angle, float circleRadius, out float isInCircle)
 {
     isInCircle = distanceTo0 < circleRadius ? 1.0f : 0.0f;
@@ -60,20 +58,16 @@ void MultiCircle_float(float distanceTo0, float angle, float circleCount, float 
     inCirclesCount = count;  
 }
 
-void ToPolarCoordinates_float(float2 pos, out float radius, out float angle)
-{
-    radius = length(pos);          
-    angle = atan2(pos.y, pos.x) / (TWO_PI); 
-}
-
 void Length_float(float2 pos, out float radius)
 {
     radius = distance(pos, float2(0, 0)); 
 }
 
-void MultiSpiral_float(float distanceTo0, float angle, float spiralCount, float outerRadius, float radiusRatio, out float isInSpiral)
+void MultiSpiral_float(float distanceTo0, float angle, float startOffset, float spiralCount, float outerRadius, float radiusRatio, out float isInSpiral)
 {
-    float remappedAngle = (angle+TWO_PI)%TWO_PI/TWO_PI;
+    float startOffsetClamped = WrapAngleToPlusMinusPI(startOffset); 
+    float remappedAngle = (angle+TWO_PI-startOffsetClamped)%TWO_PI/TWO_PI;
+    // float remappedAngle = (angle+TWO_PI)%TWO_PI/TWO_PI;
     float lerpAlpha = spiralCount > 0 ? 1-remappedAngle : remappedAngle; 
     float firstRadius = lerp(outerRadius, outerRadius*radiusRatio, lerpAlpha); 
     MultiCircle_float(distanceTo0, angle, min(abs(spiralCount), 5), firstRadius, radiusRatio, isInSpiral);  

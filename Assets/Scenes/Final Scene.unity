@@ -197,11 +197,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1689187925402532235, guid: ee04adb64b582ab4693b6a7ec2e18ac7,
         type: 3}
-      propertyPath: rotParams.typedAngle.angleType
-      value: 6320511982587609869
-      objectReference: {fileID: 0}
-    - target: {fileID: 1689187925402532235, guid: ee04adb64b582ab4693b6a7ec2e18ac7,
-        type: 3}
       propertyPath: 'managedReferences[6320511982587609869]'
       value: MathExtensions RotParams.AngleType
       objectReference: {fileID: 0}

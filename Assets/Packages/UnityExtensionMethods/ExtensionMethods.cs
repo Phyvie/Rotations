@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace MathExtensions
+namespace Packages.UnityExtensionMethods
 {
     public static class ExtensionMethods
     {
@@ -17,7 +17,14 @@ namespace MathExtensions
             {
                 relativePosition = transform.InverseTransformPoint(t.position);
                 relativeRotation = Quaternion.Inverse(transform.rotation) * t.rotation;
-                relativeScale = Vector3.Scale(t.lossyScale, transform.lossyScale);  
+                
+                Vector3 targetScale = t.lossyScale;
+                Vector3 refScale = transform.lossyScale;
+                relativeScale = new Vector3(
+                    targetScale.x / refScale.x,
+                    targetScale.y / refScale.y,
+                    targetScale.z / refScale.z
+                );
             }
         }
     }

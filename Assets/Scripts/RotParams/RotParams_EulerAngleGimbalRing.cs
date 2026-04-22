@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Packages.MathExtensions;
 using Unity.Properties;
 using UnityEditor;
 using UnityEngine;
@@ -75,14 +76,14 @@ namespace RotParams
         private _RotParams_EulerAngleGimbalRing()
         {
             eAxis = EGimbalAxis.Yaw;
-            typedAngle = new AngleWithType(AngleType.Degree, 0);
+            typedAngle = new AngleWithType(EAngleType.Degree, 0);
         }
         
-        public _RotParams_EulerAngleGimbalRing(EGimbalAxis inEAxis, float angleInRadian) : this(inEAxis, AngleType.Radian, angleInRadian)
+        public _RotParams_EulerAngleGimbalRing(EGimbalAxis inEAxis, float angleInRadian) : this(inEAxis, EAngleType.Radian, angleInRadian)
         {
         }
 
-        public _RotParams_EulerAngleGimbalRing(EGimbalAxis inEAxis, AngleType angleType, float angle) : this(inEAxis, new AngleWithType(angleType, angle))
+        public _RotParams_EulerAngleGimbalRing(EGimbalAxis inEAxis, EAngleType angleType, float angle) : this(inEAxis, new AngleWithType(angleType, angle))
         {
         }
 
@@ -100,15 +101,15 @@ namespace RotParams
         
         public static _RotParams_EulerAngleGimbalRing Yaw()
         {
-            return new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Yaw, AngleType.Degree, 90); 
+            return new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Yaw, EAngleType.Degree, 90); 
         }
         public static _RotParams_EulerAngleGimbalRing Pitch(RotParams_EulerAngles parent)
         {
-            return new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Pitch, AngleType.Degree, 90); 
+            return new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Pitch, EAngleType.Degree, 90); 
         }
         public static _RotParams_EulerAngleGimbalRing Roll(RotParams_EulerAngles parent)
         {
-            return new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Roll, AngleType.Degree, 90); 
+            return new _RotParams_EulerAngleGimbalRing(EGimbalAxis.Roll, EAngleType.Degree, 90); 
         }
         #endregion //Constructors
         
@@ -125,38 +126,19 @@ namespace RotParams
                 }),
                 EGimbalAxis.Pitch => new RotParams_Matrix(new float[3,3]
                 {
-                    { Mathf.Cos(AngleInRadian), -Mathf.Sin(AngleInRadian),  0 },
-                    { Mathf.Sin(AngleInRadian),  Mathf.Cos(AngleInRadian),  0 },
-                    {           0,                          0,              1 }
-                }),
-                EGimbalAxis.Roll => new RotParams_Matrix(new float[3,3]
-                {
                     { 1,              0,                       0            },
                     { 0, Mathf.Cos(AngleInRadian), -Mathf.Sin(AngleInRadian) },
                     { 0, Mathf.Sin(AngleInRadian), Mathf.Cos(AngleInRadian) }
                 }),
+                EGimbalAxis.Roll => new RotParams_Matrix(new float[3,3]
+                {
+                    { Mathf.Cos(AngleInRadian), -Mathf.Sin(AngleInRadian),  0 },
+                    { Mathf.Sin(AngleInRadian),  Mathf.Cos(AngleInRadian),  0 },
+                    {           0,                          0,              1 }
+                }),
                 _ => throw new InvalidEnumArgumentException()
             }; 
         }
-
-        /*
-        public void ExtractValueFromMatrix(RotParams_Matrix m) 
-        {
-            switch (eAxis)
-            {
-                case EGimbalAxis.Yaw:
-                    AngleInRadian = Mathf.Atan2(m[2, 0], m[0, 0]); 
-                    break; 
-                case EGimbalAxis.Pitch:
-                    AngleInRadian = Mathf.Atan2(m[0, 1], m[0, 0]); 
-                    break; 
-                case EGimbalAxis.Roll:
-                    AngleInRadian = Mathf.Atan2(m[2, 1], m[1, 1]); 
-                    break; 
-            }
-        }
-        */
-
         public RotParams_Quaternion toQuaternionRotation() 
         {
             return new RotParams_Quaternion(RotationAxis, AngleInRadian);

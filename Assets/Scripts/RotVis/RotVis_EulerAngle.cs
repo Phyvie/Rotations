@@ -16,7 +16,8 @@ namespace RotationVisualisation
         private class RailRingPair
         {
             [SerializeField] public GameObject rail;
-            [SerializeField] public GameObject ring; 
+            [SerializeField] public GameObject ring;
+            [SerializeField] public GameObject circle; 
             [FormerlySerializedAs("vis_planeArc")] [SerializeField] public Vis_Angle visAngle; 
         }
         [SerializeField] private RailRingPair outer;
@@ -31,10 +32,14 @@ namespace RotationVisualisation
         
         [SerializeField] private Color PosRollColor;
         [SerializeField] private Color NegRollColor;
-        
-        public RotVis_EulerAngle(RotParams_EulerAngles rotParams) : base(rotParams)
-        { }
-        
+
+        private void Start()
+        {
+            VisReset(); 
+            VisSetupRails();
+            VisUpdateShaderPlaneArcsColours();
+        }
+
         public override void VisUpdate()
         {
             if (_previousRotParamAxes == null || !RotParams_EulerAngles.AreAxesMatching(rotParams, _previousRotParamAxes))
@@ -63,8 +68,13 @@ namespace RotationVisualisation
         private void VisUpdateRingRotations()
         {
             outer.ring.transform.localRotation = new Quaternion(0, Mathf.Sin(rotParams.Outer.AngleInRadian/2), 0, Mathf.Cos(rotParams.Outer.AngleInRadian/2)); 
+            outer.circle.transform.localRotation = new Quaternion(0, Mathf.Sin(rotParams.Outer.AngleInRadian/2), 0, Mathf.Cos(rotParams.Outer.AngleInRadian/2)); 
+            
             middle.ring.transform.localRotation = new Quaternion(0, Mathf.Sin(rotParams.Middle.AngleInRadian/2), 0, Mathf.Cos(rotParams.Middle.AngleInRadian/2)); 
+            middle.circle.transform.localRotation = new Quaternion(0, Mathf.Sin(rotParams.Middle.AngleInRadian/2), 0, Mathf.Cos(rotParams.Middle.AngleInRadian/2)); 
+            
             inner.ring.transform.localRotation = new Quaternion(0, Mathf.Sin(rotParams.Inner.AngleInRadian/2), 0, Mathf.Cos(rotParams.Inner.AngleInRadian/2));
+            inner.circle.transform.localRotation = new Quaternion(0, Mathf.Sin(rotParams.Inner.AngleInRadian/2), 0, Mathf.Cos(rotParams.Inner.AngleInRadian/2));
         }
 
         private void VisSetupRails()
@@ -113,6 +123,7 @@ namespace RotationVisualisation
         {
             switch (gimbalRing.EAxis)
             {
+                //Since the GimbalRings themselves are rotated, the shader is rotated in the opposite way; thus the colours must be reversed
                 case EGimbalAxis.Yaw:
                     visAngle.PositiveAngleColor = PosYawColor; 
                     visAngle.NegativeAngleColor = NegYawColor;
@@ -134,17 +145,20 @@ namespace RotationVisualisation
         {
             if (outer.visAngle != null)
             {
-                outer.visAngle.BeginAngle = -rotParams.Outer.AngleInRadian; //The Gimbal itself gets rotated there the BeginAngle must be set to the negative of the AngleInRadian
+                outer.visAngle.BeginAngle = -rotParams.Outer.AngleInRadian; //The Gimbal itself gets rotated. Thus the BeginAngle points to the current orientation. Thus the EndAngle is set to the negative of the Angle. 
+                outer.visAngle.EndingAngle = 0; 
             }
 
             if (middle.visAngle != null)
             {
                 middle.visAngle.BeginAngle = -rotParams.Middle.AngleInRadian;
+                middle.visAngle.EndingAngle = 0;
             }
             
             if (inner.visAngle != null)
             {
                 inner.visAngle.BeginAngle = -rotParams.Inner.AngleInRadian;
+                inner.visAngle.EndingAngle = 0;
             }
         }
         

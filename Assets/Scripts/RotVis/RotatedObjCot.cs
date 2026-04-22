@@ -8,7 +8,6 @@ namespace RotObj
      */
     public class OrientedObject : MonoBehaviour
     {
-        //TodoZyKa RotSceneHierarchy: Rework and Document Hierarchy 
         [SerializeField] private Transform userRotation;
         [SerializeField] private Transform appliedRotation;
         [SerializeField] private GameObject currentlyActiveRotationObject;

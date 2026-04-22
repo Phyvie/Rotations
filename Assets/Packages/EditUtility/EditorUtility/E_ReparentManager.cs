@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using MathExtensions;
+using Packages.UnityExtensionMethods;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -32,12 +32,14 @@ public static class E_ReparentManager
                 EditorApplication.hierarchyChanged += OnHierarchyChanged;
                 EditorSceneManager.sceneOpened += UpdateParentDictionaryOnSceneOpen;
                 EditorSceneManager.sceneClosed += UpdateParentDictionaryOnSceneClose;
+                Debug.Log("ReparentedObjectEditor is now active.");
             }
             else
             {
                 EditorApplication.hierarchyChanged -= OnHierarchyChanged;
                 EditorSceneManager.sceneOpened -= UpdateParentDictionaryOnSceneOpen;
                 EditorSceneManager.sceneClosed -= UpdateParentDictionaryOnSceneClose; 
+                Debug.Log("ReparentedObjectEditor is now inactive.");
             }
             
             _isActive = value;   
@@ -110,19 +112,7 @@ public static class E_ReparentManager
     private static void ToggleActive()
     {
         IsActive = !IsActive;
-
         EditorPrefs.SetBool(ToggleKey, IsActive);
-
-        if (IsActive)
-        {
-            EditorApplication.hierarchyChanged += OnHierarchyChanged;
-            Debug.Log("ReparentedObjectEditor is now active.");
-        }
-        else
-        {
-            EditorApplication.hierarchyChanged -= OnHierarchyChanged;
-            Debug.Log("ReparentedObjectEditor is now inactive.");
-        }
     }
 
     [MenuItem("Tools/Reparented Object Editor/Show State")]

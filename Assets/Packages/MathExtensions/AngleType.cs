@@ -1,60 +1,52 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
 
-namespace RotParams
+namespace Packages.MathExtensions
 {
-    [System.Serializable]
-    public class AngleType 
+    [Serializable]
+    public enum EAngleType
     {
-        #region publicstatic
-        public static readonly AngleType Radian = new AngleType("Radian", 2 * Mathf.PI, "2PI");
-        public static readonly AngleType Degree = new AngleType("Degree", 360, "360°");
-        public static readonly AngleType CirclePart = new AngleType("CirclePart", 1, "Circle(s)");
+        Radian,
+        Degree,
+        CirclePart
+    }
 
-        public static readonly List<string> AngleTypeNames = new List<string>() { "Radian", "Degree", "Circles" }; //this is a List instead of Array, because it's easier to use for UI Toolkit
-        public static readonly AngleType[] AngleTypes = new AngleType[] { Radian, Degree, CirclePart };
-        #endregion publicstatic
+    public static class AngleType
+    {
+        #region Metadata Definition
+        private struct Metadata
+        {
+            public string Name;
+            public double Multiplier;
+            public string Label;
+        }
+
+        private static readonly Dictionary<EAngleType, Metadata> _metadata = new Dictionary<EAngleType, Metadata>
+        {
+            { EAngleType.Radian, new Metadata { Name = "Radian", Multiplier = 2 * Math.PI, Label = "2PI" } },
+            { EAngleType.Degree, new Metadata { Name = "Degree", Multiplier = 360, Label = "360°" } },
+            { EAngleType.CirclePart, new Metadata { Name = "CirclePart", Multiplier = 1, Label = "Circle(s)" } }
+        };
         
-        #region variables
-        [SerializeField] private string angleTypeName;
-        [SerializeField] private double unitMultiplier;
-        [SerializeField] private string unitLabel;
+        public static bool IsValid(EAngleType type) => _metadata.ContainsKey(type);
+        #endregion Metadata Definition
 
-        public string AngleTypeName
-        {
-            get => angleTypeName;
-            private set => angleTypeName = value;
-        }
-        
-        public double UnitMultiplier
-        {
-            get => unitMultiplier;
-            private set => unitMultiplier = value;
-        }
+        #region Public Static API
+        public static readonly List<string> AngleTypeNames = _metadata.Values.Select(m => m.Name)
+            .ToList();
 
-        public string UnitLabel
-        {
-            get => unitLabel;
-            private set => unitLabel = value;
-        }
-        #endregion variables
+        public static string GetName(this EAngleType type) => _metadata[type].Name;
+        public static double GetMultiplier(this EAngleType type) => _metadata[type].Multiplier;
+        public static string GetLabel(this EAngleType type) => _metadata[type].Label;
 
-        private AngleType(string angleTypeName, double unitMultiplier, string unitLabel)
-        {
-            this.AngleTypeName = angleTypeName;
-            this.UnitMultiplier = unitMultiplier;
-            this.UnitLabel = unitLabel; 
-        }
+        public static int GetIndex(this EAngleType type) => (int)type;
+        public static EAngleType FromIndex(int index) => (EAngleType)index;
 
-        public static float ConvertAngle(float inAngle, AngleType inAngleType, AngleType outAngleType)
+        public static float ConvertAngle(float inAngle, EAngleType inAngleType, EAngleType outAngleType)
         {
-            return (float)(inAngle / inAngleType.UnitMultiplier * outAngleType.UnitMultiplier);
+            return (float)(inAngle / GetMultiplier(inAngleType) * GetMultiplier(outAngleType));
         }
-
-        public override string ToString()
-        {
-            return AngleTypeName + $"({UnitMultiplier})({UnitLabel})"; 
-        }
+        #endregion Public Static API
     }
 }

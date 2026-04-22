@@ -1,0 +1,25 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UnityColors.uss?fileID=7433441132597879392&amp;guid=05afd8f5bd01ac04682fabbc8e02db4f&amp;type=3#UnityColors" />
+    <Style src="project://database/Assets/UI%20Toolkit/RotUI/Container/RotUI_ComboRotCot__MenuLine.uss?fileID=7433441132597879392&amp;guid=549ed600a0564424db4a009a0d906ed3&amp;type=3#RotUI_ComboRotCot__MenuLine" />
+    <Style src="project://database/Assets/UI%20Toolkit/BaseUSS/UserInputFields.uss?fileID=7433441132597879392&amp;guid=6dd3f635675e8f246b205a73e8f7b1dd&amp;type=3#UserInputFields" />
+    <engine:VisualElement name="MenuLine" data-source-type="RotContainers.ComboRotCot, RotContainers" class="unityUIBackgroundColor unityUIFieldColor unityUITextColor container--horizontalspacearound" style="flex-grow: 1; flex-direction: row; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
+        <engine:DropdownField name="MenuLine__ParameterizationSelection">
+            <Bindings>
+                <engine:DataBinding property="choices" data-source-path="SelectableRotationTypes" binding-mode="ToTargetOnce" />
+                <engine:DataBinding property="index" data-source-path="SelectedTypeIndex" binding-mode="TwoWay" />
+            </Bindings>
+        </engine:DropdownField>
+        <engine:Foldout text="Options: " value="false" name="MenuLine__ContextMenu">
+            <engine:Toggle label="Auto Convert Values" name="ContextMenu__Convert-Values-Toggle" value="true" class="fieldStyle--minimal-toggle">
+                <Bindings>
+                    <engine:DataBinding property="value" data-source-path="ConvertRotParamsOnSwitch" binding-mode="TwoWay" />
+                </Bindings>
+            </engine:Toggle>
+            <engine:Toggle label="Reset Rotation" name="ContextMenu__Identity-Reset" class="function-button">
+                <Bindings>
+                    <engine:DataBinding property="value" data-source-path="ParamsResetFunction" binding-mode="TwoWay" />
+                </Bindings>
+            </engine:Toggle>
+        </engine:Foldout>
+    </engine:VisualElement>
+</engine:UXML>

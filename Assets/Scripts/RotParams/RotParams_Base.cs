@@ -9,12 +9,19 @@ namespace RotParams
     [Serializable]
     public abstract class RotParams_Base : INotifyPropertyChanged
     {
-        public abstract RotParams_Base ToSelfType(RotParams_Base toConvert);
+        public abstract RotParams_Base ToSelfTypeCopy(RotParams_Base toConvert); 
+        public abstract void ConvertAndCopyValues(RotParams_Base toConvert); 
+        
         public abstract void CopyValues(RotParams_Base toCopy); 
         public abstract RotParams_EulerAngles ToEulerParams(); 
         public abstract RotParams_Quaternion ToQuaternionParams(); 
         public abstract RotParams_Matrix ToMatrixParams(); 
-        public abstract RotParams_AxisAngle ToAxisAngleParams(); 
+        public abstract RotParams_AxisAngle ToAxisAngleParams();
+
+        public abstract RotParams_EulerAngles ToEulerParams(RotParams_EulerAngles eulerParams); 
+        public abstract RotParams_Quaternion ToQuaternionParams(RotParams_Quaternion quaternionParams);
+        public abstract RotParams_Matrix ToMatrixParams(RotParams_Matrix matrixParams);
+        public abstract RotParams_AxisAngle ToAxisAngleParams(RotParams_AxisAngle axisAngleParams);
         
         public bool DoesTypeMatch(RotParams_Base otherRotation)
         {
@@ -24,6 +31,7 @@ namespace RotParams
         public abstract RotParams_Base GetIdentity();
         public abstract RotParams_Base GetInverse();
 
+        /* TodoZyKa RotParams_Concatenate: Not sure whether this should be in here, since not all RotParams can concatenate, maybe an interface would be better? */
         public RotParams_Base Concatenate(RotParams_Base otherRotation, bool otherFirst = false)
         {
             if (!DoesTypeMatch(otherRotation))
@@ -37,8 +45,10 @@ namespace RotParams
             }
         }
 
+        /* TodoZyKa RotParams_Concatenate: Not sure whether this should be in here, since not all RotParams can concatenate, maybe an interface would be better? */
         protected abstract RotParams_Base Concatenate_Implementation(RotParams_Base otherRotation, bool otherFirst = false); 
         
+        [ContextMenu("Reset to Identity")]
         public abstract void ResetToIdentity();
         
         public abstract Vector3 RotateVector(Vector3 inVector);

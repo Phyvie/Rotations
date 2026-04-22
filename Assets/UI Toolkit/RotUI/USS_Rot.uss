@@ -13,26 +13,41 @@
     width: 33%;
 }
 
-.MathVis--X, 
-.MathVis--X .unity-label, 
-.MathVis--X .unity-text-element
+#QuaternionRoot
+, #AxisAngleRoot
+, #EulerRoot
+, #MatrixRoot
 {
-    color: #FF7373; 
+    background-color: rgb(56, 56, 56);
+    font-size: 12px; 
+}
+
+.MathVis--X
+, .MathVis--X .unity-label
+, .MathVis--X .unity-text-element
+, .MathVis--X #unity-text-input
+{
+    color: #FF7373;
+    border-bottom-color: #FF7373;
     -unity-font-style: bold;
 }
 
-.MathVis--Y, 
-.MathVis--Y .unity-label, 
-.MathVis--Y .unity-text-element
+.MathVis--Y
+, .MathVis--Y .unity-label
+, .MathVis--Y .unity-text-element
+, .MathVis--Y #unity-text-input
 {
     color: #73FF73;
+    border-bottom-color: #73FF73;
     -unity-font-style: bold;
 }
 
-.MathVis--Z, 
-.MathVis--Z .unity-label, 
-.MathVis--Z .unity-text-element
+.MathVis--Z
+, .MathVis--Z .unity-label
+, .MathVis--Z .unity-text-element
+, .MathVis--Z #unity-text-input
 {
     color: #7373FF;
+    border-bottom-color: #7373FF;
     -unity-font-style: bold;
 }

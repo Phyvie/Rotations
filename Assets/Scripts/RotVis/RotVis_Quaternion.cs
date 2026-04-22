@@ -15,11 +15,6 @@ namespace RotationVisualisation
         [SerializeField] private Vis_Axis vis_Axis; 
         [FormerlySerializedAs("vis_PlaneArc")] [SerializeField] private Vis_Angle visAngle;
         
-        public RotVis_Quaternion(RotParams_Quaternion rotParams_Quaternion) : base(rotParams_Quaternion)
-        {
-            
-        }
-        
         public Vector3 Axis => rotParams.NormalizedAxis;
 
         public float Angle => rotParams.AngleInRadian;

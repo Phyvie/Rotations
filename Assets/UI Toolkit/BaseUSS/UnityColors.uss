@@ -1,16 +1,18 @@
+/* background colour, field background colour, field border colour, dropdown arrow & dropdown background colour */
+
 .unityUIBackgroundColor {
     background-color: rgb(56, 56, 56);
+    border-width: 1px;
     border-color: rgb(0, 0, 0);
-    border-width: 1px; 
 }
 
 .unityUIFieldColor VisualElement,
-.unityUIFieldColor #unity-text-input
+.unityUIFieldColor .unity-base-field__input
 {
-    background-color: rgba(42, 42, 42, 0);
+    background-color: rgb(56, 56, 56);
 }
 
-.unityUIFieldColor #unity-text-input
+.unityUIFieldColor .unity-base-field__input
 {
     border-width: 2px 1px; 
     border-color: rgb(0, 0, 0);
@@ -18,9 +20,8 @@
 }
 
 .unityUIFieldColor EnumField > VisualElement,
-.unityUIFieldColor DropdownField > VisualElement 
+.unityUIFieldColor DropdownField > VisualElement
 {
-    background-color: rgba(42, 42, 42, 0);
     border-width: 2px 1px 1px 2px;
     border-color: rgb(0, 0, 0);
     border-radius: 4px;
