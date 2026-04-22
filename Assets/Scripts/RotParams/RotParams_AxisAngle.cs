@@ -316,12 +316,18 @@ namespace RotParams
 
         public override RotParams_Quaternion ToQuaternionParams(RotParams_Quaternion quaternionParams)
         {
+            bool _enforceNormalisation = quaternionParams.EnforceNormalisation;
+            quaternionParams.EnforceNormalisation = false; 
+            
             float halfAngle = AngleInRadian * 0.5f;
-            float s = Mathf.Sin(halfAngle); 
+            float s = Mathf.Sin(halfAngle);
             quaternionParams.W = Mathf.Cos(halfAngle);
             quaternionParams.X = NormalisedAxis.x * s;
             quaternionParams.Y = NormalisedAxis.y * s;
             quaternionParams.Z = NormalisedAxis.z * s;
+            
+            quaternionParams.EnforceNormalisation = _enforceNormalisation;
+            
             return quaternionParams;
         }
 

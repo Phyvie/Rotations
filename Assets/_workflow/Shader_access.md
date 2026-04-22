@@ -41,57 +41,102 @@ am I creating this, only because it ... (strike-through wrong ones)
 
 ### Research: 
 switch (complexity): 
- - **pre-built**: quick-check for reuse
+ - ~~**pre-built**: quick-check for reuse~~
  - **similar**: similarity-table 
- - **custom feature**: 
-  - research <=min(0.5days, 3 answer) -> comparison table 
-  - choose one and test <=(0.5day, acceptable test) -> result table
- - **custom system**:
-   - research <=(2days, 3 answers) -> comparison table
-   - choose 2 test each <=(1.5 days, acceptable test) -> result table
+ - ~~**custom feature**:~~ 
 
-| solution | advantage | disadvantage |
-|----------|-----------|--------------|
-|          |           |              |
-|          |           |              |
+```mermaid
+flowchart TD
+    subgraph UserAction [User Interaction]
+        SwitchActive["Select other Parameterization from UI"]
+        ChangeParam["Adjust Value from UI"]
+    end
 
+    subgraph Logic [Logic Layer]
+        CRC["ComboRotCot"]
+        RC["RotCot (Active)"]
+        RP["RotParams (Data)"]
+        
+        SwitchActive -- Switch Active Parameterization --> CRC
+        CRC -- "1. Disable old RotCot \n (incl. event unsubscription)" --> RC
+        CRC -- "2. Copy/Convert values (if enabled)" --> RP
+        CRC -- "3. Enable new RotCot \n (incl. event subscription)" --> RC
+        
+        ChangeParam --> RP
+        RP -- "Event NotifyPropertyChanged" --> RC
+    end
+
+    subgraph Visualisation [Visualisation Layer]
+        RP -- "Event NotifyPropertyChanged" --> RV
+        RV["RotVis_RotParamType"]
+        VA["Vis_Elements \n(e.g. Vis_Angle, Vis_Vector, ...)"]
+        
+        RV -- "VisUpdate" --> VA
+        Shader["Shader Values (Material Properties)"]
+        VA -- "VisUpdateShader" --> Shader
+    end
+    RC -- "UpdateOrientedObject" --> OO["OrientedObject (Plane Mesh)"]
+```
+
+```mermaid
+
+```
+
+### Event Subscription Lifecycle
+```mermaid
+flowchart TD
+    subgraph Initialization [Initialization / Setup]
+        Init["ComboRotCot.Initialize"]
+        InitRotCot["RotCot.Initialize"]
+        Init --> InitRotCot
+    end
+
+    subgraph SwitchProcess [Switching Parameterization - ComboRotCot]
+        DisableOld["1. Disable Old RotCot"]
+        Convert["2. Convert & Copy Values"]
+        EnableNew["3. Enable New RotCot"]
+        
+        DisableOld --> Convert --> EnableNew
+    end
+
+    subgraph RotCotLifecycle [RotCot - Active State]
+        OnEnable["OnEnable"]
+        SubRC["Sub: RotParams.PropertyChanged += UpdateOrientedObject"]
+        
+        OnDisable["OnDisable"]
+        UnsubRC["Unsub: RotParams.PropertyChanged -= UpdateOrientedObject"]
+
+        EnableNew --> OnEnable
+        OnEnable --> SubRC
+        OnDisable --> UnsubRC
+    end
+
+    subgraph RotVisLifecycle [RotVis - Visuals]
+        SetRP["RotVis.SetRotParamsByRef"]
+        UnsubOldVis["Unsub: oldRotParams.PropertyChanged -= VisUpdateOnRotParamsChanged"]
+        SubNewVis["Sub: newRotParams.PropertyChanged += VisUpdateOnRotParamsChanged"]
+        
+        EnableNew -- "via RotCot.OnEnable" --> SetRP
+        SetRP --> UnsubOldVis --> SubNewVis
+    end
+
+    subgraph PropertySetter [Direct RotParams Assignment]
+        Setter["RotCot.RotParams = value"]
+        UnsubS["Unsub: oldRotParams.PropertyChanged -= UpdateOrientedObject"]
+        SubS["Sub: newRotParams.PropertyChanged += UpdateOrientedObject"]
+        
+        Setter --> UnsubS --> SubS
+    end
+```
 
 ###  Workflow: is research done?
 ### Research Summary: 
 
 ### Happy-Path: 
-- **simple** (<= 1hour): pseudo-code lines
 - **default** (<= 1day): flowchart & rubber-duck
-- **complex** (week): separate into tasks
-- **refactor**: check current documentation, goto corresponding case
-
-### Kill Duck
-- am I using this solution, only because it ...
-- ... is intellectually interesting?
-- ... appears cool?
-- ... is fun to make?
-- ... helps an imaginary future?
--> any yes = kill
 
 ###  Workflow: confirm happy-path
 ### Happy-Path Summary:
-
-### Edge-Cases: 
-- 5 min brainstorm (technical issues, user stupidity, internal curruption) into frequency-impact-time-list: 
-
-| case | **frequency** | **impact** | solution-idea | **solve-time** | solve? |
-|------|---------------|------------|---------------|----------------|--------|
-|      |               |            |               |                |        |
-
-### implement cases into Solution (from Happy-Path)
-
-### Kill Duck: 
-- implementable without further thinking?
-- is it "boring"?
-  - common patterns?
-  - no surprises?
-  - obvious error handling?
-  - backwards-compatible?
 
 ###  Workflow: confirm solution design
 ### Solution Summary: 

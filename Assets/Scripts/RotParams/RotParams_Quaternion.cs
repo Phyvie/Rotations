@@ -16,6 +16,17 @@ namespace RotParams
         
         #region Properties
         #region WXYZValueAccessors
+
+        public float[] GetInternalVector()
+        {
+            return _internalVector.ValuesCopy; 
+        }
+
+        public void SetValues(float[] newVector)
+        {
+            _internalVector.SetVector(newVector);
+        }
+        
         [CreateProperty]
         public float W
         {
@@ -264,15 +275,15 @@ namespace RotParams
             inAxis = inAxis.normalized;
 
             float halfAngle = inAngleInRadian * 0.5f;
-            float cos = (float)Math.Cos(halfAngle);
-            float sin = (float)Math.Sin(halfAngle);
+            float cosHalfAngle = (float)Math.Cos(halfAngle);
+            float sinHalfAngle = (float)Math.Sin(halfAngle);
 
             _internalVector.SetVector(new float[]
             {
-                cos, 
-                inAxis.x * sin, 
-                inAxis.y * sin, 
-                inAxis.z * sin
+                cosHalfAngle, 
+                inAxis.x * sinHalfAngle, 
+                inAxis.y * sinHalfAngle, 
+                inAxis.z * sinHalfAngle
             });
 
             _internalVector.SetAutoNormalizeToTargetMagnitude(autoNormalizeToTargetMagnitude);

@@ -125,16 +125,16 @@ namespace RotationVisualisation
             {
                 //Since the GimbalRings themselves are rotated, the shader is rotated in the opposite way; thus the colours must be reversed
                 case EGimbalAxis.Yaw:
-                    visAngle.PositiveAngleColor = NegYawColor; 
-                    visAngle.NegativeAngleColor = PosYawColor;
+                    visAngle.PositiveAngleColor = PosYawColor; 
+                    visAngle.NegativeAngleColor = NegYawColor;
                     break;
                 case EGimbalAxis.Pitch:
-                    visAngle.PositiveAngleColor = NegPitchColor;
-                    visAngle.NegativeAngleColor = PosPitchColor;
+                    visAngle.PositiveAngleColor = PosPitchColor;
+                    visAngle.NegativeAngleColor = NegPitchColor;
                     break;
                 case EGimbalAxis.Roll:
-                    visAngle.PositiveAngleColor = NegRollColor;
-                    visAngle.NegativeAngleColor = PosRollColor;
+                    visAngle.PositiveAngleColor = PosRollColor;
+                    visAngle.NegativeAngleColor = NegRollColor;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -145,17 +145,20 @@ namespace RotationVisualisation
         {
             if (outer.visAngle != null)
             {
-                outer.visAngle.EndingAngle = -rotParams.Outer.AngleInRadian; //The Gimbal itself gets rotated. Thus the BeginAngle points to the current orientation. Thus the EndAngle is set to the negative of the Angle. 
+                outer.visAngle.BeginAngle = -rotParams.Outer.AngleInRadian; //The Gimbal itself gets rotated. Thus the BeginAngle points to the current orientation. Thus the EndAngle is set to the negative of the Angle. 
+                outer.visAngle.EndingAngle = 0; 
             }
 
             if (middle.visAngle != null)
             {
-                middle.visAngle.EndingAngle = -rotParams.Middle.AngleInRadian;
+                middle.visAngle.BeginAngle = -rotParams.Middle.AngleInRadian;
+                middle.visAngle.EndingAngle = 0;
             }
             
             if (inner.visAngle != null)
             {
-                inner.visAngle.EndingAngle = -rotParams.Inner.AngleInRadian;
+                inner.visAngle.BeginAngle = -rotParams.Inner.AngleInRadian;
+                inner.visAngle.EndingAngle = 0;
             }
         }
         

@@ -68,13 +68,13 @@
         </engine:VisualElement>
         <engine:VisualElement name="Quaternion__Desc">
             <engine:VisualElement name="Quaternion__DescRealContainer" style="flex-grow: 1;">
-                <engine:Label text="Cos (2·Angle)" name="Quaternion__DescReal" class="centeredText" />
+                <engine:Label text="Cos (Angle / 2)" name="Quaternion__DescReal" class="centeredText" />
             </engine:VisualElement>
             <engine:VisualElement name="Quaternion__DescPlusSignContainer" style="flex-grow: 1;">
                 <engine:Label text="+" name="Quaternion__DescPlusSign" class="centeredText" />
             </engine:VisualElement>
             <engine:VisualElement name="Quaternion__DescImaginaryContainer" style="flex-grow: 1;">
-                <engine:Label text="Sin (2 · Angle) · Unit-Axis" name="Quaternion__DescImaginary" class="centeredText" />
+                <engine:Label text="Sin (Angle /2) · Unit-Axis" name="Quaternion__DescImaginary" class="centeredText" />
             </engine:VisualElement>
         </engine:VisualElement>
         <engine:VisualElement name="Quaternion__AxisAngleContainer">

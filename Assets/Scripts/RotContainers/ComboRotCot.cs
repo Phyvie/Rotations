@@ -419,7 +419,8 @@ namespace RotContainers
                 return; 
             }
             
-            _activeRotCot.enabled = true;
+            //OnEnable handles further interactions (event subscriptions, VisUpdate(), OrientedObject.SetRotation(), ...)
+            _activeRotCot.enabled = true; 
         }
         #endregion SwitchRotParamType
         

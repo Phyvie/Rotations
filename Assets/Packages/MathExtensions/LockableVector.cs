@@ -13,8 +13,8 @@ namespace Extensions.MathExtensions
     }
 
     /// <summary>
-    /// A vector where individual components can be locked.
-    /// Supports automatic normalization to a target length, even with locked components.
+    /// A vector that can be setup to keep a target magnitude, i.e. when one entry changes, the other values change accordingly to keep the magnitude consistent. 
+    /// Individual components can be locked. For example, consider a LockableVector with three components where the first entry is locked. If the second value is increased, the first one remains constant; only the third value will decrease to maintain a consistent magnitude.
     /// </summary>
     [Serializable]
     public class LockableVector

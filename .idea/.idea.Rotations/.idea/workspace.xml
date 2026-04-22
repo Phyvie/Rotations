@@ -5,29 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b54c963-bad1-41cc-8b0e-252a0574fd2d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/UI Toolkit/Scripts/CanvasSize.jslib" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/UI Toolkit/Scripts/CanvasSize.jslib.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Rotations/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathExtensions/LockableVector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathExtensions/LockableVector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/M_AngleLit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/M_AngleLit.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/M_AngleUnlit.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/M_AngleUnlit.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/Vis_Angle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Angle/Vis_Angle.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Vector/M_VectorColor.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Packages/MathVisPackage/Vector/M_VectorColor.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_EulerGimbal.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/RotVis/RotVis_EulerGimbal.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/PerformanceTestRunInfo.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/PerformanceTestRunInfo.json.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/PerformanceTestRunSettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/PerformanceTestRunSettings.json.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Final Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Final Scene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Tests/RotParams_Tests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/Tests/RotParams_Tests.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ComboRotCot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/ComboRotCot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_Base.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotContainers/RotCot_Base.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_EulerAngles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_EulerAngles.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_AxisAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_AxisAngle.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Matrix.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Matrix.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Quaternion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotParams/RotParams_Quaternion.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_EulerAngle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_EulerAngle.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_GenericBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/RotVis/RotVis_GenericBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/EulerAngle/UID_EulerAngle.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/EulerAngle/UID_EulerAngle.uxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/EulerAngle/USS_EulerAngle.uss" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/EulerAngle/USS_EulerAngle.uss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Quaternion/UID_Quaternion.uxml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Toolkit/RotUI/Quaternion/UID_Quaternion.uxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/UniversalRenderPipelineGlobalSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UniversalRenderPipelineGlobalSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Test/_Test.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Test/_Test.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_workflow/Shader_access.md" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_workflow/Shader_access.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -235,16 +227,13 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="15548">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="15548" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list>
-          <DesktopClrRuntime />
-          <MonoRuntime />
-        </list>
+        <list />
       </option>
       <option name="selectedOptions">
         <list />
@@ -421,6 +410,10 @@
       <workItem from="1776016091106" duration="31119000" />
       <workItem from="1776174923441" duration="8934000" />
       <workItem from="1776208678416" duration="20181000" />
+      <workItem from="1776374327372" duration="2937000" />
+      <workItem from="1776443735705" duration="1375000" />
+      <workItem from="1776868707884" duration="8263000" />
+      <workItem from="1776893800480" duration="2590000" />
     </task>
     <task id="LOCAL-00001" summary="Improved ComboRotCot.cs and RotCot_Base.cs initialization &amp; switching; still need to fix the conversion functions.">
       <option name="closed" value="true" />

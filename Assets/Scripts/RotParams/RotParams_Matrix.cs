@@ -396,8 +396,11 @@ namespace RotParams
                 return ToRotationMatrixFromTwoAxes(primaryAxisIndex, secondaryAxisIndex).ToQuaternionParams(quaternionParams);
             }
 
-            float trace = InternalMatrix.Trace(); 
-    
+            float trace = InternalMatrix.Trace();
+
+            bool _enforceNormalisation = quaternionParams.EnforceNormalisation; 
+            quaternionParams.EnforceNormalisation = false;
+            
             //Algo source: https://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/
             if (trace > 0.0f) 
             {
@@ -441,6 +444,8 @@ namespace RotParams
                 }
             }
 
+            quaternionParams.EnforceNormalisation = _enforceNormalisation; 
+            
             return quaternionParams;
         }
 
